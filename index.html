@@ -76,22 +76,39 @@ header { background: #090d16; color: white; padding: 1rem; border-bottom: 3px so
 .calc-card.active { display: block; }
 h1 { font-size: 1.3rem; color: var(--primary); margin-bottom: 0.3rem; }
 .sub { font-size: 0.85rem; color: #64748b; margin-bottom: 1.2rem; }
-.group { margin-bottom: 1rem; }
-label { display: block; font-size: 0.85rem; font-weight: 700; color: var(--primary); margin-bottom: 0.3rem; }
+.group { margin-bottom: 0.9rem; }
+.price-box {
+  background: #fefce8; border: 1.5px solid #fde047; border-radius: 10px;
+  padding: 0.85rem; margin: 0.9rem 0;
+}
+.price-box-title {
+  font-size: 0.78rem; font-weight: 900; text-transform: uppercase; color: #854d0e; margin-bottom: 0.55rem;
+}
+.price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
+@media (max-width: 480px) { .price-grid { grid-template-columns: 1fr; } }
+label { display: block; font-size: 0.83rem; font-weight: 700; color: var(--primary); margin-bottom: 0.28rem; }
 input, select, textarea {
-  width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; background: #fff;
+  width: 100%; padding: 0.7rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.96rem; background: #fff;
 }
 .btn {
   width: 100%; background: var(--accent); color: #000000; border: none;
-  padding: 0.9rem; border-radius: 8px; font-size: 1rem; font-weight: 900; cursor: pointer; margin-top: 0.5rem;
+  padding: 0.9rem; border-radius: 8px; font-size: 1rem; font-weight: 900; cursor: pointer; margin-top: 0.3rem;
 }
 .res-box {
   margin-top: 1.2rem; background: var(--primary); color: white; padding: 1.2rem; border-radius: 10px;
 }
 .res-title { font-size: 0.75rem; text-transform: uppercase; color: var(--accent); font-weight: 700; }
-.res-big { font-size: 1.75rem; font-weight: 800; margin: 0.3rem 0 0.8rem; border-bottom: 1px solid #334155; padding-bottom: 0.6rem; }
+.res-big-wrap {
+  display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;
+  gap: 0.5rem; margin: 0.3rem 0 0.8rem; border-bottom: 1px solid #334155; padding-bottom: 0.6rem;
+}
+.res-big { font-size: 1.65rem; font-weight: 800; }
+.res-cost-tag {
+  background: #064e3b; border: 1px solid #10b981; color: #6ee7b7;
+  padding: 0.3rem 0.65rem; border-radius: 8px; font-size: 1.15rem; font-weight: 900;
+}
 .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; font-size: 0.85rem; }
-.res-grid span { display: block; font-size: 1.1rem; font-weight: 700; color: #fff; margin-top: 0.1rem; }
+.res-grid span { display: block; font-size: 1.05rem; font-weight: 700; color: #fff; margin-top: 0.1rem; }
 
 .action-area {
   margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #334155;
@@ -138,11 +155,15 @@ input, select, textarea {
 .cart-list { list-style: none; font-size: 0.82rem; }
 .cart-item {
   background: #0f172a; border: 1px solid #334155; border-radius: 6px;
-  padding: 0.55rem 0.7rem; margin-bottom: 0.45rem; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem;
+  padding: 0.6rem 0.7rem; margin-bottom: 0.45rem; display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; flex-wrap: wrap;
+}
+.cart-price-input {
+  width: 110px !important; background: #1e293b !important; color: #6ee7b7 !important;
+  border: 1px solid #10b981 !important; padding: 0.35rem 0.5rem !important; font-weight: 800; font-size: 0.85rem !important; text-align: right;
 }
 .cart-remove {
   background: #ef4444; color: #fff; border: none; border-radius: 4px;
-  padding: 0.2rem 0.5rem; font-size: 0.72rem; font-weight: 800; cursor: pointer;
+  padding: 0.3rem 0.55rem; font-size: 0.75rem; font-weight: 800; cursor: pointer;
 }
 
 .qb-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin-bottom: 0.65rem; }
@@ -331,16 +352,39 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
 <div class="container">
   <div class="ad-banner">[ Google AdSense - Top Banner ]</div>
 
-  <div id="hormigon" class="calc-card active">
+  <!-- 1. HORMIGÓN -->
+  <div id="hormigon" class="calc-card active" data-cost="0">
     <h1 data-es="Calculadora de Hormigón" data-en="Concrete Calculator (Cubic Yards)">Calculadora de Hormigón</h1>
-    <p class="sub" data-es="Calcula yardas cúbicas y sacos para losas, aceras o zapatas." data-en="Estimate cubic yards and premix bags for slabs, footings, or sidewalks.">Calcula yardas cúbicas y sacos para losas, aceras o zapatas.</p>
-    <div class="group"><label data-es="Largo (Pies / ft)" data-en="Length (Feet)">Largo (Pies / ft)</label><input type="number" id="h-largo" value="20"></div>
-    <div class="group"><label data-es="Ancho (Pies / ft)" data-en="Width (Feet)">Ancho (Pies / ft)</label><input type="number" id="h-ancho" value="15"></div>
-    <div class="group"><label data-es="Espesor (Pulgadas / in)" data-en="Thickness / Depth (Inches)">Espesor (Pulgadas / in)</label><input type="number" id="h-espesor" value="4"></div>
-    <button class="btn" onclick="calcHormigon(true)" data-es="Calcular Hormigón" data-en="Calculate Concrete">Calcular Hormigón</button>
+    <p class="sub" data-es="Calcula yardas cúbicas, sacos y el costo total del hormigón." data-en="Estimate cubic yards, bags, and total concrete cost.">Calcula yardas cúbicas, sacos y el costo total del hormigón.</p>
+    <div class="price-grid">
+      <div class="group"><label data-es="Largo (Pies / ft)" data-en="Length (Feet)">Largo (Pies / ft)</label><input type="number" id="h-largo" value="20" oninput="calcHormigon(false)"></div>
+      <div class="group"><label data-es="Ancho (Pies / ft)" data-en="Width (Feet)">Ancho (Pies / ft)</label><input type="number" id="h-ancho" value="15" oninput="calcHormigon(false)"></div>
+    </div>
+    <div class="group"><label data-es="Espesor (Pulgadas / in)" data-en="Thickness / Depth (Inches)">Espesor (Pulgadas / in)</label><input type="number" id="h-espesor" value="4" oninput="calcHormigon(false)"></div>
+
+    <div class="price-box">
+      <div class="price-box-title" data-es="💲 Precios Unitarios para Cotizar este Hormigón" data-en="💲 Unit Prices to Quote This Concrete">💲 Precios Unitarios para Cotizar este Hormigón</div>
+      <div class="group">
+        <label data-es="¿Cómo vas a cotizar el material?" data-en="How are you pricing the concrete?">¿Cómo vas a cotizar el material?</label>
+        <select id="h-modo-precio" onchange="calcHormigon(false)">
+          <option value="yd" data-es="Por Yarda Cúbica (Camión Premezclado)" data-en="Per Cubic Yard (Ready-Mix Truck)">Por Yarda Cúbica (Camión Premezclado)</option>
+          <option value="bag80" data-es="Por Saco de 80 lb" data-en="Per 80 lb Bag">Por Saco de 80 lb</option>
+          <option value="bag60" data-es="Por Saco de 60 lb" data-en="Per 60 lb Bag">Por Saco de 60 lb</option>
+        </select>
+      </div>
+      <div class="price-grid">
+        <div><label data-es="Precio por Yarda ($/yd³)" data-en="Price per Cubic Yard ($)">Precio por Yarda ($/yd³)</label><input type="number" step="any" id="h-precio-yd" value="165" oninput="calcHormigon(false)"></div>
+        <div><label data-es="Precio por Saco ($/saco)" data-en="Price per Bag ($)">Precio por Saco ($/saco)</label><input type="number" step="any" id="h-precio-saco" value="7.50" oninput="calcHormigon(false)"></div>
+      </div>
+    </div>
+
+    <button class="btn" onclick="calcHormigon(true)" data-es="Calcular Hormigón y Precio" data-en="Calculate Concrete & Cost">Calcular Hormigón y Precio</button>
     <div class="res-box">
       <div class="res-title" data-es="Incluye 10% de desperdicio" data-en="Includes 10% waste factor">Incluye 10% de desperdicio</div>
-      <div class="res-big"><span id="h-yd">4.07</span> <small data-es="Yardas (yd³)" data-en="Cubic Yards (yd³)">Yardas (yd³)</small></div>
+      <div class="res-big-wrap">
+        <div class="res-big"><span id="h-yd">4.07</span> <small data-es="Yardas (yd³)" data-en="Cubic Yards (yd³)">Yardas (yd³)</small></div>
+        <div class="res-cost-tag" id="h-cost-tag">$671.55</div>
+      </div>
       <div class="res-grid">
         <div><em data-es="Sacos 60 lb" data-en="60 lb Bags">Sacos 60 lb</em><span id="h-60">245</span></div>
         <div><em data-es="Sacos 80 lb" data-en="80 lb Bags">Sacos 80 lb</em><span id="h-80">184</span></div>
@@ -348,16 +392,31 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
     </div>
   </div>
 
-  <div id="sellador" class="calc-card">
+  <!-- 2. SELLADOR -->
+  <div id="sellador" class="calc-card" data-cost="0">
     <h1 data-es="Sellador Elastomérico de Techo" data-en="Elastomeric Roof Coating Calculator">Sellador Elastomérico de Techo</h1>
-    <p class="sub" data-es="Estima cuántas pailas de 5 galones necesitas según el área." data-en="Calculate 5-gallon pails needed based on roof area and coats.">Estima cuántas pailas de 5 galones necesitas según el área.</p>
-    <div class="group"><label data-es="Área del Techo (sq ft)" data-en="Roof Area (sq ft)">Área del Techo (sq ft)</label><input type="number" id="s-area" value="1500"></div>
-    <div class="group"><label data-es="Cantidad de Capas (Manos)" data-en="Number of Coats">Cantidad de Capas (Manos)</label><input type="number" id="s-capas" value="2"></div>
-    <div class="group"><label data-es="Rendimiento por Paila 5 Gal (sq ft)" data-en="Coverage per 5-Gal Pail (sq ft)">Rendimiento por Paila 5 Gal (sq ft)</label><input type="number" id="s-rend" value="250"></div>
-    <button class="btn" onclick="calcSellador(true)" data-es="Calcular Pailas" data-en="Calculate Pails">Calcular Pailas</button>
+    <p class="sub" data-es="Calcula pailas de 5 galones, primer y el costo total del sellador." data-en="Calculate 5-gallon pails, primer, and total coating cost.">Calcula pailas de 5 galones, primer y el costo total del sellador.</p>
+    <div class="price-grid">
+      <div class="group"><label data-es="Área del Techo (sq ft)" data-en="Roof Area (sq ft)">Área del Techo (sq ft)</label><input type="number" id="s-area" value="1500" oninput="calcSellador(false)"></div>
+      <div class="group"><label data-es="Cantidad de Capas (Manos)" data-en="Number of Coats">Cantidad de Capas (Manos)</label><input type="number" id="s-capas" value="2" oninput="calcSellador(false)"></div>
+    </div>
+    <div class="group"><label data-es="Rendimiento por Paila 5 Gal (sq ft)" data-en="Coverage per 5-Gal Pail (sq ft)">Rendimiento por Paila 5 Gal (sq ft)</label><input type="number" id="s-rend" value="250" oninput="calcSellador(false)"></div>
+
+    <div class="price-box">
+      <div class="price-box-title" data-es="💲 Precios Unitarios de Sellador y Primer" data-en="💲 Coating & Primer Unit Prices">💲 Precios Unitarios de Sellador y Primer</div>
+      <div class="price-grid">
+        <div><label data-es="Precio Paila Sellador 5G ($)" data-en="Price per 5G Coating Pail ($)">Precio Paila Sellador 5G ($)</label><input type="number" step="any" id="s-precio-paila" value="115" oninput="calcSellador(false)"></div>
+        <div><label data-es="Precio Paila Primer 5G ($)" data-en="Price per 5G Primer Pail ($)">Precio Paila Primer 5G ($)</label><input type="number" step="any" id="s-precio-primer" value="65" oninput="calcSellador(false)"></div>
+      </div>
+    </div>
+
+    <button class="btn" onclick="calcSellador(true)" data-es="Calcular Pailas y Precio" data-en="Calculate Pails & Cost">Calcular Pailas y Precio</button>
     <div class="res-box">
-      <div class="res-title" data-es="Total de Material Estimado" data-en="Estimated Material Needed">Total de Material Estimado</div>
-      <div class="res-big"><span id="s-pailas">12</span> <small data-es="Pailas (5 Gal)" data-en="Pails (5 Gal)">Pailas (5 Gal)</small></div>
+      <div class="res-title" data-es="Total de Material y Costo Estimado" data-en="Estimated Material & Cost">Total de Material y Costo Estimado</div>
+      <div class="res-big-wrap">
+        <div class="res-big"><span id="s-pailas">12</span> <small data-es="Pailas (5 Gal)" data-en="Pails (5 Gal)">Pailas (5 Gal)</small></div>
+        <div class="res-cost-tag" id="s-cost-tag">$1,575.00</div>
+      </div>
       <div class="res-grid">
         <div><em data-es="Total Galones" data-en="Total Gallons">Total Galones</em><span id="s-gal">60</span></div>
         <div><em data-es="Primer (5 Gal)" data-en="Primer (5 Gal)">Primer (5 Gal)</em><span id="s-primer">3</span></div>
@@ -365,16 +424,31 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
     </div>
   </div>
 
-  <div id="pintura" class="calc-card">
+  <!-- 3. PINTURA -->
+  <div id="pintura" class="calc-card" data-cost="0">
     <h1 data-es="Calculadora de Pintura" data-en="Paint Calculator (Gallons & Pails)">Calculadora de Pintura</h1>
-    <p class="sub" data-es="Calcula galones y pailas de 5 galones para paredes interiores o exteriores." data-en="Estimate gallons and 5-gal pails for interior or exterior walls.">Calcula galones y pailas de 5 galones para paredes interiores o exteriores.</p>
-    <div class="group"><label data-es="Área a Pintar (Pies Cuadrados - sq ft)" data-en="Paintable Area (sq ft)">Área a Pintar (Pies Cuadrados - sq ft)</label><input type="number" id="p-area" value="2000"></div>
-    <div class="group"><label data-es="Manos de Pintura (Capas)" data-en="Number of Coats">Manos de Pintura (Capas)</label><input type="number" id="p-capas" value="2"></div>
-    <div class="group"><label data-es="Rendimiento por Galón (sq ft)" data-en="Coverage per Gallon (sq ft)">Rendimiento por Galón (sq ft)</label><input type="number" id="p-rend" value="350"></div>
-    <button class="btn" onclick="calcPintura(true)" data-es="Calcular Pintura" data-en="Calculate Paint">Calcular Pintura</button>
+    <p class="sub" data-es="Calcula galones, pailas, primer y el precio total de la pintura." data-en="Estimate gallons, 5-gal pails, primer, and total paint cost.">Calcula galones, pailas, primer y el precio total de la pintura.</p>
+    <div class="price-grid">
+      <div class="group"><label data-es="Área a Pintar (sq ft)" data-en="Paintable Area (sq ft)">Área a Pintar (sq ft)</label><input type="number" id="p-area" value="2000" oninput="calcPintura(false)"></div>
+      <div class="group"><label data-es="Manos de Pintura (Capas)" data-en="Number of Coats">Manos de Pintura (Capas)</label><input type="number" id="p-capas" value="2" oninput="calcPintura(false)"></div>
+    </div>
+    <div class="group"><label data-es="Rendimiento por Galón (sq ft)" data-en="Coverage per Gallon (sq ft)">Rendimiento por Galón (sq ft)</label><input type="number" id="p-rend" value="350" oninput="calcPintura(false)"></div>
+
+    <div class="price-box">
+      <div class="price-box-title" data-es="💲 Precios Unitarios de Pintura y Primer" data-en="💲 Paint & Primer Unit Prices">💲 Precios Unitarios de Pintura y Primer</div>
+      <div class="price-grid">
+        <div><label data-es="Precio por Galón Pintura ($)" data-en="Price per Gallon of Paint ($)">Precio por Galón Pintura ($)</label><input type="number" step="any" id="p-precio-gal" value="38" oninput="calcPintura(false)"></div>
+        <div><label data-es="Precio por Galón Primer ($)" data-en="Price per Gallon of Primer ($)">Precio por Galón Primer ($)</label><input type="number" step="any" id="p-precio-primer" value="26" oninput="calcPintura(false)"></div>
+      </div>
+    </div>
+
+    <button class="btn" onclick="calcPintura(true)" data-es="Calcular Pintura y Precio" data-en="Calculate Paint & Cost">Calcular Pintura y Precio</button>
     <div class="res-box">
-      <div class="res-title" data-es="Total de Pintura Requerida" data-en="Total Paint Required">Total de Pintura Requerida</div>
-      <div class="res-big"><span id="p-gal">12</span> <small data-es="Galones" data-en="Gallons">Galones</small></div>
+      <div class="res-title" data-es="Total de Pintura y Costo Estimado" data-en="Total Paint & Estimated Cost">Total de Pintura y Costo Estimado</div>
+      <div class="res-big-wrap">
+        <div class="res-big"><span id="p-gal">12</span> <small data-es="Galones" data-en="Gallons">Galones</small></div>
+        <div class="res-cost-tag" id="p-cost-tag">$612.00</div>
+      </div>
       <div class="res-grid">
         <div><em data-es="En Pailas (5 Gal)" data-en="In 5-Gal Pails">En Pailas (5 Gal)</em><span id="p-pailas">2.4 Pailas</span></div>
         <div><em data-es="Primer (1 Mano)" data-en="Primer (1 Coat)">Primer (1 Mano)</em><span id="p-primer">6 Gal</span></div>
@@ -382,22 +456,35 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
     </div>
   </div>
 
-  <div id="gypsum" class="calc-card">
+  <!-- 4. GYPSUM BOARD -->
+  <div id="gypsum" class="calc-card" data-cost="0">
     <h1 data-es="Gypsum Board y Plafón Acústico" data-en="Drywall (4x8) & Acoustic Ceiling (2x4)">Gypsum Board y Plafón Acústico</h1>
-    <p class="sub" data-es="Calcula paneles de 4x8 pies (Drywall) o losas de plafón comercial 2x4." data-en="Estimate 4x8 drywall sheets or 2x4 drop ceiling acoustic tiles.">Calcula paneles de 4x8 pies (Drywall) o losas de plafón comercial 2x4.</p>
-    <div class="group"><label data-es="Área Total (Pies Cuadrados - sq ft)" data-en="Total Area (sq ft)">Área Total (Pies Cuadrados - sq ft)</label><input type="number" id="g-area" value="1000"></div>
+    <p class="sub" data-es="Calcula paneles 4x8, losas 2x4, masilla y el costo total." data-en="Estimate 4x8 drywall sheets, 2x4 tiles, mud, and total cost.">Calcula paneles 4x8, losas 2x4, masilla y el costo total.</p>
+    <div class="group"><label data-es="Área Total (Pies Cuadrados - sq ft)" data-en="Total Area (sq ft)">Área Total (Pies Cuadrados - sq ft)</label><input type="number" id="g-area" value="1000" oninput="calcGypsum(false)"></div>
     <div class="group">
       <label data-es="Tipo de Panel / Losa" data-en="Panel / Tile Size">Tipo de Panel / Losa</label>
-      <select id="g-tipo">
+      <select id="g-tipo" onchange="calcGypsum(false)">
         <option value="32">Gypsum Board / Panel 4x8 ft (32 sq ft)</option>
         <option value="8">Plafón Acústico Comercial 2x4 ft (8 sq ft)</option>
         <option value="4">Plafón Acústico 2x2 ft (4 sq ft)</option>
       </select>
     </div>
-    <button class="btn" onclick="calcGypsum(true)" data-es="Calcular Paneles" data-en="Calculate Panels">Calcular Paneles</button>
+
+    <div class="price-box">
+      <div class="price-box-title" data-es="💲 Precios Unitarios de Paneles y Masilla" data-en="💲 Panel & Joint Compound Unit Prices">💲 Precios Unitarios de Paneles y Masilla</div>
+      <div class="price-grid">
+        <div><label data-es="Precio por Panel / Losa ($)" data-en="Price per Panel / Tile ($)">Precio por Panel / Losa ($)</label><input type="number" step="any" id="g-precio-panel" value="16.50" oninput="calcGypsum(false)"></div>
+        <div><label data-es="Precio Paila Masilla ($)" data-en="Price per Mud Pail ($)">Precio Paila Masilla ($)</label><input type="number" step="any" id="g-precio-masilla" value="24.00" oninput="calcGypsum(false)"></div>
+      </div>
+    </div>
+
+    <button class="btn" onclick="calcGypsum(true)" data-es="Calcular Paneles y Precio" data-en="Calculate Panels & Cost">Calcular Paneles y Precio</button>
     <div class="res-box">
       <div class="res-title" data-es="Incluye 10% por cortes y desperdicio" data-en="Includes 10% waste factor">Incluye 10% por cortes y desperdicio</div>
-      <div class="res-big"><span id="g-paneles">35</span> <small data-es="Paneles / Losas" data-en="Panels / Tiles">Paneles / Losas</small></div>
+      <div class="res-big-wrap">
+        <div class="res-big"><span id="g-paneles">35</span> <small data-es="Paneles / Losas" data-en="Panels / Tiles">Paneles / Losas</small></div>
+        <div class="res-cost-tag" id="g-cost-tag">$649.50</div>
+      </div>
       <div class="res-grid">
         <div><em data-es="Pailas Masilla (Est.)" data-en="Joint Compound Pails">Pailas Masilla (Est.)</em><span id="g-masilla">3</span></div>
         <div><em data-es="Tornillos (Est.)" data-en="Screws (Est.)">Tornillos (Est.)</em><span id="g-tornillos">1,120</span></div>
@@ -405,14 +492,17 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
     </div>
   </div>
 
-  <div id="bloques" class="calc-card">
+  <!-- 5. BLOQUES -->
+  <div id="bloques" class="calc-card" data-cost="0">
     <h1 data-es="Calculadora de Muro de Bloques" data-en="CMU Block Wall Calculator (Full System)">Calculadora de Muro de Bloques</h1>
-    <p class="sub" data-es="Bloques (8x8x16), mortero, varillas de acero, llenado de celdas y empañete." data-en="8x8x16 blocks, mortar, rebar reinforcement, cell grout & plastering.">Bloques (8x8x16), mortero, varillas de acero, llenado de celdas y empañete.</p>
-    <div class="group"><label data-es="Largo de Pared (Pies / ft)" data-en="Wall Length (Feet)">Largo de Pared (Pies / ft)</label><input type="number" id="b-largo" value="30"></div>
-    <div class="group"><label data-es="Alto de Pared (Pies / ft)" data-en="Wall Height (Feet)">Alto de Pared (Pies / ft)</label><input type="number" id="b-alto" value="8"></div>
+    <p class="sub" data-es="Bloques (8x8x16), mortero, varillas, llenado de celdas, empañete y costo." data-en="8x8x16 blocks, mortar, rebar, cell grout, plastering & total cost.">Bloques (8x8x16), mortero, varillas, llenado de celdas, empañete y costo.</p>
+    <div class="price-grid">
+      <div class="group"><label data-es="Largo de Pared (ft)" data-en="Wall Length (Feet)">Largo de Pared (ft)</label><input type="number" id="b-largo" value="30" oninput="calcBloques(false)"></div>
+      <div class="group"><label data-es="Alto de Pared (ft)" data-en="Wall Height (Feet)">Alto de Pared (ft)</label><input type="number" id="b-alto" value="8" oninput="calcBloques(false)"></div>
+    </div>
     <div class="group">
       <label data-es="Acero Vertical (Varilla #4) y Celdas Llenas" data-en="Vertical Rebar (#4) & Grouted Cells">Acero Vertical (Varilla #4) y Celdas Llenas</label>
-      <select id="b-varilla">
+      <select id="b-varilla" onchange="calcBloques(false)">
         <option value="2" data-es="Sí — Varilla #4 cada 24&quot; (2 pies) + Escalerilla" data-en="Yes — #4 Rebar every 24&quot; (2 ft) + Ladder Wire">Sí — Varilla #4 cada 24" (2 pies) + Escalerilla</option>
         <option value="2.67" data-es="Sí — Varilla #4 cada 32&quot; + Escalerilla" data-en="Yes — #4 Rebar every 32&quot; + Ladder Wire">Sí — Varilla #4 cada 32" + Escalerilla</option>
         <option value="4" data-es="Sí — Varilla #4 cada 48&quot; (4 pies) + Escalerilla" data-en="Yes — #4 Rebar every 48&quot; (4 ft) + Ladder Wire">Sí — Varilla #4 cada 48" (4 pies) + Escalerilla</option>
@@ -421,16 +511,29 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
     </div>
     <div class="group">
       <label data-es="Empañete de Pared (Espesor 1/2&quot;)" data-en="Wall Plaster / Stucco (1/2&quot; thick)">Empañete de Pared (Espesor 1/2")</label>
-      <select id="b-empanete">
+      <select id="b-empanete" onchange="calcBloques(false)">
         <option value="2" data-es="Sí — Empañete a 2 Caras (Ambos lados)" data-en="Yes — Plaster Both Sides (2 Faces)">Sí — Empañete a 2 Caras (Ambos lados)</option>
         <option value="1" data-es="Sí — Empañete a 1 Cara (Un solo lado)" data-en="Yes — Plaster 1 Side Only (1 Face)">Sí — Empañete a 1 Cara (Un solo lado)</option>
         <option value="0" data-es="Sin Empañete (Solo bloques)" data-en="No Plastering (Blocks only)">Sin Empañete (Solo bloques)</option>
       </select>
     </div>
-    <button class="btn" onclick="calcBloques(true)" data-es="Calcular Muro Completo" data-en="Calculate Full Wall">Calcular Muro Completo</button>
+
+    <div class="price-box">
+      <div class="price-box-title" data-es="💲 Precios Unitarios para Cotizar este Muro" data-en="💲 Unit Prices to Quote This Wall">💲 Precios Unitarios para Cotizar este Muro</div>
+      <div class="qb-grid-3">
+        <div><label data-es="Precio por Bloque ($)" data-en="Price per Block ($)">Precio por Bloque ($)</label><input type="number" step="any" id="b-precio-blq" value="1.65" oninput="calcBloques(false)"></div>
+        <div><label data-es="Precio Saco Mezcla/Cem ($)" data-en="Price per Bag Mortar/Cem ($)">Precio Saco Mezcla/Cem ($)</label><input type="number" step="any" id="b-precio-saco" value="8.50" oninput="calcBloques(false)"></div>
+        <div><label data-es="Precio Varilla #4 20ft ($)" data-en="Price per #4 Rebar 20ft ($)">Precio Varilla #4 20ft ($)</label><input type="number" step="any" id="b-precio-var" value="11.50" oninput="calcBloques(false)"></div>
+      </div>
+    </div>
+
+    <button class="btn" onclick="calcBloques(true)" data-es="Calcular Muro Completo y Precio" data-en="Calculate Full Wall & Cost">Calcular Muro Completo y Precio</button>
     <div class="res-box">
       <div class="res-title" data-es="Incluye 5% desperdicio en bloques y 10% en mezclas" data-en="Includes 5% block waste & 10% mortar/grout waste">Incluye 5% desperdicio en bloques y 10% en mezclas</div>
-      <div class="res-big"><span id="b-total">284</span> <small data-es="Bloques (8x8x16)" data-en="CMU Blocks (8x8x16)">Bloques (8x8x16)</small></div>
+      <div class="res-big-wrap">
+        <div class="res-big"><span id="b-total">284</span> <small data-es="Bloques (8x8x16)" data-en="CMU Blocks (8x8x16)">Bloques (8x8x16)</small></div>
+        <div class="res-cost-tag" id="b-cost-tag">$1,413.10</div>
+      </div>
       <div class="res-grid">
         <div><em data-es="Área de Pared" data-en="Wall Area">Área de Pared</em><span id="b-area">240 sq ft</span></div>
         <div><em data-es="Mortero Pega (80lb)" data-en="Mortar Bags (80lb)">Mortero Pega (80lb)</em><span id="b-mortero">22 Sacos</span></div>
@@ -442,15 +545,30 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
     </div>
   </div>
 
-  <div id="btu" class="calc-card">
+  <!-- 6. AIRE BTU -->
+  <div id="btu" class="calc-card" data-cost="0">
     <h1 data-es="Calculadora de Aire (BTU)" data-en="AC BTU & Tonnage Calculator">Calculadora de Aire (BTU)</h1>
-    <p class="sub" data-es="Capacidad recomendada según el área y carga térmica." data-en="Recommended cooling capacity based on room size and heat load.">Capacidad recomendada según el área y carga térmica.</p>
-    <div class="group"><label data-es="Largo (Pies / ft)" data-en="Room Length (Feet)">Largo (Pies / ft)</label><input type="number" id="a-largo" value="15"></div>
-    <div class="group"><label data-es="Ancho (Pies / ft)" data-en="Room Width (Feet)">Ancho (Pies / ft)</label><input type="number" id="a-ancho" value="12"></div>
-    <button class="btn" onclick="calcBTU(true)" data-es="Calcular BTU" data-en="Calculate BTU">Calcular BTU</button>
+    <p class="sub" data-es="Capacidad recomendada y costo de la unidad e insumos." data-en="Recommended cooling capacity and unit/supply cost.">Capacidad recomendada y costo de la unidad e insumos.</p>
+    <div class="price-grid">
+      <div class="group"><label data-es="Largo (Pies / ft)" data-en="Room Length (Feet)">Largo (Pies / ft)</label><input type="number" id="a-largo" value="15" oninput="calcBTU(false)"></div>
+      <div class="group"><label data-es="Ancho (Pies / ft)" data-en="Room Width (Feet)">Ancho (Pies / ft)</label><input type="number" id="a-ancho" value="12" oninput="calcBTU(false)"></div>
+    </div>
+
+    <div class="price-box">
+      <div class="price-box-title" data-es="💲 Precio del Equipo A/C y Materiales" data-en="💲 AC Unit & Installation Materials Price">💲 Precio del Equipo A/C y Materiales</div>
+      <div class="price-grid">
+        <div><label data-es="Costo Unidad A/C ($)" data-en="AC Unit Price ($)">Costo Unidad A/C ($)</label><input type="number" step="any" id="a-precio-equipo" value="580" oninput="calcBTU(false)"></div>
+        <div><label data-es="Tubería / Base / Materiales ($)" data-en="Line Set / Bracket / Supplies ($)">Tubería / Base / Materiales ($)</label><input type="number" step="any" id="a-precio-mat" value="145" oninput="calcBTU(false)"></div>
+      </div>
+    </div>
+
+    <button class="btn" onclick="calcBTU(true)" data-es="Calcular BTU y Precio" data-en="Calculate BTU & Cost">Calcular BTU y Precio</button>
     <div class="res-box">
-      <div class="res-title" data-es="Capacidad Recomendada" data-en="Recommended AC Size">Capacidad Recomendada</div>
-      <div class="res-big"><span id="a-btu">12,000</span> BTU</div>
+      <div class="res-title" data-es="Capacidad Recomendada y Costo" data-en="Recommended AC Size & Cost">Capacidad Recomendada y Costo</div>
+      <div class="res-big-wrap">
+        <div class="res-big"><span id="a-btu">12,000</span> BTU</div>
+        <div class="res-cost-tag" id="a-cost-tag">$725.00</div>
+      </div>
       <div class="res-grid">
         <div><em data-es="Tonelaje" data-en="Tonnage">Tonelaje</em><span id="a-ton">1.0 Ton</span></div>
         <div><em data-es="Área Total" data-en="Total Area">Área Total</em><span id="a-area">180 sq ft</span></div>
@@ -458,6 +576,7 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
     </div>
   </div>
 
+  <!-- CONSTRUCTOR MAESTRO -->
   <div class="master-builder-card" id="masterQuoteSection">
     <div class="mb-header">
       <h2 data-es="🛠️ Constructor Completo de Cotización y Factura" data-en="🛠️ Full Project Quote & Invoice Builder">🛠️ Constructor Completo de Cotización y Factura</h2>
@@ -466,8 +585,8 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
 
     <div class="mb-section">
       <div class="mb-sec-title">
-        <span data-es="1️⃣ Cálculos de Materiales en tu Proyecto" data-en="1️⃣ Material Calculations in Your Project">1️⃣ Cálculos de Materiales en tu Proyecto</span>
-        <small data-es="(Usa el botón azul '➕ Añadir a mi Cotización' arriba para juntar varias áreas)" data-en="(Use the blue '➕ Add to Quote' button above to combine multiple areas)">(Usa el botón azul '➕ Añadir a mi Cotización' arriba para juntar varias áreas)</small>
+        <span data-es="1️⃣ Cálculos de Materiales y Precios en tu Proyecto" data-en="1️⃣ Material Calculations & Prices in Your Project">1️⃣ Cálculos de Materiales y Precios en tu Proyecto</span>
+        <small data-es="(Cada cálculo que añades trae su precio y se suma al Total)" data-en="(Each added calculation brings its price and adds to the Total)">(Cada cálculo que añades trae su precio y se suma al Total)</small>
       </div>
       <ul class="cart-list" id="projectCartList"></ul>
     </div>
@@ -475,6 +594,7 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
     <div id="proBuilderBody"></div>
   </div>
 
+  <!-- DOCUMENTO IMPRESO (1 PÁGINA) -->
   <div id="printMasterDocument">
     <div class="print-top">
       <div class="print-brand-wrap">
@@ -560,8 +680,8 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
 <div class="modal-overlay" id="helpModal">
   <div class="modal-box">
     <h3 data-es="🚀 Cómo usar MaterialCalcPro" data-en="🚀 How to Use MaterialCalcPro">🚀 Cómo usar MaterialCalcPro</h3>
-    <div class="modal-step" data-es="1️⃣ Calcula los materiales en cualquiera de las 6 pestañas y toca '➕ Añadir este Cálculo a mi Cotización' para combinar varias áreas (ej. Hormigón + Bloques + Pintura)." data-en="1️⃣ Calculate materials in any tab and tap '➕ Add Calculation to My Quote' to combine multiple areas (e.g. Concrete + Blocks + Paint).">1️⃣ Calcula los materiales en cualquiera de las 6 pestañas y toca '➕ Añadir este Cálculo a mi Cotización' para combinar varias áreas (ej. Hormigón + Bloques + Pintura).</div>
-    <div class="modal-step" data-es="2️⃣ Abajo en el Constructor Maestro puedes meter el Estimado de la Ferretería (con tu % de ganancia oculta), añadir Ventanas, Puertas, Plomería o Escombros, y calcular tu Mano de Obra." data-en="2️⃣ In the Master Builder below, enter your Hardware Store Quote (with hidden markup %), add Windows, Doors, Plumbing or Debris, and calculate your Labor.">2️⃣ Abajo en el Constructor Maestro puedes meter el Estimado de la Ferretería (con tu % de ganancia oculta), añadir Ventanas, Puertas, Plomería o Escombros, y calcular tu Mano de Obra.</div>
+    <div class="modal-step" data-es="1️⃣ Pon las medidas y el precio unitario en cualquiera de las 6 calculadoras (Hormigón, Sellador, Pintura, Gypsum, Bloques o Aire) y toca '➕ Añadir este Cálculo y Precio a mi Cotización'." data-en="1️⃣ Enter dimensions and unit price in any of the 6 calculators and tap '➕ Add Calculation & Price to My Quote'.">1️⃣ Pon las medidas y el precio unitario en cualquiera de las 6 calculadoras (Hormigón, Sellador, Pintura, Gypsum, Bloques o Aire) y toca '➕ Añadir este Cálculo y Precio a mi Cotización'.</div>
+    <div class="modal-step" data-es="2️⃣ Abajo en el Constructor Maestro también puedes meter un Estimado de Ferretería adicional (con tu % de ganancia oculta), añadir Ventanas, Puertas o Plomería, y calcular tu Mano de Obra." data-en="2️⃣ In the Master Builder below, you can also enter an additional Hardware Store Quote (with hidden markup %), add Windows, Doors or Plumbing, and calculate your Labor.">2️⃣ Abajo en el Constructor Maestro también puedes meter un Estimado de Ferretería adicional (con tu % de ganancia oculta), añadir Ventanas, Puertas o Plomería, y calcular tu Mano de Obra.</div>
     <div class="modal-step" data-es="3️⃣ Cuando veas tu Total listo, toca el botón verde al final para desbloquear e imprimir en 1 sola página tu Cotización Oficial o Factura ($1.99)." data-en="3️⃣ Once your Total is ready, tap the green button at the bottom to unlock and print your 1-page Official Quote or Invoice ($1.99).">3️⃣ Cuando veas tu Total listo, toca el botón verde al final para desbloquear e imprimir en 1 sola página tu Cotización Oficial o Factura ($1.99).</div>
     <button class="modal-close" onclick="closeHelpModal()" data-es="¡Entendido!" data-en="Got it!">¡Entendido!</button>
   </div>
@@ -620,7 +740,7 @@ function toggleLang() {
   document.querySelectorAll('[data-ph-es]').forEach(el => {
     el.placeholder = el.getAttribute('data-ph-' + currentLang);
   });
-  calcBloques(false);
+  runAllCalcs();
   renderProjectCart();
   updatePayButtonState();
   renderHistory();
@@ -631,6 +751,7 @@ function openTab(id, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   btn.classList.add('active');
+  recalcMasterTotals();
 }
 
 function saveHistoryItem(labelEs, labelEn, resultText) {
@@ -665,13 +786,26 @@ function calcHormigon(logHist) {
   let w = parseFloat(document.getElementById('h-ancho').value) || 0;
   let t = (parseFloat(document.getElementById('h-espesor').value) || 0) / 12;
   let cuft = (l * w * t) * 1.10;
-  let yds = (cuft / 27).toFixed(2);
+  let ydsNum = cuft / 27;
+  let yds = ydsNum.toFixed(2);
   let b60 = Math.ceil(cuft / 0.45);
   let b80 = Math.ceil(cuft / 0.60);
+
+  let modo = document.getElementById('h-modo-precio').value;
+  let pYd = parseFloat(document.getElementById('h-precio-yd').value) || 0;
+  let pSaco = parseFloat(document.getElementById('h-precio-saco').value) || 0;
+  let cost = 0;
+  if (modo === 'yd') cost = parseFloat(yds) * pYd;
+  else if (modo === 'bag80') cost = b80 * pSaco;
+  else cost = b60 * pSaco;
+
   document.getElementById('h-yd').innerText = yds;
   document.getElementById('h-60').innerText = b60;
   document.getElementById('h-80').innerText = b80;
-  if (logHist) saveHistoryItem('Hormigón (' + l + 'x' + w + ' ft)', 'Concrete (' + l + 'x' + w + ' ft)', yds + ' yd³ (' + b80 + 'x80lb)');
+  document.getElementById('h-cost-tag').innerText = formatUSD(cost);
+  document.getElementById('hormigon').setAttribute('data-cost', cost.toFixed(2));
+  recalcMasterTotals();
+  if (logHist) saveHistoryItem('Hormigón (' + l + 'x' + w + ' ft)', 'Concrete (' + l + 'x' + w + ' ft)', yds + ' yd³ • ' + formatUSD(cost));
 }
 
 function calcSellador(logHist) {
@@ -679,10 +813,19 @@ function calcSellador(logHist) {
   let capas = parseFloat(document.getElementById('s-capas').value) || 2;
   let rend = parseFloat(document.getElementById('s-rend').value) || 250;
   let pailas = Math.ceil((area * capas) / rend);
+  let primer = Math.ceil(area / 500);
+
+  let pPaila = parseFloat(document.getElementById('s-precio-paila').value) || 0;
+  let pPrimer = parseFloat(document.getElementById('s-precio-primer').value) || 0;
+  let cost = (pailas * pPaila) + (primer * pPrimer);
+
   document.getElementById('s-pailas').innerText = pailas;
   document.getElementById('s-gal').innerText = pailas * 5;
-  document.getElementById('s-primer').innerText = Math.ceil(area / 500);
-  if (logHist) saveHistoryItem('Sellador (' + area + ' sq ft)', 'Roof Coat (' + area + ' sq ft)', pailas + ' Pailas (5G)');
+  document.getElementById('s-primer').innerText = primer;
+  document.getElementById('s-cost-tag').innerText = formatUSD(cost);
+  document.getElementById('sellador').setAttribute('data-cost', cost.toFixed(2));
+  recalcMasterTotals();
+  if (logHist) saveHistoryItem('Sellador (' + area + ' sq ft)', 'Roof Coat (' + area + ' sq ft)', pailas + ' Pailas • ' + formatUSD(cost));
 }
 
 function calcPintura(logHist) {
@@ -692,10 +835,18 @@ function calcPintura(logHist) {
   let galones = Math.ceil((area * capas) / rend);
   let pailas = (galones / 5).toFixed(1);
   let primer = Math.ceil(area / 350);
+
+  let pGal = parseFloat(document.getElementById('p-precio-gal').value) || 0;
+  let pPrimer = parseFloat(document.getElementById('p-precio-primer').value) || 0;
+  let cost = (galones * pGal) + (primer * pPrimer);
+
   document.getElementById('p-gal').innerText = galones;
   document.getElementById('p-pailas').innerText = pailas + ' Pailas';
   document.getElementById('p-primer').innerText = primer + ' Gal';
-  if (logHist) saveHistoryItem('Pintura (' + area + ' sq ft)', 'Paint (' + area + ' sq ft)', galones + ' Gal (' + pailas + ' Pailas)');
+  document.getElementById('p-cost-tag').innerText = formatUSD(cost);
+  document.getElementById('pintura').setAttribute('data-cost', cost.toFixed(2));
+  recalcMasterTotals();
+  if (logHist) saveHistoryItem('Pintura (' + area + ' sq ft)', 'Paint (' + area + ' sq ft)', galones + ' Gal • ' + formatUSD(cost));
 }
 
 function calcGypsum(logHist) {
@@ -704,10 +855,18 @@ function calcGypsum(logHist) {
   let paneles = Math.ceil((area / size) * 1.10);
   let masilla = size === 32 ? Math.ceil(paneles / 12) : 0;
   let tornillos = size === 32 ? paneles * 32 : 0;
+
+  let pPanel = parseFloat(document.getElementById('g-precio-panel').value) || 0;
+  let pMasilla = parseFloat(document.getElementById('g-precio-masilla').value) || 0;
+  let cost = (paneles * pPanel) + (masilla * pMasilla);
+
   document.getElementById('g-paneles').innerText = paneles;
   document.getElementById('g-masilla').innerText = size === 32 ? masilla : 'N/A';
   document.getElementById('g-tornillos').innerText = size === 32 ? tornillos.toLocaleString() : 'N/A';
-  if (logHist) saveHistoryItem('Gypsum/Plafón (' + area + ' sq ft)', 'Drywall/Ceiling (' + area + ' sq ft)', paneles + ' Paneles');
+  document.getElementById('g-cost-tag').innerText = formatUSD(cost);
+  document.getElementById('gypsum').setAttribute('data-cost', cost.toFixed(2));
+  recalcMasterTotals();
+  if (logHist) saveHistoryItem('Gypsum/Plafón (' + area + ' sq ft)', 'Drywall/Ceiling (' + area + ' sq ft)', paneles + ' Paneles • ' + formatUSD(cost));
 }
 
 function calcBloques(logHist) {
@@ -745,6 +904,12 @@ function calcBloques(logHist) {
     yardasArena = (((areaEmpanete * 0.0417) * 1.10) / 27).toFixed(2);
   }
 
+  let pBlq = parseFloat(document.getElementById('b-precio-blq').value) || 0;
+  let pSaco = parseFloat(document.getElementById('b-precio-saco').value) || 0;
+  let pVar = parseFloat(document.getElementById('b-precio-var').value) || 0;
+  let totalSacos = mortero + sacosCeldas + sacosEmpanete;
+  let cost = (bloques * pBlq) + (totalSacos * pSaco) + (varillas20 * pVar);
+
   document.getElementById('b-total').innerText = bloques;
   document.getElementById('b-area').innerText = area + ' sq ft';
   document.getElementById('b-mortero').innerText = mortero + (currentLang === 'es' ? ' Sacos' : ' Bags');
@@ -752,9 +917,12 @@ function calcBloques(logHist) {
   document.getElementById('b-durowal').innerText = rebarSpacing > 0 ? (durowal10 + (currentLang === 'es' ? ' Piezas' : ' Pcs')) : (currentLang === 'es' ? 'No aplica' : 'None');
   document.getElementById('b-celdas').innerText = rebarSpacing > 0 ? (sacosCeldas + (currentLang === 'es' ? ' Sacos' : ' Bags')) : (currentLang === 'es' ? 'No aplica' : 'None');
   document.getElementById('b-plaster').innerText = plasterSides > 0 ? (sacosEmpanete + ' ' + (currentLang === 'es' ? 'Sacos' : 'Bags') + ' + ' + yardasArena + ' yd³') : (currentLang === 'es' ? 'Sin empañete' : 'No plaster');
+  document.getElementById('b-cost-tag').innerText = formatUSD(cost);
+  document.getElementById('bloques').setAttribute('data-cost', cost.toFixed(2));
+  recalcMasterTotals();
 
   if (logHist) {
-    saveHistoryItem('Muro Bloques (' + l + 'x' + h + ' ft)', 'CMU Wall (' + l + 'x' + h + ' ft)', bloques + ' Blq | ' + varillas20 + ' Var #4 | Emp: ' + sacosEmpanete + ' sacos');
+    saveHistoryItem('Muro Bloques (' + l + 'x' + h + ' ft)', 'CMU Wall (' + l + 'x' + h + ' ft)', bloques + ' Blq • ' + formatUSD(cost));
   }
 }
 
@@ -768,10 +936,18 @@ function calcBTU(logHist) {
   else if (rawBtu > 12500 && rawBtu <= 18500) comercial = 18000;
   else if (rawBtu > 18500 && rawBtu <= 24500) comercial = 24000;
   else if (rawBtu > 24500) comercial = 36000;
+
+  let pEq = parseFloat(document.getElementById('a-precio-equipo').value) || 0;
+  let pMat = parseFloat(document.getElementById('a-precio-mat').value) || 0;
+  let cost = pEq + pMat;
+
   document.getElementById('a-btu').innerText = comercial.toLocaleString();
   document.getElementById('a-ton').innerText = (comercial / 12000).toFixed(1) + ' Ton';
   document.getElementById('a-area').innerText = area + ' sq ft';
-  if (logHist) saveHistoryItem('Aire BTU (' + l + 'x' + w + ' ft)', 'AC BTU (' + l + 'x' + w + ' ft)', comercial.toLocaleString() + ' BTU');
+  document.getElementById('a-cost-tag').innerText = formatUSD(cost);
+  document.getElementById('btu').setAttribute('data-cost', cost.toFixed(2));
+  recalcMasterTotals();
+  if (logHist) saveHistoryItem('Aire BTU (' + l + 'x' + w + ' ft)', 'AC BTU (' + l + 'x' + w + ' ft)', comercial.toLocaleString() + ' BTU • ' + formatUSD(cost));
 }
 
 function runAllCalcs() {
@@ -783,6 +959,7 @@ function extractCardSnapshot(card) {
   const title = card.querySelector('h1')?.innerText || '';
   const specs = [];
   card.querySelectorAll('.group').forEach(g => {
+    if (g.closest('.price-box')) return;
     const lbl = g.querySelector('label')?.innerText || '';
     const inp = g.querySelector('input, select');
     if (!inp) return;
@@ -791,10 +968,12 @@ function extractCardSnapshot(card) {
   });
   const bigRes = card.querySelector('.res-big')?.innerText.replace(/\s+/g, ' ').trim() || '';
   const grids = Array.from(card.querySelectorAll('.res-grid > div')).map(d => d.innerText.replace(/\n/g, ': ')).join(' | ');
+  const cost = parseFloat(card.getAttribute('data-cost')) || 0;
   return {
     title: title,
     specs: specs.join(' • '),
-    summary: bigRes + ' (' + grids + ')'
+    summary: bigRes + ' (' + grids + ')',
+    cost: cost
   };
 }
 
@@ -805,33 +984,63 @@ function addActiveCalcToProject(btn) {
   projectCart.push(snap);
   try { localStorage.setItem('mcp_project_cart', JSON.stringify(projectCart)); } catch(e) {}
   renderProjectCart();
+  recalcMasterTotals();
   document.getElementById('masterQuoteSection').scrollIntoView({ behavior: 'smooth' });
+}
+
+function updateCartItemPrice(idx, val) {
+  if (!projectCart[idx]) return;
+  projectCart[idx].cost = parseFloat(val) || 0;
+  try { localStorage.setItem('mcp_project_cart', JSON.stringify(projectCart)); } catch(e) {}
+  recalcMasterTotals();
 }
 
 function removeCartItem(idx) {
   projectCart.splice(idx, 1);
   try { localStorage.setItem('mcp_project_cart', JSON.stringify(projectCart)); } catch(e) {}
   renderProjectCart();
+  recalcMasterTotals();
 }
 
 function renderProjectCart() {
   const list = document.getElementById('projectCartList');
   if (!list) return;
   if (projectCart.length === 0) {
-    list.innerHTML = '<li style="color:#94a3b8; font-style:italic; padding:0.3rem 0;">' + (currentLang === 'es' ? 'Aún no has añadido áreas al carrito. Si imprimes ahora, se usará la calculadora que tienes abierta arriba, o toca "➕ Añadir este Cálculo a mi Cotización" para combinar varias calculadoras.' : 'No areas added to cart yet. Printing now will use the active calculator above, or tap "➕ Add Calculation to My Quote" to combine multiple calculators.') + '</li>';
+    const activeCard = document.querySelector('.calc-card.active');
+    const activeCost = activeCard ? (parseFloat(activeCard.getAttribute('data-cost')) || 0) : 0;
+    const activeTitle = activeCard ? (activeCard.querySelector('h1')?.innerText || '') : '';
+    list.innerHTML = '<li style="color:#cbd5e1; padding:0.4rem 0;">' +
+      (currentLang === 'es'
+        ? '📌 Usando actualmente: <strong style="color:#fde047;">' + activeTitle + ' (' + formatUSD(activeCost) + ')</strong>. Toca el botón azul <strong>"➕ Añadir este Cálculo y Precio a mi Cotización"</strong> arriba si quieres combinar varias calculadoras (ej. Hormigón + Pintura + Bloques).'
+        : '📌 Currently using: <strong style="color:#fde047;">' + activeTitle + ' (' + formatUSD(activeCost) + ')</strong>. Tap the blue <strong>"➕ Add Calculation & Price to My Quote"</strong> button above to combine multiple calculators.') +
+      '</li>';
     return;
   }
-  list.innerHTML = projectCart.map((item, i) => '<li class="cart-item"><div><strong style="color:#fde047;">' + (i + 1) + '. ' + item.title + '</strong><div style="color:#cbd5e1; font-size:0.76rem;">' + item.specs + '</div><div style="color:#4ade80; font-weight:700; font-size:0.79rem;">➔ ' + item.summary + '</div></div><button type="button" class="cart-remove" onclick="removeCartItem(' + i + ')">✕</button></li>').join('');
+  list.innerHTML = projectCart.map((item, i) =>
+    '<li class="cart-item">' +
+      '<div style="flex:1; min-width:200px;">' +
+        '<strong style="color:#fde047;">' + (i + 1) + '. ' + item.title + '</strong>' +
+        '<div style="color:#cbd5e1; font-size:0.75rem;">' + item.specs + '</div>' +
+        '<div style="color:#4ade80; font-weight:700; font-size:0.78rem;">➔ ' + item.summary + '</div>' +
+      '</div>' +
+      '<div style="display:flex; align-items:center; gap:0.4rem;">' +
+        '<span style="font-size:0.75rem; color:#94a3b8;">$</span>' +
+        '<input type="number" step="any" class="cart-price-input" value="' + (Number(item.cost) || 0).toFixed(2) + '" oninput="updateCartItemPrice(' + i + ', this.value)">' +
+        '<button type="button" class="cart-remove" onclick="removeCartItem(' + i + ')">✕</button>' +
+      '</div>' +
+    '</li>'
+  ).join('');
 }
 
 function shareViaWhatsApp(btn) {
   const card = btn.closest('.calc-card');
   const title = card.querySelector('h1').innerText;
   const bigRes = card.querySelector('.res-big').innerText.replace(/\s+/g, ' ').trim();
+  const cost = formatUSD(parseFloat(card.getAttribute('data-cost')) || 0);
   const grids = Array.from(card.querySelectorAll('.res-grid > div')).map(d => d.innerText.replace(/\n/g, ': ')).join('\n• ');
   const msg = currentLang === 'es'
-    ? '📐 *Estimado MaterialCalcPro.org*\n*' + title + '*\n✅ Principal: *' + bigRes + '*\n📦 Desglose:\n• ' + grids + '\n🌐 https://materialcalcpro.org'
-    : '📐 *MaterialCalcPro.org Estimate*\n*' + title + '*\n✅ Main: *' + bigRes + '*\n📦 Breakdown:\n• ' + grids + '\n🌐 https://materialcalcpro.org';
+    ? '📐 *Estimado MaterialCalcPro.org*\n*' + title + '*\n✅ Principal: *' + bigRes + '*\n💲 Costo Estimado Material: *' + cost + '*\n📦 Desglose:\n• ' + grids + '\n🌐 https://materialcalcpro.org'
+    : '📐 *MaterialCalcPro.org Estimate*\n*' + title + '*\n✅ Main: *' + bigRes + '*\n💲 Est. Material Cost: *' + cost + '*\n📦 Breakdown:\n• ' + grids + '\n🌐 https://materialcalcpro.org';
   window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
 }
 
@@ -905,8 +1114,19 @@ function applyLaborHelper() {
   }
 }
 
+function getCalculatedMaterialsTotal() {
+  if (projectCart.length > 0) {
+    return projectCart.reduce((acc, it) => acc + (parseFloat(it.cost) || 0), 0);
+  }
+  const activeCard = document.querySelector('.calc-card.active');
+  return activeCard ? (parseFloat(activeCard.getAttribute('data-cost')) || 0) : 0;
+}
+
 function recalcMasterTotals() {
   syncCustomLinesFromDOM();
+  if (projectCart.length === 0) renderProjectCart();
+
+  const calcMatTotal = getCalculatedMaterialsTotal();
   const hwRaw = parseFloat(document.getElementById('qb-hw-cost')?.value) || 0;
   const hwMarkup = parseFloat(document.getElementById('qb-hw-markup')?.value) || 0;
   const hwWithMarkup = hwRaw * (1 + (hwMarkup / 100));
@@ -921,7 +1141,7 @@ function recalcMasterTotals() {
     extrasSum += parseFloat(r.querySelector('.cl-price')?.value) || 0;
   });
 
-  const grandTotal = hwWithMarkup + otherMat + extrasSum + lab + tax;
+  const grandTotal = calcMatTotal + hwWithMarkup + otherMat + extrasSum + lab + tax;
   const balance = Math.max(0, grandTotal - dep);
 
   const totEl = document.getElementById('liveGrandTotal');
@@ -934,7 +1154,7 @@ function injectCardButtons() {
   document.querySelectorAll('.res-box').forEach(box => {
     const div = document.createElement('div');
     div.className = 'action-area';
-    div.innerHTML = '<button type="button" class="add-project-btn" onclick="addActiveCalcToProject(this)" data-es="➕ Añadir este Cálculo a mi Cotización / Proyecto" data-en="➕ Add This Calculation to My Project Quote">➕ Añadir este Cálculo a mi Cotización / Proyecto</button><button type="button" class="wa-btn" onclick="shareViaWhatsApp(this)" data-es="📲 Enviar este Cálculo por WhatsApp" data-en="📲 Share Calculation via WhatsApp">📲 Enviar este Cálculo por WhatsApp</button>';
+    div.innerHTML = '<button type="button" class="add-project-btn" onclick="addActiveCalcToProject(this)" data-es="➕ Añadir este Cálculo y Precio a mi Cotización" data-en="➕ Add This Calculation & Price to My Quote">➕ Añadir este Cálculo y Precio a mi Cotización</button><button type="button" class="wa-btn" onclick="shareViaWhatsApp(this)" data-es="📲 Enviar este Cálculo y Precio por WhatsApp" data-en="📲 Share Calculation & Price via WhatsApp">📲 Enviar este Cálculo y Precio por WhatsApp</button>';
     box.appendChild(div);
   });
 }
@@ -962,7 +1182,7 @@ function renderMasterBuilderBody() {
   container.innerHTML = `
     <div class="mb-section">
       <div class="mb-sec-title">
-        <span data-es="2️⃣ Estimado de la Ferretería y Materiales" data-en="2️⃣ Hardware Store Quote & Materials">2️⃣ Estimado de la Ferretería y Materiales</span>
+        <span data-es="2️⃣ Estimado Adicional de Ferretería (Opcional)" data-en="2️⃣ Additional Hardware Store Quote (Optional)">2️⃣ Estimado Adicional de Ferretería (Opcional)</span>
         <small data-es="(Tu % de ganancia se suma sin mostrarse al cliente)" data-en="(Your markup % is added privately)">(Tu % de ganancia se suma sin mostrarse al cliente)</small>
       </div>
       <div class="qb-grid-3">
@@ -1079,7 +1299,7 @@ function renderMasterBuilderBody() {
           <input type="text" id="qb-client" placeholder="Nombre del cliente o proyecto">
         </div>
         <div class="qb-field">
-          <label data-es="Otros Materiales Directos ($ USD)" data-en="Other Direct Materials ($ USD)">Otros Materiales Directos ($ USD)</label>
+          <label data-es="Otros Materiales Misceláneos ($ USD)" data-en="Other Misc. Materials ($ USD)">Otros Materiales Misceláneos ($ USD)</label>
           <input type="number" step="any" id="qb-mat" value="0" oninput="recalcMasterTotals()">
         </div>
       </div>
@@ -1198,14 +1418,22 @@ function printMasterDocument() {
   let rowsHtml = '';
   let grandTotal = 0;
 
+  itemsToPrint.forEach((it, idx) => {
+    const c = parseFloat(it.cost) || 0;
+    if (c > 0) {
+      rowsHtml += '<tr><td>' + it.title + ' — ' + it.summary.split('(')[0].trim() + '</td><td>' + formatUSD(c) + '</td></tr>';
+      grandTotal += c;
+    }
+  });
+
   if (hwClientTotal > 0) {
-    const hwLabel = hwName ? (currentLang === 'es' ? 'Suministro de Materiales y Acarreo (Ref. ' + hwName + ')' : 'Material Supply & Hauling (Ref. ' + hwName + ')') : (currentLang === 'es' ? 'Suministro de Materiales de Construcción y Acarreo' : 'Construction Materials Supply & Hauling');
+    const hwLabel = hwName ? (currentLang === 'es' ? 'Suministro de Materiales de Ferretería y Acarreo (Ref. ' + hwName + ')' : 'Hardware Store Material Supply & Hauling (Ref. ' + hwName + ')') : (currentLang === 'es' ? 'Suministro de Materiales de Ferretería y Acarreo' : 'Hardware Store Material Supply & Hauling');
     rowsHtml += '<tr><td>' + hwLabel + '</td><td>' + formatUSD(hwClientTotal) + '</td></tr>';
     grandTotal += hwClientTotal;
   }
 
   if (otherMat > 0) {
-    const matLbl = currentLang === 'es' ? 'Materiales Directos e Insumos de Obra' : 'Direct Jobsite Materials & Supplies';
+    const matLbl = currentLang === 'es' ? 'Otros Materiales Directos e Insumos de Obra' : 'Other Direct Jobsite Materials & Supplies';
     rowsHtml += '<tr><td>' + matLbl + '</td><td>' + formatUSD(otherMat) + '</td></tr>';
     grandTotal += otherMat;
   }
