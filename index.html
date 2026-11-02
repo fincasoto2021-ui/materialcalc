@@ -103,9 +103,8 @@
         .res-title { font-size: 0.75rem; text-transform: uppercase; color: var(--accent); font-weight: 700; }
         .res-big { font-size: 1.75rem; font-weight: 800; margin: 0.3rem 0 0.8rem; border-bottom: 1px solid #334155; padding-bottom: 0.6rem; }
         .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; font-size: 0.85rem; }
-        .res-grid span { display: block; font-size: 1.15rem; font-weight: 700; color: #fff; }
+        .res-grid span { display: block; font-size: 1.1rem; font-weight: 700; color: #fff; margin-top: 0.1rem; }
 
-        /* Botones de Acción: WhatsApp + Stripe PDF */
         .action-area {
             margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #334155;
             display: flex; flex-direction: column; gap: 0.6rem;
@@ -121,7 +120,6 @@
         }
         .stripe-note { text-align: center; font-size: 0.72rem; color: #94a3b8; }
 
-        /* Panel Desbloqueado de Cotización ($1.99 Pagado) */
         .quote-builder {
             background: #1e293b; border: 1px solid var(--green-pay); border-radius: 10px;
             padding: 1rem; margin-top: 0.5rem;
@@ -143,7 +141,6 @@
         .logo-upload-box input[type="file"] { font-size: 0.8rem; color: #cbd5e1; border: none; padding: 0.2rem; background: transparent; }
         .logo-preview { max-height: 55px; margin-top: 0.4rem; display: none; border-radius: 4px; }
 
-        /* Historial de Cálculos */
         .history-card {
             background: var(--card); padding: 1.2rem; border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-top: 1.2rem;
@@ -155,7 +152,6 @@
         .history-list li { padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; gap: 0.5rem; }
         .history-list li:last-child { border-bottom: none; }
 
-        /* Modal Guía Rápida */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(15,23,42,0.75);
             display: none; justify-content: center; align-items: center; padding: 1rem; z-index: 999;
@@ -171,7 +167,6 @@
             padding: 0.7rem; border-radius: 8px; font-weight: 700; cursor: pointer; margin-top: 0.5rem;
         }
 
-        /* Vista exclusiva para Impresión / PDF Oficial */
         #printOnlySheet { display: none; }
         @media print {
             header, .ad-banner, .btn, .action-area, .history-card, .modal-overlay, footer { display: none !important; }
@@ -224,7 +219,6 @@
 <div class="container">
     <div class="ad-banner">[ Google AdSense - Top Banner ]</div>
 
-    <!-- Hoja de Encabezado y Costos Exclusiva para el PDF Impreso -->
     <div id="printOnlySheet">
         <div class="print-top">
             <div>
@@ -330,19 +324,40 @@
         </div>
     </div>
 
-    <!-- 5. BLOQUES / CMU BLOCKS -->
+    <!-- 5. BLOQUES / CMU BLOCKS (SISTEMA COMPLETO DE MURO) -->
     <div id="bloques" class="calc-card">
-        <h1 data-es="Calculadora de Bloques" data-en="Concrete Block (CMU) Calculator">Calculadora de Bloques</h1>
-        <p class="sub" data-es="Bloques estándar (8x8x16) y sacos de mortero para paredes." data-en="Standard 8x8x16 blocks and mortar bags needed for walls.">Bloques estándar (8x8x16) y sacos de mortero para paredes.</p>
+        <h1 data-es="Calculadora de Muro de Bloques" data-en="CMU Block Wall Calculator (Full System)">Calculadora de Muro de Bloques</h1>
+        <p class="sub" data-es="Bloques (8x8x16), mortero, varillas de acero, llenado de celdas y empañete." data-en="8x8x16 blocks, mortar, rebar reinforcement, cell grout & plastering.">Bloques (8x8x16), mortero, varillas de acero, llenado de celdas y empañete.</p>
         <div class="group"><label data-es="Largo de Pared (Pies / ft)" data-en="Wall Length (Feet)">Largo de Pared (Pies / ft)</label><input type="number" id="b-largo" value="30"></div>
         <div class="group"><label data-es="Alto de Pared (Pies / ft)" data-en="Wall Height (Feet)">Alto de Pared (Pies / ft)</label><input type="number" id="b-alto" value="8"></div>
-        <button class="btn" onclick="calcBloques(true)" data-es="Calcular Bloques" data-en="Calculate Blocks">Calcular Bloques</button>
+        <div class="group">
+            <label data-es="Acero Vertical (Varilla #4) y Celdas Llenas" data-en="Vertical Rebar (#4) & Grouted Cells">Acero Vertical (Varilla #4) y Celdas Llenas</label>
+            <select id="b-varilla">
+                <option value="2" data-es="Sí — Varilla #4 cada 24&quot; (2 pies) + Escalerilla" data-en="Yes — #4 Rebar every 24&quot; (2 ft) + Ladder Wire">Sí — Varilla #4 cada 24" (2 pies) + Escalerilla</option>
+                <option value="2.67" data-es="Sí — Varilla #4 cada 32&quot; + Escalerilla" data-en="Yes — #4 Rebar every 32&quot; + Ladder Wire">Sí — Varilla #4 cada 32" + Escalerilla</option>
+                <option value="4" data-es="Sí — Varilla #4 cada 48&quot; (4 pies) + Escalerilla" data-en="Yes — #4 Rebar every 48&quot; (4 ft) + Ladder Wire">Sí — Varilla #4 cada 48" (4 pies) + Escalerilla</option>
+                <option value="0" data-es="No incluir varilla ni llenado de celdas" data-en="No rebar or cell grouting">No incluir varilla ni llenado de celdas</option>
+            </select>
+        </div>
+        <div class="group">
+            <label data-es="Empañete de Pared (Espesor 1/2&quot;)" data-en="Wall Plaster / Stucco (1/2&quot; thick)">Empañete de Pared (Espesor 1/2")</label>
+            <select id="b-empanete">
+                <option value="2" data-es="Sí — Empañete a 2 Caras (Ambos lados)" data-en="Yes — Plaster Both Sides (2 Faces)">Sí — Empañete a 2 Caras (Ambos lados)</option>
+                <option value="1" data-es="Sí — Empañete a 1 Cara (Un solo lado)" data-en="Yes — Plaster 1 Side Only (1 Face)">Sí — Empañete a 1 Cara (Un solo lado)</option>
+                <option value="0" data-es="Sin Empañete (Solo bloques)" data-en="No Plastering (Blocks only)">Sin Empañete (Solo bloques)</option>
+            </select>
+        </div>
+        <button class="btn" onclick="calcBloques(true)" data-es="Calcular Muro Completo" data-en="Calculate Full Wall">Calcular Muro Completo</button>
         <div class="res-box">
-            <div class="res-title" data-es="Incluye 5% por desperdicio" data-en="Includes 5% waste factor">Incluye 5% por desperdicio</div>
-            <div class="res-big"><span id="b-total">284</span> <small data-es="Bloques" data-en="Blocks">Bloques</small></div>
+            <div class="res-title" data-es="Incluye 5% desperdicio en bloques y 10% en mezclas" data-en="Includes 5% block waste & 10% mortar/grout waste">Incluye 5% desperdicio en bloques y 10% en mezclas</div>
+            <div class="res-big"><span id="b-total">284</span> <small data-es="Bloques (8x8x16)" data-en="CMU Blocks (8x8x16)">Bloques (8x8x16)</small></div>
             <div class="res-grid">
-                <div><em data-es="Área Pared" data-en="Wall Area">Área Pared</em><span id="b-area">240 sq ft</span></div>
-                <div><em data-es="Mortero (80lb)" data-en="Mortar Bags (80lb)">Mortero (80lb)</em><span id="b-mortero">22</span></div>
+                <div><em data-es="Área de Pared" data-en="Wall Area">Área de Pared</em><span id="b-area">240 sq ft</span></div>
+                <div><em data-es="Mortero Pega (80lb)" data-en="Mortar Bags (80lb)">Mortero Pega (80lb)</em><span id="b-mortero">22 Sacos</span></div>
+                <div><em data-es="Varilla #4 (20 pies)" data-en="#4 Rebar (20 ft)">Varilla #4 (20 pies)</em><span id="b-rebar">8 Varillas</span></div>
+                <div><em data-es="Escalerilla (10 pies)" data-en="Ladder Wire (10 ft)">Escalerilla (10 pies)</em><span id="b-durowal">19 Piezas</span></div>
+                <div><em data-es="Concreto Celdas (80lb)" data-en="Cell Grout (80lb Bags)">Concreto Celdas (80lb)</em><span id="b-celdas">37 Sacos</span></div>
+                <div><em data-es="Empañete (Cemento + Arena)" data-en="Plaster (Cement + Sand)">Empañete (Cemento + Arena)</em><span id="b-plaster">16 Sacos + 0.82 yd³</span></div>
             </div>
         </div>
     </div>
@@ -364,7 +379,6 @@
         </div>
     </div>
 
-    <!-- Historial de Cálculos Guardados -->
     <div class="history-card">
         <div class="history-header">
             <h3 data-es="📋 Historial Reciente de Cálculos" data-en="📋 Recent Calculation History">📋 Historial Reciente de Cálculos</h3>
@@ -376,7 +390,6 @@
     <div class="ad-banner" style="margin-top:1.5rem;">[ Google AdSense - Bottom Banner ]</div>
 </div>
 
-<!-- Modal Guía Rápida / Tutorial -->
 <div class="modal-overlay" id="helpModal">
     <div class="modal-box">
         <h3 data-es="🚀 Cómo usar MaterialCalcPro" data-en="🚀 How to Use MaterialCalcPro">🚀 Cómo usar MaterialCalcPro</h3>
@@ -390,7 +403,7 @@
 <footer>&copy; 2026 MaterialCalcPro.org | Professional Estimating Tools</footer>
 
 <script>
-    const STRIPE_URL = "https://buy.stripe.com/28E8wR039cqb8cI1ZV6k000";
+    const STRIPE_URL = "https://buy.stripe.com/28E8wR039cqp8cI1ZV6k000";
     let currentLang = 'es';
     let isPaidUser = new URLSearchParams(window.location.search).get('paid') === 'true';
     let uploadedLogoData = localStorage.getItem('mcp_company_logo') || '';
@@ -423,6 +436,7 @@
         document.querySelectorAll('[data-ph-es]').forEach(el => {
             el.placeholder = el.getAttribute('data-ph-' + currentLang);
         });
+        calcBloques(false);
         renderHistory();
     }
 
@@ -518,13 +532,64 @@
     function calcBloques(logHist) {
         let l = parseFloat(document.getElementById('b-largo').value) || 0;
         let h = parseFloat(document.getElementById('b-alto').value) || 0;
+        let rebarSpacing = parseFloat(document.getElementById('b-varilla').value) || 0;
+        let plasterSides = parseInt(document.getElementById('b-empanete').value) || 0;
+
         let area = l * h;
         let bloques = Math.ceil(area * 1.125 * 1.05);
         let mortero = Math.ceil((bloques / 100) * 7.5);
+
+        // Cálculo de Varillas #4 (20 ft), Escalerilla (10 ft) y Concreto de Celdas
+        let varillas20 = 0;
+        let durowal10 = 0;
+        let sacosCeldas = 0;
+
+        if (rebarSpacing > 0 && l > 0 && h > 0) {
+            let numVerticalCells = Math.floor(l / rebarSpacing) + 1;
+            let totalRebarFeet = numVerticalCells * (h + 2) * 1.10; // Incluye 2 ft de bastón/anclaje + 10% solape
+            varillas20 = Math.ceil(totalRebarFeet / 20);
+
+            let hiladas = Math.ceil((h * 12) / 8);
+            let hiladasConEscalerilla = Math.floor(hiladas / 2);
+            durowal10 = Math.ceil(((hiladasConEscalerilla * l) * 1.05) / 10);
+
+            // Cada pie lineal de celda llena lleva ~0.25 pies cúbicos; saco 80lb rinde 0.60 pies cúbicos
+            let cuftGrout = numVerticalCells * h * 0.25 * 1.10;
+            sacosCeldas = Math.ceil(cuftGrout / 0.60);
+        }
+
+        // Cálculo de Empañete (1/2" espesor = 0.0417 ft + 10% desperdicio)
+        let sacosEmpanete = 0;
+        let yardasArena = "0";
+        if (plasterSides > 0 && area > 0) {
+            let areaEmpanete = area * plasterSides;
+            sacosEmpanete = Math.ceil((areaEmpanete / 30) * 1.10);
+            yardasArena = (((areaEmpanete * 0.0417) * 1.10) / 27).toFixed(2);
+        }
+
         document.getElementById('b-total').innerText = bloques;
         document.getElementById('b-area').innerText = area + " sq ft";
-        document.getElementById('b-mortero').innerText = mortero;
-        if (logHist) saveHistoryItem(`Bloques (${l}x${h} ft)`, `CMU Blocks (${l}x${h} ft)`, `${bloques} Bloques`);
+        document.getElementById('b-mortero').innerText = mortero + (currentLang === 'es' ? " Sacos" : " Bags");
+        document.getElementById('b-rebar').innerText = rebarSpacing > 0
+            ? (varillas20 + (currentLang === 'es' ? " Varillas" : " Bars"))
+            : (currentLang === 'es' ? "No aplica" : "None");
+        document.getElementById('b-durowal').innerText = rebarSpacing > 0
+            ? (durowal10 + (currentLang === 'es' ? " Piezas" : " Pcs"))
+            : (currentLang === 'es' ? "No aplica" : "None");
+        document.getElementById('b-celdas').innerText = rebarSpacing > 0
+            ? (sacosCeldas + (currentLang === 'es' ? " Sacos" : " Bags"))
+            : (currentLang === 'es' ? "No aplica" : "None");
+        document.getElementById('b-plaster').innerText = plasterSides > 0
+            ? `${sacosEmpanete} ${currentLang === 'es' ? 'Sacos' : 'Bags'} + ${yardasArena} yd³`
+            : (currentLang === 'es' ? "Sin empañete" : "No plaster");
+
+        if (logHist) {
+            saveHistoryItem(
+                `Muro Bloques (${l}x${h} ft)`,
+                `CMU Wall (${l}x${h} ft)`,
+                `${bloques} Blq | ${varillas20} Var #4 | Emp: ${sacosEmpanete} sacos`
+            );
+        }
     }
 
     function calcBTU(logHist) {
@@ -552,10 +617,10 @@
         const card = btn.closest('.calc-card');
         const title = card.querySelector('h1').innerText;
         const bigRes = card.querySelector('.res-big').innerText.replace(/\s+/g, ' ').trim();
-        const grids = Array.from(card.querySelectorAll('.res-grid > div')).map(d => d.innerText.replace(/\n/g, ': ')).join(' | ');
+        const grids = Array.from(card.querySelectorAll('.res-grid > div')).map(d => d.innerText.replace(/\n/g, ': ')).join('\n• ');
         const msg = currentLang === 'es'
-            ? `📐 *Estimado MaterialCalcPro.org*\n*${title}*\n✅ Resultado: *${bigRes}*\n📦 Detalle: ${grids}\n🌐 https://materialcalcpro.org`
-            : `📐 *MaterialCalcPro.org Estimate*\n*${title}*\n✅ Result: *${bigRes}*\n📦 Details: ${grids}\n🌐 https://materialcalcpro.org`;
+            ? `📐 *Estimado MaterialCalcPro.org*\n*${title}*\n✅ Principal: *${bigRes}*\n📦 Desglose:\n• ${grids}\n🌐 https://materialcalcpro.org`
+            : `📐 *MaterialCalcPro.org Estimate*\n*${title}*\n✅ Main: *${bigRes}*\n📦 Breakdown:\n• ${grids}\n🌐 https://materialcalcpro.org`;
         if (window.goatcounter && window.goatcounter.count) {
             window.goatcounter.count({ path: 'COMPARTIR-WHATSAPP', title: 'Envio por WhatsApp', event: true });
         }
@@ -583,8 +648,8 @@
             div.className = 'action-area';
 
             const waButtonHtml = `
-                <button type="button" class="wa-btn" onclick="shareViaWhatsApp(this)" data-es="📲 Enviar Resultado por WhatsApp" data-en="📲 Share Estimate via WhatsApp">
-                    ${currentLang === 'es' ? '📲 Enviar Resultado por WhatsApp' : '📲 Share Estimate via WhatsApp'}
+                <button type="button" class="wa-btn" onclick="shareViaWhatsApp(this)" data-es="📲 Enviar Desglose por WhatsApp" data-en="📲 Share Breakdown via WhatsApp">
+                    ${currentLang === 'es' ? '📲 Enviar Desglose por WhatsApp' : '📲 Share Breakdown via WhatsApp'}
                 </button>
             `;
 
