@@ -403,7 +403,7 @@
 <footer>&copy; 2026 MaterialCalcPro.org | Professional Estimating Tools</footer>
 
 <script>
-    const STRIPE_URL = "https://buy.stripe.com/28E8wR039cqp8cI1ZV6k000";
+    const STRIPE_URL = "https://buy.stripe.com/28E8wR0J9cqp8ei17Y7ok00";
     let currentLang = 'es';
     let isPaidUser = new URLSearchParams(window.location.search).get('paid') === 'true';
     let uploadedLogoData = localStorage.getItem('mcp_company_logo') || '';
@@ -539,26 +539,23 @@
         let bloques = Math.ceil(area * 1.125 * 1.05);
         let mortero = Math.ceil((bloques / 100) * 7.5);
 
-        // Cálculo de Varillas #4 (20 ft), Escalerilla (10 ft) y Concreto de Celdas
         let varillas20 = 0;
         let durowal10 = 0;
         let sacosCeldas = 0;
 
         if (rebarSpacing > 0 && l > 0 && h > 0) {
             let numVerticalCells = Math.floor(l / rebarSpacing) + 1;
-            let totalRebarFeet = numVerticalCells * (h + 2) * 1.10; // Incluye 2 ft de bastón/anclaje + 10% solape
+            let totalRebarFeet = numVerticalCells * (h + 2) * 1.10;
             varillas20 = Math.ceil(totalRebarFeet / 20);
 
             let hiladas = Math.ceil((h * 12) / 8);
             let hiladasConEscalerilla = Math.floor(hiladas / 2);
             durowal10 = Math.ceil(((hiladasConEscalerilla * l) * 1.05) / 10);
 
-            // Cada pie lineal de celda llena lleva ~0.25 pies cúbicos; saco 80lb rinde 0.60 pies cúbicos
             let cuftGrout = numVerticalCells * h * 0.25 * 1.10;
             sacosCeldas = Math.ceil(cuftGrout / 0.60);
         }
 
-        // Cálculo de Empañete (1/2" espesor = 0.0417 ft + 10% desperdicio)
         let sacosEmpanete = 0;
         let yardasArena = "0";
         if (plasterSides > 0 && area > 0) {
