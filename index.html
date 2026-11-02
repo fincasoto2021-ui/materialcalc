@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MaterialCalcPro.org | Construction & Material Calculators</title>
     <meta name="description" content="Free professional construction calculators: Concrete, Elastomeric Roof Coating, CMU Blocks, AC BTU, Paint Gallons/Pails, Drywall 4x8 & Acoustic Ceiling 2x4.">
+     <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#f59e0b">
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+      }
+    </script>
+  
     <style>
         :root {
             --primary: #0f172a;
