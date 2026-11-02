@@ -130,9 +130,9 @@
             padding: 0.95rem; border-radius: 8px; font-size: 0.98rem; font-weight: 800;
             cursor: pointer; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.25);
         }
-        .stripe-note { text-align: center; font-size: 0.74rem; color: #94a3b8; margin-top: 0.3rem; }
+        .stripe-note { text-align: center; font-size: 0.74rem; color: #94a3b8; margin-top: 0.35rem; }
 
-        /* CONSTRUCTOR MAESTRO DE PROYECTO / COTIZACIÓN PRO */
+        /* CONSTRUCTOR MAESTRO SIEMPRE VISIBLE */
         .master-builder-card {
             background: #0f172a; color: #fff; padding: 1.35rem; border-radius: 12px;
             border: 2px solid var(--accent); margin-top: 1.25rem; box-shadow: 0 6px 18px rgba(0,0,0,0.12);
@@ -479,11 +479,11 @@
         </div>
     </div>
 
-    <!-- CONSTRUCTOR MAESTRO DE PROYECTO, FERRETERÍA, PARTIDAS EXTRAS Y FACTURA -->
+    <!-- CONSTRUCTOR MAESTRO SIEMPRE ABIERTO PARA ENGANCHAR AL CONTRATISTA -->
     <div class="master-builder-card" id="masterQuoteSection">
         <div class="mb-header">
             <h2 data-es="🛠️ Constructor Completo de Cotización y Factura" data-en="🛠️ Full Project Quote & Invoice Builder">🛠️ Constructor Completo de Cotización y Factura</h2>
-            <span class="mb-badge" id="proStatusBadge" data-es="Combina Calculadoras + Ferretería + Extras" data-en="Combine Calculators + Hardware Quote + Extras">Combina Calculadoras + Ferretería + Extras</span>
+            <span class="mb-badge" id="proStatusBadge" data-es="¡Ármala Gratis Aquí! ($1.99 al Descargar PDF)" data-en="Build Free Here! ($1.99 to Download PDF)">¡Ármala Gratis Aquí! ($1.99 al Descargar PDF)</span>
         </div>
 
         <!-- PASO 1: CARRITO DE CALCULADORAS AGREGADAS -->
@@ -495,7 +495,7 @@
             <ul class="cart-list" id="projectCartList"></ul>
         </div>
 
-        <!-- CONTENEDOR DESBLOQUEADO O BLOQUEADO POR STRIPE ($1.99) -->
+        <!-- PASO 2 AL 5 SIEMPRE VISIBLES -->
         <div id="proBuilderBody"></div>
     </div>
 
@@ -580,19 +580,22 @@
         <h3 data-es="🚀 Cómo usar MaterialCalcPro" data-en="🚀 How to Use MaterialCalcPro">🚀 Cómo usar MaterialCalcPro</h3>
         <div class="modal-step" data-es="1️⃣ Calcula los materiales en cualquiera de las 6 pestañas y toca '➕ Añadir este Cálculo a mi Cotización' para combinar varias áreas (ej. Hormigón + Bloques + Pintura)." data-en="1️⃣ Calculate materials in any tab and tap '➕ Add Calculation to My Quote' to combine multiple areas (e.g. Concrete + Blocks + Paint).">1️⃣ Calcula los materiales en cualquiera de las 6 pestañas y toca '➕ Añadir este Cálculo a mi Cotización' para combinar varias áreas (ej. Hormigón + Bloques + Pintura).</div>
         <div class="modal-step" data-es="2️⃣ Abajo en el Constructor Maestro puedes meter el Estimado de la Ferretería (con tu % de ganancia oculta), añadir Ventanas, Puertas, Plomería o Escombros, y calcular tu Mano de Obra." data-en="2️⃣ In the Master Builder below, enter your Hardware Store Quote (with hidden markup %), add Windows, Doors, Plumbing or Debris, and calculate your Labor.">2️⃣ Abajo en el Constructor Maestro puedes meter el Estimado de la Ferretería (con tu % de ganancia oculta), añadir Ventanas, Puertas, Plomería o Escombros, y calcular tu Mano de Obra.</div>
-        <div class="modal-step" data-es="3️⃣ Imprime en 1 sola página tu Cotización Oficial (con Acepto / No Acepto y Firma) o cámbiala a Factura Oficial (Invoice) restando el depósito recibido." data-en="3️⃣ Print your 1-page Official Quote (with Accept / Decline & Signature) or switch it to an Official Invoice subtracting any deposit paid.">3️⃣ Imprime en 1 sola página tu Cotización Oficial (con Acepto / No Acepto y Firma) o cámbiala a Factura Oficial (Invoice) restando el depósito recibido.</div>
+        <div class="modal-step" data-es="3️⃣ Cuando veas tu Total listo, toca el botón verde al final para desbloquear e imprimir en 1 sola página tu Cotización Oficial o Factura ($1.99)." data-en="3️⃣ Once your Total is ready, tap the green button at the bottom to unlock and print your 1-page Official Quote or Invoice ($1.99).">3️⃣ Cuando veas tu Total listo, toca el botón verde al final para desbloquear e imprimir en 1 sola página tu Cotización Oficial o Factura ($1.99).</div>
         <button class="modal-close" onclick="closeHelpModal()" data-es="¡Entendido!" data-en="Got it!">¡Entendido!</button>
     </div>
 </div>
 
-<footer>&copy; 2026 MaterialCalcPro.org | Professional Estimating Tools</footer>
+<footer>
+    &copy; 2026 MaterialCalcPro.org | Professional Estimating Tools
+    <span onclick="activateOwnerMode()" style="cursor:pointer; opacity:0.45; margin-left:8px;" title="Modo Dueño">🔑</span>
+</footer>
 
 <script>
     const STRIPE_URL = "https://buy.stripe.com/28E8wR0J9cqp8ei17Y7ok00";
     let currentLang = 'es';
-    let isPaidUser = new URLSearchParams(window.location.search).get('paid') === 'true';
+    let isPaidUser = new URLSearchParams(window.location.search).get('paid') === 'true' || localStorage.getItem('mcp_owner_unlocked') === 'true';
     let uploadedLogoData = localStorage.getItem('mcp_company_logo') || '';
-    let uploadedHwQuoteImg = '';
+    let uploadedHwQuoteImg = localStorage.getItem('mcp_hw_quote_img') || '';
     let projectCart = [];
     let customLineItems = [
         { desc: '', price: '' }
@@ -601,6 +604,13 @@
 
     function formatUSD(num) {
         return '$' + (Number(num) || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function activateOwnerMode() {
+        localStorage.setItem('mcp_owner_unlocked', 'true');
+        isPaidUser = true;
+        updatePayButtonState();
+        alert(currentLang === 'es' ? '✅ Modo Dueño Activado: Impresión directa desbloqueada.' : '✅ Owner Mode Activated: Direct PDF print unlocked.');
     }
 
     window.addEventListener('beforeinstallprompt', (e) => {
@@ -632,6 +642,7 @@
         });
         calcBloques(false);
         renderProjectCart();
+        updatePayButtonState();
         renderHistory();
     }
 
@@ -896,6 +907,7 @@
         const reader = new FileReader();
         reader.onload = function(e) {
             uploadedHwQuoteImg = e.target.result;
+            try { localStorage.setItem('mcp_hw_quote_img', uploadedHwQuoteImg); } catch(err) {}
             const prev = document.getElementById('hwQuotePreview');
             if (prev) { prev.src = uploadedHwQuoteImg; prev.style.display = 'inline-block'; }
         };
@@ -924,6 +936,7 @@
             desc: r.querySelector('.cl-desc')?.value || '',
             price: r.querySelector('.cl-price')?.value || ''
         }));
+        try { localStorage.setItem('mcp_custom_lines', JSON.stringify(customLineItems)); } catch(e) {}
     }
 
     function renderCustomLines() {
@@ -952,6 +965,7 @@
     }
 
     function recalcMasterTotals() {
+        syncCustomLinesFromDOM();
         const hwRaw = parseFloat(document.getElementById('qb-hw-cost')?.value) || 0;
         const hwMarkup = parseFloat(document.getElementById('qb-hw-markup')?.value) || 0;
         const hwWithMarkup = hwRaw * (1 + (hwMarkup / 100));
@@ -991,28 +1005,33 @@
         });
     }
 
+    function updatePayButtonState() {
+        const btn = document.getElementById('finalActionBtn');
+        const note = document.getElementById('finalActionNote');
+        const badge = document.getElementById('proStatusBadge');
+        if (!btn) return;
+        if (isPaidUser) {
+            btn.innerText = currentLang === 'es'
+                ? '🖨️ Descargar / Imprimir Cotización o Factura PDF (1 Página)'
+                : '🖨️ Download / Print Official 1-Page Quote or Invoice PDF';
+            if (note) note.innerText = currentLang === 'es'
+                ? '✅ Acceso Pro Desbloqueado • Imprime todas las cotizaciones y facturas que necesites'
+                : '✅ Pro Access Unlocked • Print unlimited quotes and invoices';
+            if (badge) badge.innerText = currentLang === 'es' ? '✅ Modo Pro Desbloqueado' : '✅ Pro Mode Unlocked';
+        } else {
+            btn.innerText = currentLang === 'es'
+                ? '🖨️ Descargar Cotización / Factura Oficial PDF con Tu Logo ($1.99)'
+                : '🖨️ Download Official PDF Quote / Invoice with Your Logo ($1.99)';
+            if (note) note.innerText = currentLang === 'es'
+                ? '🔒 Tus datos y partidas quedan guardados • Paga $1.99 en Stripe y tu PDF se descarga al instante'
+                : '🔒 Your items are saved • Pay $1.99 via Stripe to immediately download your PDF';
+            if (badge) badge.innerText = currentLang === 'es' ? '¡Ármala Gratis Aquí! ($1.99 al Descargar PDF)' : 'Build Free Here! ($1.99 to Download PDF)';
+        }
+    }
+
     function renderMasterBuilderBody() {
         const container = document.getElementById('proBuilderBody');
         if (!container) return;
-
-        if (!isPaidUser) {
-            container.innerHTML = `
-                <div class="mb-section" style="text-align:center;">
-                    <p style="font-size:0.9rem; color:#e2e8f0; margin-bottom:0.8rem; line-height:1.45;" data-es="Desbloquea el Cotizador y Facturador Pro para unir varias calculadoras, cargar el estimado de la ferretería con tu margen de ganancia, agregar partidas como ventanas/puertas/plomería e imprimir tu Cotización o Factura Oficial con tu Logo." data-en="Unlock the Pro Quote & Invoice Builder to combine calculators, import your hardware store quote with markup, add custom line items (windows, doors, plumbing) & print your 1-Page Official PDF Quote or Invoice.">
-                        ${currentLang === 'es'
-                            ? 'Desbloquea el Cotizador y Facturador Pro para unir varias calculadoras, cargar el estimado de la ferretería con tu margen de ganancia, agregar partidas como ventanas/puertas/plomería e imprimir tu Cotización o Factura Oficial con tu Logo.'
-                            : 'Unlock the Pro Quote & Invoice Builder to combine calculators, import your hardware store quote with markup, add custom line items (windows, doors, plumbing) & print your 1-Page Official PDF Quote or Invoice.'}
-                    </p>
-                    <button type="button" class="stripe-pay-btn" onclick="startStripeCheckout()" data-es="🔓 Desbloquear Cotizador Completo + Factura PDF ($1.99)" data-en="🔓 Unlock Full Quote & Invoice PDF Builder ($1.99)">
-                        ${currentLang === 'es' ? '🔓 Desbloquear Cotizador Completo + Factura PDF ($1.99)' : '🔓 Unlock Full Quote & Invoice PDF Builder ($1.99)'}
-                    </button>
-                    <div class="stripe-note" data-es="🔒 Pago seguro con Stripe • Incluye Ferretería + Ventanas/Extras + Calculadora Labor + Factura" data-en="🔒 Secure Stripe Checkout • Includes Hardware Quote + Custom Extras + Labor Helper + Invoice">
-                        ${currentLang === 'es' ? '🔒 Pago seguro con Stripe • Incluye Ferretería + Ventanas/Extras + Calculadora Labor + Factura' : '🔒 Secure Stripe Checkout • Includes Hardware Quote + Custom Extras + Labor Helper + Invoice'}
-                    </div>
-                </div>
-            `;
-            return;
-        }
 
         container.innerHTML = `
             <!-- PASO 2: ESTIMADO DE FERRETERÍA + MARGEN -->
@@ -1047,7 +1066,7 @@
                         📎 Subir Foto / Captura del Estimado de la Ferretería (Opcional)
                     </label>
                     <input type="file" accept="image/*" onchange="handleHwQuoteUpload(this)">
-                    <img id="hwQuotePreview" class="logo-preview" alt="Estimado Ferretería">
+                    <img id="hwQuotePreview" class="logo-preview" src="${uploadedHwQuoteImg}" style="${uploadedHwQuoteImg ? 'display:inline-block;' : 'display:none;'}" alt="Estimado Ferretería">
                     <div style="margin-top:0.35rem; font-size:0.75rem; color:#cbd5e1;">
                         <label style="display:inline; color:#cbd5e1; font-weight:600; cursor:pointer;">
                             <input type="checkbox" id="qb-hw-print-attach" style="width:auto; margin-right:0.3rem;">
@@ -1178,34 +1197,44 @@
                     </div>
                 </div>
 
-                <button type="button" class="stripe-pay-btn" onclick="printMasterDocument()" data-es="🖨️ Generar y Descargar Cotización / Factura PDF Oficial" data-en="🖨️ Generate & Download Official PDF Quote / Invoice">
-                    🖨️ Generar y Descargar Cotización / Factura PDF Oficial
-                </button>
+                <button type="button" class="stripe-pay-btn" id="finalActionBtn" onclick="handleFinalDownloadClick()"></button>
+                <div class="stripe-note" id="finalActionNote"></div>
             </div>
         `;
         renderCustomLines();
         recalcMasterTotals();
+        updatePayButtonState();
     }
 
-    function startStripeCheckout() {
+    function saveAllBuilderState() {
+        syncCustomLinesFromDOM();
         const activeCard = document.querySelector('.calc-card.active')?.id || 'hormigon';
         const inputs = {};
         document.querySelectorAll('input[id], select[id]').forEach(el => {
-            if (el.type !== 'file') inputs[el.id] = el.value;
+            if (el.type === 'checkbox') inputs[el.id] = el.checked;
+            else if (el.type !== 'file') inputs[el.id] = el.value;
         });
         localStorage.setItem('mcp_checkout_state', JSON.stringify({
             tab: activeCard,
             lang: currentLang,
             inputs: inputs
         }));
-        if (window.goatcounter && window.goatcounter.count) {
-            window.goatcounter.count({
-                path: 'CLIC-PAGAR-PDF-STRIPE',
-                title: 'Clic en boton pagar PDF $1.99',
-                event: true
-            });
+    }
+
+    function handleFinalDownloadClick() {
+        saveAllBuilderState();
+        if (isPaidUser) {
+            printMasterDocument();
+        } else {
+            if (window.goatcounter && window.goatcounter.count) {
+                window.goatcounter.count({
+                    path: 'CLIC-PAGAR-PDF-STRIPE',
+                    title: 'Clic en boton pagar PDF $1.99 con cotizacion armada',
+                    event: true
+                });
+            }
+            window.location.href = STRIPE_URL;
         }
-        window.location.href = STRIPE_URL;
     }
 
     function printMasterDocument() {
@@ -1249,7 +1278,6 @@
             badgeEl.style.display = 'flex';
         }
 
-        // Llenar alcance de materiales calculados (usa carrito o la pestaña activa)
         let itemsToPrint = projectCart.slice();
         if (itemsToPrint.length === 0) {
             const activeCard = document.querySelector('.calc-card.active');
@@ -1265,7 +1293,6 @@
             </div>
         `).join('');
 
-        // Construir filas de la tabla de costos
         let rowsHtml = '';
         let grandTotal = 0;
 
@@ -1346,7 +1373,6 @@
                 : 'By checking Accept and signing below, the client approves the costs, items and terms in this estimate.';
         }
 
-        // Anejo opcional de foto de estimado de ferretería
         const attachPage = document.getElementById('pHardwareAttachmentPage');
         const attachCheck = document.getElementById('qb-hw-print-attach');
         if (uploadedHwQuoteImg && attachCheck && attachCheck.checked) {
@@ -1365,6 +1391,13 @@
             if (Array.isArray(savedCart)) projectCart = savedCart;
         } catch(e) {}
 
+        try {
+            const savedLines = JSON.parse(localStorage.getItem('mcp_custom_lines') || '[]');
+            if (Array.isArray(savedLines) && savedLines.length > 0) customLineItems = savedLines;
+        } catch(e) {}
+
+        renderMasterBuilderBody();
+
         const savedRaw = localStorage.getItem('mcp_checkout_state');
         if (savedRaw) {
             try {
@@ -1372,7 +1405,9 @@
                 if (saved.inputs) {
                     Object.keys(saved.inputs).forEach(id => {
                         const el = document.getElementById(id);
-                        if (el) el.value = saved.inputs[id];
+                        if (!el) return;
+                        if (el.type === 'checkbox') el.checked = !!saved.inputs[id];
+                        else el.value = saved.inputs[id];
                     });
                 }
                 if (saved.tab) {
@@ -1390,10 +1425,10 @@
         runAllCalcs();
         injectCardButtons();
         renderProjectCart();
-        renderMasterBuilderBody();
+        recalcMasterTotals();
         renderHistory();
 
-        if (isPaidUser && window.goatcounter && window.goatcounter.count) {
+        if (new URLSearchParams(window.location.search).get('paid') === 'true' && window.goatcounter && window.goatcounter.count) {
             window.goatcounter.count({
                 path: 'VENTA-CONFIRMADA-PDF-199',
                 title: 'Pago de $1.99 completado en Stripe',
