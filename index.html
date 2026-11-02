@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MaterialCalcPro.org | Construction & Material Calculators</title>
+    <meta name="description" content="Free professional construction calculators: Concrete, Elastomeric Roof Coating, CMU Blocks, AC BTU, Paint Gallons/Pails, Drywall 4x8 & Acoustic Ceiling 2x4.">
+    <style>
+        :root {
+            --primary: #0f172a;
+            --accent: #f59e0b;
+            --bg: #f1f5f9;
+            --card: #ffffff;
+            --text: #334155;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+        body { background: var(--bg); color: var(--text); padding-bottom: 2rem; }
+        header { background: var(--primary); color: white; padding: 1rem; }
+        .top-bar {
+            display: flex; justify-content: space-between; align-items: center;
+            max-width: 650px; margin: 0 auto 0.8rem;
+        }
+        .logo { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.5px; }
+        .logo span { color: var(--accent); }
+        .lang-btn {
+            background: #1e293b; color: white; border: 1px solid var(--accent);
+            padding: 0.35rem 0.7rem; border-radius: 6px; font-weight: 700; font-size: 0.8rem; cursor: pointer;
+        }
+        .tabs {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.45rem;
+            max-width: 650px; margin: 0 auto;
+        }
+        @media (max-width: 480px) {
+            .tabs { grid-template-columns: repeat(2, 1fr); }
+        }
+        .tab-btn {
+            background: #1e293b; color: #cbd5e1; border: 1px solid #334155;
+            padding: 0.6rem 0.4rem; border-radius: 8px; font-weight: 600; font-size: 0.8rem; cursor: pointer;
+        }
+        .tab-btn.active { background: var(--accent); color: var(--primary); border-color: var(--accent); font-weight: 800; }
+
+        .container { max-width: 650px; margin: 1rem auto; padding: 0 1rem; }
+        .ad-banner {
+            background: #e2e8f0; border: 2px dashed #94a3b8; border-radius: 8px;
+            padding: 0.8rem; text-align: center; font-size: 0.75rem; color: #475569; margin-bottom: 1rem;
+        }
+        .calc-card {
+            background: var(--card); padding: 1.5rem; border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06); display: none;
+        }
+        .calc-card.active { display: block; }
+        h1 { font-size: 1.3rem; color: var(--primary); margin-bottom: 0.3rem; }
+        .sub { font-size: 0.85rem; color: #64748b; margin-bottom: 1.2rem; }
+        .group { margin-bottom: 1rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 700; color: var(--primary); margin-bottom: 0.3rem; }
+        input, select {
+            width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem; background: #fff;
+        }
+        .btn {
+            width: 100%; background: var(--accent); color: var(--primary); border: none;
+            padding: 0.9rem; border-radius: 8px; font-size: 1rem; font-weight: 800; cursor: pointer; margin-top: 0.5rem;
+        }
+        .res-box {
+            margin-top: 1.2rem; background: var(--primary); color: white; padding: 1.2rem; border-radius: 10px;
+        }
+        .res-title { font-size: 0.75rem; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+        .res-big { font-size: 1.75rem; font-weight: 800; margin: 0.3rem 0 0.8rem; border-bottom: 1px solid #334155; padding-bottom: 0.6rem; }
+        .res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; font-size: 0.85rem; }
+        .res-grid span { display: block; font-size: 1.15rem; font-weight: 700; color: #fff; }
+        footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="top-bar">
+        <div class="logo">Material<span>Calc</span>Pro.org</div>
+        <button class="lang-btn" onclick="toggleLang()" id="langBtn">🇺🇸 English</button>
+    </div>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openTab('hormigon', this)" data-es="🧱 Hormigón" data-en="🧱 Concrete">🧱 Hormigón</button>
+        <button class="tab-btn" onclick="openTab('sellador', this)" data-es="🪣 Sellador" data-en="🪣 Roof Coat">🪣 Sellador</button>
+        <button class="tab-btn" onclick="openTab('pintura', this)" data-es="🎨 Pintura" data-en="🎨 Paint">🎨 Pintura</button>
+        <button class="tab-btn" onclick="openTab('gypsum', this)" data-es="📐 Gypsum/Plafón" data-en="📐 Drywall/Ceiling">📐 Gypsum/Plafón</button>
+        <button class="tab-btn" onclick="openTab('bloques', this)" data-es="🧱 Bloques" data-en="🧱 CMU Blocks">🧱 Bloques</button>
+        <button class="tab-btn" onclick="openTab('btu', this)" data-es="❄️ Aire BTU" data-en="❄️ AC BTU">❄️ Aire BTU</button>
+    </div>
+</header>
+
+<div class="container">
+    <div class="ad-banner">[ Google AdSense - Top Banner ]</div>
+
+    <!-- 1. HORMIGÓN / CONCRETE -->
+    <div id="hormigon" class="calc-card active">
+        <h1 data-es="Calculadora de Hormigón" data-en="Concrete Calculator (Cubic Yards)">Calculadora de Hormigón</h1>
+        <p class="sub" data-es="Calcula yardas cúbicas y sacos para losas, aceras o zapatas." data-en="Estimate cubic yards and premix bags for slabs, footings, or sidewalks.">Calcula yardas cúbicas y sacos para losas, aceras o zapatas.</p>
+        <div class="group"><label data-es="Largo (Pies / ft)" data-en="Length (Feet)">Largo (Pies / ft)</label><input type="number" id="h-largo" value="20"></div>
+        <div class="group"><label data-es="Ancho (Pies / ft)" data-en="Width (Feet)">Ancho (Pies / ft)</label><input type="number" id="h-ancho" value="15"></div>
+        <div class="group"><label data-es="Espesor (Pulgadas / in)" data-en="Thickness / Depth (Inches)">Espesor (Pulgadas / in)</label><input type="number" id="h-espesor" value="4"></div>
+        <button class="btn" onclick="calcHormigon()" data-es="Calcular Hormigón" data-en="Calculate Concrete">Calcular Hormigón</button>
+        <div class="res-box">
+            <div class="res-title" data-es="Incluye 10% de desperdicio" data-en="Includes 10% waste factor">Incluye 10% de desperdicio</div>
+            <div class="res-big"><span id="h-yd">4.07</span> <small data-es="Yardas (yd³)" data-en="Cubic Yards (yd³)">Yardas (yd³)</small></div>
+            <div class="res-grid">
+                <div><em data-es="Sacos 60 lb" data-en="60 lb Bags">Sacos 60 lb</em><span id="h-60">245</span></div>
+                <div><em data-es="Sacos 80 lb" data-en="80 lb Bags">Sacos 80 lb</em><span id="h-80">184</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. SELLADOR / ROOF COATING -->
+    <div id="sellador" class="calc-card">
+        <h1 data-es="Sellador Elastomérico de Techo" data-en="Elastomeric Roof Coating Calculator">Sellador Elastomérico de Techo</h1>
+        <p class="sub" data-es="Estima cuántas pailas de 5 galones necesitas según el área." data-en="Calculate 5-gallon pails needed based on roof area and coats.">Estima cuántas pailas de 5 galones necesitas según el área.</p>
+        <div class="group"><label data-es="Área del Techo (sq ft)" data-en="Roof Area (sq ft)">Área del Techo (sq ft)</label><input type="number" id="s-area" value="1500"></div>
+        <div class="group"><label data-es="Cantidad de Capas (Manos)" data-en="Number of Coats">Cantidad de Capas (Manos)</label><input type="number" id="s-capas" value="2"></div>
+        <div class="group"><label data-es="Rendimiento por Paila 5 Gal (sq ft)" data-en="Coverage per 5-Gal Pail (sq ft)">Rendimiento por Paila 5 Gal (sq ft)</label><input type="number" id="s-rend" value="250"></div>
+        <button class="btn" onclick="calcSellador()" data-es="Calcular Pailas" data-en="Calculate Pails">Calcular Pailas</button>
+        <div class="res-box">
+            <div class="res-title" data-es="Total de Material Estimado" data-en="Estimated Material Needed">Total de Material Estimado</div>
+            <div class="res-big"><span id="s-pailas">12</span> <small data-es="Pailas (5 Gal)" data-en="Pails (5 Gal)">Pailas (5 Gal)</small></div>
+            <div class="res-grid">
+                <div><em data-es="Total Galones" data-en="Total Gallons">Total Galones</em><span id="s-gal">60</span></div>
+                <div><em data-es="Primer (5 Gal)" data-en="Primer (5 Gal)">Primer (5 Gal)</em><span id="s-primer">3</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. PINTURA / PAINT -->
+    <div id="pintura" class="calc-card">
+        <h1 data-es="Calculadora de Pintura" data-en="Paint Calculator (Gallons & Pails)">Calculadora de Pintura</h1>
+        <p class="sub" data-es="Calcula galones y pailas de 5 galones para paredes interiores o exteriores." data-en="Estimate gallons and 5-gal pails for interior or exterior walls.">Calcula galones y pailas de 5 galones para paredes interiores o exteriores.</p>
+        <div class="group"><label data-es="Área a Pintar (Pies Cuadrados - sq ft)" data-en="Paintable Area (sq ft)">Área a Pintar (Pies Cuadrados - sq ft)</label><input type="number" id="p-area" value="2000"></div>
+        <div class="group"><label data-es="Manos de Pintura (Capas)" data-en="Number of Coats">Manos de Pintura (Capas)</label><input type="number" id="p-capas" value="2"></div>
+        <div class="group"><label data-es="Rendimiento por Galón (sq ft)" data-en="Coverage per Gallon (sq ft)">Rendimiento por Galón (sq ft)</label><input type="number" id="p-rend" value="350"></div>
+        <button class="btn" onclick="calcPintura()" data-es="Calcular Pintura" data-en="Calculate Paint">Calcular Pintura</button>
+        <div class="res-box">
+            <div class="res-title" data-es="Total de Pintura Requerida" data-en="Total Paint Required">Total de Pintura Requerida</div>
+            <div class="res-big"><span id="p-gal">12</span> <small data-es="Galones" data-en="Gallons">Galones</small></div>
+            <div class="res-grid">
+                <div><em data-es="En Pailas (5 Gal)" data-en="In 5-Gal Pails">En Pailas (5 Gal)</em><span id="p-pailas">2.4 Pailas</span></div>
+                <div><em data-es="Primer (1 Mano)" data-en="Primer (1 Coat)">Primer (1 Mano)</em><span id="p-primer">6 Gal</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. GYPSUM BOARD & PLAFÓN ACÚSTICO -->
+    <div id="gypsum" class="calc-card">
+        <h1 data-es="Gypsum Board y Plafón Acústico" data-en="Drywall (4x8) & Acoustic Ceiling (2x4)">Gypsum Board y Plafón Acústico</h1>
+        <p class="sub" data-es="Calcula paneles de 4x8 pies (Drywall) o losas de plafón comercial 2x4." data-en="Estimate 4x8 drywall sheets or 2x4 drop ceiling acoustic tiles.">Calcula paneles de 4x8 pies (Drywall) o losas de plafón comercial 2x4.</p>
+        <div class="group"><label data-es="Área Total (Pies Cuadrados - sq ft)" data-en="Total Area (sq ft)">Área Total (Pies Cuadrados - sq ft)</label><input type="number" id="g-area" value="1000"></div>
+        <div class="group">
+            <label data-es="Tipo de Panel / Losa" data-en="Panel / Tile Size">Tipo de Panel / Losa</label>
+            <select id="g-tipo">
+                <option value="32">Gypsum Board / Panel 4x8 ft (32 sq ft)</option>
+                <option value="8">Plafón Acústico Comercial 2x4 ft (8 sq ft)</option>
+                <option value="4">Plafón Acústico 2x2 ft (4 sq ft)</option>
+            </select>
+        </div>
+        <button class="btn" onclick="calcGypsum()" data-es="Calcular Paneles" data-en="Calculate Panels">Calcular Paneles</button>
+        <div class="res-box">
+            <div class="res-title" data-es="Incluye 10% por cortes y desperdicio" data-en="Includes 10% waste factor">Incluye 10% por cortes y desperdicio</div>
+            <div class="res-big"><span id="g-paneles">35</span> <small data-es="Paneles / Losas" data-en="Panels / Tiles">Paneles / Losas</small></div>
+            <div class="res-grid">
+                <div><em data-es="Pailas Masilla (Est.)" data-en="Joint Compound Pails">Pailas Masilla (Est.)</em><span id="g-masilla">3</span></div>
+                <div><em data-es="Tornillos (Est.)" data-en="Screws (Est.)">Tornillos (Est.)</em><span id="g-tornillos">1,120</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. BLOQUES / CMU BLOCKS -->
+    <div id="bloques" class="calc-card">
+        <h1 data-es="Calculadora de Bloques" data-en="Concrete Block (CMU) Calculator">Calculadora de Bloques</h1>
+        <p class="sub" data-es="Bloques estándar (8x8x16) y sacos de mortero para paredes." data-en="Standard 8x8x16 blocks and mortar bags needed for walls.">Bloques estándar (8x8x16) y sacos de mortero para paredes.</p>
+        <div class="group"><label data-es="Largo de Pared (Pies / ft)" data-en="Wall Length (Feet)">Largo de Pared (Pies / ft)</label><input type="number" id="b-largo" value="30"></div>
+        <div class="group"><label data-es="Alto de Pared (Pies / ft)" data-en="Wall Height (Feet)">Alto de Pared (Pies / ft)</label><input type="number" id="b-alto" value="8"></div>
+        <button class="btn" onclick="calcBloques()" data-es="Calcular Bloques" data-en="Calculate Blocks">Calcular Bloques</button>
+        <div class="res-box">
+            <div class="res-title" data-es="Incluye 5% por desperdicio" data-en="Includes 5% waste factor">Incluye 5% por desperdicio</div>
+            <div class="res-big"><span id="b-total">284</span> <small data-es="Bloques" data-en="Blocks">Bloques</small></div>
+            <div class="res-grid">
+                <div><em data-es="Área Pared" data-en="Wall Area">Área Pared</em><span id="b-area">240 sq ft</span></div>
+                <div><em data-es="Mortero (80lb)" data-en="Mortar Bags (80lb)">Mortero (80lb)</em><span id="b-mortero">22</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6. AIRE BTU / AC BTU -->
+    <div id="btu" class="calc-card">
+        <h1 data-es="Calculadora de Aire (BTU)" data-en="AC BTU & Tonnage Calculator">Calculadora de Aire (BTU)</h1>
+        <p class="sub" data-es="Capacidad recomendada según el área y carga térmica." data-en="Recommended cooling capacity based on room size and heat load.">Capacidad recomendada según el área y carga térmica.</p>
+        <div class="group"><label data-es="Largo (Pies / ft)" data-en="Room Length (Feet)">Largo (Pies / ft)</label><input type="number" id="a-largo" value="15"></div>
+        <div class="group"><label data-es="Ancho (Pies / ft)" data-en="Room Width (Feet)">Ancho (Pies / ft)</label><input type="number" id="a-ancho" value="12"></div>
+        <button class="btn" onclick="calcBTU()" data-es="Calcular BTU" data-en="Calculate BTU">Calcular BTU</button>
+        <div class="res-box">
+            <div class="res-title" data-es="Capacidad Recomendada" data-en="Recommended AC Size">Capacidad Recomendada</div>
+            <div class="res-big"><span id="a-btu">12,000</span> BTU</div>
+            <div class="res-grid">
+                <div><em data-es="Tonelaje" data-en="Tonnage">Tonelaje</em><span id="a-ton">1.0 Ton</span></div>
+                <div><em data-es="Área Total" data-en="Total Area">Área Total</em><span id="a-area">180 sq ft</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="ad-banner" style="margin-top:1.5rem;">[ Google AdSense - Bottom Banner ]</div>
+</div>
+
+<footer>&copy; 2026 MaterialCalcPro.org | Professional Estimating Tools</footer>
+
+<script>
+    let currentLang = 'es';
+
+    function toggleLang() {
+        currentLang = currentLang === 'es' ? 'en' : 'es';
+        document.getElementById('langBtn').innerText = currentLang === 'es' ? '🇺🇸 English' : '🇪🇸 Español';
+        document.querySelectorAll('[data-es]').forEach(el => {
+            el.innerText = el.getAttribute('data-' + currentLang);
+        });
+    }
+
+    function openTab(id, btn) {
+        document.querySelectorAll('.calc-card').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        btn.classList.add('active');
+    }
+
+    function calcHormigon() {
+        let l = parseFloat(document.getElementById('h-largo').value) || 0;
+        let w = parseFloat(document.getElementById('h-ancho').value) || 0;
+        let t = (parseFloat(document.getElementById('h-espesor').value) || 0) / 12;
+        let cuft = (l * w * t) * 1.10;
+        document.getElementById('h-yd').innerText = (cuft / 27).toFixed(2);
+        document.getElementById('h-60').innerText = Math.ceil(cuft / 0.45);
+        document.getElementById('h-80').innerText = Math.ceil(cuft / 0.60);
+    }
+
+    function calcSellador() {
+        let area = parseFloat(document.getElementById('s-area').value) || 0;
+        let capas = parseFloat(document.getElementById('s-capas').value) || 2;
+        let rend = parseFloat(document.getElementById('s-rend').value) || 250;
+        let pailas = Math.ceil((area * capas) / rend);
+        document.getElementById('s-pailas').innerText = pailas;
+        document.getElementById('s-gal').innerText = pailas * 5;
+        document.getElementById('s-primer').innerText = Math.ceil(area / 500);
+    }
+
+    function calcPintura() {
+        let area = parseFloat(document.getElementById('p-area').value) || 0;
+        let capas = parseFloat(document.getElementById('p-capas').value) || 2;
+        let rend = parseFloat(document.getElementById('p-rend').value) || 350;
+        let galones = Math.ceil((area * capas) / rend);
+        let pailas = (galones / 5).toFixed(1);
+        let primer = Math.ceil(area / 350);
+        document.getElementById('p-gal').innerText = galones;
+        document.getElementById('p-pailas').innerText = pailas + " Pailas";
+        document.getElementById('p-primer').innerText = primer + " Gal";
+    }
+
+    function calcGypsum() {
+        let area = parseFloat(document.getElementById('g-area').value) || 0;
+        let size = parseFloat(document.getElementById('g-tipo').value) || 32;
+        let paneles = Math.ceil((area / size) * 1.10);
+        let masilla = size === 32 ? Math.ceil(paneles / 12) : 0;
+        let tornillos = size === 32 ? paneles * 32 : 0;
+        document.getElementById('g-paneles').innerText = paneles;
+        document.getElementById('g-masilla').innerText = size === 32 ? masilla : "N/A";
+        document.getElementById('g-tornillos').innerText = size === 32 ? tornillos.toLocaleString() : "N/A";
+    }
+
+    function calcBloques() {
+        let l = parseFloat(document.getElementById('b-largo').value) || 0;
+        let h = parseFloat(document.getElementById('b-alto').value) || 0;
+        let area = l * h;
+        let bloques = Math.ceil(area * 1.125 * 1.05);
+        document.getElementById('b-total').innerText = bloques;
+        document.getElementById('b-area').innerText = area + " sq ft";
+        document.getElementById('b-mortero').innerText = Math.ceil((bloques / 100) * 7.5);
+    }
+
+    function calcBTU() {
+        let l = parseFloat(document.getElementById('a-largo').value) || 0;
+        let w = parseFloat(document.getElementById('a-ancho').value) || 0;
+        let area = l * w;
+        let rawBtu = area * 45;
+        let comercial = 9000;
+        if (rawBtu > 9000 && rawBtu <= 12500) comercial = 12000;
+        else if (rawBtu > 12500 && rawBtu <= 18500) comercial = 18000;
+        else if (rawBtu > 18500 && rawBtu <= 24500) comercial = 24000;
+        else if (rawBtu > 24500) comercial = 36000;
+        document.getElementById('a-btu').innerText = comercial.toLocaleString();
+        document.getElementById('a-ton').innerText = (comercial / 12000).toFixed(1) + " Ton";
+        document.getElementById('a-area').innerText = area + " sq ft";
+    }
+
+    if (navigator.language && navigator.language.startsWith('en')) {
+        toggleLang();
+    }
+</script>
+</body>
+</html>
