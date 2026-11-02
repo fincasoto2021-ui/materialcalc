@@ -12,7 +12,32 @@
         navigator.serviceWorker.register('/sw.js');
       }
     </script>
-  
+      <script data-goatcounter="https://materialcalcpro.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script>
+      window.addEventListener('appinstalled', () => {
+        if (window.goatcounter && window.goatcounter.count) {
+          window.goatcounter.count({
+            path: 'APP-INSTALADA-EN-CELULAR',
+            title: 'Descarga directa de App (PWA)',
+            event: true
+          });
+        }
+      });
+
+      if (window.matchMedia('(display-mode: standalone)').matches) {
+        window.addEventListener('load', () => {
+          if (window.goatcounter && window.goatcounter.count) {
+            window.goatcounter.count({
+              path: 'ABIERTA-DESDE-ICONO-APP',
+              title: 'Usuario abrio la App instalada',
+              event: true
+            });
+          }
+        });
+      }
+    </script>
+
+
     <style>
         :root {
             --primary: #0f172a;
