@@ -117,18 +117,18 @@ display: flex; flex-direction: column; gap: 0.55rem;
 }
 .add-project-btn {
 width: 100%; background: #3b82f6; color: #ffffff; border: none;
-padding: 0.78rem; border-radius: 8px; font-size: 0.9rem; font-weight: 800; cursor: pointer;
+padding: 0.82rem; border-radius: 8px; font-size: 0.92rem; font-weight: 800; cursor: pointer;
 }
-.wa-btn {
-width: 100%; background: #1e293b; color: #4ade80; border: 1px solid #25D366;
-padding: 0.75rem; border-radius: 8px; font-size: 0.9rem; font-weight: 700; cursor: pointer;
+.wa-master-btn {
+width: 100%; background: #1e293b; color: #4ade80; border: 1.5px solid #25D366;
+padding: 0.9rem; border-radius: 8px; font-size: 0.95rem; font-weight: 800; cursor: pointer; margin-top: 0.55rem;
 }
 .stripe-pay-btn {
 width: 100%; background: var(--green-pay); color: #ffffff; border: none;
 padding: 0.95rem; border-radius: 8px; font-size: 0.98rem; font-weight: 800;
 cursor: pointer; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.25);
 }
-.stripe-note { text-align: center; font-size: 0.74rem; color: #94a3b8; margin-top: 0.35rem; }
+.stripe-note { text-align: center; font-size: 0.74rem; color: #94a3b8; margin-top: 0.45rem; }
 .master-builder-card {
 background: #0f172a; color: #fff; padding: 1.35rem; border-radius: 12px;
 border: 2px solid var(--accent); margin-top: 1.25rem; box-shadow: 0 6px 18px rgba(0,0,0,0.12);
@@ -588,7 +588,7 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
 <div class="master-builder-card" id="masterQuoteSection">
 <div class="mb-header">
 <h2 data-es="🛠️ Constructor Completo de Cotización y Factura" data-en="🛠️ Full Project Quote & Invoice Builder">🛠️ Constructor Completo de Cotización y Factura</h2>
-<span class="mb-badge" id="proStatusBadge" data-es="¡Ármala Gratis Aquí! ($1.99 al Descargar PDF)" data-en="Build Free Here! ($1.99 to Download PDF)">¡Ármala Gratis Aquí! ($1.99 al Descargar PDF)</span>
+<span class="mb-badge" id="proStatusBadge" data-es="¡Ármala Gratis Aquí! ($1.99 al Descargar o Enviar)" data-en="Build Free Here! ($1.99 to Download or Send)">¡Ármala Gratis Aquí! ($1.99 al Descargar o Enviar)</span>
 </div>
 <div class="mb-section">
 <div class="mb-sec-title">
@@ -668,7 +668,7 @@ Al marcar Acepto y firmar debajo, el cliente aprueba los costos y términos desc
 <h3 data-es="🚀 Cómo usar MaterialCalcPro" data-en="🚀 How to Use MaterialCalcPro">🚀 Cómo usar MaterialCalcPro</h3>
 <div class="modal-step" data-es="1️⃣ Arriba puedes alternar entre Pies/Yardas (📏 ft/yd³) y Metros (📏 m/m³), cambiar la moneda (USD, MXN, CLP, COP, DOP, EUR) y el idioma (ES/EN)." data-en="1️⃣ At the top you can toggle between Feet/Yards (📏 ft/yd³) and Meters (📏 m/m³), change currency (USD, MXN, CLP, COP, DOP, EUR) and language (ES/EN).">1️⃣ Arriba puedes alternar entre Pies/Yardas (📏 ft/yd³) y Metros (📏 m/m³), cambiar la moneda (USD, MXN, CLP, COP, DOP, EUR) y el idioma (ES/EN).</div>
 <div class="modal-step" data-es="2️⃣ Pon las medidas y el precio unitario en cualquiera de las 6 calculadoras y toca '➕ Añadir este Cálculo y Precio a mi Cotización'." data-en="2️⃣ Enter dimensions and unit price in any of the 6 calculators and tap '➕ Add Calculation & Price to My Quote'.">2️⃣ Pon las medidas y el precio unitario en cualquiera de las 6 calculadoras y toca '➕ Añadir este Cálculo y Precio a mi Cotización'.</div>
-<div class="modal-step" data-es="3️⃣ Todo el reporte PDF se imprimirá 100% en el idioma, unidad de medida y moneda que tengas seleccionados arriba." data-en="3️⃣ The entire PDF report will print 100% in the language, unit system, and currency selected at the top.">3️⃣ Todo el reporte PDF se imprimirá 100% en el idioma, unidad de medida y moneda que tengas seleccionados arriba.</div>
+<div class="modal-step" data-es="3️⃣ Al desbloquear tu cotización ($1.99), podrás imprimir el PDF oficial de 1 página y enviarla completa por WhatsApp a tu cliente." data-en="3️⃣ Upon unlocking your quote ($1.99), you can print the official 1-page PDF and send the full quote via WhatsApp to your client.">3️⃣ Al desbloquear tu cotización ($1.99), podrás imprimir el PDF oficial de 1 página y enviarla completa por WhatsApp a tu cliente.</div>
 <button class="modal-close" onclick="closeHelpModal()" data-es="¡Entendido!" data-en="Got it!">¡Entendido!</button>
 </div>
 </div>
@@ -766,7 +766,7 @@ function activateOwnerMode() {
 localStorage.setItem('mcp_owner_unlocked', 'true');
 isPaidUser = true;
 updatePayButtonState();
-alert(currentLang === 'es' ? '✅ Modo Dueño Activado: Impresión directa desbloqueada.' : '✅ Owner Mode Activated: Direct PDF print unlocked.');
+alert(currentLang === 'es' ? '✅ Modo Dueño Activado: PDF y WhatsApp desbloqueados.' : '✅ Owner Mode Activated: PDF & WhatsApp unlocked.');
 }
 window.addEventListener('beforeinstallprompt', (e) => {
 e.preventDefault();
@@ -1328,16 +1328,89 @@ return '<li class="cart-item">' +
 '</li>';
 }).join('');
 }
-function shareViaWhatsApp(btn) {
-const card = btn.closest('.calc-card');
-const snap = extractCardSnapshot(card);
-const title = currentLang === 'es' ? snap.title_es : snap.title_en;
-const summary = currentLang === 'es' ? snap.summary_es : snap.summary_en;
-const cost = formatUSD(snap.cost);
-const msg = currentLang === 'es'
-? '📐 *Estimado MaterialCalcPro.org*\n*' + title + '*\n✅ Resultado: *' + summary + '*\n💲 Costo Estimado Material: *' + cost + '* (' + currentCurr + ')\n🌐 https://materialcalcpro.org'
-: '📐 *MaterialCalcPro.org Estimate*\n*' + title + '*\n✅ Result: *' + summary + '*\n💲 Est. Material Cost: *' + cost + '* (' + currentCurr + ')\n🌐 https://materialcalcpro.org';
-window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+function handleWhatsAppQuoteClick() {
+saveAllBuilderState();
+if (!isPaidUser) {
+if (window.goatcounter && window.goatcounter.count) {
+window.goatcounter.count({ path: 'CLIC-WHATSAPP-STRIPE', title: 'Intento enviar WhatsApp redirigido a Stripe $1.99', event: true });
+}
+window.location.href = STRIPE_URL;
+return;
+}
+sendUnlockedMasterWhatsApp();
+}
+function sendUnlockedMasterWhatsApp() {
+syncCustomLinesFromDOM();
+const docType = document.getElementById('qb-doctype')?.value || 'quote';
+const isInvoice = docType === 'invoice';
+const docNum = document.getElementById('qb-docnum')?.value.trim() || '2026-0101';
+const comp = document.getElementById('qb-comp')?.value.trim() || 'MaterialCalcPro.org';
+const phone = document.getElementById('qb-phone')?.value.trim() || '';
+const client = document.getElementById('qb-client')?.value.trim() || '';
+const hwName = document.getElementById('qb-hw-name')?.value.trim() || '';
+const hwRaw = parseFloat(document.getElementById('qb-hw-cost')?.value) || 0;
+const hwMarkup = parseFloat(document.getElementById('qb-hw-markup')?.value) || 0;
+const hwClientTotal = hwRaw * (1 + (hwMarkup / 100));
+const otherMat = parseFloat(document.getElementById('qb-mat')?.value) || 0;
+const lab = parseFloat(document.getElementById('qb-lab')?.value) || 0;
+const tax = parseFloat(document.getElementById('qb-tax')?.value) || 0;
+const dep = parseFloat(document.getElementById('qb-dep')?.value) || 0;
+const notes = document.getElementById('qb-notes')?.value.trim() || '';
+let items = projectCart.slice();
+if (items.length === 0) {
+const activeCard = document.querySelector('.calc-card.active');
+if (activeCard) items.push(extractCardSnapshot(activeCard));
+}
+let lines = [];
+const hdr = isInvoice
+? (currentLang === 'es' ? '🧾 *FACTURA OFICIAL #' + docNum + '*' : '🧾 *OFFICIAL INVOICE #' + docNum + '*')
+: (currentLang === 'es' ? '📄 *COTIZACIÓN OFICIAL #' + docNum + '*' : '📄 *OFFICIAL ESTIMATE #' + docNum + '*');
+lines.push(hdr);
+lines.push('🏢 *' + comp + '*' + (phone ? ' (' + phone + ')' : ''));
+if (client) lines.push((currentLang === 'es' ? '👤 Cliente/Proyecto: ' : '👤 Client/Project: ') + client);
+lines.push('────────────────');
+let grandTotal = 0;
+items.forEach((it, idx) => {
+const t = currentLang === 'es' ? (it.title_es || it.title) : (it.title_en || it.title);
+const sm = currentLang === 'es' ? (it.summary_es || it.summary) : (it.summary_en || it.summary);
+const c = parseFloat(it.cost) || 0;
+grandTotal += c;
+lines.push('*' + (idx + 1) + '. ' + t + '*');
+lines.push('➔ ' + sm + (c > 0 ? ' — *' + formatUSD(c) + '*' : ''));
+});
+if (hwClientTotal > 0) {
+grandTotal += hwClientTotal;
+lines.push('• ' + (currentLang === 'es' ? 'Materiales de Ferretería y Acarreo' : 'Hardware Store Materials & Hauling') + (hwName ? ' (' + hwName + ')' : '') + ': *' + formatUSD(hwClientTotal) + '*');
+}
+if (otherMat > 0) {
+grandTotal += otherMat;
+lines.push('• ' + (currentLang === 'es' ? 'Otros Materiales Directos: ' : 'Other Direct Materials: ') + '*' + formatUSD(otherMat) + '*');
+}
+customLineItems.forEach(item => {
+const p = parseFloat(item.price) || 0;
+if (item.desc.trim() !== '' || p > 0) {
+const d = translatePresetText(item.desc.trim(), currentLang) || (currentLang === 'es' ? 'Partida Adicional' : 'Additional Item');
+grandTotal += p;
+lines.push('• ' + d + ': *' + formatUSD(p) + '*');
+}
+});
+if (lab > 0) {
+grandTotal += lab;
+lines.push('• ' + (currentLang === 'es' ? 'Mano de Obra Profesional: ' : 'Professional Labor: ') + '*' + formatUSD(lab) + '*');
+}
+if (tax > 0) {
+grandTotal += tax;
+lines.push('• ' + (currentLang === 'es' ? 'Impuestos / Permisos: ' : 'Taxes / Permits: ') + '*' + formatUSD(tax) + '*');
+}
+const balance = Math.max(0, grandTotal - dep);
+lines.push('────────────────');
+lines.push((currentLang === 'es' ? '💰 *TOTAL (' + currentCurr + '): ' : '💰 *TOTAL (' + currentCurr + '): ') + formatUSD(grandTotal) + '*');
+if (dep > 0) {
+lines.push((currentLang === 'es' ? '➖ Depósito Recibido: -' : '➖ Deposit Paid: -') + formatUSD(dep));
+lines.push((currentLang === 'es' ? '✅ *BALANCE PENDIENTE: ' : '✅ *BALANCE DUE: ') + formatUSD(balance) + '*');
+}
+if (notes) lines.push('📌 ' + (currentLang === 'es' ? 'Notas: ' : 'Notes: ') + notes);
+window.open('https://wa.me/?text=' + encodeURIComponent(lines.join('\n')), '_blank');
 }
 function handleLogoUpload(input) {
 const file = input.files && input.files[0];
@@ -1443,23 +1516,26 @@ function injectCardButtons() {
 document.querySelectorAll('.res-box').forEach(box => {
 const div = document.createElement('div');
 div.className = 'action-area';
-div.innerHTML = '<button type="button" class="add-project-btn" onclick="addActiveCalcToProject(this)" data-es="➕ Añadir este Cálculo y Precio a mi Cotización" data-en="➕ Add This Calculation & Price to My Quote">➕ Añadir este Cálculo y Precio a mi Cotización</button><button type="button" class="wa-btn" onclick="shareViaWhatsApp(this)" data-es="📲 Enviar este Cálculo y Precio por WhatsApp" data-en="📲 Share Calculation & Price via WhatsApp">📲 Enviar este Cálculo y Precio por WhatsApp</button>';
+div.innerHTML = '<button type="button" class="add-project-btn" onclick="addActiveCalcToProject(this)" data-es="➕ Añadir este Cálculo y Precio a mi Cotización" data-en="➕ Add This Calculation & Price to My Quote">➕ Añadir este Cálculo y Precio a mi Cotización</button>';
 box.appendChild(div);
 });
 }
 function updatePayButtonState() {
 const btn = document.getElementById('finalActionBtn');
+const waBtn = document.getElementById('finalWaBtn');
 const note = document.getElementById('finalActionNote');
 const badge = document.getElementById('proStatusBadge');
 if (!btn) return;
 if (isPaidUser) {
 btn.innerText = currentLang === 'es' ? '🖨️ Descargar / Imprimir Cotización o Factura PDF (1 Página)' : '🖨️ Download / Print Official 1-Page Quote or Invoice PDF';
-if (note) note.innerText = currentLang === 'es' ? '✅ Acceso Pro Desbloqueado • Imprime todas las cotizaciones y facturas que necesites' : '✅ Pro Access Unlocked • Print unlimited quotes and invoices';
+if (waBtn) waBtn.innerText = currentLang === 'es' ? '📲 Enviar Cotización / Factura Completa por WhatsApp' : '📲 Send Full Quote / Invoice via WhatsApp';
+if (note) note.innerText = currentLang === 'es' ? '✅ Acceso Pro Desbloqueado • Imprime tu PDF y envía por WhatsApp sin límites' : '✅ Pro Access Unlocked • Print PDF and send via WhatsApp unlimited';
 if (badge) badge.innerText = currentLang === 'es' ? '✅ Modo Pro Desbloqueado' : '✅ Pro Mode Unlocked';
 } else {
-btn.innerText = currentLang === 'es' ? '🖨️ Descargar Cotización / Factura Oficial PDF con Tu Logo ($1.99)' : '🖨️ Download Official PDF Quote / Invoice with Your Logo ($1.99)';
-if (note) note.innerText = currentLang === 'es' ? '🔒 Tus datos y partidas quedan guardados • Paga $1.99 en Stripe y tu PDF se descarga al instante' : '🔒 Your items are saved • Pay $1.99 via Stripe to immediately download your PDF';
-if (badge) badge.innerText = currentLang === 'es' ? '¡Ármala Gratis Aquí! ($1.99 al Descargar PDF)' : 'Build Free Here! ($1.99 to Download PDF)';
+btn.innerText = currentLang === 'es' ? '🔒 Descargar Cotización Oficial PDF con Tu Logo ($1.99)' : '🔒 Download Official PDF Quote with Your Logo ($1.99)';
+if (waBtn) waBtn.innerText = currentLang === 'es' ? '🔒 Enviar Cotización Oficial por WhatsApp ($1.99)' : '🔒 Send Official Quote via WhatsApp ($1.99)';
+if (note) note.innerText = currentLang === 'es' ? '🔒 Tus datos quedan guardados • Un solo pago de $1.99 desbloquea el PDF Oficial y el envío por WhatsApp' : '🔒 Your items are saved • One $1.99 payment unlocks both Official PDF and WhatsApp sending';
+if (badge) badge.innerText = currentLang === 'es' ? '¡Ármala Gratis Aquí! ($1.99 al Descargar o Enviar)' : 'Build Free Here! ($1.99 to Download or Send)';
 }
 }
 function renderMasterBuilderBody() {
@@ -1617,6 +1693,7 @@ container.innerHTML = `
 </div>
 </div>
 <button type="button" class="stripe-pay-btn" id="finalActionBtn" onclick="handleFinalDownloadClick()"></button>
+<button type="button" class="wa-master-btn" id="finalWaBtn" onclick="handleWhatsAppQuoteClick()"></button>
 <div class="stripe-note" id="finalActionNote"></div>
 </div>
 `;
