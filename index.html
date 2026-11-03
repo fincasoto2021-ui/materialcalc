@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="QK9UkO8Wa6ApdBs0sG4Gk8ojj5vx9duiBlAG9b618-g" />
-<title>MaterialCalcPro.org | Contratos PDF, Estimados y Calculadora de Materiales</title>
-<meta name="description" content="Create contractor estimates, invoices & signable PDF contracts with built-in construction material calculators.">
+<title>MaterialCalcPro.org | Estimados, Facturas y Calculadora de Materiales</title>
+<meta name="description" content="Professional contractor estimate & invoice builder with built-in construction material calculators: Concrete, Roof Coating, CMU Blocks, AC BTU, Paint & Drywall.">
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#0f172a">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 90'%3E%3Crect width='120' height='90' rx='18' fill='%230b0f19' stroke='%23facc15' stroke-width='3'/%3E%3Cpath d='M14 66 L54 52 L62 63 L22 77 Z' fill='%23facc15' stroke='%23111' stroke-width='1.5'/%3E%3Cpath d='M55 52 C56 30 72 20 90 23 C103 26 107 40 103 56 C100 66 91 70 78 70 L58 70 Z' fill='%23facc15'/%3E%3Ccircle cx='84' cy='48' r='14' fill='%23e2e8f0' stroke='%23475569' stroke-width='2'/%3E%3C/svg%3E">
@@ -51,7 +51,7 @@ header { background: #090d16; color: white; padding: 1rem; border-bottom: 3px so
 .curr-select { border-color: #4ade80; color: #bbf7d0; }
 .install-top-btn { background: var(--accent); color: #000; display: none; font-weight: 900; }
 
-/* BOTONES PRINCIPALES DE MODO */
+/* BOTONES PRINCIPALES DE NAVEGACIÓN */
 .main-mode-switch {
   display: grid; grid-template-columns: 1.2fr 1fr; gap: 0.55rem;
   max-width: 720px; margin: 0 auto;
@@ -117,7 +117,7 @@ input, select, textarea {
   padding: 0.8rem; border-radius: 8px; font-size: 0.9rem; font-weight: 800; cursor: pointer;
 }
 
-/* TARJETA PRINCIPAL DE COTIZADOR, CONTRATO Y FACTURAS */
+/* TARJETA PRINCIPAL DE ESTIMADOS Y FACTURAS */
 .builder-card {
   background: #0f172a; color: #fff; padding: 1.25rem; border-radius: 12px;
   border: 2px solid var(--accent); box-shadow: 0 6px 18px rgba(0,0,0,0.12);
@@ -132,8 +132,9 @@ input, select, textarea {
   color: #0f172a; border: 2px solid #ffffff; padding: 0.85rem 1rem; border-radius: 10px;
   font-size: 0.92rem; font-weight: 900; cursor: pointer; margin-bottom: 1rem;
   display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-  box-shadow: 0 4px 14px rgba(250, 204, 21, 0.35);
+  box-shadow: 0 4px 14px rgba(250, 204, 21, 0.35); transition: transform 0.12s;
 }
+.open-sample-btn:active { transform: scale(0.99); }
 .mb-section {
   background: #1e293b; border: 1px solid #334155; border-radius: 10px;
   padding: 0.9rem; margin-bottom: 0.9rem;
@@ -176,20 +177,6 @@ input, select, textarea {
 .logo-upload-box input[type="file"] { font-size: 0.76rem; color: #cbd5e1; border: none; padding: 0.15rem; background: transparent; }
 .logo-preview { max-height: 50px; margin-top: 0.35rem; display: none; border-radius: 4px; }
 
-/* RECUADRO TÁCTIL DE FIRMA DEL CONTRATISTA */
-.sig-pad-wrap {
-  background: #ffffff; border: 2px dashed #0f172a; border-radius: 8px;
-  padding: 0.4rem; text-align: center; position: relative;
-}
-.sig-canvas {
-  width: 100%; height: 115px; background: #fff; border-radius: 6px;
-  touch-action: none; cursor: crosshair; display: block;
-}
-.sig-clear-btn {
-  background: #ef4444; color: #fff; border: none; padding: 0.28rem 0.65rem;
-  border-radius: 5px; font-size: 0.74rem; font-weight: 800; cursor: pointer; margin-top: 0.35rem;
-}
-
 .contractor-numbers-bar {
   background: #064e3b; border: 1.5px solid #10b981; border-radius: 8px;
   padding: 0.75rem 0.9rem; margin: 0.85rem 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;
@@ -202,12 +189,12 @@ input, select, textarea {
   cursor: pointer; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.25); margin-top: 0.4rem;
 }
 .wa-master-btn {
-  width: 100%; background: #1e293b; color: #4ade80; border: 2px solid #25D366;
-  padding: 0.9rem; border-radius: 8px; font-size: 0.93rem; font-weight: 900; cursor: pointer; margin-top: 0.5rem;
+  width: 100%; background: #1e293b; color: #4ade80; border: 1.5px solid #25D366;
+  padding: 0.88rem; border-radius: 8px; font-size: 0.92rem; font-weight: 800; cursor: pointer; margin-top: 0.5rem;
 }
 .stripe-note { text-align: center; font-size: 0.74rem; color: #cbd5e1; margin-top: 0.45rem; }
 
-/* MODAL Y HOJA DE PAPEL EJECUTIVA */
+/* MODAL DE DOCUMENTO COMPLETO (HOJA DE PAPEL EJECUTIVA CON LOGO) */
 .doc-modal-overlay {
   position: fixed; inset: 0; background: rgba(9, 13, 22, 0.88);
   display: none; justify-content: center; align-items: flex-start;
@@ -232,7 +219,7 @@ input, select, textarea {
 
 .luxury-paper-sheet {
   background: #ffffff; color: #0f172a; border-radius: 10px;
-  padding: 1.5rem 1.35rem; box-shadow: 0 12px 35px rgba(0,0,0,0.25);
+  padding: 1.5rem 1.35rem; box-shadow: 0 20px 45px rgba(0,0,0,0.55);
   border-top: 6px solid #0f172a; position: relative;
 }
 @media (max-width: 480px) { .luxury-paper-sheet { padding: 1.05rem 0.85rem; } }
@@ -249,17 +236,17 @@ input, select, textarea {
 }
 .lux-brand { display: flex; align-items: center; gap: 0.75rem; }
 .lux-logo-box {
-  width: 66px; height: 66px; background: linear-gradient(145deg, #0f172a, #1e293b);
+  width: 68px; height: 68px; background: linear-gradient(145deg, #0f172a, #1e293b);
   border: 2.5px solid #eab308; border-radius: 14px; display: flex; align-items: center;
-  justify-content: center; flex-shrink: 0;
+  justify-content: center; flex-shrink: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.18);
 }
-.lux-comp-name { font-size: 1.18rem; font-weight: 900; color: #0f172a; }
+.lux-comp-name { font-size: 1.2rem; font-weight: 900; color: #0f172a; letter-spacing: -0.3px; }
 .lux-comp-sub { font-size: 0.76rem; color: #475569; font-weight: 600; line-height: 1.35; margin-top: 2px; }
 .lux-badge-box {
   background: #f8fafc; border: 1.5px solid #cbd5e1; border-right: 4px solid #eab308;
-  padding: 0.5rem 0.8rem; border-radius: 8px; text-align: right; min-width: 165px;
+  padding: 0.5rem 0.8rem; border-radius: 8px; text-align: right; min-width: 170px;
 }
-.lux-doc-title { font-size: 0.9rem; font-weight: 900; color: #0f172a; text-transform: uppercase; }
+.lux-doc-title { font-size: 0.92rem; font-weight: 900; color: #0f172a; text-transform: uppercase; }
 .lux-doc-num { font-size: 0.84rem; font-weight: 800; color: #b45309; margin-top: 2px; }
 .lux-doc-date { font-size: 0.73rem; color: #64748b; margin-top: 2px; font-weight: 600; }
 
@@ -293,17 +280,13 @@ input, select, textarea {
   border: 1.5px solid #0f172a; border-radius: 8px; padding: 0.65rem 0.8rem; margin-top: 0.6rem;
 }
 .lux-checks { display: flex; gap: 1.4rem; flex-wrap: wrap; font-size: 0.8rem; font-weight: 800; margin: 0.35rem 0 0.5rem; }
-.lux-signs { display: grid; grid-template-columns: 2fr 2fr 1fr; gap: 0.85rem; margin-top: 0.75rem; font-size: 0.74rem; align-items: end; }
+.lux-signs { display: grid; grid-template-columns: 2fr 2fr 1fr; gap: 0.85rem; margin-top: 1.15rem; font-size: 0.74rem; }
 .lux-sign-line { border-top: 1.5px solid #0f172a; padding-top: 0.25rem; font-weight: 700; color: #334155; }
-.pdf-touch-guide {
-  background: #fefce8; border: 1px dashed #ca8a04; color: #854d0e;
-  padding: 0.32rem 0.55rem; border-radius: 5px; font-size: 0.71rem; font-weight: 800; margin-top: 0.45rem;
-}
 
-/* IMPRESIÓN OFICIAL (1 PÁGINA CON FIRMA DEL CONTRATISTA Y RECUADRO DE FIRMA DEL CLIENTE) */
+/* IMPRESIÓN OFICIAL (FORMATO EJECUTIVO LIMPIO DE 1 PÁGINA) */
 #printMasterDocument { display: none; }
 @media print {
-  @page { size: letter; margin: 0.36in; }
+  @page { size: letter; margin: 0.38in; }
   header, .container > *:not(#printMasterDocument), .doc-modal-overlay, footer { display: none !important; }
   body { background: #fff; color: #000; padding: 0; font-size: 11.5px; }
   .container { max-width: 100%; margin: 0; padding: 0; }
@@ -311,7 +294,7 @@ input, select, textarea {
   body.locked-view #printMasterDocument { display: none !important; }
   .print-top {
     display: flex; justify-content: space-between; align-items: flex-start;
-    border-bottom: 2.5px solid #0f172a; padding-bottom: 0.5rem; margin-bottom: 0.6rem; gap: 1rem;
+    border-bottom: 2.5px solid #0f172a; padding-bottom: 0.55rem; margin-bottom: 0.65rem; gap: 1rem;
   }
   .print-brand-wrap { display: flex; align-items: center; gap: 0.65rem; }
   .print-default-badge {
@@ -324,34 +307,29 @@ input, select, textarea {
     padding: 0.4rem 0.7rem; border-radius: 6px; border: 1px solid #cbd5e1;
   }
   .print-section-box {
-    border: 1.5px solid #0f172a; border-radius: 7px; padding: 0.55rem 0.7rem;
-    margin-bottom: 0.55rem; page-break-inside: avoid;
+    border: 1.5px solid #0f172a; border-radius: 7px; padding: 0.6rem 0.75rem;
+    margin-bottom: 0.6rem; page-break-inside: avoid;
   }
   .print-sec-hdr {
-    font-size: 0.8rem; font-weight: 900; text-transform: uppercase; color: #0f172a;
-    border-bottom: 1px solid #cbd5e1; padding-bottom: 0.22rem; margin-bottom: 0.35rem;
+    font-size: 0.82rem; font-weight: 900; text-transform: uppercase; color: #0f172a;
+    border-bottom: 1px solid #cbd5e1; padding-bottom: 0.25rem; margin-bottom: 0.4rem;
   }
-  .print-scope-item { padding: 0.24rem 0; border-bottom: 1px dashed #e2e8f0; font-size: 0.79rem; line-height: 1.32; }
+  .print-scope-item { padding: 0.28rem 0; border-bottom: 1px dashed #e2e8f0; font-size: 0.8rem; line-height: 1.35; }
   .print-scope-item:last-child { border-bottom: none; }
-  .print-cost-table { width: 100%; border-collapse: collapse; margin-top: 0.35rem; font-size: 0.82rem; page-break-inside: avoid; }
-  .print-cost-table th, .print-cost-table td { border: 1px solid #cbd5e1; padding: 0.34rem 0.55rem; text-align: left; }
+  .print-cost-table { width: 100%; border-collapse: collapse; margin-top: 0.4rem; font-size: 0.83rem; page-break-inside: avoid; }
+  .print-cost-table th, .print-cost-table td { border: 1px solid #cbd5e1; padding: 0.36rem 0.6rem; text-align: left; }
   .print-cost-table th {
     background: #0f172a !important; color: #fff !important; font-weight: 800;
     -webkit-print-color-adjust: exact; print-color-adjust: exact;
   }
   .print-cost-table td:last-child, .print-cost-table th:last-child { text-align: right; }
-  .print-total-row { font-size: 0.94rem; font-weight: 800; background: #fef3c7 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .print-balance-row { font-size: 1rem; font-weight: 900; background: #dcfce7 !important; color: #065f46 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .print-sign-box { margin-top: 0.55rem; border: 1.5px solid #0f172a; border-radius: 7px; padding: 0.55rem 0.7rem; page-break-inside: avoid; }
-  .accept-options { display: flex; gap: 1.8rem; font-weight: 800; font-size: 0.83rem; margin: 0.3rem 0 0.45rem; }
+  .print-total-row { font-size: 0.95rem; font-weight: 800; background: #fef3c7 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .print-balance-row { font-size: 1.02rem; font-weight: 900; background: #dcfce7 !important; color: #065f46 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .print-sign-box { margin-top: 0.6rem; border: 1.5px solid #0f172a; border-radius: 7px; padding: 0.6rem 0.75rem; page-break-inside: avoid; }
+  .accept-options { display: flex; gap: 1.8rem; font-weight: 800; font-size: 0.84rem; margin: 0.35rem 0 0.65rem; }
   .check-box-sq { display: inline-block; width: 13px; height: 13px; border: 2px solid #0f172a; margin-right: 0.3rem; vertical-align: middle; }
-  .client-pdf-sign-zone {
-    border: 1.5px dashed #94a3b8; background: #f8fafc !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
-    border-radius: 6px; min-height: 46px; display: flex; align-items: center; justify-content: center;
-    font-size: 0.68rem; color: #64748b; font-weight: 700; margin-bottom: 3px;
-  }
-  .sign-grid { display: grid; grid-template-columns: 2fr 2fr 1fr; gap: 0.9rem; margin-top: 0.45rem; font-size: 0.74rem; align-items: end; }
-  .sign-line { border-top: 1.5px solid #0f172a; padding-top: 0.2rem; font-weight: 700; color: #334155; }
+  .sign-grid { display: grid; grid-template-columns: 2fr 2fr 1fr; gap: 1rem; margin-top: 1.15rem; font-size: 0.75rem; }
+  .sign-line { border-top: 1px solid #0f172a; padding-top: 0.22rem; font-weight: 700; color: #334155; }
   .print-hw-attachment { margin-top: 0.8rem; page-break-before: always; text-align: center; }
   .print-hw-attachment img { max-width: 95%; max-height: 8.5in; border: 1px solid #cbd5e1; margin-top: 0.4rem; }
 }
@@ -382,11 +360,11 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
       <div class="brand-icon"><svg width="48" height="36"><use href="#tapeIcon"/></svg></div>
       <div>
         <div class="logo-main">Material<span>Calc</span>Pro<small>.org</small></div>
-        <div class="logo-sub" data-es="Contratos PDF, Estimados y Calculadora" data-en="PDF Contracts, Estimates & Calculator">Contratos PDF, Estimados y Calculadora</div>
+        <div class="logo-sub" data-es="Cotizador Oficial, Facturas y Calculadora" data-en="Official Quote, Invoice & Material Calculator">Cotizador Oficial, Facturas y Calculadora</div>
       </div>
     </div>
     <div class="top-actions">
-      <button class="install-top-btn" id="installPwaBtn" onclick="installPWA()">📲 Instalar App</button>
+      <button class="install-top-btn" id="installPwaBtn" onclick="installPWA()">📲 App</button>
       <button class="unit-btn" id="unitBtn" onclick="toggleUnitSystem()">📏 ft / yd³</button>
       <select class="curr-select" id="currSelect" onchange="changeCurrency(this.value)">
         <option value="USD">💵 USD ($)</option>
@@ -402,7 +380,7 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
   </div>
 
   <div class="main-mode-switch">
-    <button class="mode-btn active" id="btnModeQuote" onclick="switchMainView('quoteView')" data-es="📄 Crear Estimado / Contrato / Factura" data-en="📄 Create Estimate / Contract / Invoice">📄 Crear Estimado / Contrato / Factura</button>
+    <button class="mode-btn active" id="btnModeQuote" onclick="switchMainView('quoteView')" data-es="📄 Crear Estimado / Factura Oficial" data-en="📄 Create Official Estimate / Invoice">📄 Crear Estimado / Factura Oficial</button>
     <button class="mode-btn" id="btnModeCalcs" onclick="switchMainView('calcsView')" data-es="🧮 Calculadora de Materiales" data-en="🧮 Material Calculator">🧮 Calculadora de Materiales</button>
   </div>
 </header>
@@ -410,16 +388,16 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
 <div class="container">
 
   <!-- ========================================================= -->
-  <!-- VISTA 1 (PRINCIPAL): CONSTRUCTOR DE ESTIMADOS Y CONTRATOS -->
+  <!-- VISTA 1 (PRINCIPAL): CONSTRUCTOR DE ESTIMADOS Y FACTURAS  -->
   <!-- ========================================================= -->
   <div id="quoteView" class="view-panel active">
     <div class="builder-card">
       <div class="mb-header">
-        <h2 data-es="📄 Generador de Contratos PDF, Estimados y Facturas" data-en="📄 Official PDF Contract, Estimate & Invoice Builder">📄 Generador de Contratos PDF, Estimados y Facturas</h2>
+        <h2 data-es="📄 Generador de Estimados y Facturas (Invoice)" data-en="📄 Official Estimate & Invoice Builder">📄 Generador de Estimados y Facturas (Invoice)</h2>
       </div>
 
       <button type="button" class="open-sample-btn" id="topSampleBtn" onclick="openDocPreviewModal('quote')">
-        👁️ Ver Ejemplo de Contrato / Factura con Logo y Firmas
+        👁️ Ver Ejemplo de Documento Final con Logo (Abrir Hoja Completa)
       </button>
 
       <!-- PASO 1: DATOS DE LA EMPRESA Y CLIENTE -->
@@ -431,12 +409,12 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
           <div class="qb-field">
             <label data-es="Tipo de Documento" data-en="Document Type">Tipo de Documento</label>
             <select id="qb-doctype" onchange="recalcMasterTotals()">
-              <option value="quote" data-es="📄 Estimado / Contrato Oficial (Con Firmas)" data-en="📄 Official Estimate / Contract (With Signatures)">📄 Estimado / Contrato Oficial (Con Firmas)</option>
+              <option value="quote" data-es="📄 Estimado / Cotización (Con Acepto / No Acepto)" data-en="📄 Official Estimate / Quote (With Accept / Decline)">📄 Estimado / Cotización (Con Acepto / No Acepto)</option>
               <option value="invoice" data-es="🧾 Factura / Invoice Oficial (Para Cobro)" data-en="🧾 Official Invoice (For Billing)">🧾 Factura / Invoice Oficial (Para Cobro)</option>
             </select>
           </div>
           <div class="qb-field">
-            <label data-es="Número de Documento" data-en="Document #">Número de Documento</label>
+            <label data-es="Número de Estimado / Invoice" data-en="Estimate / Invoice #">Número de Estimado / Invoice</label>
             <input type="text" id="qb-docnum" value="2026-0101" oninput="recalcMasterTotals()">
           </div>
         </div>
@@ -446,7 +424,7 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
             <input type="text" id="qb-comp" placeholder="Ej. ASD Building Solutions LLC" oninput="recalcMasterTotals()">
           </div>
           <div class="qb-field">
-            <label data-es="Tu Teléfono / WhatsApp / Licencia" data-en="Your Phone / WhatsApp / License">Tu Teléfono / WhatsApp / Licencia</label>
+            <label data-es="Tu Teléfono / Licencia" data-en="Your Phone / License">Tu Teléfono / Licencia</label>
             <input type="text" id="qb-phone" placeholder="(787) 000-0000" oninput="recalcMasterTotals()">
           </div>
         </div>
@@ -464,7 +442,7 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
       <!-- PASO 2: PARTIDAS DE LA COTIZACIÓN / FACTURA -->
       <div class="mb-section">
         <div class="mb-sec-title">
-          <span data-es="2️⃣ Trabajos, Materiales y Precios" data-en="2️⃣ Scope of Work, Materials & Prices">2️⃣ Trabajos, Materiales y Precios</span>
+          <span data-es="2️⃣ Trabajos, Materiales y Precios a Cotizar" data-en="2️⃣ Scope of Work, Materials & Prices">2️⃣ Trabajos, Materiales y Precios a Cotizar</span>
           <button type="button" class="chip-btn" style="background:#38bdf8; color:#000; border-color:#38bdf8;" onclick="switchMainView('calcsView')" data-es="🧮 Ir a Calculadora de Materiales" data-en="🧮 Open Material Calculator">🧮 Ir a Calculadora de Materiales</button>
         </div>
 
@@ -521,12 +499,12 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
 
         <div class="price-grid" style="margin-top:0.55rem;">
           <div class="qb-field">
-            <label data-es="Depósito / Pronto Requerido ($)" data-en="Required Deposit ($)">Depósito / Pronto Requerido ($)</label>
+            <label data-es="Depósito / Pronto Recibido ($)" data-en="Deposit / Amount Paid ($)">Depósito / Pronto Recibido ($)</label>
             <input type="number" step="any" id="qb-dep" value="0" oninput="recalcMasterTotals()">
           </div>
           <div class="qb-field">
-            <label data-es="Condiciones / Garantía del Contrato" data-en="Contract Terms & Warranty">Condiciones / Garantía del Contrato</label>
-            <input type="text" id="qb-notes" value="Depósito 50% para iniciar obra. Garantía de 1 año en mano de obra." oninput="recalcMasterTotals()">
+            <label data-es="Notas / Garantía / Condiciones" data-en="Notes / Warranty / Terms">Notas / Garantía / Condiciones</label>
+            <input type="text" id="qb-notes" placeholder="Ej. 50% depósito para iniciar. Garantía 1 año." oninput="recalcMasterTotals()">
           </div>
         </div>
 
@@ -541,28 +519,17 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
             </label>
           </div>
         </div>
-      </div>
-
-      <!-- PASO 4: FIRMA DIGITAL DEL CONTRATISTA QUE SALE EN EL PDF -->
-      <div class="mb-section">
-        <div class="mb-sec-title">
-          <span data-es="4️⃣ Tu Firma Digital de Contratista (Sale estampada en el PDF)" data-en="4️⃣ Your Contractor Digital Signature (Stamped on the PDF)">4️⃣ Tu Firma Digital de Contratista (Sale estampada en el PDF)</span>
-        </div>
-        <div class="sig-pad-wrap">
-          <canvas id="contractorSigCanvas" class="sig-canvas" width="560" height="115"></canvas>
-          <button type="button" class="sig-clear-btn" onclick="clearSigPad('contractorSigCanvas')" data-es="🗑️ Borrar y Firmar de Nuevo" data-en="🗑️ Clear Signature">🗑️ Borrar y Firmar de Nuevo</button>
-        </div>
 
         <div class="contractor-numbers-bar">
           <div>
-            <div style="font-size:0.74rem; color:#a7f3d0; font-weight:700;" data-es="TOTAL ACUMULADO DE TU CONTRATO / FACTURA:" data-en="YOUR ACCUMULATED CONTRACT / INVOICE TOTAL:">TOTAL ACUMULADO DE TU CONTRATO / FACTURA:</div>
+            <div style="font-size:0.74rem; color:#a7f3d0; font-weight:700;" data-es="TOTAL ACUMULADO DE TU COTIZACIÓN / FACTURA:" data-en="YOUR ACCUMULATED QUOTE / INVOICE TOTAL:">TOTAL ACUMULADO DE TU COTIZACIÓN / FACTURA:</div>
             <div id="contractorSummaryLine" style="font-size:0.82rem; color:#fff;">Total: $0.00</div>
           </div>
           <strong id="contractorBigTotal">$0.00</strong>
         </div>
 
         <button type="button" class="open-sample-btn" id="bottomSampleBtn" onclick="openDocPreviewModal('quote')" style="margin-top:0.4rem; margin-bottom:0.5rem;">
-          👁️ Ver Ejemplo de Cómo Quedará el Documento Final con Logo y Firmas
+          👁️ Ver Ejemplo de Cómo Quedará el Documento Final con Logo
         </button>
 
         <button type="button" class="stripe-pay-btn" id="finalActionBtn" onclick="handleFinalDownloadClick()"></button>
@@ -588,7 +555,7 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
     <!-- 1. HORMIGÓN -->
     <div id="hormigon" class="calc-card active" data-cost="0">
       <h1 data-es="Calculadora de Hormigón / Concreto" data-en="Concrete Calculator">Calculadora de Hormigón / Concreto</h1>
-      <p class="sub" data-es="Calcula yardas/m³, sacos y envíalo con un clic a tu Contrato." data-en="Calculate volume, bags, and send with one click to your Contract.">Calcula yardas/m³, sacos y envíalo con un clic a tu Contrato.</p>
+      <p class="sub" data-es="Calcula yardas/m³, sacos y envíalo con un clic a tu Estimado." data-en="Calculate volume, bags, and send with one click to your Estimate.">Calcula yardas/m³, sacos y envíalo con un clic a tu Estimado.</p>
       <div class="price-grid">
         <div class="group"><label>Largo (ft)</label><input type="number" step="any" id="h-largo" value="20" oninput="calcHormigon()"></div>
         <div class="group"><label>Ancho (ft)</label><input type="number" step="any" id="h-ancho" value="15" oninput="calcHormigon()"></div>
@@ -618,14 +585,14 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
           <div><em>Sacos 60 lb</em><span id="h-60">245</span></div>
           <div><em>Sacos 80 lb</em><span id="h-80">184</span></div>
         </div>
-        <button type="button" class="add-project-btn" onclick="addActiveCalcToProject(this)" data-es="➕ Pasar este Cálculo y Precio a mi Contrato / Estimado" data-en="➕ Send Calculation & Price to My Contract / Estimate">➕ Pasar este Cálculo y Precio a mi Contrato / Estimado</button>
+        <button type="button" class="add-project-btn" onclick="addActiveCalcToProject(this)" data-es="➕ Pasar este Cálculo y Precio a mi Estimado / Factura" data-en="➕ Send Calculation & Price to My Estimate / Invoice">➕ Pasar este Cálculo y Precio a mi Estimado / Factura</button>
       </div>
     </div>
 
     <!-- 2. SELLADOR -->
     <div id="sellador" class="calc-card" data-cost="0">
       <h1 data-es="Sellador Elastomérico de Techo" data-en="Roof Coating Calculator">Sellador Elastomérico de Techo</h1>
-      <p class="sub" data-es="Calcula pailas, primer y envíalo a tu Contrato." data-en="Calculate pails, primer, and send to your Contract.">Calcula pailas, primer y envíalo a tu Contrato.</p>
+      <p class="sub" data-es="Calcula pailas, primer y envíalo a tu Estimado." data-en="Calculate pails, primer, and send to your Estimate.">Calcula pailas, primer y envíalo a tu Estimado.</p>
       <div class="price-grid">
         <div class="group"><label>Área del Techo (sq ft)</label><input type="number" step="any" id="s-area" value="1500" oninput="calcSellador()"></div>
         <div class="group"><label>Capas (Manos)</label><input type="number" step="any" id="s-capas" value="2" oninput="calcSellador()"></div>
@@ -646,7 +613,7 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
           <div><em>Total Galones</em><span id="s-gal">60</span></div>
           <div><em>Primer (5G)</em><span id="s-primer">3</span></div>
         </div>
-        <button type="button" class="add-project-btn" onclick="addActiveCalcToProject(this)" data-es="➕ Pasar este Cálculo y Precio a mi Contrato / Estimado" data-en="➕ Send Calculation & Price to My Contract / Estimate">➕ Pasar este Cálculo y Precio a mi Contrato / Estimado</button>
+        <button type="button" class="add-project-btn" onclick="addActiveCalcToProject(this)" data-es="➕ Pasar este Cálculo y Precio a mi Estimado / Factura" data-en="➕ Send Calculation & Price to My Estimate / Invoice">➕ Pasar este Cálculo y Precio a mi Estimado / Factura</button>
       </div>
     </div>
 
@@ -674,7 +641,7 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
           <div><em>En Pailas (5G)</em><span id="p-pailas">2.4 Pailas</span></div>
           <div><em>Primer (1 Mano)</em><span id="p-primer">6 Gal</span></div>
         </div>
-        <button type="button" class="add-project-btn" onclick="addActiveCalcToProject(this)" data-es="➕ Pasar este Cálculo y Precio a mi Contrato / Estimado" data-en="➕ Send Calculation & Price to My Contract / Estimate">➕ Pasar este Cálculo y Precio a mi Contrato / Estimado</button>
+        <button type="button" class="add-project-btn" onclick="addActiveCalcToProject(this)" data-es="➕ Pasar este Cálculo y Precio a mi Estimado / Factura" data-en="➕ Send Calculation & Price to My Estimate / Invoice">➕ Pasar este Cálculo y Precio a mi Estimado / Factura</button>
       </div>
     </div>
 
@@ -706,7 +673,7 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
           <div><em>Masilla (Pailas)</em><span id="g-masilla">3</span></div>
           <div><em>Tornillos</em><span id="g-tornillos">1,120</span></div>
         </div>
-        <button type="button" class="add-project-btn" onclick="addActiveCalcToProject(this)" data-es="➕ Pasar este Cálculo y Precio a mi Contrato / Estimado" data-en="➕ Send Calculation & Price to My Contract / Estimate">➕ Pasar este Cálculo y Precio a mi Contrato / Estimado</button>
+        <button type="button" class="add-project-btn" onclick="addActiveCalcToProject(this)" data-es="➕ Pasar este Cálculo y Precio a mi Estimado / Factura" data-en="➕ Send Calculation & Price to My Estimate / Invoice">➕ Pasar este Cálculo y Precio a mi Estimado / Factura</button>
       </div>
     </div>
 
@@ -755,7 +722,7 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
           <div><em>Celdas</em><span id="b-celdas">59 Sacos</span></div>
           <div><em>Empañete</em><span id="b-plaster">18 Sacos + 0.82 yd³</span></div>
         </div>
-        <button type="button" class="add-project-btn" onclick="addActiveCalcToProject(this)" data-es="➕ Pasar este Cálculo y Precio a mi Contrato / Estimado" data-en="➕ Send Calculation & Price to My Contract / Estimate">➕ Pasar este Cálculo y Precio a mi Contrato / Estimado</button>
+        <button type="button" class="add-project-btn" onclick="addActiveCalcToProject(this)" data-es="➕ Pasar este Cálculo y Precio a mi Estimado / Factura" data-en="➕ Send Calculation & Price to My Estimate / Invoice">➕ Pasar este Cálculo y Precio a mi Estimado / Factura</button>
       </div>
     </div>
 
@@ -782,13 +749,13 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
           <div><em>Tonelaje</em><span id="a-ton">1.0 Ton</span></div>
           <div><em>Área</em><span id="a-area">180 sq ft</span></div>
         </div>
-        <button type="button" class="add-project-btn" onclick="addActiveCalcToProject(this)" data-es="➕ Pasar este Cálculo y Precio a mi Contrato / Estimado" data-en="➕ Send Calculation & Price to My Contract / Estimate">➕ Pasar este Cálculo y Precio a mi Contrato / Estimado</button>
+        <button type="button" class="add-project-btn" onclick="addActiveCalcToProject(this)" data-es="➕ Pasar este Cálculo y Precio a mi Estimado / Factura" data-en="➕ Send Calculation & Price to My Estimate / Invoice">➕ Pasar este Cálculo y Precio a mi Estimado / Factura</button>
       </div>
     </div>
   </div>
 
   <!-- ========================================================= -->
-  <!-- PLANTILLA DE IMPRESIÓN PDF (1 PÁGINA LISTA PARA FIRMAR)   -->
+  <!-- PLANTILLA DE IMPRESIÓN OFICIAL (1 PÁGINA EJECUTIVA LIMPIA)-->
   <!-- ========================================================= -->
   <div id="printMasterDocument">
     <div class="print-top">
@@ -804,51 +771,40 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
         </div>
       </div>
       <div class="print-doc-badge">
-        <div id="pDocTypeBadge" style="font-size:0.92rem; font-weight:900; color:#0f172a; text-transform:uppercase;">COTIZACIÓN / CONTRATO</div>
+        <div id="pDocTypeBadge" style="font-size:0.92rem; font-weight:900; color:#0f172a; text-transform:uppercase;">COTIZACIÓN OFICIAL</div>
         <div id="pDocNumLine" style="font-size:0.8rem; font-weight:700; color:#b45309;">#EST-2026-0101</div>
         <div id="pDateLine" style="font-size:0.76rem; color:#475569; margin-top:2px;"></div>
       </div>
     </div>
     <div class="print-section-box" id="pScopeBox">
-      <div class="print-sec-hdr">Alcance Técnico de Materiales Calculados</div>
+      <div class="print-sec-hdr" id="pScopeTitle">Alcance Técnico y Desglose de Materiales Calculados</div>
       <div id="pScopeItemsContainer"></div>
     </div>
     <table class="print-cost-table">
       <thead>
         <tr>
-          <th>Descripción / Partida de Obra</th>
-          <th>Monto</th>
+          <th id="thConcept">Descripción / Partida de Obra</th>
+          <th id="thAmount">Monto</th>
         </tr>
       </thead>
       <tbody id="pCostTableBody"></tbody>
     </table>
     <p id="pNotesLine" style="margin-top:0.45rem; font-size:0.82rem; color:#1e293b; font-style:italic; display:none;"></p>
     <div class="print-sign-box">
-      <div style="font-size:0.82rem; font-weight:900; color:#0f172a; text-transform:uppercase;">Decisión y Firmas Oficiales del Contrato:</div>
+      <div id="pAuthHeader" style="font-size:0.82rem; font-weight:900; color:#0f172a; text-transform:uppercase;">Decisión y Autorización del Cliente:</div>
       <div class="accept-options" id="pAcceptChecks">
-        <span><span class="check-box-sq"></span> ACEPTO LA COTIZACIÓN Y AUTORIZO EL TRABAJO</span>
-        <span><span class="check-box-sq"></span> NO ACEPTO</span>
+        <span><span class="check-box-sq"></span> <span id="lblAcceptYes">ACEPTO LA COTIZACIÓN Y AUTORIZO EL TRABAJO</span></span>
+        <span><span class="check-box-sq"></span> <span id="lblAcceptNo">NO ACEPTO</span></span>
       </div>
-      <p style="font-size:0.72rem; color:#475569; line-height:1.32;">
-        📲 <strong>Para firmar desde tu celular en WhatsApp:</strong> abre este PDF, toca el ícono del lápiz (✏️) arriba en tu pantalla, marca ☑️ Acepto, dibuja tu firma con el dedo en el recuadro de abajo y reenvía este PDF al contratista.
-      </p>
+      <p id="pLegalText" style="font-size:0.73rem; color:#475569; line-height:1.35;">Al marcar Acepto y firmar debajo, el cliente aprueba los costos y términos descritos en esta cotización.</p>
       <div class="sign-grid">
-        <div>
-          <div class="client-pdf-sign-zone">✍️ Espacio para Firma del Cliente con el dedo (✏️)</div>
-          <div class="sign-line" id="sigClientLbl">Firma del Cliente</div>
-        </div>
-        <div>
-          <div id="pContractorSigHolder" style="min-height:46px; display:flex; align-items:flex-end; justify-content:center;"></div>
-          <div class="sign-line" id="sigContractorLbl">Firma del Contratista</div>
-        </div>
-        <div>
-          <div id="pSignedDateVal" style="font-size:0.75rem; font-weight:800; padding-bottom:4px;"></div>
-          <div class="sign-line">Fecha</div>
-        </div>
+        <div class="sign-line" id="sigClientLbl">Firma del Cliente</div>
+        <div class="sign-line" id="sigContractorLbl">Firma del Contratista</div>
+        <div class="sign-line" id="sigDateLbl">Fecha</div>
       </div>
     </div>
     <div id="pHardwareAttachmentPage" class="print-hw-attachment" style="display:none;">
-      <h3 style="font-size:1rem; color:#0f172a;">Anejo: Cotización de Ferretería</h3>
+      <h3 id="pHwAttachTitle" style="font-size:1rem; color:#0f172a;">Anejo: Cotización de Ferretería</h3>
       <img id="pHwAttachImg" alt="Ferretería">
     </div>
   </div>
@@ -856,13 +812,13 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
 </div>
 
 <!-- ========================================================= -->
-<!-- MODAL DE HOJA COMPLETA: EJEMPLO CON LOGO Y FIRMAS         -->
+<!-- MODAL DE HOJA COMPLETA: EJEMPLO DE COMPAÑÍA CON LOGO      -->
 <!-- ========================================================= -->
 <div class="doc-modal-overlay" id="docPreviewModal" onclick="if(event.target===this) closeDocPreviewModal()">
   <div class="doc-modal-container">
     <div class="doc-modal-topbar">
       <div class="sample-switch-group">
-        <button type="button" class="sample-type-btn active" id="btnSampleQuote" onclick="renderModalSheet('quote')">📄 Ejemplo de Contrato / Estimado</button>
+        <button type="button" class="sample-type-btn active" id="btnSampleQuote" onclick="renderModalSheet('quote')">📄 Ejemplo de Estimado</button>
         <button type="button" class="sample-type-btn" id="btnSampleInv" onclick="renderModalSheet('invoice')">🧾 Ejemplo de Factura (Invoice)</button>
       </div>
       <button type="button" class="close-modal-x" onclick="closeDocPreviewModal()">✕ Cerrar</button>
@@ -877,7 +833,7 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
 </div>
 
 <footer>
-  &copy; 2026 MaterialCalcPro.org | Digital Construction Contracts & Estimating Suite
+  &copy; 2026 MaterialCalcPro.org | Professional Estimating & Invoicing Suite
   <span onclick="activateOwnerMode()" style="cursor:pointer; opacity:0.65; margin-left:8px; padding:2px 6px; border:1px solid #475569; border-radius:4px;" id="ownerKeyBtn" title="Modo Dueño">🔑</span>
 </footer>
 
@@ -932,92 +888,15 @@ window.addEventListener('beforeinstallprompt', (e) => {
 });
 
 function installPWA() {
-  if (deferredPrompt) {
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
-  } else {
-    alert('📲 Para instalar la App: toca el menú de tu navegador y selecciona "Añadir a pantalla de inicio".');
-  }
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
 }
 
 function getCurrObj() { return CURRENCIES[currentCurr] || CURRENCIES.USD; }
 function formatUSD(num) {
   const c = getCurrObj();
   return c.sym + (Number(num) || 0).toLocaleString('en-US', { minimumFractionDigits: c.dec, maximumFractionDigits: c.dec });
-}
-
-/* CONFIGURACIÓN DEL PAD DE FIRMA DEL CONTRATISTA */
-function initSignaturePad(canvasId) {
-  const canvas = document.getElementById(canvasId);
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  ctx.strokeStyle = '#0f172a';
-  ctx.lineWidth = 2.6;
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
-  let drawing = false;
-
-  const savedSig = localStorage.getItem('mcp_contractor_sig');
-  if (savedSig) {
-    const img = new Image();
-    img.onload = function() {
-      ctx.drawImage(img, 0, 0);
-      canvas.dataset.signed = 'true';
-    };
-    img.src = savedSig;
-  }
-
-  function getPos(e) {
-    const rect = canvas.getBoundingClientRect();
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    return {
-      x: (clientX - rect.left) * (canvas.width / rect.width),
-      y: (clientY - rect.top) * (canvas.height / rect.height)
-    };
-  }
-  function start(e) {
-    drawing = true;
-    canvas.dataset.signed = 'true';
-    const p = getPos(e);
-    ctx.beginPath();
-    ctx.moveTo(p.x, p.y);
-    if (e.cancelable) e.preventDefault();
-  }
-  function move(e) {
-    if (!drawing) return;
-    const p = getPos(e);
-    ctx.lineTo(p.x, p.y);
-    ctx.stroke();
-    if (e.cancelable) e.preventDefault();
-  }
-  function stop() {
-    if (drawing) {
-      try { localStorage.setItem('mcp_contractor_sig', canvas.toDataURL()); } catch(err) {}
-    }
-    drawing = false;
-  }
-  canvas.addEventListener('mousedown', start);
-  canvas.addEventListener('mousemove', move);
-  window.addEventListener('mouseup', stop);
-  canvas.addEventListener('touchstart', start, { passive: false });
-  canvas.addEventListener('touchmove', move, { passive: false });
-  canvas.addEventListener('touchend', stop);
-}
-
-function clearSigPad(canvasId) {
-  const canvas = document.getElementById(canvasId);
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  canvas.dataset.signed = '';
-  localStorage.removeItem('mcp_contractor_sig');
-}
-
-function getSigDataUrl(canvasId) {
-  const canvas = document.getElementById(canvasId);
-  if (!canvas || !canvas.dataset.signed) return '';
-  return canvas.toDataURL();
 }
 
 function switchMainView(viewId) {
@@ -1060,8 +939,8 @@ function activateOwnerMode() {
   updatePayButtonState();
   recalcMasterTotals();
   alert(isPaidUser
-    ? '✅ Modo Dueño Activado: Puedes descargar el PDF Oficial de 1 página con tu logo y tu firma estampada gratis.'
-    : '🔒 Modo Cliente Activado: El botón amarillo muestra el Contrato de Ejemplo de Apex Constructora LLC y pide pagar $1.99 para desbloquear.');
+    ? '✅ Modo Dueño Activado: Puedes ver tu documento oficial con tu logo y descargar el PDF gratis.'
+    : '🔒 Modo Cliente Activado: El botón amarillo muestra el Documento de Ejemplo de Apex Constructora LLC y pide pagar $1.99 para generar el documento real.');
 }
 
 function openDocPreviewModal(defaultType) {
@@ -1086,302 +965,156 @@ function renderModalSheet(mode) {
 
   if (!isPaidUser) {
     unlockBtn.innerText = isEs
-      ? '🔒 Generar Mi Contrato / Factura PDF con Mi Logo y Mi Firma ($1.99)'
-      : '🔒 Generate My Contract / Invoice PDF with My Logo & Signature ($1.99)';
+      ? '🔒 Desbloquear Mi Documento Oficial con Mi Logo y Mis Números ($1.99)'
+      : '🔒 Unlock My Official Document with My Logo & My Numbers ($1.99)';
 
     const docBadgeTitle = isInv
       ? (isEs ? 'FACTURA OFICIAL (INVOICE)' : 'OFFICIAL INVOICE')
-      : (isEs ? 'CONTRATO Y COTIZACIÓN OFICIAL' : 'OFFICIAL ESTIMATE & CONTRACT');
+      : (isEs ? 'COTIZACIÓN OFICIAL' : 'OFFICIAL ESTIMATE');
     const docNum = isInv ? 'INV #2026-0842' : 'EST #2026-0842';
-
-    const sampleClientSig = '<svg width="130" height="36" viewBox="0 0 130 36"><path d="M8 28 Q 25 6, 40 24 T 75 18 T 118 14" fill="none" stroke="#1d4ed8" stroke-width="2.4"/></svg>';
-    const sampleContrSig = '<svg width="130" height="36" viewBox="0 0 130 36"><path d="M12 24 C 30 5, 50 32, 70 14 S 105 25, 122 10" fill="none" stroke="#0f172a" stroke-width="2.4"/></svg>';
 
     paper.innerHTML =
       '<div class="lux-sample-ribbon">' +
         (isEs
-          ? '✨ EJEMPLO DE DOCUMENTO FINAL • Así queda tu PDF con TU LOGO y TU FIRMA al desbloquear por $1.99'
-          : '✨ SAMPLE FINAL DOCUMENT • Your PDF looks just like this with YOUR LOGO & SIGNATURE for $1.99') +
+          ? '✨ EJEMPLO DE FORMATO OFICIAL • Así quedará tu documento con TU LOGO y TUS NÚMEROS al desbloquear por $1.99'
+          : '✨ OFFICIAL FORMAT SAMPLE • Your document will look just like this with YOUR LOGO & NUMBERS for $1.99') +
       '</div>' +
       '<div class="lux-header">' +
         '<div class="lux-brand">' +
           '<div class="lux-logo-box"><svg width="52" height="52"><use href="#apexSampleLogo"/></svg></div>' +
           '<div>' +
             '<div class="lux-comp-name">APEX CONSTRUCTORA & REMODELACIONES LLC</div>' +
-            '<div class="lux-comp-sub">Contratista General Certificado • Lic. DACO #GC-89421<br>Tel / WhatsApp: (787) 555-0199 • San Juan, PR</div>' +
+            '<div class="lux-comp-sub">' +
+              (isEs
+                ? 'Contratista General Certificado • Lic. DACO #GC-89421<br>Tel: (787) 555-0199 • San Juan, PR • proyectos@apexconstructora.com'
+                : 'Licensed General Contractor • Lic. #GC-89421<br>Phone: (787) 555-0199 • info@apexconstructora.com') +
+            '</div>' +
           '</div>' +
         '</div>' +
         '<div class="lux-badge-box">' +
           '<div class="lux-doc-title">' + docBadgeTitle + '</div>' +
           '<div class="lux-doc-num">' + docNum + '</div>' +
-          '<div class="lux-doc-date">Fecha: 03/11/2026 • Validez: 30 Días</div>' +
+          '<div class="lux-doc-date">' + (isEs ? 'Fecha: 03/11/2026 • Validez: 30 Días' : 'Date: 11/03/2026 • Valid: 30 Days') + '</div>' +
         '</div>' +
       '</div>' +
       '<div class="lux-client-grid">' +
-        '<div><strong>PREPARADO PARA EL CLIENTE:</strong><span>Ing. Carlos M. Rodríguez</span><div style="color:#475569; margin-top:2px;">Tel: (787) 555-8420</div></div>' +
-        '<div><strong>DIRECCIÓN Y PROYECTO:</strong><span>Urb. Los Paseos, Calle Real #114</span><div style="color:#475569; margin-top:2px;">Construcción de Muro, Sellado de Techo y Remodelación</div></div>' +
+        '<div><strong>' + (isEs ? 'PREPARADO PARA EL CLIENTE:' : 'PREPARED FOR CLIENT:') + '</strong><span>Ing. Carlos M. Rodríguez</span><div style="color:#475569; margin-top:2px;">Tel: (787) 555-8420</div></div>' +
+        '<div><strong>' + (isEs ? 'DIRECCIÓN Y PROYECTO:' : 'PROJECT LOCATION:') + '</strong><span>Urb. Los Paseos, Calle Real #114</span><div style="color:#475569; margin-top:2px;">' + (isEs ? 'Construcción de Muro, Sellado de Techo y Remodelación' : 'Wall Construction, Roof Coating & Remodel') + '</div></div>' +
       '</div>' +
       '<div class="lux-scope-box">' +
-        '<div class="lux-scope-hdr">Alcance Técnico y Desglose de Materiales Calculados (Ejemplo)</div>' +
-        '<div class="lux-scope-item"><strong>1. Construcción de Muro de Bloques (CMU):</strong> Pared 30×8 ft • ➔ 284 Bloques (8×8×16), 22 Sacos Mortero, 9 Varillas #4, 19 Escalerillas, 59 Sacos Celdas y Empañete a 2 Caras.</div>' +
-        '<div class="lux-scope-item"><strong>2. Sellado e Impermeabilización Elastomérica de Techo:</strong> 1,500 sq ft a 2 Capas • ➔ 12 Pailas Sellador Elastomérico (5G) + 3 Pailas Primer.</div>' +
-        '<div class="lux-scope-item"><strong>3. Suministro e Instalación de Ventanas de Seguridad:</strong> 4 Ventanas corredizas en aluminio pesado y cristal laminado.</div>' +
+        '<div class="lux-scope-hdr">' + (isEs ? 'Alcance Técnico y Desglose de Materiales Calculados (Ejemplo)' : 'Technical Scope & Calculated Materials (Sample)') + '</div>' +
+        '<div class="lux-scope-item"><strong>1. ' + (isEs ? 'Construcción de Muro de Bloques (CMU):' : 'CMU Block Wall Construction:') + '</strong> ' +
+          (isEs ? 'Pared de 30 ft × 8 ft (240 sq ft) • ➔ 284 Bloques (8×8×16), 22 Sacos Mortero, 9 Varillas #4, 19 Escalerillas, 59 Sacos en Celdas y Empañete a 2 Caras.' : '30 ft × 8 ft Wall (240 sq ft) • ➔ 284 CMU Blocks, 22 Mortar Bags, 9 #4 Rebars, 59 Grout Bags & Both-Sides Plaster.') +
+        '</div>' +
+        '<div class="lux-scope-item"><strong>2. ' + (isEs ? 'Sellado e Impermeabilización Elastomérica de Techo:' : 'Elastomeric Roof Waterproofing:') + '</strong> ' +
+          (isEs ? 'Área de 1,500 sq ft a 2 Capas • ➔ 12 Pailas de Sellador Elastomérico (5 Gal) + 3 Pailas de Primer Acrílico.' : '1,500 sq ft at 2 Coats • ➔ 12 Pails (5 Gal) Elastomeric Coating + 3 Pails Primer.') +
+        '</div>' +
+        '<div class="lux-scope-item"><strong>3. ' + (isEs ? 'Suministro e Instalación de Ventanas de Seguridad:' : 'Security Window Supply & Installation:') + '</strong> ' +
+          (isEs ? '4 Ventanas corredizas en aluminio pesado y cristal laminado de impacto.' : '4 Heavy-gauge aluminum impact-resistant sliding windows.') +
+        '</div>' +
       '</div>' +
       '<table class="lux-table">' +
-        '<thead><tr><th>Descripción / Partida de Obra (Ejemplo)</th><th>Monto (USD)</th></tr></thead>' +
+        '<thead><tr><th>' + (isEs ? 'Descripción / Partida de Obra (Ejemplo)' : 'Description / Line Item (Sample)') + '</th><th>' + (isEs ? 'Monto (USD)' : 'Amount (USD)') + '</th></tr></thead>' +
         '<tbody>' +
           '<tr><td>Construcción de Muro de Bloques (284 Bloques + Acero + Mezclas)</td><td>$1,413.60</td></tr>' +
           '<tr><td>Sellado e Impermeabilización Elastomérica de Techo (12 Pailas 5G + Primer)</td><td>$1,575.00</td></tr>' +
           '<tr><td>Materiales de Ferretería y Acarreo (National Lumber & Hardware)</td><td>$1,850.00</td></tr>' +
           '<tr><td>Suministro e Instalación de 4 Ventanas de Seguridad</td><td>$2,400.00</td></tr>' +
           '<tr><td>Mano de Obra Profesional, Supervisión y Limpieza Final (Labor)</td><td>$4,200.00</td></tr>' +
-          '<tr class="lux-tot-row"><td>TOTAL DEL CONTRATO (SAMPLE)</td><td>$11,438.60</td></tr>' +
-          '<tr><td>Menos Depósito Inicial Requerido (50%)</td><td>-$5,719.30</td></tr>' +
-          '<tr class="lux-bal-row"><td>BALANCE PENDIENTE AL FINALIZAR OBRA</td><td>$5,719.30</td></tr>' +
+          '<tr class="lux-tot-row"><td>' + (isInv ? 'TOTAL FACTURADO (INVOICE SAMPLE)' : 'TOTAL COTIZADO (ESTIMATE SAMPLE)') + '</td><td>$11,438.60</td></tr>' +
+          '<tr><td>' + (isEs ? 'Menos Depósito Inicial (50%)' : 'Less Initial Deposit (50%)') + '</td><td>-$5,719.30</td></tr>' +
+          '<tr class="lux-bal-row"><td>' + (isEs ? 'BALANCE PENDIENTE AL FINALIZAR' : 'BALANCE DUE UPON COMPLETION') + '</td><td>$5,719.30</td></tr>' +
         '</tbody>' +
       '</table>' +
-      '<div style="font-size:0.76rem; font-style:italic; color:#334155; margin-bottom:0.5rem;">📌 Condiciones: Incluye acarreo, bote de escombros y 1 año de garantía en mano de obra.</div>' +
+      '<div style="font-size:0.76rem; font-style:italic; color:#334155; margin-bottom:0.5rem;">📌 ' +
+        (isEs ? 'Notas y Garantía: Incluye acarreo de materiales, bote de escombros y 1 año de garantía en mano de obra.' : 'Notes & Warranty: Includes material hauling, debris removal, and 1-year labor warranty.') +
+      '</div>' +
       '<div class="lux-sign-box">' +
-        '<div style="font-size:0.76rem; font-weight:900; text-transform:uppercase; color:#0f172a;">Aprobación y Firmas Digitales en el PDF:</div>' +
-        '<div class="lux-checks"><span style="color:#065f46;">☑️ ACEPTO LA COTIZACIÓN Y AUTORIZO EL TRABAJO</span><span style="color:#94a3b8;">⬜ NO ACEPTO</span></div>' +
-        '<div class="pdf-touch-guide">📲 El cliente abre el PDF en su WhatsApp, toca el lápiz (✏️) de su celular, firma con el dedo sobre la línea y te devuelve el PDF firmado.</div>' +
+        '<div style="font-size:0.76rem; font-weight:900; text-transform:uppercase; color:#0f172a;">' +
+          (isInv ? (isEs ? 'Conformidad y Recibo de Obra:' : 'Completion & Acknowledgment:') : (isEs ? 'Decisión y Autorización del Cliente:' : 'Client Decision & Authorization:')) +
+        '</div>' +
+        (isInv ? '' : '<div class="lux-checks"><span>☑️ ACEPTO LA COTIZACIÓN Y AUTORIZO EL TRABAJO</span><span>⬜ NO ACEPTO</span></div>') +
+        '<div style="font-size:0.71rem; color:#475569;">' +
+          (isEs ? 'Al marcar Acepto y firmar debajo, el cliente aprueba los costos y términos descritos en esta cotización.' : 'By checking Accept and signing below, the client approves the costs and terms described in this estimate.') +
+        '</div>' +
         '<div class="lux-signs">' +
-          '<div>' + sampleClientSig + '<div class="lux-sign-line">Firma del Cliente (Con el lápiz ✏️ en el PDF)</div></div>' +
-          '<div>' + sampleContrSig + '<div class="lux-sign-line">Firma del Contratista: Apex Constructora</div></div>' +
-          '<div><div style="font-size:0.75rem; font-weight:800; padding-bottom:4px;">03/11/2026</div><div class="lux-sign-line">Fecha</div></div>' +
+          '<div class="lux-sign-line">' + (isEs ? 'Firma del Cliente' : 'Client Signature') + '</div>' +
+          '<div class="lux-sign-line">' + (isEs ? 'Firma del Contratista' : 'Contractor Signature') + '</div>' +
+          '<div class="lux-sign-line">' + (isEs ? 'Fecha' : 'Date') + '</div>' +
         '</div>' +
       '</div>';
   } else {
     syncCustomLinesFromDOM();
     unlockBtn.innerText = isEs
-      ? '🖨️ Descargar / Guardar Mi PDF Oficial Ahora (1 Página)'
-      : '🖨️ Download / Save My Official 1-Page PDF Now';
+      ? '🖨️ Imprimir / Guardar Mi PDF Oficial Ahora (1 Página)'
+      : '🖨️ Print / Save My Official 1-Page PDF Now';
 
-    const d = collectCurrentContractData();
-    paper.innerHTML = buildUnlockedPreviewHTML(d);
-  }
-}
+    const comp = document.getElementById('qb-comp')?.value.trim() || 'ASD Building Solutions LLC';
+    const phone = document.getElementById('qb-phone')?.value.trim() || '';
+    const client = document.getElementById('qb-client')?.value.trim() || (isEs ? 'Cliente / Proyecto' : 'Client / Project');
+    const docNum = document.getElementById('qb-docnum')?.value.trim() || '2026-0101';
+    const hwName = document.getElementById('qb-hw-name')?.value.trim() || '';
+    const hwRaw = parseFloat(document.getElementById('qb-hw-cost')?.value) || 0;
+    const hwMarkup = parseFloat(document.getElementById('qb-hw-markup')?.value) || 0;
+    const hwClientTotal = hwRaw * (1 + (hwMarkup / 100));
+    const lab = parseFloat(document.getElementById('qb-lab')?.value) || 0;
+    const tax = parseFloat(document.getElementById('qb-tax')?.value) || 0;
+    const dep = parseFloat(document.getElementById('qb-dep')?.value) || 0;
+    const notes = document.getElementById('qb-notes')?.value.trim() || '';
 
-function collectCurrentContractData() {
-  syncCustomLinesFromDOM();
-  const isEs = currentLang === 'es';
-  const docType = document.getElementById('qb-doctype')?.value || 'quote';
-  const docNum = document.getElementById('qb-docnum')?.value.trim() || '2026-0101';
-  const comp = document.getElementById('qb-comp')?.value.trim() || 'ASD Building Solutions LLC';
-  const phone = document.getElementById('qb-phone')?.value.trim() || '';
-  const client = document.getElementById('qb-client')?.value.trim() || (isEs ? 'Cliente / Proyecto' : 'Client / Project');
-  const hwName = document.getElementById('qb-hw-name')?.value.trim() || '';
-  const hwRaw = parseFloat(document.getElementById('qb-hw-cost')?.value) || 0;
-  const hwMarkup = parseFloat(document.getElementById('qb-hw-markup')?.value) || 0;
-  const hwClientTotal = hwRaw * (1 + (hwMarkup / 100));
-  const lab = parseFloat(document.getElementById('qb-lab')?.value) || 0;
-  const tax = parseFloat(document.getElementById('qb-tax')?.value) || 0;
-  const dep = parseFloat(document.getElementById('qb-dep')?.value) || 0;
-  const notes = document.getElementById('qb-notes')?.value.trim() || '';
+    const logoHtml = uploadedLogoData
+      ? '<img src="' + uploadedLogoData + '" style="max-height:64px; max-width:140px; object-fit:contain; border-radius:6px;">'
+      : '<div class="lux-logo-box"><svg width="48" height="36"><use href="#tapeIcon"/></svg></div>';
 
-  const scopes = [];
-  const lines = [];
-  projectCart.forEach(it => {
-    const c = parseFloat(it.cost) || 0;
-    const t = upgradeScopeTitle(isEs ? it.title_es : it.title_en, currentLang);
-    const sm = isEs ? it.summary_es : it.summary_en;
-    const sh = isEs ? it.short_es : it.short_en;
-    scopes.push(t + ': ' + sm);
-    lines.push([t + ' (' + sh + ')', c]);
-  });
-  if (hwClientTotal > 0) {
-    lines.push([(isEs ? 'Materiales de Ferretería y Acarreo' : 'Hardware Materials & Hauling') + (hwName ? ' (' + hwName + ')' : ''), hwClientTotal]);
-  }
-  customLineItems.forEach(it => {
-    const p = parseFloat(it.price) || 0;
-    if (p > 0) lines.push([it.desc.trim() || 'Partida de Obra', p]);
-  });
-  if (lab > 0) lines.push([isEs ? 'Mano de Obra Profesional (Labor)' : 'Professional Labor', lab]);
-  if (tax > 0) lines.push([isEs ? 'Impuestos / Permisos / Otros' : 'Taxes / Permits', tax]);
+    let rows = '';
+    let grandTotal = 0;
+    projectCart.forEach(it => {
+      const c = parseFloat(it.cost) || 0;
+      const t = upgradeScopeTitle(isEs ? it.title_es : it.title_en, currentLang);
+      const sh = isEs ? it.short_es : it.short_en;
+      rows += '<tr><td>' + t + ' (' + sh + ')</td><td>' + formatUSD(c) + '</td></tr>';
+      grandTotal += c;
+    });
+    if (hwClientTotal > 0) {
+      rows += '<tr><td>' + (isEs ? 'Materiales de Ferretería y Acarreo' : 'Hardware Materials & Hauling') + (hwName ? ' (' + hwName + ')' : '') + '</td><td>' + formatUSD(hwClientTotal) + '</td></tr>';
+      grandTotal += hwClientTotal;
+    }
+    customLineItems.forEach(it => {
+      const p = parseFloat(it.price) || 0;
+      if (p > 0) {
+        rows += '<tr><td>' + (it.desc.trim() || 'Partida') + '</td><td>' + formatUSD(p) + '</td></tr>';
+        grandTotal += p;
+      }
+    });
+    if (lab > 0) { rows += '<tr><td>' + (isEs ? 'Mano de Obra Profesional (Labor)' : 'Professional Labor') + '</td><td>' + formatUSD(lab) + '</td></tr>'; grandTotal += lab; }
+    if (tax > 0) { rows += '<tr><td>' + (isEs ? 'Impuestos / Permisos' : 'Taxes / Permits') + '</td><td>' + formatUSD(tax) + '</td></tr>'; grandTotal += tax; }
 
-  return {
-    dt: docType,
-    dn: docNum,
-    co: comp,
-    ph: phone,
-    cl: client,
-    cu: currentCurr,
-    dp: dep,
-    nt: notes,
-    sc: scopes,
-    ln: lines,
-    dtStr: new Date().toLocaleDateString(isEs ? 'es-PR' : 'en-US')
-  };
-}
+    const balance = Math.max(0, grandTotal - dep);
+    rows += '<tr class="lux-tot-row"><td>TOTAL (' + currentCurr + ')</td><td>' + formatUSD(grandTotal) + '</td></tr>';
+    if (dep > 0) {
+      rows += '<tr><td>' + (isEs ? 'Menos Depósito Recibido' : 'Less Deposit Paid') + '</td><td>-' + formatUSD(dep) + '</td></tr>';
+      rows += '<tr class="lux-bal-row"><td>' + (isEs ? 'BALANCE PENDIENTE' : 'BALANCE DUE') + '</td><td>' + formatUSD(balance) + '</td></tr>';
+    }
 
-function buildUnlockedPreviewHTML(d) {
-  const isInv = d.dt === 'invoice';
-  let grandTotal = 0;
-  const rowsHtml = (d.ln || []).map(row => {
-    const amt = parseFloat(row[1]) || 0;
-    grandTotal += amt;
-    return '<tr><td>' + row[0] + '</td><td>' + formatUSD(amt) + '</td></tr>';
-  }).join('');
-
-  const dep = parseFloat(d.dp) || 0;
-  const balance = Math.max(0, grandTotal - dep);
-
-  const logoHtml = uploadedLogoData
-    ? '<img src="' + uploadedLogoData + '" style="max-height:62px; max-width:140px; object-fit:contain; border-radius:6px;">'
-    : '<div class="lux-logo-box"><svg width="48" height="36"><use href="#tapeIcon"/></svg></div>';
-
-  const scopeBoxHtml = (d.sc && d.sc.length > 0)
-    ? '<div class="lux-scope-box"><div class="lux-scope-hdr">Alcance Técnico de Materiales</div>' +
-      d.sc.map((s, idx) => '<div class="lux-scope-item"><strong>' + (idx + 1) + '.</strong> ' + s + '</div>').join('') +
-      '</div>'
-    : '';
-
-  const contrSigUrl = getSigDataUrl('contractorSigCanvas') || localStorage.getItem('mcp_contractor_sig') || '';
-  const contrSigHtml = contrSigUrl
-    ? '<img src="' + contrSigUrl + '" style="max-height:42px; max-width:150px;">'
-    : '<div style="font-weight:800; color:#0f172a; padding-bottom:4px;">' + d.co + '</div>';
-
-  return (
-    '<div class="lux-header">' +
-      '<div class="lux-brand">' + logoHtml +
-        '<div><div class="lux-comp-name">' + d.co + '</div><div class="lux-comp-sub">' + (d.ph ? 'Tel / WhatsApp: ' + d.ph : '') + '</div></div>' +
+    paper.innerHTML =
+      '<div class="lux-header">' +
+        '<div class="lux-brand">' + logoHtml +
+          '<div><div class="lux-comp-name">' + comp + '</div><div class="lux-comp-sub">' + (phone ? 'Tel / Lic: ' + phone : '') + '</div></div>' +
+        '</div>' +
+        '<div class="lux-badge-box">' +
+          '<div class="lux-doc-title">' + (isInv ? 'FACTURA OFICIAL' : 'COTIZACIÓN OFICIAL') + '</div>' +
+          '<div class="lux-doc-num">' + (isInv ? 'INV #' : 'EST #') + docNum + '</div>' +
+          '<div class="lux-doc-date">' + new Date().toLocaleDateString(isEs ? 'es-PR' : 'en-US') + '</div>' +
+        '</div>' +
       '</div>' +
-      '<div class="lux-badge-box">' +
-        '<div class="lux-doc-title">' + (isInv ? 'FACTURA OFICIAL' : 'CONTRATO / COTIZACIÓN') + '</div>' +
-        '<div class="lux-doc-num">' + (isInv ? 'INV #' : 'EST #') + d.dn + '</div>' +
-        '<div class="lux-doc-date">' + d.dtStr + '</div>' +
-      '</div>' +
-    '</div>' +
-    '<div class="lux-client-grid">' +
-      '<div><strong>CLIENTE / PROYECTO:</strong><span>' + d.cl + '</span></div>' +
-      '<div><strong>FIRMA EN PDF:</strong><span>Lista para firmar con el lápiz (✏️) en WhatsApp</span></div>' +
-    '</div>' +
-    scopeBoxHtml +
-    '<table class="lux-table"><thead><tr><th>Descripción / Partida de Obra</th><th>Monto (' + d.cu + ')</th></tr></thead><tbody>' +
-      rowsHtml +
-      '<tr class="lux-tot-row"><td>TOTAL (' + d.cu + ')</td><td>' + formatUSD(grandTotal) + '</td></tr>' +
-      (dep > 0 ? '<tr><td>Menos Depósito Requerido</td><td>-' + formatUSD(dep) + '</td></tr><tr class="lux-bal-row"><td>BALANCE PENDIENTE</td><td>' + formatUSD(balance) + '</td></tr>' : '') +
-    '</tbody></table>' +
-    (d.nt ? '<div style="font-size:0.77rem; font-style:italic; margin-bottom:0.5rem;">📌 Condiciones: ' + d.nt + '</div>' : '') +
-    '<div class="lux-sign-box">' +
-      '<div style="font-size:0.75rem; font-weight:900; text-transform:uppercase;">Decisión y Firmas Oficiales del Contrato:</div>' +
-      (isInv ? '' : '<div class="lux-checks"><span>⬜ ACEPTO LA COTIZACIÓN Y AUTORIZO EL TRABAJO</span><span>⬜ NO ACEPTO</span></div>') +
-      '<div class="pdf-touch-guide">📲 Para firmar en WhatsApp: el cliente abre este PDF, toca el lápiz (✏️) de su celular, firma con el dedo y lo reenvía.</div>' +
-      '<div class="lux-signs">' +
-        '<div><div style="min-height:38px; border:1px dashed #cbd5e1; border-radius:5px; display:flex; align-items:center; justify-content:center; font-size:0.68rem; color:#64748b;">✍️ Firma del Cliente (✏️)</div><div class="lux-sign-line">Firma del Cliente</div></div>' +
-        '<div>' + contrSigHtml + '<div class="lux-sign-line">Firma del Contratista: ' + d.co + '</div></div>' +
-        '<div><div style="font-size:0.74rem; font-weight:800; padding-bottom:4px;">' + d.dtStr + '</div><div class="lux-sign-line">Fecha</div></div>' +
-      '</div>' +
-    '</div>'
-  );
-}
-
-function populatePrintFromData(d) {
-  document.getElementById('pCompanyTitle').innerText = d.co;
-  document.getElementById('pCompanyPhone').innerText = d.ph ? ('Tel / WhatsApp: ' + d.ph) : '';
-  document.getElementById('pClientLine').innerText = 'Cliente / Proyecto: ' + d.cl;
-  document.getElementById('pDocTypeBadge').innerText = d.dt === 'invoice' ? 'FACTURA OFICIAL (INVOICE)' : 'CONTRATO Y COTIZACIÓN OFICIAL';
-  document.getElementById('pDocNumLine').innerText = (d.dt === 'invoice' ? 'INV #' : 'EST #') + d.dn;
-  document.getElementById('pDateLine').innerText = d.dtStr || '';
-
-  const scopeBox = document.getElementById('pScopeBox');
-  if (d.sc && d.sc.length > 0) {
-    scopeBox.style.display = 'block';
-    document.getElementById('pScopeItemsContainer').innerHTML = d.sc.map((s, i) => '<div class="print-scope-item"><strong>' + (i + 1) + '.</strong> ' + s + '</div>').join('');
-  } else {
-    scopeBox.style.display = 'none';
+      '<div class="lux-client-grid"><div><strong>CLIENTE / PROYECTO:</strong><span>' + client + '</span></div></div>' +
+      '<table class="lux-table"><thead><tr><th>Descripción / Partida</th><th>Monto</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+      (notes ? '<div style="font-size:0.76rem; font-style:italic; margin-bottom:0.5rem;">📌 ' + notes + '</div>' : '') +
+      '<div class="lux-sign-box">' +
+        (isInv ? '' : '<div class="lux-checks"><span>⬜ ACEPTO LA COTIZACIÓN Y AUTORIZO EL TRABAJO</span><span>⬜ NO ACEPTO</span></div>') +
+        '<div class="lux-signs"><div class="lux-sign-line">Firma del Cliente</div><div class="lux-sign-line">Firma del Contratista</div><div class="lux-sign-line">Fecha</div></div>' +
+      '</div>';
   }
-
-  let grandTotal = 0;
-  let tbody = '';
-  (d.ln || []).forEach(r => {
-    const amt = parseFloat(r[1]) || 0;
-    grandTotal += amt;
-    tbody += '<tr><td>' + r[0] + '</td><td>' + formatUSD(amt) + '</td></tr>';
-  });
-  const dep = parseFloat(d.dp) || 0;
-  const bal = Math.max(0, grandTotal - dep);
-  tbody += '<tr class="print-total-row"><td>TOTAL (' + d.cu + ')</td><td>' + formatUSD(grandTotal) + '</td></tr>';
-  if (dep > 0) {
-    tbody += '<tr><td>Menos Depósito Requerido</td><td>-' + formatUSD(dep) + '</td></tr>';
-    tbody += '<tr class="print-balance-row"><td>BALANCE PENDIENTE</td><td>' + formatUSD(bal) + '</td></tr>';
-  }
-  document.getElementById('pCostTableBody').innerHTML = tbody;
-
-  const notesEl = document.getElementById('pNotesLine');
-  if (d.nt) { notesEl.innerText = 'Condiciones: ' + d.nt; notesEl.style.display = 'block'; }
-  else { notesEl.style.display = 'none'; }
-
-  document.getElementById('pAcceptChecks').style.display = d.dt === 'invoice' ? 'none' : 'flex';
-
-  const contrSigUrl = getSigDataUrl('contractorSigCanvas') || localStorage.getItem('mcp_contractor_sig') || '';
-  const coHolder = document.getElementById('pContractorSigHolder');
-  if (contrSigUrl) {
-    coHolder.innerHTML = '<img src="' + contrSigUrl + '" style="max-height:42px;">';
-  } else {
-    coHolder.innerHTML = '<strong>' + d.co + '</strong>';
-  }
-  document.getElementById('sigContractorLbl').innerText = 'Firma del Contratista: ' + d.co;
-  document.getElementById('pSignedDateVal').innerText = d.dtStr || '';
-
-  const attachCheck = document.getElementById('qb-hw-print-attach')?.checked;
-  const attachPage = document.getElementById('pHardwareAttachmentPage');
-  if (attachCheck && uploadedHwQuoteImg) {
-    document.getElementById('pHwAttachImg').src = uploadedHwQuoteImg;
-    attachPage.style.display = 'block';
-  } else {
-    attachPage.style.display = 'none';
-  }
-}
-
-function handleFinalDownloadClick() {
-  saveAllBuilderState();
-  if (!isPaidUser) { window.location.href = STRIPE_URL; return; }
-  closeDocPreviewModal();
-  const d = collectCurrentContractData();
-  const logoImg = document.getElementById('pLogoImg');
-  const defBadge = document.getElementById('pDefaultBadge');
-  if (uploadedLogoData) {
-    logoImg.src = uploadedLogoData; logoImg.style.display = 'block'; defBadge.style.display = 'none';
-  } else {
-    logoImg.style.display = 'none'; defBadge.style.display = 'flex';
-  }
-  populatePrintFromData(d);
-  window.print();
-}
-
-function handleWhatsAppQuoteClick() {
-  saveAllBuilderState();
-  if (!isPaidUser) { window.location.href = STRIPE_URL; return; }
-  const d = collectCurrentContractData();
-  const isInv = d.dt === 'invoice';
-  let grandTotal = 0;
-  let lines = [];
-  lines.push(isInv ? ('🧾 *FACTURA OFICIAL #' + d.dn + '*') : ('📄 *CONTRATO Y COTIZACIÓN OFICIAL #' + d.dn + '*'));
-  lines.push('🏢 *' + d.co + '*' + (d.ph ? ' (' + d.ph + ')' : ''));
-  lines.push('👤 Cliente / Proyecto: ' + d.cl);
-  lines.push('────────────────');
-  (d.ln || []).forEach(r => {
-    const amt = parseFloat(r[1]) || 0;
-    grandTotal += amt;
-    lines.push('• ' + r[0] + ': *' + formatUSD(amt) + '*');
-  });
-  const dep = parseFloat(d.dp) || 0;
-  const bal = Math.max(0, grandTotal - dep);
-  lines.push('────────────────');
-  lines.push('💰 *TOTAL (' + d.cu + '): ' + formatUSD(grandTotal) + '*');
-  if (dep > 0) {
-    lines.push('➖ Depósito Requerido: -' + formatUSD(dep));
-    lines.push('✅ *BALANCE PENDIENTE: ' + formatUSD(bal) + '*');
-  }
-  if (d.nt) lines.push('📌 Condiciones: ' + d.nt);
-  lines.push('────────────────');
-  lines.push('✍️ *CÓMO FIRMAR EL PDF ADJUNTO DESDE TU CELULAR:*');
-  lines.push('1️⃣ Abre el archivo PDF que te adjunto aquí en WhatsApp.');
-  lines.push('2️⃣ Toca el ícono del *lápiz (✏️)* arriba en tu pantalla.');
-  lines.push('3️⃣ Marca *☑️ Acepto*, dibuja tu firma con el dedo sobre la línea y reenvíame el PDF.');
-
-  window.open('https://wa.me/?text=' + encodeURIComponent(lines.join('\n')), '_blank');
 }
 
 function toggleUnitSystem() {
@@ -1594,7 +1327,10 @@ function removeCartItem(idx) {
 function renderProjectCart() {
   const list = document.getElementById('projectCartList');
   if (!list) return;
-  if (projectCart.length === 0) { list.innerHTML = ''; return; }
+  if (projectCart.length === 0) {
+    list.innerHTML = '';
+    return;
+  }
   const cSym = getCurrObj().sym;
   list.innerHTML = projectCart.map((item, i) => {
     const t = upgradeScopeTitle(currentLang === 'es' ? item.title_es : item.title_en, currentLang);
@@ -1659,6 +1395,7 @@ function handleLogoUpload(input) {
     try { localStorage.setItem('mcp_company_logo', uploadedLogoData); } catch(err) {}
     const prev = document.getElementById('mainLogoPreview');
     if (prev) { prev.src = uploadedLogoData; prev.style.display = 'inline-block'; }
+    recalcMasterTotals();
   };
   reader.readAsDataURL(file);
 }
@@ -1713,17 +1450,17 @@ function updatePayButtonState() {
   if (!btn) return;
   const isEs = currentLang === 'es';
   if (isPaidUser) {
-    btn.innerText = isEs ? '🖨️ 1. Descargar Mi Contrato / Factura PDF con Logo y Mi Firma (1 Página)' : '🖨️ 1. Download Official 1-Page PDF with Logo & My Signature';
-    waBtn.innerText = isEs ? '📲 2. Enviar Resumen e Instrucciones de Firma en PDF por WhatsApp' : '📲 2. Send Summary & PDF Signing Instructions via WhatsApp';
-    note.innerText = isEs ? '✅ Modo Oficial Activo • Descarga el PDF y adjúntaselo al cliente en WhatsApp para que lo firme con el lápiz (✏️) de su celular' : '✅ Official Mode Active • Download PDF and send via WhatsApp for client signature';
-    if (topSample) topSample.innerText = isEs ? '👁️ Ver Vista Previa de Mi Contrato / Factura Oficial con Mi Logo' : '👁️ Preview My Unlocked Official Contract / Invoice';
-    if (botSample) botSample.innerText = isEs ? '👁️ Ver Vista Previa de Mi Contrato / Factura Oficial con Mi Logo' : '👁️ Preview My Unlocked Official Contract / Invoice';
+    btn.innerText = isEs ? '🖨️ Descargar / Imprimir Mi Estimado o Factura PDF con Logo (1 Página)' : '🖨️ Download / Print Official 1-Page Quote or Invoice PDF';
+    waBtn.innerText = isEs ? '📲 Enviar Mi Estimado / Factura Oficial por WhatsApp' : '📲 Send Official Quote / Invoice via WhatsApp';
+    note.innerText = isEs ? '✅ Documento Oficial Desbloqueado • Listo para PDF y WhatsApp' : '✅ Official Document Unlocked • Ready for PDF & WhatsApp';
+    if (topSample) topSample.innerText = isEs ? '👁️ Ver Vista Previa de Mi Documento Oficial con Mi Logo' : '👁️ Preview My Unlocked Official Document';
+    if (botSample) botSample.innerText = isEs ? '👁️ Ver Vista Previa de Mi Documento Oficial con Mi Logo' : '👁️ Preview My Unlocked Official Document';
   } else {
-    btn.innerText = isEs ? '🔒 Generar Mi Contrato / Factura PDF con Mi Logo y Mi Firma ($1.99)' : '🔒 Generate My Official PDF with Logo & Signature ($1.99)';
-    waBtn.innerText = isEs ? '🔒 Desbloquear Envío de Contrato por WhatsApp ($1.99)' : '🔒 Unlock WhatsApp Contract Sending ($1.99)';
-    note.innerText = isEs ? '🔒 Toca el botón amarillo para ver el documento de ejemplo • Desbloquea por $1.99 para generar tu PDF Oficial listo para que el cliente lo firme en su celular' : '🔒 Tap the yellow button to view the sample • Unlock for $1.99 to generate your Official PDF';
-    if (topSample) topSample.innerText = isEs ? '👁️ Ver Ejemplo de Contrato / Factura con Logo y Firmas' : '👁️ View Full Sample Contract / Invoice with Logo & Signatures';
-    if (botSample) botSample.innerText = isEs ? '👁️ Ver Ejemplo de Cómo Quedará el Documento Final con Logo y Firmas' : '👁️ View Sample of How the Final Document Looks';
+    btn.innerText = isEs ? '🔒 Generar Mi Documento Final con Mi Logo y Mis Números ($1.99)' : '🔒 Generate My Final Document with My Logo & Numbers ($1.99)';
+    waBtn.innerText = isEs ? '🔒 Desbloquear y Enviar Mi Estimado / Factura por WhatsApp ($1.99)' : '🔒 Unlock & Send My Official Quote / Invoice via WhatsApp ($1.99)';
+    note.innerText = isEs ? '🔒 Toca el botón amarillo para ver el documento de ejemplo • Paga $1.99 en Stripe para generar tu PDF Oficial con tu logo' : '🔒 Tap the yellow button to view the sample document • Pay $1.99 via Stripe to generate your Official PDF with your logo';
+    if (topSample) topSample.innerText = isEs ? '👁️ Ver Ejemplo de Documento Final con Logo (Abrir Hoja Completa)' : '👁️ View Full Sample Document with Logo';
+    if (botSample) botSample.innerText = isEs ? '👁️ Ver Ejemplo de Cómo Quedará el Documento Final con Logo' : '👁️ View Sample of How the Final Document Looks';
   }
 }
 
@@ -1737,6 +1474,180 @@ function saveAllBuilderState() {
   localStorage.setItem('mcp_checkout_state', JSON.stringify({
     lang: currentLang, unit: unitSys, curr: currentCurr, inputs: inputs
   }));
+}
+
+function handleFinalDownloadClick() {
+  saveAllBuilderState();
+  if (!isPaidUser) { window.location.href = STRIPE_URL; return; }
+  closeDocPreviewModal();
+  printMasterDocument();
+}
+
+function handleWhatsAppQuoteClick() {
+  saveAllBuilderState();
+  if (!isPaidUser) { window.location.href = STRIPE_URL; return; }
+  sendUnlockedMasterWhatsApp();
+}
+
+function printMasterDocument() {
+  if (!isPaidUser) { window.location.href = STRIPE_URL; return; }
+  syncCustomLinesFromDOM();
+  const isEs = currentLang === 'es';
+  const isInvoice = (document.getElementById('qb-doctype')?.value || 'quote') === 'invoice';
+  const docNum = document.getElementById('qb-docnum')?.value.trim() || '2026-0101';
+  const comp = document.getElementById('qb-comp')?.value.trim() || 'MaterialCalcPro.org';
+  const phone = document.getElementById('qb-phone')?.value.trim() || '';
+  const client = document.getElementById('qb-client')?.value.trim() || '';
+  const hwName = document.getElementById('qb-hw-name')?.value.trim() || '';
+  const hwRaw = parseFloat(document.getElementById('qb-hw-cost')?.value) || 0;
+  const hwMarkup = parseFloat(document.getElementById('qb-hw-markup')?.value) || 0;
+  const hwClientTotal = hwRaw * (1 + (hwMarkup / 100));
+  const lab = parseFloat(document.getElementById('qb-lab')?.value) || 0;
+  const tax = parseFloat(document.getElementById('qb-tax')?.value) || 0;
+  const dep = parseFloat(document.getElementById('qb-dep')?.value) || 0;
+  const notes = document.getElementById('qb-notes')?.value.trim() || '';
+
+  document.getElementById('pCompanyTitle').innerText = comp;
+  document.getElementById('pCompanyPhone').innerText = phone ? ((isEs ? 'Tel / Lic: ' : 'Phone / Lic: ') + phone) : '';
+  document.getElementById('pClientLine').innerText = client ? ((isEs ? 'Cliente / Proyecto: ' : 'Client / Project: ') + client) : '';
+  document.getElementById('pDocTypeBadge').innerText = isInvoice ? (isEs ? 'FACTURA OFICIAL (INVOICE)' : 'OFFICIAL INVOICE') : (isEs ? 'COTIZACIÓN OFICIAL' : 'OFFICIAL ESTIMATE');
+  document.getElementById('pDocNumLine').innerText = (isInvoice ? 'INV #' : 'EST #') + docNum;
+  document.getElementById('pDateLine').innerText = new Date().toLocaleDateString(isEs ? 'es-PR' : 'en-US');
+
+  const logoImg = document.getElementById('pLogoImg');
+  const defBadge = document.getElementById('pDefaultBadge');
+  if (uploadedLogoData) {
+    logoImg.src = uploadedLogoData; logoImg.style.display = 'block'; defBadge.style.display = 'none';
+  } else {
+    logoImg.style.display = 'none'; defBadge.style.display = 'flex';
+  }
+
+  const scopeBox = document.getElementById('pScopeBox');
+  if (projectCart.length > 0) {
+    scopeBox.style.display = 'block';
+    document.getElementById('pScopeItemsContainer').innerHTML = projectCart.map((it, idx) => {
+      const t = upgradeScopeTitle(isEs ? it.title_es : it.title_en, currentLang);
+      const sm = isEs ? it.summary_es : it.summary_en;
+      return '<div class="print-scope-item"><strong>' + (idx + 1) + '. ' + t + ':</strong> <em>➔ ' + sm + '</em></div>';
+    }).join('');
+  } else {
+    scopeBox.style.display = 'none';
+  }
+
+  let tbody = '';
+  let grandTotal = 0;
+  projectCart.forEach(it => {
+    const c = parseFloat(it.cost) || 0;
+    const t = upgradeScopeTitle(isEs ? it.title_es : it.title_en, currentLang);
+    const sh = isEs ? it.short_es : it.short_en;
+    tbody += '<tr><td>' + t + ' (' + sh + ')</td><td>' + formatUSD(c) + '</td></tr>';
+    grandTotal += c;
+  });
+  if (hwClientTotal > 0) {
+    tbody += '<tr><td>' + (isEs ? 'Materiales de Ferretería y Acarreo' : 'Hardware Store Materials & Hauling') + (hwName ? ' (' + hwName + ')' : '') + '</td><td>' + formatUSD(hwClientTotal) + '</td></tr>';
+    grandTotal += hwClientTotal;
+  }
+  customLineItems.forEach(it => {
+    const p = parseFloat(it.price) || 0;
+    if (p > 0) {
+      tbody += '<tr><td>' + (it.desc.trim() || (isEs ? 'Partida de Obra' : 'Work Item')) + '</td><td>' + formatUSD(p) + '</td></tr>';
+      grandTotal += p;
+    }
+  });
+  if (lab > 0) {
+    tbody += '<tr><td>' + (isEs ? 'Mano de Obra Profesional (Labor)' : 'Professional Labor') + '</td><td>' + formatUSD(lab) + '</td></tr>';
+    grandTotal += lab;
+  }
+  if (tax > 0) {
+    tbody += '<tr><td>' + (isEs ? 'Impuestos / Permisos / Otros' : 'Taxes / Permits / Other') + '</td><td>' + formatUSD(tax) + '</td></tr>';
+    grandTotal += tax;
+  }
+
+  const balance = Math.max(0, grandTotal - dep);
+  tbody += '<tr class="print-total-row"><td>' + (isInvoice ? 'TOTAL INVOICE (' + currentCurr + ')' : 'TOTAL COTIZADO (' + currentCurr + ')') + '</td><td>' + formatUSD(grandTotal) + '</td></tr>';
+  if (dep > 0) {
+    tbody += '<tr><td>' + (isEs ? 'Menos Depósito / Pronto Recibido' : 'Less Deposit Paid') + '</td><td>-' + formatUSD(dep) + '</td></tr>';
+    tbody += '<tr class="print-balance-row"><td>' + (isEs ? 'BALANCE PENDIENTE A PAGAR' : 'BALANCE DUE') + '</td><td>' + formatUSD(balance) + '</td></tr>';
+  }
+  document.getElementById('pCostTableBody').innerHTML = tbody;
+
+  const notesEl = document.getElementById('pNotesLine');
+  if (notes) { notesEl.innerText = (isEs ? 'Notas y Condiciones: ' : 'Notes & Terms: ') + notes; notesEl.style.display = 'block'; }
+  else { notesEl.style.display = 'none'; }
+
+  document.getElementById('pAcceptChecks').style.display = isInvoice ? 'none' : 'flex';
+
+  const attachCheck = document.getElementById('qb-hw-print-attach')?.checked;
+  const attachPage = document.getElementById('pHardwareAttachmentPage');
+  if (attachCheck && uploadedHwQuoteImg) {
+    document.getElementById('pHwAttachImg').src = uploadedHwQuoteImg;
+    attachPage.style.display = 'block';
+  } else {
+    attachPage.style.display = 'none';
+  }
+  window.print();
+}
+
+function sendUnlockedMasterWhatsApp() {
+  syncCustomLinesFromDOM();
+  const isEs = currentLang === 'es';
+  const isInvoice = (document.getElementById('qb-doctype')?.value || 'quote') === 'invoice';
+  const docNum = document.getElementById('qb-docnum')?.value.trim() || '2026-0101';
+  const comp = document.getElementById('qb-comp')?.value.trim() || 'MaterialCalcPro.org';
+  const phone = document.getElementById('qb-phone')?.value.trim() || '';
+  const client = document.getElementById('qb-client')?.value.trim() || '';
+  const hwName = document.getElementById('qb-hw-name')?.value.trim() || '';
+  const hwRaw = parseFloat(document.getElementById('qb-hw-cost')?.value) || 0;
+  const hwMarkup = parseFloat(document.getElementById('qb-hw-markup')?.value) || 0;
+  const hwClientTotal = hwRaw * (1 + (hwMarkup / 100));
+  const lab = parseFloat(document.getElementById('qb-lab')?.value) || 0;
+  const tax = parseFloat(document.getElementById('qb-tax')?.value) || 0;
+  const dep = parseFloat(document.getElementById('qb-dep')?.value) || 0;
+  const notes = document.getElementById('qb-notes')?.value.trim() || '';
+
+  let lines = [];
+  lines.push(isInvoice ? ('🧾 *FACTURA OFICIAL #' + docNum + '*') : ('📄 *ESTIMADO OFICIAL #' + docNum + '*'));
+  lines.push('🏢 *' + comp + '*' + (phone ? ' (' + phone + ')' : ''));
+  if (client) lines.push('👤 ' + client);
+  lines.push('────────────────');
+
+  let grandTotal = 0;
+  projectCart.forEach((it, idx) => {
+    const t = upgradeScopeTitle(isEs ? it.title_es : it.title_en, currentLang);
+    const sm = isEs ? it.summary_es : it.summary_en;
+    const c = parseFloat(it.cost) || 0;
+    grandTotal += c;
+    lines.push('*' + (idx + 1) + '. ' + t + '* (' + sm + '): *' + formatUSD(c) + '*');
+  });
+  if (hwClientTotal > 0) {
+    grandTotal += hwClientTotal;
+    lines.push('• Materiales de Ferretería y Acarreo' + (hwName ? ' (' + hwName + ')' : '') + ': *' + formatUSD(hwClientTotal) + '*');
+  }
+  customLineItems.forEach(it => {
+    const p = parseFloat(it.price) || 0;
+    if (p > 0) {
+      grandTotal += p;
+      lines.push('• ' + (it.desc.trim() || 'Partida') + ': *' + formatUSD(p) + '*');
+    }
+  });
+  if (lab > 0) { grandTotal += lab; lines.push('• Mano de Obra Profesional: *' + formatUSD(lab) + '*'); }
+  if (tax > 0) { grandTotal += tax; lines.push('• Impuestos / Permisos: *' + formatUSD(tax) + '*'); }
+
+  const balance = Math.max(0, grandTotal - dep);
+  lines.push('────────────────');
+  lines.push('💰 *TOTAL (' + currentCurr + '): ' + formatUSD(grandTotal) + '*');
+  if (dep > 0) {
+    lines.push('➖ Depósito: -' + formatUSD(dep));
+    lines.push('✅ *BALANCE PENDIENTE: ' + formatUSD(balance) + '*');
+  }
+  if (notes) lines.push('📌 ' + notes);
+  if (!isInvoice) {
+    lines.push('────────────────');
+    lines.push(isEs
+      ? '✅ *Para aprobar esta cotización, puede responder "ACEPTO" a este mensaje o devolver el PDF firmado.*'
+      : '✅ *To approve this estimate, reply "ACCEPT" to this message or return the signed PDF.*');
+  }
+  window.open('https://wa.me/?text=' + encodeURIComponent(lines.join('\n')), '_blank');
 }
 
 function restoreSavedState() {
@@ -1766,7 +1677,6 @@ function restoreSavedState() {
 }
 
 window.addEventListener('DOMContentLoaded', function() {
-  initSignaturePad('contractorSigCanvas');
   restoreSavedState();
   applyLanguageUI();
 });
