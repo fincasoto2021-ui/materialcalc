@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-site-verification" content="QK9UkO8Wa6ApdBs0sG4Gk8ojj5vx9duiBlAG9b618-g" />
 <title>MaterialCalcPro.org | Calculadoras de Construcción y Cotizador</title>
 <meta name="description" content="Free professional construction calculators & contractor quote builder: Concrete, Roof Coating, CMU Blocks, AC BTU, Paint, Drywall & Acoustic Ceiling.">
 <link rel="manifest" href="/manifest.json">
@@ -97,7 +98,7 @@ width: 100%; background: var(--accent); color: #000000; border: none;
 padding: 0.9rem; border-radius: 8px; font-size: 1rem; font-weight: 900; cursor: pointer; margin-top: 0.3rem;
 }
 .res-box {
-margin-top: 1.2rem; background: var(--primary); color: white; padding: 1.2rem; border-radius: 10px;
+margin-top: 1.2rem; background: var(--primary); color: white; padding: 1.2rem; border-radius: 10px; position: relative; overflow: hidden;
 }
 .res-title { font-size: 0.75rem; text-transform: uppercase; color: var(--accent); font-weight: 700; }
 .res-big-wrap {
@@ -109,7 +110,7 @@ gap: 0.5rem; margin: 0.3rem 0 0.8rem; border-bottom: 1px solid #334155; padding-
 background: #064e3b; border: 1px solid #10b981; color: #6ee7b7;
 padding: 0.3rem 0.65rem; border-radius: 8px; font-size: 1.15rem; font-weight: 900;
 }
-.res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; font-size: 0.85rem; }
+.res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; font-size: 0.85rem; position: relative; }
 .res-grid span { display: block; font-size: 1.05rem; font-weight: 700; color: #fff; margin-top: 0.1rem; }
 .action-area {
 margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #334155;
@@ -188,11 +189,59 @@ margin-bottom: 0.65rem; background: #0f172a;
 }
 .logo-upload-box input[type="file"] { font-size: 0.78rem; color: #cbd5e1; border: none; padding: 0.2rem; background: transparent; }
 .logo-preview { max-height: 55px; margin-top: 0.4rem; display: none; border-radius: 4px; }
-.live-total-bar {
-background: #064e3b; border: 1px solid #10b981; border-radius: 8px;
-padding: 0.8rem; margin: 0.8rem 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;
+
+/* VISTA PREVIA DEL BORRADOR (DRAFT) PROTEGIDO CONTRA SCREENSHOT */
+.draft-preview-wrapper {
+background: #ffffff; color: #0f172a; border-radius: 10px;
+border: 2px solid #94a3b8; padding: 0.9rem; margin: 0.9rem 0;
+position: relative; overflow: hidden;
+-webkit-user-select: none; user-select: none; -webkit-touch-callout: none;
 }
-.live-total-bar strong { font-size: 1.25rem; color: #6ee7b7; }
+.draft-top-ribbon {
+display: none; background: #dc2626; color: #ffffff; font-size: 0.72rem;
+font-weight: 900; text-align: center; padding: 0.35rem 0.5rem; border-radius: 5px;
+margin-bottom: 0.65rem; text-transform: uppercase; letter-spacing: 0.4px;
+}
+body.locked-view .draft-top-ribbon { display: block; }
+.draft-watermark-layer {
+display: none; position: absolute; inset: 0; pointer-events: none; z-index: 10;
+flex-direction: column; justify-content: space-around; align-items: center;
+overflow: hidden; padding: 0.5rem;
+}
+body.locked-view .draft-watermark-layer { display: flex; }
+.draft-wm-stamp {
+color: rgba(220, 38, 38, 0.26); font-size: 0.92rem; font-weight: 900;
+text-transform: uppercase; text-align: center; transform: rotate(-16deg);
+border: 2px dashed rgba(220, 38, 38, 0.32); padding: 0.25rem 0.6rem;
+border-radius: 6px; width: 110%; line-height: 1.25; letter-spacing: 0.5px;
+background: rgba(255, 255, 255, 0.12);
+}
+.draft-capture-shield {
+display: none; position: absolute; inset: 0; z-index: 25;
+background: rgba(15, 23, 42, 0.96); color: #fde047;
+flex-direction: column; justify-content: center; align-items: center;
+text-align: center; padding: 1.2rem; font-weight: 900;
+}
+.draft-preview-wrapper.shield-active .draft-capture-shield { display: flex; }
+.draft-hdr-row {
+display: flex; justify-content: space-between; align-items: flex-start;
+border-bottom: 2px solid #0f172a; padding-bottom: 0.45rem; margin-bottom: 0.5rem; gap: 0.5rem;
+}
+.draft-scope-list {
+background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px;
+padding: 0.5rem 0.65rem; margin-bottom: 0.55rem; font-size: 0.78rem;
+}
+.draft-table {
+width: 100%; border-collapse: collapse; font-size: 0.8rem; position: relative; z-index: 2;
+}
+.draft-table th, .draft-table td {
+border: 1px solid #cbd5e1; padding: 0.35rem 0.5rem; text-align: left;
+}
+.draft-table th { background: #0f172a; color: #fff; font-weight: 800; }
+.draft-table td:last-child, .draft-table th:last-child { text-align: right; font-weight: 700; }
+.draft-tot-row { background: #fef3c7; font-weight: 900; font-size: 0.88rem; }
+.draft-bal-row { background: #dcfce7; color: #065f46; font-weight: 900; font-size: 0.92rem; }
+
 .history-card {
 background: var(--card); padding: 1.2rem; border-radius: 12px;
 box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-top: 1.2rem;
@@ -226,6 +275,7 @@ display: none !important;
 body { background: #fff; color: #000; padding: 0; font-size: 11.5px; }
 .container { max-width: 100%; margin: 0; padding: 0; }
 #printMasterDocument { display: block !important; }
+body.locked-view #printMasterDocument { display: none !important; }
 .print-top {
 display: flex; justify-content: space-between; align-items: flex-start;
 border-bottom: 2.5px solid #0f172a; padding-bottom: 0.55rem; margin-bottom: 0.65rem; gap: 1rem;
@@ -294,7 +344,7 @@ margin-top: 0.8rem; page-break-before: always; text-align: center;
 footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem; }
 </style>
 </head>
-<body>
+<body class="locked-view">
 <svg style="display:none;" xmlns="http://www.w3.org/2000/svg">
 <defs>
 <linearGradient id="tmYellowCase" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -588,7 +638,7 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
 <div class="master-builder-card" id="masterQuoteSection">
 <div class="mb-header">
 <h2 data-es="🛠️ Constructor Completo de Cotización y Factura" data-en="🛠️ Full Project Quote & Invoice Builder">🛠️ Constructor Completo de Cotización y Factura</h2>
-<span class="mb-badge" id="proStatusBadge" data-es="¡Ármala Gratis Aquí! ($1.99 al Descargar o Enviar)" data-en="Build Free Here! ($1.99 to Download or Send)">¡Ármala Gratis Aquí! ($1.99 al Descargar o Enviar)</span>
+<span class="mb-badge" id="proStatusBadge" data-es="¡Ármala y Ve el Borrador Gratis! ($1.99 al Descargar/Enviar)" data-en="Build & View Draft Free! ($1.99 to Download/Send)">¡Ármala y Ve el Borrador Gratis! ($1.99 al Descargar/Enviar)</span>
 </div>
 <div class="mb-section">
 <div class="mb-sec-title">
@@ -666,9 +716,9 @@ Al marcar Acepto y firmar debajo, el cliente aprueba los costos y términos desc
 <div class="modal-overlay" id="helpModal">
 <div class="modal-box">
 <h3 data-es="🚀 Cómo usar MaterialCalcPro" data-en="🚀 How to Use MaterialCalcPro">🚀 Cómo usar MaterialCalcPro</h3>
-<div class="modal-step" data-es="1️⃣ Arriba puedes alternar entre Pies/Yardas (📏 ft/yd³) y Metros (📏 m/m³), cambiar la moneda (USD, MXN, CLP, COP, DOP, EUR) y el idioma (ES/EN)." data-en="1️⃣ At the top you can toggle between Feet/Yards (📏 ft/yd³) and Meters (📏 m/m³), change currency (USD, MXN, CLP, COP, DOP, EUR) and language (ES/EN).">1️⃣ Arriba puedes alternar entre Pies/Yardas (📏 ft/yd³) y Metros (📏 m/m³), cambiar la moneda (USD, MXN, CLP, COP, DOP, EUR) y el idioma (ES/EN).</div>
-<div class="modal-step" data-es="2️⃣ Pon las medidas y el precio unitario en cualquiera de las 6 calculadoras y toca '➕ Añadir este Cálculo y Precio a mi Cotización'." data-en="2️⃣ Enter dimensions and unit price in any of the 6 calculators and tap '➕ Add Calculation & Price to My Quote'.">2️⃣ Pon las medidas y el precio unitario en cualquiera de las 6 calculadoras y toca '➕ Añadir este Cálculo y Precio a mi Cotización'.</div>
-<div class="modal-step" data-es="3️⃣ Al desbloquear tu cotización ($1.99), podrás imprimir el PDF oficial de 1 página y enviarla completa por WhatsApp a tu cliente." data-en="3️⃣ Upon unlocking your quote ($1.99), you can print the official 1-page PDF and send the full quote via WhatsApp to your client.">3️⃣ Al desbloquear tu cotización ($1.99), podrás imprimir el PDF oficial de 1 página y enviarla completa por WhatsApp a tu cliente.</div>
+<div class="modal-step" data-es="1️⃣ Las 6 calculadoras de arriba son 100% libres: calcula materiales, precios y toma capturas si lo necesitas." data-en="1️⃣ All 6 calculators at the top are 100% free: calculate materials, costs, and take screenshots if needed.">1️⃣ Las 6 calculadoras de arriba son 100% libres: calcula materiales, precios y toma capturas si lo necesitas.</div>
+<div class="modal-step" data-es="2️⃣ Abajo puedes armar y revisar gratis el Borrador (Draft) completo de tu cotización con todos los números reales." data-en="2️⃣ Below you can build and review the full Draft of your quote for free with all real numbers visible.">2️⃣ Abajo puedes armar y revisar gratis el Borrador (Draft) completo de tu cotización con todos los números reales.</div>
+<div class="modal-step" data-es="3️⃣ Para quitar los sellos de Borrador Interno, descargar el PDF limpio de 1 página y enviarlo por WhatsApp a tu cliente, desbloquéalo por $1.99." data-en="3️⃣ To remove the Internal Draft watermarks, download the clean 1-page PDF, and send via WhatsApp to your client, unlock for $1.99.">3️⃣ Para quitar los sellos de Borrador Interno, descargar el PDF limpio de 1 página y enviarlo por WhatsApp a tu cliente, desbloquéalo por $1.99.</div>
 <button class="modal-close" onclick="closeHelpModal()" data-es="¡Entendido!" data-en="Got it!">¡Entendido!</button>
 </div>
 </div>
@@ -763,9 +813,14 @@ maximumFractionDigits: c.dec
 });
 }
 function syncLockVisualState() {
+if (isPaidUser) {
+document.body.classList.remove('locked-view');
+} else {
+document.body.classList.add('locked-view');
+}
 const keyEl = document.getElementById('ownerKeyBtn');
 if (keyEl) {
-keyEl.innerText = isPaidUser ? '🔑 Modo Dueño: ON' : '🔒 Modo Cliente ($1.99)';
+keyEl.innerText = isPaidUser ? '🔑 Modo Dueño: ON' : '🔒 Modo Cliente: ON';
 }
 }
 function activateOwnerMode() {
@@ -774,15 +829,40 @@ localStorage.removeItem('mcp_owner_unlocked');
 isPaidUser = false;
 syncLockVisualState();
 updatePayButtonState();
-alert(currentLang === 'es' ? '🔒 Modo Cliente ($1.99) Activado: Los botones de PDF y WhatsApp ahora piden pago en Stripe.' : '🔒 Client Mode ($1.99) Activated: PDF and WhatsApp buttons now require Stripe payment.');
+recalcMasterTotals();
+alert(currentLang === 'es' ? '🔒 Modo Cliente Activado: El contratista ve el Borrador (Draft) con sellos anti-captura y los botones piden pagar $1.99.' : '🔒 Client Mode Activated: Contractor sees the Draft with anti-screenshot watermarks and buttons require $1.99.');
 } else {
 localStorage.setItem('mcp_owner_unlocked', 'true');
 isPaidUser = true;
 syncLockVisualState();
 updatePayButtonState();
-alert(currentLang === 'es' ? '✅ Modo Dueño Activado: PDF y WhatsApp desbloqueados directo.' : '✅ Owner Mode Activated: Direct PDF & WhatsApp unlocked.');
+recalcMasterTotals();
+alert(currentLang === 'es' ? '✅ Modo Dueño Activado: Sellos de borrador eliminados, PDF y WhatsApp desbloqueados.' : '✅ Owner Mode Activated: Draft watermarks removed, PDF & WhatsApp unlocked.');
 }
 }
+function triggerDraftShield() {
+if (isPaidUser) return;
+const box = document.getElementById('liveDraftPreviewBox');
+if (!box) return;
+box.classList.add('shield-active');
+setTimeout(() => { box.classList.remove('shield-active'); }, 3500);
+}
+document.addEventListener('keyup', function(e) {
+if (!isPaidUser && (e.key === 'PrintScreen' || e.keyCode === 44)) {
+triggerDraftShield();
+}
+});
+document.addEventListener('keydown', function(e) {
+if (!isPaidUser) {
+if ((e.ctrlKey || e.metaKey) && (e.key === 'p' || e.key === 'P' || e.key === 's' || e.key === 'S')) {
+e.preventDefault();
+handleFinalDownloadClick();
+}
+if ((e.metaKey && e.shiftKey && (e.key === 's' || e.key === 'S' || e.key === '3' || e.key === '4'))) {
+triggerDraftShield();
+}
+}
+});
 window.addEventListener('beforeinstallprompt', (e) => {
 e.preventDefault();
 deferredPrompt = e;
@@ -1437,6 +1517,7 @@ uploadedLogoData = e.target.result;
 try { localStorage.setItem('mcp_company_logo', uploadedLogoData); } catch(err) {}
 const prev = document.getElementById('mainLogoPreview');
 if (prev) { prev.src = uploadedLogoData; prev.style.display = 'inline-block'; }
+recalcMasterTotals();
 };
 reader.readAsDataURL(file);
 }
@@ -1499,34 +1580,92 @@ labInput.value = totalLabor.toFixed(getCurrObj().dec);
 recalcMasterTotals();
 }
 }
-function getCalculatedMaterialsTotal() {
-if (projectCart.length > 0) {
-return projectCart.reduce((acc, it) => acc + (parseFloat(it.cost) || 0), 0);
-}
-const activeCard = document.querySelector('.calc-card.active');
-return activeCard ? (parseFloat(activeCard.getAttribute('data-cost')) || 0) : 0;
-}
-function recalcMasterTotals() {
-syncCustomLinesFromDOM();
-if (projectCart.length === 0) renderProjectCart();
-const calcMatTotal = getCalculatedMaterialsTotal();
+function renderLiveDraftPreview() {
+const draftBox = document.getElementById('liveDraftContent');
+if (!draftBox) return;
+const docType = document.getElementById('qb-doctype')?.value || 'quote';
+const isInvoice = docType === 'invoice';
+const docNum = document.getElementById('qb-docnum')?.value.trim() || '2026-0101';
+const comp = document.getElementById('qb-comp')?.value.trim() || (currentLang === 'es' ? 'Tu Compañía / Contratista' : 'Your Company / Contractor');
+const phone = document.getElementById('qb-phone')?.value.trim() || '';
+const client = document.getElementById('qb-client')?.value.trim() || (currentLang === 'es' ? 'Cliente / Proyecto' : 'Client / Project');
+const hwName = document.getElementById('qb-hw-name')?.value.trim() || '';
 const hwRaw = parseFloat(document.getElementById('qb-hw-cost')?.value) || 0;
 const hwMarkup = parseFloat(document.getElementById('qb-hw-markup')?.value) || 0;
-const hwWithMarkup = hwRaw * (1 + (hwMarkup / 100));
+const hwClientTotal = hwRaw * (1 + (hwMarkup / 100));
 const otherMat = parseFloat(document.getElementById('qb-mat')?.value) || 0;
 const lab = parseFloat(document.getElementById('qb-lab')?.value) || 0;
 const tax = parseFloat(document.getElementById('qb-tax')?.value) || 0;
 const dep = parseFloat(document.getElementById('qb-dep')?.value) || 0;
-let extrasSum = 0;
-document.querySelectorAll('.custom-line-row').forEach(r => {
-extrasSum += parseFloat(r.querySelector('.cl-price')?.value) || 0;
+const notes = document.getElementById('qb-notes')?.value.trim() || '';
+let items = projectCart.slice();
+if (items.length === 0) {
+const activeCard = document.querySelector('.calc-card.active');
+if (activeCard) items.push(extractCardSnapshot(activeCard));
+}
+const scopeHtml = items.map((it, idx) => {
+const t = currentLang === 'es' ? (it.title_es || it.title) : (it.title_en || it.title);
+const sm = currentLang === 'es' ? (it.summary_es || it.summary) : (it.summary_en || it.summary);
+return '<div style="margin-bottom:3px;"><strong>' + (idx + 1) + '. ' + t + ':</strong> ' + sm + '</div>';
+}).join('');
+let rowsHtml = '';
+let grandTotal = 0;
+items.forEach((it) => {
+const c = parseFloat(it.cost) || 0;
+const t = currentLang === 'es' ? (it.title_es || it.title) : (it.title_en || it.title);
+const sh = currentLang === 'es' ? (it.short_es || '') : (it.short_en || '');
+rowsHtml += '<tr><td>' + t + ' (' + sh + ')</td><td>' + formatUSD(c) + '</td></tr>';
+grandTotal += c;
 });
-const grandTotal = calcMatTotal + hwWithMarkup + otherMat + extrasSum + lab + tax;
+if (hwClientTotal > 0) {
+const hwLbl = hwName ? (currentLang === 'es' ? 'Materiales Ferretería y Acarreo (' + hwName + ')' : 'Hardware Materials & Hauling (' + hwName + ')') : (currentLang === 'es' ? 'Materiales Ferretería y Acarreo' : 'Hardware Materials & Hauling');
+rowsHtml += '<tr><td>' + hwLbl + '</td><td>' + formatUSD(hwClientTotal) + '</td></tr>';
+grandTotal += hwClientTotal;
+}
+if (otherMat > 0) {
+rowsHtml += '<tr><td>' + (currentLang === 'es' ? 'Otros Materiales Directos' : 'Other Direct Materials') + '</td><td>' + formatUSD(otherMat) + '</td></tr>';
+grandTotal += otherMat;
+}
+customLineItems.forEach(item => {
+const p = parseFloat(item.price) || 0;
+if (item.desc.trim() !== '' || p > 0) {
+const d = translatePresetText(item.desc.trim(), currentLang) || (currentLang === 'es' ? 'Partida Adicional' : 'Additional Item');
+rowsHtml += '<tr><td>' + d + '</td><td>' + formatUSD(p) + '</td></tr>';
+grandTotal += p;
+}
+});
+if (lab > 0) {
+rowsHtml += '<tr><td>' + (currentLang === 'es' ? 'Mano de Obra Profesional (Labor)' : 'Professional Labor') + '</td><td>' + formatUSD(lab) + '</td></tr>';
+grandTotal += lab;
+}
+if (tax > 0) {
+rowsHtml += '<tr><td>' + (currentLang === 'es' ? 'Impuestos / Permisos' : 'Taxes / Permits') + '</td><td>' + formatUSD(tax) + '</td></tr>';
+grandTotal += tax;
+}
 const balance = Math.max(0, grandTotal - dep);
-const totEl = document.getElementById('liveGrandTotal');
-const balEl = document.getElementById('liveBalanceDue');
-if (totEl) totEl.innerText = formatUSD(grandTotal) + ' ' + currentCurr;
-if (balEl) balEl.innerText = formatUSD(balance) + ' ' + currentCurr;
+const totLbl = isInvoice ? (currentLang === 'es' ? 'TOTAL FACTURA (' + currentCurr + ')' : 'TOTAL INVOICE (' + currentCurr + ')') : (currentLang === 'es' ? 'TOTAL COTIZADO (' + currentCurr + ')' : 'TOTAL ESTIMATE (' + currentCurr + ')');
+rowsHtml += '<tr class="draft-tot-row"><td>' + totLbl + '</td><td>' + formatUSD(grandTotal) + '</td></tr>';
+if (dep > 0) {
+rowsHtml += '<tr><td>' + (currentLang === 'es' ? 'Menos Depósito Recibido' : 'Less Deposit Paid') + '</td><td>-' + formatUSD(dep) + '</td></tr>';
+rowsHtml += '<tr class="draft-bal-row"><td>' + (currentLang === 'es' ? 'BALANCE PENDIENTE' : 'BALANCE DUE') + '</td><td>' + formatUSD(balance) + '</td></tr>';
+}
+const badgeTxt = isInvoice
+? (currentLang === 'es' ? 'FACTURA #' + docNum : 'INVOICE #' + docNum)
+: (currentLang === 'es' ? 'COTIZACIÓN #' + docNum : 'ESTIMATE #' + docNum);
+draftBox.innerHTML =
+'<div class="draft-hdr-row">' +
+'<div><strong style="font-size:0.95rem;">' + comp + '</strong>' + (phone ? '<div style="font-size:0.74rem; color:#475569;">' + phone + '</div>' : '') +
+'<div style="font-size:0.78rem; font-weight:700; margin-top:2px;">👤 ' + client + '</div></div>' +
+'<div style="text-align:right;"><span style="background:#0f172a; color:#facc15; padding:2px 6px; border-radius:4px; font-size:0.72rem; font-weight:900;">' + badgeTxt + '</span></div>' +
+'</div>' +
+'<div class="draft-scope-list">' + scopeHtml + '</div>' +
+'<table class="draft-table"><thead><tr><th>' + (currentLang === 'es' ? 'Partida / Descripción' : 'Scope / Description') + '</th><th>' + (currentLang === 'es' ? 'Monto' : 'Amount') + '</th></tr></thead><tbody>' + rowsHtml + '</tbody></table>' +
+(notes ? '<div style="margin-top:0.4rem; font-size:0.74rem; font-style:italic; color:#334155;">📌 ' + notes + '</div>' : '');
+}
+function recalcMasterTotals() {
+syncCustomLinesFromDOM();
+if (projectCart.length === 0) renderProjectCart();
+renderLiveDraftPreview();
 }
 function injectCardButtons() {
 document.querySelectorAll('.res-box').forEach(box => {
@@ -1543,15 +1682,15 @@ const note = document.getElementById('finalActionNote');
 const badge = document.getElementById('proStatusBadge');
 if (!btn) return;
 if (isPaidUser) {
-btn.innerText = currentLang === 'es' ? '🖨️ Descargar / Imprimir Cotización o Factura PDF (1 Página)' : '🖨️ Download / Print Official 1-Page Quote or Invoice PDF';
-if (waBtn) waBtn.innerText = currentLang === 'es' ? '📲 Enviar Cotización / Factura Completa por WhatsApp' : '📲 Send Full Quote / Invoice via WhatsApp';
-if (note) note.innerText = currentLang === 'es' ? '✅ Acceso Pro Desbloqueado • Imprime tu PDF y envía por WhatsApp sin límites' : '✅ Pro Access Unlocked • Print PDF and send via WhatsApp unlimited';
-if (badge) badge.innerText = currentLang === 'es' ? '✅ Modo Pro Desbloqueado' : '✅ Pro Mode Unlocked';
+btn.innerText = currentLang === 'es' ? '🖨️ Descargar / Imprimir Cotización o Factura PDF Limpia (1 Página)' : '🖨️ Download / Print Clean Official 1-Page Quote or Invoice PDF';
+if (waBtn) waBtn.innerText = currentLang === 'es' ? '📲 Enviar Cotización / Factura Oficial por WhatsApp' : '📲 Send Official Quote / Invoice via WhatsApp';
+if (note) note.innerText = currentLang === 'es' ? '✅ Documento Oficial Desbloqueado • Sin sellos de borrador, listo para PDF y WhatsApp' : '✅ Official Document Unlocked • No draft watermarks, ready for PDF & WhatsApp';
+if (badge) badge.innerText = currentLang === 'es' ? '✅ Modo Oficial Desbloqueado' : '✅ Official Mode Unlocked';
 } else {
-btn.innerText = currentLang === 'es' ? '🔒 Descargar Cotización Oficial PDF con Tu Logo ($1.99)' : '🔒 Download Official PDF Quote with Your Logo ($1.99)';
-if (waBtn) waBtn.innerText = currentLang === 'es' ? '🔒 Enviar Cotización Oficial por WhatsApp ($1.99)' : '🔒 Send Official Quote via WhatsApp ($1.99)';
-if (note) note.innerText = currentLang === 'es' ? '🔒 Tus datos quedan guardados • Un solo pago de $1.99 desbloquea el PDF Oficial y el envío por WhatsApp' : '🔒 Your items are saved • One $1.99 payment unlocks both Official PDF and WhatsApp sending';
-if (badge) badge.innerText = currentLang === 'es' ? '¡Ármala Gratis Aquí! ($1.99 al Descargar o Enviar)' : 'Build Free Here! ($1.99 to Download or Send)';
+btn.innerText = currentLang === 'es' ? '🔒 Quitar Sellos de Borrador y Descargar PDF Oficial ($1.99)' : '🔒 Remove Draft Watermarks & Download Official PDF ($1.99)';
+if (waBtn) waBtn.innerText = currentLang === 'es' ? '🔒 Desbloquear y Enviar Cotización por WhatsApp ($1.99)' : '🔒 Unlock & Send Official Quote via WhatsApp ($1.99)';
+if (note) note.innerText = currentLang === 'es' ? '🔒 El Borrador arriba es solo para tu revisión • Paga $1.99 en Stripe para quitar los sellos internos, descargar el PDF limpio y enviar por WhatsApp' : '🔒 The Draft above is for your review only • Pay $1.99 via Stripe to remove internal watermarks, download clean PDF & send via WhatsApp';
+if (badge) badge.innerText = currentLang === 'es' ? '¡Ármala y Ve el Borrador Gratis! ($1.99 al Descargar/Enviar)' : 'Build & View Draft Free! ($1.99 to Download/Send)';
 }
 }
 function renderMasterBuilderBody() {
@@ -1566,7 +1705,7 @@ container.innerHTML = `
 <div class="qb-grid-3">
 <div class="qb-field">
 <label data-es="Ferretería / # Estimado (Opcional)" data-en="Hardware Store / Quote #">Ferretería / # Estimado (Opcional)</label>
-<input type="text" id="qb-hw-name" data-ph-es="Ej. National / Home Depot #402" data-ph-en="e.g. Home Depot / National #402" placeholder="Ej. National / Home Depot #402">
+<input type="text" id="qb-hw-name" data-ph-es="Ej. National / Home Depot #402" data-ph-en="e.g. Home Depot / National #402" placeholder="Ej. National / Home Depot #402" oninput="recalcMasterTotals()">
 </div>
 <div class="qb-field">
 <label id="lbl-qb-hw-cost">Monto Estimado Ferretería ($ USD)</label>
@@ -1638,19 +1777,19 @@ container.innerHTML = `
 </div>
 <div class="mb-section">
 <div class="mb-sec-title">
-<span data-es="5️⃣ Datos Oficiales de tu Cotización o Factura (Invoice)" data-en="5️⃣ Official Quote or Invoice Details">5️⃣ Datos Oficiales de tu Cotización o Factura (Invoice)</span>
+<span data-es="5️⃣ Datos Oficiales y Borrador en Vivo (Draft)" data-en="5️⃣ Official Details & Live Draft Preview">5️⃣ Datos Oficiales y Borrador en Vivo (Draft)</span>
 </div>
 <div class="qb-grid">
 <div class="qb-field">
 <label data-es="Tipo de Documento a Generar" data-en="Document Type">Tipo de Documento a Generar</label>
-<select id="qb-doctype">
+<select id="qb-doctype" onchange="recalcMasterTotals()">
 <option value="quote" data-es="📄 Cotización Oficial (Con Acepto / No Acepto)" data-en="📄 Official Estimate / Quote (With Accept / Decline)">📄 Cotización Oficial (Con Acepto / No Acepto)</option>
 <option value="invoice" data-es="🧾 Factura Oficial / Invoice (Cobro de Obra)" data-en="🧾 Official Invoice (Project Billing)">🧾 Factura Oficial / Invoice (Cobro de Obra)</option>
 </select>
 </div>
 <div class="qb-field">
 <label data-es="Núm. de Documento" data-en="Document #">Núm. de Documento</label>
-<input type="text" id="qb-docnum" value="2026-0101">
+<input type="text" id="qb-docnum" value="2026-0101" oninput="recalcMasterTotals()">
 </div>
 </div>
 <div class="logo-upload-box">
@@ -1661,17 +1800,17 @@ container.innerHTML = `
 <div class="qb-grid">
 <div class="qb-field">
 <label data-es="Tu Compañía / Contratista" data-en="Your Company / Contractor">Tu Compañía / Contratista</label>
-<input type="text" id="qb-comp" data-ph-es="Ej. Constructora Soto LLC" data-ph-en="e.g. Soto Construction LLC" placeholder="Ej. Constructora Soto LLC">
+<input type="text" id="qb-comp" data-ph-es="Ej. Constructora Soto LLC" data-ph-en="e.g. Soto Construction LLC" placeholder="Ej. Constructora Soto LLC" oninput="recalcMasterTotals()">
 </div>
 <div class="qb-field">
 <label data-es="Teléfono / Licencia" data-en="Phone / License #">Teléfono / Licencia</label>
-<input type="text" id="qb-phone" placeholder="(787) 000-0000">
+<input type="text" id="qb-phone" placeholder="(787) 000-0000" oninput="recalcMasterTotals()">
 </div>
 </div>
 <div class="qb-grid">
 <div class="qb-field">
 <label data-es="Cliente / Dirección de Proyecto" data-en="Client / Project Address">Cliente / Dirección de Proyecto</label>
-<input type="text" id="qb-client" data-ph-es="Nombre del cliente o proyecto" data-ph-en="Client name or project address" placeholder="Nombre del cliente o proyecto">
+<input type="text" id="qb-client" data-ph-es="Nombre del cliente o proyecto" data-ph-en="Client name or project address" placeholder="Nombre del cliente o proyecto" oninput="recalcMasterTotals()">
 </div>
 <div class="qb-field">
 <label id="lbl-qb-mat">Otros Materiales Misceláneos ($ USD)</label>
@@ -1695,18 +1834,21 @@ container.innerHTML = `
 </div>
 <div class="qb-field">
 <label data-es="Notas / Garantía / Condiciones" data-en="Notes / Warranty / Terms">Notas / Garantía / Condiciones</label>
-<input type="text" id="qb-notes" data-ph-es="Ej. Depósito 50% para iniciar. Garantía 1 año." data-ph-en="e.g. 50% deposit to start. 1-year warranty." placeholder="Ej. Depósito 50% para iniciar. Garantía 1 año.">
+<input type="text" id="qb-notes" data-ph-es="Ej. Depósito 50% para iniciar. Garantía 1 año." data-ph-en="e.g. 50% deposit to start. 1-year warranty." placeholder="Ej. Depósito 50% para iniciar. Garantía 1 año." oninput="recalcMasterTotals()">
 </div>
 </div>
-<div class="live-total-bar">
-<div>
-<span style="font-size:0.78rem; color:#a7f3d0; display:block;" data-es="TOTAL DEL PROYECTO:" data-en="TOTAL PROJECT ESTIMATE:">TOTAL DEL PROYECTO:</span>
-<strong id="liveGrandTotal">$0.00</strong>
+<div class="draft-preview-wrapper" id="liveDraftPreviewBox" oncontextmenu="if(!isPaidUser) return false;" oncopy="if(!isPaidUser) return false;">
+<div class="draft-top-ribbon" data-es="⚠️ BORRADOR INTERNO DEL CONTRATISTA (INCLUYE MARGEN PRIVADO • NO ENVIAR CAPTURA AL CLIENTE)" data-en="⚠️ INTERNAL CONTRACTOR DRAFT (INCLUDES PRIVATE MARKUP • DO NOT SCREENSHOT TO CLIENT)">⚠️ BORRADOR INTERNO DEL CONTRATISTA (INCLUYE MARGEN PRIVADO • NO ENVIAR CAPTURA AL CLIENTE)</div>
+<div class="draft-watermark-layer">
+<div class="draft-wm-stamp" data-es="BORRADOR DE USO INTERNO • CONTIENE GANANCIA DEL CONTRATISTA • NO OFICIAL" data-en="INTERNAL CONTRACTOR DRAFT • CONTAINS PRIVATE MARKUP • NOT OFFICIAL">BORRADOR DE USO INTERNO • CONTIENE GANANCIA DEL CONTRATISTA • NO OFICIAL</div>
+<div class="draft-wm-stamp" data-es="PROHIBIDO CAPTURAR PARA CLIENTE • DESBLOQUEA EL PDF LIMPIO POR $1.99" data-en="DO NOT SCREENSHOT TO CLIENT • UNLOCK CLEAN PDF FOR $1.99">PROHIBIDO CAPTURAR PARA CLIENTE • DESBLOQUEA EL PDF LIMPIO POR $1.99</div>
+<div class="draft-wm-stamp" data-es="BORRADOR DE USO INTERNO • CONTIENE GANANCIA DEL CONTRATISTA • NO OFICIAL" data-en="INTERNAL CONTRACTOR DRAFT • CONTAINS PRIVATE MARKUP • NOT OFFICIAL">BORRADOR DE USO INTERNO • CONTIENE GANANCIA DEL CONTRATISTA • NO OFICIAL</div>
 </div>
-<div style="text-align:right;">
-<span style="font-size:0.78rem; color:#fde68a; display:block;" data-es="BALANCE PENDIENTE:" data-en="BALANCE DUE:">BALANCE PENDIENTE:</span>
-<strong id="liveBalanceDue" style="color:#fde68a;">$0.00</strong>
+<div class="draft-capture-shield">
+<div style="font-size:1.1rem; margin-bottom:0.4rem;" data-es="🔒 CAPTURA DE BORRADOR BLOQUEADA" data-en="🔒 DRAFT SCREENSHOT BLOCKED">🔒 CAPTURA DE BORRADOR BLOQUEADA</div>
+<div style="font-size:0.82rem; color:#fff; font-weight:600;" data-es="Este borrador es de uso interno. Desbloquea el PDF Oficial y el envío por WhatsApp abajo por $1.99." data-en="This draft is for internal review. Unlock the Official PDF and WhatsApp sending below for $1.99.">Este borrador es de uso interno. Desbloquea el PDF Oficial y el envío por WhatsApp abajo por $1.99.</div>
 </div>
+<div id="liveDraftContent"></div>
 </div>
 <button type="button" class="stripe-pay-btn" id="finalActionBtn" onclick="handleFinalDownloadClick()"></button>
 <button type="button" class="wa-master-btn" id="finalWaBtn" onclick="handleWhatsAppQuoteClick()"></button>
@@ -1767,85 +1909,96 @@ document.getElementById('pCompanyPhone').innerText = phone ? ((currentLang === '
 document.getElementById('pClientLine').innerText = client ? ((currentLang === 'es' ? 'Cliente / Proyecto: ' : 'Client / Project: ') + client) : '';
 document.getElementById('pDocTypeBadge').innerText = isInvoice ? (currentLang === 'es' ? 'FACTURA OFICIAL (INVOICE)' : 'OFFICIAL INVOICE') : (currentLang === 'es' ? 'COTIZACIÓN OFICIAL' : 'OFFICIAL ESTIMATE');
 document.getElementById('pDocNumLine').innerText = (isInvoice ? 'INV #' : 'EST #') + docNum;
-document.getElementById('pDateLine').innerText = (currentLang === 'es' ? 'Fecha: ' : 'Date: ') + new Date().toLocaleDateString();
-document.getElementById('thConcept').innerText = currentLang === 'es' ? 'Descripción / Partida de Obra' : 'Description / Scope Item';
-document.getElementById('thAmount').innerText = (currentLang === 'es' ? 'Monto (' : 'Amount (') + currentCurr + ')';
-document.getElementById('sigClientLbl').innerText = currentLang === 'es' ? 'Firma del Cliente' : 'Client Signature';
-document.getElementById('sigContractorLbl').innerText = currentLang === 'es' ? 'Firma del Contratista' : 'Contractor Signature';
-document.getElementById('sigDateLbl').innerText = currentLang === 'es' ? 'Fecha' : 'Date';
-document.getElementById('pHwAttachTitle').innerText = currentLang === 'es' ? 'Anejo: Cotización / Estimado de Ferretería' : 'Attachment: Hardware Store Quote / Estimate';
-const logoEl = document.getElementById('pLogoImg');
-const badgeEl = document.getElementById('pDefaultBadge');
+document.getElementById('pDateLine').innerText = new Date().toLocaleDateString(currentLang === 'es' ? 'es-PR' : 'en-US');
+
+const logoImg = document.getElementById('pLogoImg');
+const defBadge = document.getElementById('pDefaultBadge');
 if (uploadedLogoData) {
-logoEl.src = uploadedLogoData;
-logoEl.style.display = 'block';
-badgeEl.style.display = 'none';
+logoImg.src = uploadedLogoData;
+logoImg.style.display = 'block';
+defBadge.style.display = 'none';
 } else {
-logoEl.style.display = 'none';
-badgeEl.style.display = 'flex';
+logoImg.style.display = 'none';
+defBadge.style.display = 'flex';
 }
-let itemsToPrint = projectCart.slice();
-if (itemsToPrint.length === 0) {
+
+document.getElementById('pScopeTitle').innerText = currentLang === 'es'
+? 'Alcance Técnico y Desglose de Materiales Calculados'
+: 'Technical Scope & Calculated Material Breakdown';
+
+let items = projectCart.slice();
+if (items.length === 0) {
 const activeCard = document.querySelector('.calc-card.active');
-if (activeCard) itemsToPrint.push(extractCardSnapshot(activeCard));
+if (activeCard) items.push(extractCardSnapshot(activeCard));
 }
-document.getElementById('pScopeTitle').innerText = currentLang === 'es' ? 'Alcance Técnico y Desglose de Materiales Calculados' : 'Technical Scope & Calculated Material Breakdown';
-document.getElementById('pScopeItemsContainer').innerHTML = itemsToPrint.map((it, idx) => {
+
+document.getElementById('pScopeItemsContainer').innerHTML = items.map((it, idx) => {
 const t = currentLang === 'es' ? (it.title_es || it.title) : (it.title_en || it.title);
 const sp = currentLang === 'es' ? (it.specs_es || it.specs) : (it.specs_en || it.specs);
 const sm = currentLang === 'es' ? (it.summary_es || it.summary) : (it.summary_en || it.summary);
-return '<div class="print-scope-item"><strong>' + (idx + 1) + '. ' + t + ':</strong> ' + sp + '<br><span style="color:#0f172a; font-weight:700;">➔ ' + sm + '</span></div>';
+return '<div class="print-scope-item"><strong>' + (idx + 1) + '. ' + t + ':</strong> ' + sp + '<br><em>➔ ' + sm + '</em></div>';
 }).join('');
-let rowsHtml = '';
+
+document.getElementById('thConcept').innerText = currentLang === 'es' ? 'Descripción / Partida de Obra' : 'Scope / Line Item Description';
+document.getElementById('thAmount').innerText = (currentLang === 'es' ? 'Monto (' : 'Amount (') + currentCurr + ')';
+
+let tbodyHtml = '';
 let grandTotal = 0;
-itemsToPrint.forEach((it) => {
+
+items.forEach((it) => {
 const c = parseFloat(it.cost) || 0;
-if (c > 0) {
 const t = currentLang === 'es' ? (it.title_es || it.title) : (it.title_en || it.title);
-const sh = currentLang === 'es' ? (it.short_es || (it.summary_es || '').split('(')[0].trim()) : (it.short_en || (it.summary_en || '').split('(')[0].trim());
-rowsHtml += '<tr><td>' + t + ' — ' + sh + '</td><td>' + formatUSD(c) + '</td></tr>';
+const sh = currentLang === 'es' ? (it.short_es || '') : (it.short_en || '');
+tbodyHtml += '<tr><td>' + t + ' (' + sh + ')</td><td>' + formatUSD(c) + '</td></tr>';
 grandTotal += c;
-}
 });
+
 if (hwClientTotal > 0) {
-const hwLabel = hwName ? (currentLang === 'es' ? 'Suministro de Materiales de Ferretería y Acarreo (Ref. ' + hwName + ')' : 'Hardware Store Material Supply & Hauling (Ref. ' + hwName + ')') : (currentLang === 'es' ? 'Suministro de Materiales de Ferretería y Acarreo' : 'Hardware Store Material Supply & Hauling');
-rowsHtml += '<tr><td>' + hwLabel + '</td><td>' + formatUSD(hwClientTotal) + '</td></tr>';
+const hwLbl = hwName
+? (currentLang === 'es' ? 'Materiales de Ferretería y Acarreo (' + hwName + ')' : 'Hardware Store Materials & Hauling (' + hwName + ')')
+: (currentLang === 'es' ? 'Materiales de Ferretería y Acarreo' : 'Hardware Store Materials & Hauling');
+tbodyHtml += '<tr><td>' + hwLbl + '</td><td>' + formatUSD(hwClientTotal) + '</td></tr>';
 grandTotal += hwClientTotal;
 }
+
 if (otherMat > 0) {
-const matLbl = currentLang === 'es' ? 'Otros Materiales Directos e Insumos de Obra' : 'Other Direct Jobsite Materials & Supplies';
-rowsHtml += '<tr><td>' + matLbl + '</td><td>' + formatUSD(otherMat) + '</td></tr>';
+tbodyHtml += '<tr><td>' + (currentLang === 'es' ? 'Otros Materiales Directos' : 'Other Direct Materials') + '</td><td>' + formatUSD(otherMat) + '</td></tr>';
 grandTotal += otherMat;
 }
+
 customLineItems.forEach(item => {
 const p = parseFloat(item.price) || 0;
 if (item.desc.trim() !== '' || p > 0) {
-const rawDesc = translatePresetText(item.desc.trim(), currentLang);
-const d = rawDesc || (currentLang === 'es' ? 'Partida Adicional / Especial' : 'Additional Line Item');
-rowsHtml += '<tr><td>' + d + '</td><td>' + formatUSD(p) + '</td></tr>';
+const d = translatePresetText(item.desc.trim(), currentLang) || (currentLang === 'es' ? 'Partida Adicional' : 'Additional Item');
+tbodyHtml += '<tr><td>' + d + '</td><td>' + formatUSD(p) + '</td></tr>';
 grandTotal += p;
 }
 });
-if (lab > 0 || rowsHtml === '') {
-const labLbl = currentLang === 'es' ? 'Mano de Obra Profesional e Instalación (Labor)' : 'Professional Labor & Installation';
-rowsHtml += '<tr><td>' + labLbl + '</td><td>' + formatUSD(lab) + '</td></tr>';
+
+if (lab > 0) {
+tbodyHtml += '<tr><td>' + (currentLang === 'es' ? 'Mano de Obra Profesional (Labor)' : 'Professional Labor') + '</td><td>' + formatUSD(lab) + '</td></tr>';
 grandTotal += lab;
 }
+
 if (tax > 0) {
-const taxLbl = currentLang === 'es' ? 'Impuestos, Permisos y Cargos Operativos' : 'Taxes, Permits & Operating Charges';
-rowsHtml += '<tr><td>' + taxLbl + '</td><td>' + formatUSD(tax) + '</td></tr>';
+tbodyHtml += '<tr><td>' + (currentLang === 'es' ? 'Impuestos / Permisos / Otros' : 'Taxes / Permits / Other') + '</td><td>' + formatUSD(tax) + '</td></tr>';
 grandTotal += tax;
 }
-const totalLabel = isInvoice ? (currentLang === 'es' ? 'TOTAL FACTURADO (' + currentCurr + ')' : 'TOTAL PROJECT INVOICE (' + currentCurr + ')') : (currentLang === 'es' ? 'TOTAL COTIZADO (' + currentCurr + ')' : 'TOTAL PROJECT ESTIMATE (' + currentCurr + ')');
-rowsHtml += '<tr class="print-total-row"><td>' + totalLabel + '</td><td>' + formatUSD(grandTotal) + '</td></tr>';
+
 const balance = Math.max(0, grandTotal - dep);
-if (dep > 0 || isInvoice) {
-const depLbl = currentLang === 'es' ? 'Menos: Depósito / Pagos Recibidos' : 'Less: Deposit / Payments Received';
-const balLbl = currentLang === 'es' ? 'BALANCE PENDIENTE A PAGAR (' + currentCurr + ')' : 'BALANCE DUE (' + currentCurr + ')';
-rowsHtml += '<tr><td>' + depLbl + '</td><td>-' + formatUSD(dep) + '</td></tr>';
-rowsHtml += '<tr class="print-balance-row"><td>' + balLbl + '</td><td>' + formatUSD(balance) + '</td></tr>';
+const totLabel = isInvoice
+? (currentLang === 'es' ? 'TOTAL FACTURA (' + currentCurr + ')' : 'TOTAL INVOICE (' + currentCurr + ')')
+: (currentLang === 'es' ? 'TOTAL COTIZADO (' + currentCurr + ')' : 'TOTAL ESTIMATE (' + currentCurr + ')');
+
+tbodyHtml += '<tr class="print-total-row"><td>' + totLabel + '</td><td>' + formatUSD(grandTotal) + '</td></tr>';
+
+if (dep > 0) {
+tbodyHtml += '<tr><td>' + (currentLang === 'es' ? 'Menos Depósito / Pronto Recibido' : 'Less Deposit / Amount Paid') + '</td><td>-' + formatUSD(dep) + '</td></tr>';
+tbodyHtml += '<tr class="print-balance-row"><td>' + (currentLang === 'es' ? 'BALANCE PENDIENTE A PAGAR' : 'BALANCE DUE') + '</td><td>' + formatUSD(balance) + '</td></tr>';
 }
-document.getElementById('pCostTableBody').innerHTML = rowsHtml;
+
+document.getElementById('pCostTableBody').innerHTML = tbodyHtml;
+
 const notesEl = document.getElementById('pNotesLine');
 if (notes) {
 notesEl.innerText = (currentLang === 'es' ? 'Notas y Condiciones: ' : 'Notes & Terms: ') + notes;
@@ -1853,67 +2006,74 @@ notesEl.style.display = 'block';
 } else {
 notesEl.style.display = 'none';
 }
-const authHeader = document.getElementById('pAuthHeader');
-const acceptChecks = document.getElementById('pAcceptChecks');
-const legalText = document.getElementById('pLegalText');
-if (isInvoice) {
-authHeader.innerText = currentLang === 'es' ? 'Certificación de Entrega y Facturación:' : 'Work Completion & Invoice Acknowledgment:';
-acceptChecks.style.display = 'none';
-legalText.innerText = currentLang === 'es' ? 'Certifico que los materiales y trabajos detallados han sido ejecutados según lo acordado.' : 'I acknowledge that the billed materials and work described above have been completed as agreed.';
-} else {
-authHeader.innerText = currentLang === 'es' ? 'Decisión y Autorización del Cliente:' : 'Client Decision & Authorization:';
-acceptChecks.style.display = 'flex';
-document.getElementById('lblAcceptYes').innerText = currentLang === 'es' ? 'ACEPTO LA COTIZACIÓN Y AUTORIZO EL TRABAJO' : 'I ACCEPT THIS ESTIMATE & AUTHORIZE WORK';
-document.getElementById('lblAcceptNo').innerText = currentLang === 'es' ? 'NO ACEPTO' : 'I DO NOT ACCEPT';
-legalText.innerText = currentLang === 'es' ? 'Al marcar Acepto y firmar debajo, el cliente aprueba los costos, partidas y términos de esta cotización.' : 'By checking Accept and signing below, the client approves the costs, items and terms in this estimate.';
-}
+
+document.getElementById('pAuthHeader').innerText = isInvoice
+? (currentLang === 'es' ? 'Conformidad y Recibo de Obra:' : 'Project Completion & Acknowledgment:')
+: (currentLang === 'es' ? 'Decisión y Autorización del Cliente:' : 'Client Decision & Authorization:');
+
+document.getElementById('pAcceptChecks').style.display = isInvoice ? 'none' : 'flex';
+document.getElementById('lblAcceptYes').innerText = currentLang === 'es' ? 'ACEPTO LA COTIZACIÓN Y AUTORIZO EL TRABAJO' : 'I ACCEPT THIS ESTIMATE & AUTHORIZE THE WORK';
+document.getElementById('lblAcceptNo').innerText = currentLang === 'es' ? 'NO ACEPTO' : 'DECLINE';
+document.getElementById('pLegalText').innerText = isInvoice
+? (currentLang === 'es' ? 'Gracias por su confianza. Favor emitir el pago del balance pendiente según acordado.' : 'Thank you for your business. Please remit the balance due as agreed.')
+: (currentLang === 'es' ? 'Al marcar Acepto y firmar debajo, el cliente aprueba los costos y términos descritos en esta cotización.' : 'By checking Accept and signing below, the client approves the costs and terms described in this estimate.');
+
+document.getElementById('sigClientLbl').innerText = currentLang === 'es' ? 'Firma del Cliente' : 'Client Signature';
+document.getElementById('sigContractorLbl').innerText = currentLang === 'es' ? 'Firma del Contratista' : 'Contractor Signature';
+document.getElementById('sigDateLbl').innerText = currentLang === 'es' ? 'Fecha' : 'Date';
+
+const attachCheck = document.getElementById('qb-hw-print-attach')?.checked;
 const attachPage = document.getElementById('pHardwareAttachmentPage');
-const attachCheck = document.getElementById('qb-hw-print-attach');
-if (uploadedHwQuoteImg && attachCheck && attachCheck.checked) {
+if (attachCheck && uploadedHwQuoteImg) {
+document.getElementById('pHwAttachTitle').innerText = currentLang === 'es'
+? 'Anejo: Cotización / Estimado de Ferretería' + (hwName ? ' (' + hwName + ')' : '')
+: 'Attachment: Hardware Store Quote' + (hwName ? ' (' + hwName + ')' : '');
 document.getElementById('pHwAttachImg').src = uploadedHwQuoteImg;
 attachPage.style.display = 'block';
 } else {
 attachPage.style.display = 'none';
 }
+
 window.print();
 }
-window.addEventListener('DOMContentLoaded', () => {
+
+function restoreSavedState() {
 try {
 const savedCart = JSON.parse(localStorage.getItem('mcp_project_cart') || '[]');
-if (Array.isArray(savedCart)) {
-projectCart = savedCart.filter(it => it && it.title_es && it.title_en);
-localStorage.setItem('mcp_project_cart', JSON.stringify(projectCart));
-}
-} catch(e) {}
+if (Array.isArray(savedCart)) projectCart = savedCart;
+} catch (e) {}
 try {
 const savedLines = JSON.parse(localStorage.getItem('mcp_custom_lines') || '[]');
 if (Array.isArray(savedLines) && savedLines.length > 0) customLineItems = savedLines;
-} catch(e) {}
-renderMasterBuilderBody();
-const savedRaw = localStorage.getItem('mcp_checkout_state');
-if (savedRaw) {
+} catch (e) {}
 try {
-const saved = JSON.parse(savedRaw);
-if (saved.unit) unitSys = saved.unit;
-if (saved.curr) currentCurr = saved.curr;
-if (saved.lang) currentLang = saved.lang;
-if (saved.inputs) {
-Object.keys(saved.inputs).forEach(id => {
+const st = JSON.parse(localStorage.getItem('mcp_checkout_state') || 'null');
+if (st) {
+if (st.lang) currentLang = st.lang;
+if (st.unit) unitSys = st.unit;
+if (st.curr) currentCurr = st.curr;
+if (st.inputs) {
+Object.keys(st.inputs).forEach(id => {
 const el = document.getElementById(id);
 if (!el) return;
-if (el.type === 'checkbox') el.checked = !!saved.inputs[id];
-else el.value = saved.inputs[id];
+if (el.type === 'checkbox') el.checked = !!st.inputs[id];
+else el.value = st.inputs[id];
 });
 }
-if (saved.tab) {
-const targetBtn = document.querySelector('.tab-btn[onclick*="\'' + saved.tab + '\'"]');
-if (targetBtn) openTab(saved.tab, targetBtn);
+if (st.tab) {
+const targetCard = document.getElementById(st.tab);
+const targetBtn = document.querySelector(`.tab-btn[onclick*="'${st.tab}'"]`);
+if (targetCard && targetBtn) openTab(st.tab, targetBtn);
+}
 }
 } catch (e) {}
 }
+
+window.addEventListener('DOMContentLoaded', function() {
 injectCardButtons();
+renderMasterBuilderBody();
+restoreSavedState();
 applyLanguageUI();
-syncLockVisualState();
 });
 </script>
 </body>
