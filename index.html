@@ -28,8 +28,7 @@ for (let reg of regs) { reg.update(); }
 --whatsapp: #25D366;
 }
 html, * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
-body { background: var(--bg); color: var(--text); padding-bottom: 2.5rem; -webkit-user-select: none; user-select: none; }
-input, select, textarea { -webkit-user-select: text; user-select: text; }
+body { background: var(--bg); color: var(--text); padding-bottom: 2.5rem; }
 header { background: #090d16; color: white; padding: 1rem; border-bottom: 3px solid var(--accent); }
 .top-bar {
 display: flex; justify-content: space-between; align-items: center;
@@ -98,7 +97,7 @@ width: 100%; background: var(--accent); color: #000000; border: none;
 padding: 0.9rem; border-radius: 8px; font-size: 1rem; font-weight: 900; cursor: pointer; margin-top: 0.3rem;
 }
 .res-box {
-margin-top: 1.2rem; background: var(--primary); color: white; padding: 1.2rem; border-radius: 10px; position: relative; overflow: hidden;
+margin-top: 1.2rem; background: var(--primary); color: white; padding: 1.2rem; border-radius: 10px;
 }
 .res-title { font-size: 0.75rem; text-transform: uppercase; color: var(--accent); font-weight: 700; }
 .res-big-wrap {
@@ -108,30 +107,10 @@ gap: 0.5rem; margin: 0.3rem 0 0.8rem; border-bottom: 1px solid #334155; padding-
 .res-big { font-size: 1.65rem; font-weight: 800; }
 .res-cost-tag {
 background: #064e3b; border: 1px solid #10b981; color: #6ee7b7;
-padding: 0.3rem 0.65rem; border-radius: 8px; font-size: 1.15rem; font-weight: 900; transition: filter 0.2s;
+padding: 0.3rem 0.65rem; border-radius: 8px; font-size: 1.15rem; font-weight: 900;
 }
-.res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; font-size: 0.85rem; position: relative; }
-.res-grid span { display: block; font-size: 1.05rem; font-weight: 700; color: #fff; margin-top: 0.1rem; transition: filter 0.2s; }
-body.locked-view .res-cost-tag,
-body.locked-view .res-grid span,
-body.locked-view .cart-secret-num,
-body.locked-view #liveGrandTotal,
-body.locked-view #liveBalanceDue {
-filter: blur(7px);
-pointer-events: none;
-user-select: none;
-}
-.anti-ss-banner {
-display: none; margin-top: 0.75rem; background: rgba(250, 204, 21, 0.14);
-border: 1px dashed var(--accent); color: #fde047; padding: 0.45rem 0.65rem;
-border-radius: 6px; font-size: 0.75rem; font-weight: 800; text-align: center; cursor: pointer;
-}
-body.locked-view .anti-ss-banner { display: block; }
-.ss-watermark {
-display: none; font-size: 0.68rem; color: #f87171; font-weight: 900;
-text-transform: uppercase; letter-spacing: 0.6px; margin-top: 0.25rem;
-}
-body.locked-view .ss-watermark { display: block; }
+.res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; font-size: 0.85rem; }
+.res-grid span { display: block; font-size: 1.05rem; font-weight: 700; color: #fff; margin-top: 0.1rem; }
 .action-area {
 margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #334155;
 display: flex; flex-direction: column; gap: 0.55rem;
@@ -247,7 +226,6 @@ display: none !important;
 body { background: #fff; color: #000; padding: 0; font-size: 11.5px; }
 .container { max-width: 100%; margin: 0; padding: 0; }
 #printMasterDocument { display: block !important; }
-body.locked-view #printMasterDocument { display: none !important; }
 .print-top {
 display: flex; justify-content: space-between; align-items: flex-start;
 border-bottom: 2.5px solid #0f172a; padding-bottom: 0.55rem; margin-bottom: 0.65rem; gap: 1rem;
@@ -316,7 +294,7 @@ margin-top: 0.8rem; page-break-before: always; text-align: center;
 footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem; }
 </style>
 </head>
-<body class="locked-view">
+<body>
 <svg style="display:none;" xmlns="http://www.w3.org/2000/svg">
 <defs>
 <linearGradient id="tmYellowCase" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -615,10 +593,9 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
 <div class="mb-section">
 <div class="mb-sec-title">
 <span data-es="1️⃣ Cálculos de Materiales y Precios en tu Proyecto" data-en="1️⃣ Material Calculations & Prices in Your Project">1️⃣ Cálculos de Materiales y Precios en tu Proyecto</span>
-<small data-es="(Desglose y totales protegidos contra capturas hasta desbloquear)" data-en="(Breakdown & totals protected against screenshots until unlocked)">(Desglose y totales protegidos contra capturas hasta desbloquear)</small>
+<small data-es="(Cada cálculo que añades trae su precio y cambia de idioma automáticamente)" data-en="(Each added calculation brings its price and translates automatically)">(Cada cálculo que añades trae su precio y cambia de idioma automáticamente)</small>
 </div>
 <ul class="cart-list" id="projectCartList"></ul>
-<div class="ss-watermark" data-es="⚠️ VISTA DE BORRADOR INTERNO (CONTIENE GANANCIA OCULTA DEL CONTRATISTA • NO ENVIAR CAPTURA AL CLIENTE)" data-en="⚠️ INTERNAL DRAFT VIEW (CONTAINS HIDDEN CONTRACTOR MARKUP • DO NOT SCREENSHOT TO CLIENT)">⚠️ VISTA DE BORRADOR INTERNO (CONTIENE GANANCIA OCULTA DEL CONTRATISTA • NO ENVIAR CAPTURA AL CLIENTE)</div>
 </div>
 <div id="proBuilderBody"></div>
 </div>
@@ -691,7 +668,7 @@ Al marcar Acepto y firmar debajo, el cliente aprueba los costos y términos desc
 <h3 data-es="🚀 Cómo usar MaterialCalcPro" data-en="🚀 How to Use MaterialCalcPro">🚀 Cómo usar MaterialCalcPro</h3>
 <div class="modal-step" data-es="1️⃣ Arriba puedes alternar entre Pies/Yardas (📏 ft/yd³) y Metros (📏 m/m³), cambiar la moneda (USD, MXN, CLP, COP, DOP, EUR) y el idioma (ES/EN)." data-en="1️⃣ At the top you can toggle between Feet/Yards (📏 ft/yd³) and Meters (📏 m/m³), change currency (USD, MXN, CLP, COP, DOP, EUR) and language (ES/EN).">1️⃣ Arriba puedes alternar entre Pies/Yardas (📏 ft/yd³) y Metros (📏 m/m³), cambiar la moneda (USD, MXN, CLP, COP, DOP, EUR) y el idioma (ES/EN).</div>
 <div class="modal-step" data-es="2️⃣ Pon las medidas y el precio unitario en cualquiera de las 6 calculadoras y toca '➕ Añadir este Cálculo y Precio a mi Cotización'." data-en="2️⃣ Enter dimensions and unit price in any of the 6 calculators and tap '➕ Add Calculation & Price to My Quote'.">2️⃣ Pon las medidas y el precio unitario en cualquiera de las 6 calculadoras y toca '➕ Añadir este Cálculo y Precio a mi Cotización'.</div>
-<div class="modal-step" data-es="3️⃣ Al desbloquear tu cotización ($1.99), se quita el filtro borroso de seguridad, puedes imprimir el PDF oficial de 1 página y enviarla por WhatsApp." data-en="3️⃣ Upon unlocking your quote ($1.99), the security blur is removed, and you can print the official 1-page PDF and send it via WhatsApp.">3️⃣ Al desbloquear tu cotización ($1.99), se quita el filtro borroso de seguridad, puedes imprimir el PDF oficial de 1 página y enviarla por WhatsApp.</div>
+<div class="modal-step" data-es="3️⃣ Al desbloquear tu cotización ($1.99), podrás imprimir el PDF oficial de 1 página y enviarla completa por WhatsApp a tu cliente." data-en="3️⃣ Upon unlocking your quote ($1.99), you can print the official 1-page PDF and send the full quote via WhatsApp to your client.">3️⃣ Al desbloquear tu cotización ($1.99), podrás imprimir el PDF oficial de 1 página y enviarla completa por WhatsApp a tu cliente.</div>
 <button class="modal-close" onclick="closeHelpModal()" data-es="¡Entendido!" data-en="Got it!">¡Entendido!</button>
 </div>
 </div>
@@ -786,14 +763,9 @@ maximumFractionDigits: c.dec
 });
 }
 function syncLockVisualState() {
-if (isPaidUser) {
-document.body.classList.remove('locked-view');
-} else {
-document.body.classList.add('locked-view');
-}
 const keyEl = document.getElementById('ownerKeyBtn');
 if (keyEl) {
-keyEl.innerText = isPaidUser ? '🔑 Modo Dueño: ON' : '🔒 Modo Cliente: ON';
+keyEl.innerText = isPaidUser ? '🔑 Modo Dueño: ON' : '🔒 Modo Cliente ($1.99)';
 }
 }
 function activateOwnerMode() {
@@ -802,24 +774,15 @@ localStorage.removeItem('mcp_owner_unlocked');
 isPaidUser = false;
 syncLockVisualState();
 updatePayButtonState();
-alert(currentLang === 'es' ? '🔒 Modo Cliente Activado: Precios, desgloses y totales ahora están borrosos contra screenshots.' : '🔒 Client Mode Activated: Prices, breakdowns, and totals are now blurred against screenshots.');
+alert(currentLang === 'es' ? '🔒 Modo Cliente ($1.99) Activado: Los botones de PDF y WhatsApp ahora piden pago en Stripe.' : '🔒 Client Mode ($1.99) Activated: PDF and WhatsApp buttons now require Stripe payment.');
 } else {
 localStorage.setItem('mcp_owner_unlocked', 'true');
 isPaidUser = true;
 syncLockVisualState();
 updatePayButtonState();
-alert(currentLang === 'es' ? '✅ Modo Dueño Activado: Todos los números visibles, PDF y WhatsApp desbloqueados.' : '✅ Owner Mode Activated: All numbers visible, PDF & WhatsApp unlocked.');
+alert(currentLang === 'es' ? '✅ Modo Dueño Activado: PDF y WhatsApp desbloqueados directo.' : '✅ Owner Mode Activated: Direct PDF & WhatsApp unlocked.');
 }
 }
-document.addEventListener('contextmenu', function(e) {
-if (!isPaidUser) e.preventDefault();
-});
-document.addEventListener('keydown', function(e) {
-if (!isPaidUser && (e.ctrlKey || e.metaKey) && (e.key === 'p' || e.key === 'P' || e.key === 'c' || e.key === 'C')) {
-e.preventDefault();
-handleFinalDownloadClick();
-}
-});
 window.addEventListener('beforeinstallprompt', (e) => {
 e.preventDefault();
 deferredPrompt = e;
@@ -1008,7 +971,7 @@ if (hist.length === 0) {
 list.innerHTML = '<li style="color:#94a3b8;">' + (currentLang === 'es' ? 'Tus cálculos recientes aparecerán aquí automáticamente.' : 'Your recent calculations will appear here automatically.') + '</li>';
 return;
 }
-list.innerHTML = hist.map(item => '<li><span><strong>' + (currentLang === 'es' ? item.es : item.en) + '</strong> (' + item.time + ')</span><strong class="cart-secret-num" style="color:#0f172a;">' + item.res + '</strong></li>').join('');
+list.innerHTML = hist.map(item => '<li><span><strong>' + (currentLang === 'es' ? item.es : item.en) + '</strong> (' + item.time + ')</span><strong style="color:#0f172a;">' + item.res + '</strong></li>').join('');
 }
 function clearCalcHistory() {
 localStorage.removeItem('mcp_calc_history');
@@ -1358,8 +1321,8 @@ const h1 = activeCard ? activeCard.querySelector('h1') : null;
 const activeTitle = h1 ? (h1.getAttribute('data-' + currentLang) || h1.innerText) : '';
 list.innerHTML = '<li style="color:#cbd5e1; padding:0.4rem 0;">' +
 (currentLang === 'es'
-? '📌 Usando actualmente: <strong style="color:#fde047;">' + activeTitle + ' (<span class="cart-secret-num">' + formatUSD(activeCost) + '</span>)</strong>. Toca el botón azul <strong>"➕ Añadir este Cálculo y Precio a mi Cotización"</strong> arriba si quieres combinar varias calculadoras.'
-: '📌 Currently using: <strong style="color:#fde047;">' + activeTitle + ' (<span class="cart-secret-num">' + formatUSD(activeCost) + '</span>)</strong>. Tap the blue <strong>"➕ Add This Calculation & Price to My Quote"</strong> button above to combine multiple calculators.') +
+? '📌 Usando actualmente: <strong style="color:#fde047;">' + activeTitle + ' (' + formatUSD(activeCost) + ')</strong>. Toca el botón azul <strong>"➕ Añadir este Cálculo y Precio a mi Cotización"</strong> arriba si quieres combinar varias calculadoras.'
+: '📌 Currently using: <strong style="color:#fde047;">' + activeTitle + ' (' + formatUSD(activeCost) + ')</strong>. Tap the blue <strong>"➕ Add This Calculation & Price to My Quote"</strong> button above to combine multiple calculators.') +
 '</li>';
 return;
 }
@@ -1371,11 +1334,11 @@ return '<li class="cart-item">' +
 '<div style="flex:1; min-width:200px;">' +
 '<strong style="color:#fde047;">' + (i + 1) + '. ' + t + '</strong>' +
 '<div style="color:#cbd5e1; font-size:0.75rem;">' + sp + '</div>' +
-'<div class="cart-secret-num" style="color:#4ade80; font-weight:700; font-size:0.78rem;">➔ ' + sm + '</div>' +
+'<div style="color:#4ade80; font-weight:700; font-size:0.78rem;">➔ ' + sm + '</div>' +
 '</div>' +
 '<div style="display:flex; align-items:center; gap:0.4rem;">' +
 '<span style="font-size:0.75rem; color:#94a3b8;">' + cSym + '</span>' +
-'<input type="number" step="any" class="cart-price-input cart-secret-num" value="' + (Number(item.cost) || 0).toFixed(getCurrObj().dec) + '" oninput="updateCartItemPrice(' + i + ', this.value)">' +
+'<input type="number" step="any" class="cart-price-input" value="' + (Number(item.cost) || 0).toFixed(getCurrObj().dec) + '" oninput="updateCartItemPrice(' + i + ', this.value)">' +
 '<button type="button" class="cart-remove" onclick="removeCartItem(' + i + ')">✕</button>' +
 '</div>' +
 '</li>';
@@ -1567,13 +1530,6 @@ if (balEl) balEl.innerText = formatUSD(balance) + ' ' + currentCurr;
 }
 function injectCardButtons() {
 document.querySelectorAll('.res-box').forEach(box => {
-const banner = document.createElement('div');
-banner.className = 'anti-ss-banner';
-banner.setAttribute('onclick', 'handleFinalDownloadClick()');
-banner.setAttribute('data-es', '🔒 Desglose exacto y costos protegidos contra captura • Toca para desbloquear ($1.99)');
-banner.setAttribute('data-en', '🔒 Exact breakdown & costs protected against screenshots • Tap to unlock ($1.99)');
-banner.innerText = '🔒 Desglose exacto y costos protegidos contra captura • Toca para desbloquear ($1.99)';
-box.appendChild(banner);
 const div = document.createElement('div');
 div.className = 'action-area';
 div.innerHTML = '<button type="button" class="add-project-btn" onclick="addActiveCalcToProject(this)" data-es="➕ Añadir este Cálculo y Precio a mi Cotización" data-en="➕ Add This Calculation & Price to My Quote">➕ Añadir este Cálculo y Precio a mi Cotización</button>';
@@ -1589,13 +1545,13 @@ if (!btn) return;
 if (isPaidUser) {
 btn.innerText = currentLang === 'es' ? '🖨️ Descargar / Imprimir Cotización o Factura PDF (1 Página)' : '🖨️ Download / Print Official 1-Page Quote or Invoice PDF';
 if (waBtn) waBtn.innerText = currentLang === 'es' ? '📲 Enviar Cotización / Factura Completa por WhatsApp' : '📲 Send Full Quote / Invoice via WhatsApp';
-if (note) note.innerText = currentLang === 'es' ? '✅ Acceso Pro Desbloqueado • Números visibles, PDF y WhatsApp sin límites' : '✅ Pro Access Unlocked • Visible numbers, unlimited PDF and WhatsApp';
+if (note) note.innerText = currentLang === 'es' ? '✅ Acceso Pro Desbloqueado • Imprime tu PDF y envía por WhatsApp sin límites' : '✅ Pro Access Unlocked • Print PDF and send via WhatsApp unlimited';
 if (badge) badge.innerText = currentLang === 'es' ? '✅ Modo Pro Desbloqueado' : '✅ Pro Mode Unlocked';
 } else {
-btn.innerText = currentLang === 'es' ? '🔒 Revelar Números y Descargar Cotización PDF ($1.99)' : '🔒 Reveal Numbers & Download Official PDF Quote ($1.99)';
-if (waBtn) waBtn.innerText = currentLang === 'es' ? '🔒 Revelar y Enviar Cotización por WhatsApp ($1.99)' : '🔒 Reveal & Send Official Quote via WhatsApp ($1.99)';
-if (note) note.innerText = currentLang === 'es' ? '🔒 Anti-Screenshot Activo • Paga $1.99 en Stripe para quitar el filtro borroso, descargar el PDF y enviar por WhatsApp' : '🔒 Anti-Screenshot Active • Pay $1.99 via Stripe to unblur numbers, download PDF & send via WhatsApp';
-if (badge) badge.innerText = currentLang === 'es' ? '🔒 Vista Previa Protegida ($1.99 Desbloqueo Total)' : '🔒 Protected Preview ($1.99 Full Unlock)';
+btn.innerText = currentLang === 'es' ? '🔒 Descargar Cotización Oficial PDF con Tu Logo ($1.99)' : '🔒 Download Official PDF Quote with Your Logo ($1.99)';
+if (waBtn) waBtn.innerText = currentLang === 'es' ? '🔒 Enviar Cotización Oficial por WhatsApp ($1.99)' : '🔒 Send Official Quote via WhatsApp ($1.99)';
+if (note) note.innerText = currentLang === 'es' ? '🔒 Tus datos quedan guardados • Un solo pago de $1.99 desbloquea el PDF Oficial y el envío por WhatsApp' : '🔒 Your items are saved • One $1.99 payment unlocks both Official PDF and WhatsApp sending';
+if (badge) badge.innerText = currentLang === 'es' ? '¡Ármala Gratis Aquí! ($1.99 al Descargar o Enviar)' : 'Build Free Here! ($1.99 to Download or Send)';
 }
 }
 function renderMasterBuilderBody() {
@@ -1752,7 +1708,6 @@ container.innerHTML = `
 <strong id="liveBalanceDue" style="color:#fde68a;">$0.00</strong>
 </div>
 </div>
-<div class="ss-watermark" style="text-align:center; margin-bottom:0.6rem;" data-es="🔒 TOTALES PROTEGIDOS CONTRA CAPTURA • DESBLOQUEA EL DOCUMENTO OFICIAL DEBAJO ($1.99)" data-en="🔒 TOTALS PROTECTED AGAINST SCREENSHOTS • UNLOCK OFFICIAL DOCUMENT BELOW ($1.99)">🔒 TOTALES PROTEGIDOS CONTRA CAPTURA • DESBLOQUEA EL DOCUMENTO OFICIAL DEBAJO ($1.99)</div>
 <button type="button" class="stripe-pay-btn" id="finalActionBtn" onclick="handleFinalDownloadClick()"></button>
 <button type="button" class="wa-master-btn" id="finalWaBtn" onclick="handleWhatsAppQuoteClick()"></button>
 <div class="stripe-note" id="finalActionNote"></div>
