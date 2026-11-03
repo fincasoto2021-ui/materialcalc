@@ -6,23 +6,15 @@
 <meta name="google-site-verification" content="QK9UkO8Wa6ApdBs0sG4Gk8ojj5vx9duiBlAG9b618-g" />
 <title>MaterialCalcPro.org | Estimados, Facturas y Calculadora de Materiales</title>
 <meta name="description" content="Professional contractor estimate & invoice builder with built-in construction material calculators: Concrete, Roof Coating, CMU Blocks, AC BTU, Paint & Drywall.">
+<link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#0f172a">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 130 92'%3E%3Crect width='130' height='92' rx='18' fill='%23090d16' stroke='%23facc15' stroke-width='3'/%3E%3Cpath d='M14 66 L58 50 L68 63 L24 80 Z' fill='%23facc15' stroke='%23111827' stroke-width='1.5'/%3E%3Cpath d='M10 62 L16 59 L26 75 L20 82 L12 72 Z' fill='%23cbd5e1' stroke='%231e293b' stroke-width='1.5'/%3E%3Cpath d='M52 46 C52 17 75 5 100 11 C119 16 125 36 120 57 C116 71 104 78 88 78 L56 78 C49 78 49 65 52 46 Z' fill='%231e293b' stroke='%23000' stroke-width='1.8'/%3E%3Cpath d='M56 50 C57 26 75 16 96 20 C111 23 116 39 112 56 C109 67 99 72 84 72 L58 72 Z' fill='%23facc15' stroke='%23111827' stroke-width='1.4'/%3E%3Ccircle cx='90' cy='48' r='19' fill='%23facc15' stroke='%23b45309' stroke-width='1.5'/%3E%3Cpath d='M84 31 L98 31 L95 64 C95 67 83 67 83 64 Z' fill='%23cbd5e1' stroke='%23334155' stroke-width='1.4'/%3E%3Ccircle cx='90' cy='46' r='3' fill='%2394a3b8' stroke='%231e293b' stroke-width='1'/%3E%3C/svg%3E">
 <script>
-/* BLOQUEA CUALQUIER AVISO DE ADD TO HOME SCREEN Y ELIMINA SERVICE WORKERS VIEJOS */
-window.addEventListener('beforeinstallprompt', function(e) {
-  e.preventDefault();
-  e.stopImmediatePropagation();
-  return false;
-});
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistrations().then(function(regs) {
-    for (let reg of regs) { reg.unregister(); }
-  });
-}
-if ('caches' in window) {
-  caches.keys().then(function(names) {
-    for (let name of names) { caches.delete(name); }
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').then(function(reg) {
+      reg.update();
+    }).catch(function() {});
   });
 }
 </script>
