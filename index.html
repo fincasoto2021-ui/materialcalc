@@ -738,6 +738,28 @@ EUR: { sym: '€', code: 'EUR', dec: 2 },
 PEN: { sym: 'S/', code: 'PEN', dec: 2 },
 ARS: { sym: '$', code: 'ARS', dec: 0 }
 };
+
+/* NOMBRES EJECUTIVOS DE OBRA PARA EL COTIZADOR, PDF Y WHATSAPP */
+const PRO_SCOPE_TITLES = {
+hormigon: { es: 'Suministro y Vaciado de Hormigón / Concreto', en: 'Concrete Supply & Pouring' },
+sellador: { es: 'Sellado e Impermeabilización Elastomérica de Techo', en: 'Elastomeric Roof Waterproofing & Coating' },
+pintura: { es: 'Pintura y Preparación de Superficies', en: 'Surface Preparation & Paint Application' },
+gypsum: { es: 'Instalación de Gypsum Board y Plafón Acústico', en: 'Drywall & Acoustic Ceiling Installation' },
+bloques: { es: 'Construcción de Muro de Bloques (CMU)', en: 'CMU Block Wall Construction' },
+btu: { es: 'Suministro e Instalación de Unidad A/C (BTU)', en: 'A/C Unit Supply & Installation (BTU)' }
+};
+
+function upgradeScopeTitle(rawTitle, lang) {
+const t = (rawTitle || '').toLowerCase();
+if (t.indexOf('hormig') !== -1 || t.indexOf('concret') !== -1) return PRO_SCOPE_TITLES.hormigon[lang];
+if (t.indexOf('sellador') !== -1 || t.indexOf('roof') !== -1 || t.indexOf('elastom') !== -1) return PRO_SCOPE_TITLES.sellador[lang];
+if (t.indexOf('pintura') !== -1 || t.indexOf('paint') !== -1) return PRO_SCOPE_TITLES.pintura[lang];
+if (t.indexOf('gypsum') !== -1 || t.indexOf('drywall') !== -1 || t.indexOf('plaf') !== -1 || t.indexOf('tablaroca') !== -1) return PRO_SCOPE_TITLES.gypsum[lang];
+if (t.indexOf('bloque') !== -1 || t.indexOf('cmu') !== -1) return PRO_SCOPE_TITLES.bloques[lang];
+if (t.indexOf('aire') !== -1 || t.indexOf('btu') !== -1 || t.indexOf('tonnage') !== -1 || t.indexOf('a/c') !== -1) return PRO_SCOPE_TITLES.btu[lang];
+return rawTitle;
+}
+
 function detectInitialSettings() {
 let tz = '';
 try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch(e) {}
@@ -1335,8 +1357,9 @@ calcGypsum(false); calcBloques(false); calcBTU(false);
 }
 function extractCardSnapshot(card) {
 const h1 = card.querySelector('h1');
-const title_es = h1?.getAttribute('data-es') || h1?.innerText || '';
-const title_en = h1?.getAttribute('data-en') || h1?.innerText || '';
+const scopeObj = PRO_SCOPE_TITLES[card.id];
+const title_es = scopeObj ? scopeObj.es : (h1?.getAttribute('data-es') || h1?.innerText || '');
+const title_en = scopeObj ? scopeObj.en : (h1?.getAttribute('data-en') || h1?.innerText || '');
 const specs_es = [];
 const specs_en = [];
 card.querySelectorAll('.group').forEach(g => {
@@ -1397,8 +1420,9 @@ const cSym = getCurrObj().sym;
 if (projectCart.length === 0) {
 const activeCard = document.querySelector('.calc-card.active');
 const activeCost = activeCard ? (parseFloat(activeCard.getAttribute('data-cost')) || 0) : 0;
+const scopeObj = activeCard ? PRO_SCOPE_TITLES[activeCard.id] : null;
 const h1 = activeCard ? activeCard.querySelector('h1') : null;
-const activeTitle = h1 ? (h1.getAttribute('data-' + currentLang) || h1.innerText) : '';
+const activeTitle = scopeObj ? scopeObj[currentLang] : (h1 ? (h1.getAttribute('data-' + currentLang) || h1.innerText) : '');
 list.innerHTML = '<li style="color:#cbd5e1; padding:0.4rem 0;">' +
 (currentLang === 'es'
 ? '📌 Usando actualmente: <strong style="color:#fde047;">' + activeTitle + ' (' + formatUSD(activeCost) + ')</strong>. Toca el botón azul <strong>"➕ Añadir este Cálculo y Precio a mi Cotización"</strong> arriba si quieres combinar varias calculadoras.'
@@ -1407,7 +1431,8 @@ list.innerHTML = '<li style="color:#cbd5e1; padding:0.4rem 0;">' +
 return;
 }
 list.innerHTML = projectCart.map((item, i) => {
-const t = currentLang === 'es' ? (item.title_es || item.title) : (item.title_en || item.title);
+const rawT = currentLang === 'es' ? (item.title_es || item.title) : (item.title_en || item.title);
+const t = upgradeScopeTitle(rawT, currentLang);
 const sp = currentLang === 'es' ? (item.specs_es || item.specs) : (item.specs_en || item.specs);
 const sm = currentLang === 'es' ? (item.summary_es || item.summary) : (item.summary_en || item.summary);
 return '<li class="cart-item">' +
@@ -1467,7 +1492,8 @@ if (client) lines.push((currentLang === 'es' ? '👤 Cliente/Proyecto: ' : '👤
 lines.push('────────────────');
 let grandTotal = 0;
 items.forEach((it, idx) => {
-const t = currentLang === 'es' ? (it.title_es || it.title) : (it.title_en || it.title);
+const rawT = currentLang === 'es' ? (it.title_es || it.title) : (it.title_en || it.title);
+const t = upgradeScopeTitle(rawT, currentLang);
 const sm = currentLang === 'es' ? (it.summary_es || it.summary) : (it.summary_en || it.summary);
 const c = parseFloat(it.cost) || 0;
 grandTotal += c;
@@ -1484,7 +1510,7 @@ lines.push('• ' + (currentLang === 'es' ? 'Otros Materiales Directos: ' : 'Oth
 }
 customLineItems.forEach(item => {
 const p = parseFloat(item.price) || 0;
-if (item.desc.trim() !== '' || p > 0) {
+if (p > 0) {
 const d = translatePresetText(item.desc.trim(), currentLang) || (currentLang === 'es' ? 'Partida Adicional' : 'Additional Item');
 grandTotal += p;
 lines.push('• ' + d + ': *' + formatUSD(p) + '*');
@@ -1604,7 +1630,8 @@ const activeCard = document.querySelector('.calc-card.active');
 if (activeCard) items.push(extractCardSnapshot(activeCard));
 }
 const scopeHtml = items.map((it, idx) => {
-const t = currentLang === 'es' ? (it.title_es || it.title) : (it.title_en || it.title);
+const rawT = currentLang === 'es' ? (it.title_es || it.title) : (it.title_en || it.title);
+const t = upgradeScopeTitle(rawT, currentLang);
 const sm = currentLang === 'es' ? (it.summary_es || it.summary) : (it.summary_en || it.summary);
 return '<div style="margin-bottom:3px;"><strong>' + (idx + 1) + '. ' + t + ':</strong> ' + sm + '</div>';
 }).join('');
@@ -1612,7 +1639,8 @@ let rowsHtml = '';
 let grandTotal = 0;
 items.forEach((it) => {
 const c = parseFloat(it.cost) || 0;
-const t = currentLang === 'es' ? (it.title_es || it.title) : (it.title_en || it.title);
+const rawT = currentLang === 'es' ? (it.title_es || it.title) : (it.title_en || it.title);
+const t = upgradeScopeTitle(rawT, currentLang);
 const sh = currentLang === 'es' ? (it.short_es || '') : (it.short_en || '');
 rowsHtml += '<tr><td>' + t + ' (' + sh + ')</td><td>' + formatUSD(c) + '</td></tr>';
 grandTotal += c;
@@ -1628,7 +1656,7 @@ grandTotal += otherMat;
 }
 customLineItems.forEach(item => {
 const p = parseFloat(item.price) || 0;
-if (item.desc.trim() !== '' || p > 0) {
+if (p > 0) {
 const d = translatePresetText(item.desc.trim(), currentLang) || (currentLang === 'es' ? 'Partida Adicional' : 'Additional Item');
 rowsHtml += '<tr><td>' + d + '</td><td>' + formatUSD(p) + '</td></tr>';
 grandTotal += p;
@@ -1800,7 +1828,7 @@ container.innerHTML = `
 <div class="qb-grid">
 <div class="qb-field">
 <label data-es="Tu Compañía / Contratista" data-en="Your Company / Contractor">Tu Compañía / Contratista</label>
-<input type="text" id="qb-comp" data-ph-es="Ej. Constructora Soto LLC" data-ph-en="e.g. Soto Construction LLC" placeholder="Ej. Constructora Soto LLC" oninput="recalcMasterTotals()">
+<input type="text" id="qb-comp" data-ph-es="Ej. ASD Building Solutions LLC" data-ph-en="e.g. ASD Building Solutions LLC" placeholder="Ej. ASD Building Solutions LLC" oninput="recalcMasterTotals()">
 </div>
 <div class="qb-field">
 <label data-es="Teléfono / Licencia" data-en="Phone / License #">Teléfono / Licencia</label>
@@ -1933,7 +1961,8 @@ if (activeCard) items.push(extractCardSnapshot(activeCard));
 }
 
 document.getElementById('pScopeItemsContainer').innerHTML = items.map((it, idx) => {
-const t = currentLang === 'es' ? (it.title_es || it.title) : (it.title_en || it.title);
+const rawT = currentLang === 'es' ? (it.title_es || it.title) : (it.title_en || it.title);
+const t = upgradeScopeTitle(rawT, currentLang);
 const sp = currentLang === 'es' ? (it.specs_es || it.specs) : (it.specs_en || it.specs);
 const sm = currentLang === 'es' ? (it.summary_es || it.summary) : (it.summary_en || it.summary);
 return '<div class="print-scope-item"><strong>' + (idx + 1) + '. ' + t + ':</strong> ' + sp + '<br><em>➔ ' + sm + '</em></div>';
@@ -1947,7 +1976,8 @@ let grandTotal = 0;
 
 items.forEach((it) => {
 const c = parseFloat(it.cost) || 0;
-const t = currentLang === 'es' ? (it.title_es || it.title) : (it.title_en || it.title);
+const rawT = currentLang === 'es' ? (it.title_es || it.title) : (it.title_en || it.title);
+const t = upgradeScopeTitle(rawT, currentLang);
 const sh = currentLang === 'es' ? (it.short_es || '') : (it.short_en || '');
 tbodyHtml += '<tr><td>' + t + ' (' + sh + ')</td><td>' + formatUSD(c) + '</td></tr>';
 grandTotal += c;
@@ -1968,7 +1998,7 @@ grandTotal += otherMat;
 
 customLineItems.forEach(item => {
 const p = parseFloat(item.price) || 0;
-if (item.desc.trim() !== '' || p > 0) {
+if (p > 0) {
 const d = translatePresetText(item.desc.trim(), currentLang) || (currentLang === 'es' ? 'Partida Adicional' : 'Additional Item');
 tbodyHtml += '<tr><td>' + d + '</td><td>' + formatUSD(p) + '</td></tr>';
 grandTotal += p;
