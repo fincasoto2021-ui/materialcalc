@@ -99,6 +99,10 @@ label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--primar
 input, select, textarea {
   width: 100%; padding: 0.65rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.92rem; background: #fff;
 }
+.btn-calc {
+  width: 100%; background: var(--accent); color: #000; border: none;
+  padding: 0.8rem; border-radius: 8px; font-size: 0.92rem; font-weight: 900; cursor: pointer; margin-top: 0.2rem;
+}
 .res-box { margin-top: 1rem; background: var(--primary); color: white; padding: 1.1rem; border-radius: 10px; }
 .res-title { font-size: 0.72rem; text-transform: uppercase; color: var(--accent); font-weight: 700; }
 .res-big-wrap {
@@ -127,6 +131,10 @@ input, select, textarea {
   border-bottom: 1px solid #334155; padding-bottom: 0.75rem; margin-bottom: 0.95rem; flex-wrap: wrap; gap: 0.5rem;
 }
 .mb-header h2 { font-size: 1.15rem; color: var(--accent); font-weight: 900; }
+.reset-zero-btn {
+  background: #334155; color: #f8fafc; border: 1px solid #64748b;
+  padding: 0.32rem 0.65rem; border-radius: 6px; font-size: 0.74rem; font-weight: 800; cursor: pointer;
+}
 .open-sample-btn {
   width: 100%; background: linear-gradient(135deg, #fde047 0%, #eab308 100%);
   color: #0f172a; border: 2px solid #ffffff; padding: 0.85rem 1rem; border-radius: 10px;
@@ -175,7 +183,7 @@ input, select, textarea {
   margin-top: 0.55rem; background: #0f172a;
 }
 .logo-upload-box input[type="file"] { font-size: 0.76rem; color: #cbd5e1; border: none; padding: 0.15rem; background: transparent; }
-.logo-preview { max-height: 50px; margin-top: 0.35rem; display: none; border-radius: 4px; }
+.logo-status-msg { font-size: 0.76rem; color: #4ade80; font-weight: 800; margin-top: 0.3rem; display: none; }
 
 .contractor-numbers-bar {
   background: #064e3b; border: 1.5px solid #10b981; border-radius: 8px;
@@ -194,7 +202,25 @@ input, select, textarea {
 }
 .stripe-note { text-align: center; font-size: 0.74rem; color: #cbd5e1; margin-top: 0.45rem; }
 
-/* MODAL DE DOCUMENTO COMPLETO (HOJA DE PAPEL EJECUTIVA CON LOGO) */
+/* TARJETA DE HISTORIAL PERMANENTE */
+.history-card {
+  background: var(--card); padding: 1.15rem; border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-top: 1.15rem; border: 1px solid #cbd5e1;
+}
+.history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+.history-header h3 { font-size: 0.96rem; color: var(--primary); font-weight: 900; }
+.clear-btn {
+  background: transparent; border: 1px solid #ef4444; color: #ef4444;
+  padding: 0.24rem 0.6rem; border-radius: 6px; font-size: 0.74rem; font-weight: 700; cursor: pointer;
+}
+.history-list { list-style: none; font-size: 0.82rem; color: #475569; }
+.history-list li {
+  padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;
+  display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+}
+.history-list li:last-child { border-bottom: none; }
+
+/* MODAL DE EJEMPLO (SIEMPRE MUESTRA APEX CONSTRUCTORA LLC) */
 .doc-modal-overlay {
   position: fixed; inset: 0; background: rgba(9, 13, 22, 0.88);
   display: none; justify-content: center; align-items: flex-start;
@@ -283,7 +309,7 @@ input, select, textarea {
 .lux-signs { display: grid; grid-template-columns: 2fr 2fr 1fr; gap: 0.85rem; margin-top: 1.15rem; font-size: 0.74rem; }
 .lux-sign-line { border-top: 1.5px solid #0f172a; padding-top: 0.25rem; font-weight: 700; color: #334155; }
 
-/* IMPRESIÓN OFICIAL (FORMATO EJECUTIVO LIMPIO DE 1 PÁGINA) */
+/* IMPRESIÓN OFICIAL (SOLO SE ACTIVA AL DESCARGAR EL PDF TRAS PAGAR) */
 #printMasterDocument { display: none; }
 @media print {
   @page { size: letter; margin: 0.38in; }
@@ -394,10 +420,12 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
     <div class="builder-card">
       <div class="mb-header">
         <h2 data-es="📄 Generador de Estimados y Facturas (Invoice)" data-en="📄 Official Estimate & Invoice Builder">📄 Generador de Estimados y Facturas (Invoice)</h2>
+        <button type="button" class="reset-zero-btn" onclick="resetBuilderToZero()" data-es="🔄 Limpiar a $0.00" data-en="🔄 Reset to $0.00">🔄 Limpiar a $0.00</button>
       </div>
 
-      <button type="button" class="open-sample-btn" id="topSampleBtn" onclick="openDocPreviewModal('quote')">
-        👁️ Ver Ejemplo de Documento Final con Logo (Abrir Hoja Completa)
+      <!-- BOTÓN QUE SIEMPRE ABRE EL EJEMPLO DE OTRA COMPAÑÍA (APEX CONSTRUCTORA) -->
+      <button type="button" class="open-sample-btn" id="topSampleBtn" onclick="openDocPreviewModal('quote')" data-es="👁️ Ver Ejemplo de Documento Final (Compañía de Muestra)" data-en="👁️ View Sample Final Document (Example Company)">
+        👁️ Ver Ejemplo de Documento Final (Compañía de Muestra)
       </button>
 
       <!-- PASO 1: DATOS DE LA EMPRESA Y CLIENTE -->
@@ -433,9 +461,9 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
           <input type="text" id="qb-client" placeholder="Ej. Residencia Familia Rivera - San Juan" oninput="recalcMasterTotals()">
         </div>
         <div class="logo-upload-box">
-          <label data-es="🖼️ Subir el Logo de tu Compañía (Se colocará en tu PDF oficial)" data-en="🖼️ Upload Your Company Logo (Placed on your official PDF)">🖼️ Subir el Logo de tu Compañía (Se colocará en tu PDF oficial)</label>
+          <label data-es="🖼️ Cargar el Logo de tu Compañía (Solo aparecerá en tu PDF final al desbloquear)" data-en="🖼️ Upload Your Company Logo (Only appears on your unlocked final PDF)">🖼️ Cargar el Logo de tu Compañía (Solo aparecerá en tu PDF final al desbloquear)</label>
           <input type="file" accept="image/*" onchange="handleLogoUpload(this)">
-          <img id="mainLogoPreview" class="logo-preview" alt="Logo">
+          <div id="logoLoadedMsg" class="logo-status-msg" data-es="✅ Tu logo está guardado y listo para imprimirse en tu PDF oficial" data-en="✅ Your logo is saved and ready to print on your official PDF">✅ Tu logo está guardado y listo para imprimirse en tu PDF oficial</div>
         </div>
       </div>
 
@@ -511,7 +539,6 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
         <div class="logo-upload-box">
           <label data-es="📎 Adjuntar Foto de Cotización de Ferretería como 2da Página (Opcional)" data-en="📎 Attach Hardware Quote Photo as 2nd Page (Optional)">📎 Adjuntar Foto de Cotización de Ferretería como 2da Página (Opcional)</label>
           <input type="file" accept="image/*" onchange="handleHwQuoteUpload(this)">
-          <img id="hwQuotePreview" class="logo-preview" alt="Ferretería">
           <div style="margin-top:0.3rem; font-size:0.74rem;">
             <label style="display:inline; color:#cbd5e1; cursor:pointer;">
               <input type="checkbox" id="qb-hw-print-attach" style="width:auto; margin-right:0.3rem;">
@@ -528,8 +555,8 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
           <strong id="contractorBigTotal">$0.00</strong>
         </div>
 
-        <button type="button" class="open-sample-btn" id="bottomSampleBtn" onclick="openDocPreviewModal('quote')" style="margin-top:0.4rem; margin-bottom:0.5rem;">
-          👁️ Ver Ejemplo de Cómo Quedará el Documento Final con Logo
+        <button type="button" class="open-sample-btn" id="bottomSampleBtn" onclick="openDocPreviewModal('quote')" style="margin-top:0.4rem; margin-bottom:0.5rem;" data-es="👁️ Ver Ejemplo de Cómo Queda el Formato Final (Compañía de Muestra)" data-en="👁️ View Sample of How the Final Format Looks (Example Company)">
+          👁️ Ver Ejemplo de Cómo Queda el Formato Final (Compañía de Muestra)
         </button>
 
         <button type="button" class="stripe-pay-btn" id="finalActionBtn" onclick="handleFinalDownloadClick()"></button>
@@ -557,24 +584,25 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
       <h1 data-es="Calculadora de Hormigón / Concreto" data-en="Concrete Calculator">Calculadora de Hormigón / Concreto</h1>
       <p class="sub" data-es="Calcula yardas/m³, sacos y envíalo con un clic a tu Estimado." data-en="Calculate volume, bags, and send with one click to your Estimate.">Calcula yardas/m³, sacos y envíalo con un clic a tu Estimado.</p>
       <div class="price-grid">
-        <div class="group"><label>Largo (ft)</label><input type="number" step="any" id="h-largo" value="20" oninput="calcHormigon()"></div>
-        <div class="group"><label>Ancho (ft)</label><input type="number" step="any" id="h-ancho" value="15" oninput="calcHormigon()"></div>
+        <div class="group"><label>Largo (ft)</label><input type="number" step="any" id="h-largo" value="20" oninput="calcHormigon(false)"></div>
+        <div class="group"><label>Ancho (ft)</label><input type="number" step="any" id="h-ancho" value="15" oninput="calcHormigon(false)"></div>
       </div>
-      <div class="group"><label>Espesor (Pulgadas / in)</label><input type="number" step="any" id="h-espesor" value="4" oninput="calcHormigon()"></div>
+      <div class="group"><label>Espesor (Pulgadas / in)</label><input type="number" step="any" id="h-espesor" value="4" oninput="calcHormigon(false)"></div>
       <div class="price-box">
         <div class="group">
           <label>Modo de Precio</label>
-          <select id="h-modo-precio" onchange="calcHormigon()">
+          <select id="h-modo-precio" onchange="calcHormigon(false)">
             <option value="vol">Por Yarda Cúbica (Camión)</option>
             <option value="bagMain">Por Saco de 80 lb</option>
             <option value="bagAlt">Por Saco de 60 lb</option>
           </select>
         </div>
         <div class="price-grid">
-          <div><label>Precio Volumen ($)</label><input type="number" step="any" id="h-precio-yd" value="165" oninput="calcHormigon()"></div>
-          <div><label>Precio Saco ($)</label><input type="number" step="any" id="h-precio-saco" value="7.50" oninput="calcHormigon()"></div>
+          <div><label>Precio Volumen ($)</label><input type="number" step="any" id="h-precio-yd" value="165" oninput="calcHormigon(false)"></div>
+          <div><label>Precio Saco ($)</label><input type="number" step="any" id="h-precio-saco" value="7.50" oninput="calcHormigon(false)"></div>
         </div>
       </div>
+      <button type="button" class="btn-calc" onclick="calcHormigon(true)" data-es="💾 Calcular y Guardar en Historial" data-en="💾 Calculate & Save to History">💾 Calcular y Guardar en Historial</button>
       <div class="res-box">
         <div class="res-title">Incluye 10% de desperdicio</div>
         <div class="res-big-wrap">
@@ -594,16 +622,17 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
       <h1 data-es="Sellador Elastomérico de Techo" data-en="Roof Coating Calculator">Sellador Elastomérico de Techo</h1>
       <p class="sub" data-es="Calcula pailas, primer y envíalo a tu Estimado." data-en="Calculate pails, primer, and send to your Estimate.">Calcula pailas, primer y envíalo a tu Estimado.</p>
       <div class="price-grid">
-        <div class="group"><label>Área del Techo (sq ft)</label><input type="number" step="any" id="s-area" value="1500" oninput="calcSellador()"></div>
-        <div class="group"><label>Capas (Manos)</label><input type="number" step="any" id="s-capas" value="2" oninput="calcSellador()"></div>
+        <div class="group"><label>Área del Techo (sq ft)</label><input type="number" step="any" id="s-area" value="1500" oninput="calcSellador(false)"></div>
+        <div class="group"><label>Capas (Manos)</label><input type="number" step="any" id="s-capas" value="2" oninput="calcSellador(false)"></div>
       </div>
-      <div class="group"><label>Rendimiento por Paila 5G (sq ft)</label><input type="number" step="any" id="s-rend" value="250" oninput="calcSellador()"></div>
+      <div class="group"><label>Rendimiento por Paila 5G (sq ft)</label><input type="number" step="any" id="s-rend" value="250" oninput="calcSellador(false)"></div>
       <div class="price-box">
         <div class="price-grid">
-          <div><label>Precio Paila Sellador ($)</label><input type="number" step="any" id="s-precio-paila" value="115" oninput="calcSellador()"></div>
-          <div><label>Precio Paila Primer ($)</label><input type="number" step="any" id="s-precio-primer" value="65" oninput="calcSellador()"></div>
+          <div><label>Precio Paila Sellador ($)</label><input type="number" step="any" id="s-precio-paila" value="115" oninput="calcSellador(false)"></div>
+          <div><label>Precio Paila Primer ($)</label><input type="number" step="any" id="s-precio-primer" value="65" oninput="calcSellador(false)"></div>
         </div>
       </div>
+      <button type="button" class="btn-calc" onclick="calcSellador(true)" data-es="💾 Calcular y Guardar en Historial" data-en="💾 Calculate & Save to History">💾 Calcular y Guardar en Historial</button>
       <div class="res-box">
         <div class="res-big-wrap">
           <div class="res-big"><span id="s-pailas">12</span> <small>Pailas (5G)</small></div>
@@ -622,16 +651,17 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
       <h1 data-es="Calculadora de Pintura" data-en="Paint Calculator">Calculadora de Pintura</h1>
       <p class="sub" data-es="Calcula galones, pailas y primer." data-en="Estimate gallons, pails, and primer.">Calcula galones, pailas y primer.</p>
       <div class="price-grid">
-        <div class="group"><label>Área a Pintar (sq ft)</label><input type="number" step="any" id="p-area" value="2000" oninput="calcPintura()"></div>
-        <div class="group"><label>Manos (Capas)</label><input type="number" step="any" id="p-capas" value="2" oninput="calcPintura()"></div>
+        <div class="group"><label>Área a Pintar (sq ft)</label><input type="number" step="any" id="p-area" value="2000" oninput="calcPintura(false)"></div>
+        <div class="group"><label>Manos (Capas)</label><input type="number" step="any" id="p-capas" value="2" oninput="calcPintura(false)"></div>
       </div>
-      <div class="group"><label>Rendimiento por Galón (sq ft)</label><input type="number" step="any" id="p-rend" value="350" oninput="calcPintura()"></div>
+      <div class="group"><label>Rendimiento por Galón (sq ft)</label><input type="number" step="any" id="p-rend" value="350" oninput="calcPintura(false)"></div>
       <div class="price-box">
         <div class="price-grid">
-          <div><label>Precio Galón Pintura ($)</label><input type="number" step="any" id="p-precio-gal" value="38" oninput="calcPintura()"></div>
-          <div><label>Precio Galón Primer ($)</label><input type="number" step="any" id="p-precio-primer" value="26" oninput="calcPintura()"></div>
+          <div><label>Precio Galón Pintura ($)</label><input type="number" step="any" id="p-precio-gal" value="38" oninput="calcPintura(false)"></div>
+          <div><label>Precio Galón Primer ($)</label><input type="number" step="any" id="p-precio-primer" value="26" oninput="calcPintura(false)"></div>
         </div>
       </div>
+      <button type="button" class="btn-calc" onclick="calcPintura(true)" data-es="💾 Calcular y Guardar en Historial" data-en="💾 Calculate & Save to History">💾 Calcular y Guardar en Historial</button>
       <div class="res-box">
         <div class="res-big-wrap">
           <div class="res-big"><span id="p-gal">12</span> <small>Galones</small></div>
@@ -649,10 +679,10 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
     <div id="gypsum" class="calc-card" data-cost="0">
       <h1 data-es="Gypsum Board y Plafón Acústico" data-en="Drywall & Acoustic Ceiling">Gypsum Board y Plafón Acústico</h1>
       <p class="sub" data-es="Calcula paneles, losas de plafón y masilla." data-en="Estimate sheets, ceiling tiles, and joint compound.">Calcula paneles, losas de plafón y masilla.</p>
-      <div class="group"><label>Área Total (sq ft)</label><input type="number" step="any" id="g-area" value="1000" oninput="calcGypsum()"></div>
+      <div class="group"><label>Área Total (sq ft)</label><input type="number" step="any" id="g-area" value="1000" oninput="calcGypsum(false)"></div>
       <div class="group">
         <label>Tamaño de Panel / Losa</label>
-        <select id="g-tipo" onchange="calcGypsum()">
+        <select id="g-tipo" onchange="calcGypsum(false)">
           <option value="32">Gypsum Board 4x8 ft (32 sq ft)</option>
           <option value="8">Plafón Comercial 2x4 ft (8 sq ft)</option>
           <option value="4">Plafón 2x2 ft (4 sq ft)</option>
@@ -660,10 +690,11 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
       </div>
       <div class="price-box">
         <div class="price-grid">
-          <div><label>Precio por Panel ($)</label><input type="number" step="any" id="g-precio-panel" value="16.50" oninput="calcGypsum()"></div>
-          <div><label>Precio Paila Masilla ($)</label><input type="number" step="any" id="g-precio-masilla" value="24.00" oninput="calcGypsum()"></div>
+          <div><label>Precio por Panel ($)</label><input type="number" step="any" id="g-precio-panel" value="16.50" oninput="calcGypsum(false)"></div>
+          <div><label>Precio Paila Masilla ($)</label><input type="number" step="any" id="g-precio-masilla" value="24.00" oninput="calcGypsum(false)"></div>
         </div>
       </div>
+      <button type="button" class="btn-calc" onclick="calcGypsum(true)" data-es="💾 Calcular y Guardar en Historial" data-en="💾 Calculate & Save to History">💾 Calcular y Guardar en Historial</button>
       <div class="res-box">
         <div class="res-big-wrap">
           <div class="res-big"><span id="g-paneles">35</span> <small>Paneles</small></div>
@@ -682,12 +713,12 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
       <h1 data-es="Muro de Bloques Completo" data-en="CMU Block Wall Calculator">Muro de Bloques Completo</h1>
       <p class="sub" data-es="Bloques, mortero, varillas, celdas y empañete." data-en="Blocks, mortar, rebar, cell grout & plastering.">Bloques, mortero, varillas, celdas y empañete.</p>
       <div class="price-grid">
-        <div class="group"><label>Largo de Pared (ft)</label><input type="number" step="any" id="b-largo" value="30" oninput="calcBloques()"></div>
-        <div class="group"><label>Alto de Pared (ft)</label><input type="number" step="any" id="b-alto" value="8" oninput="calcBloques()"></div>
+        <div class="group"><label>Largo de Pared (ft)</label><input type="number" step="any" id="b-largo" value="30" oninput="calcBloques(false)"></div>
+        <div class="group"><label>Alto de Pared (ft)</label><input type="number" step="any" id="b-alto" value="8" oninput="calcBloques(false)"></div>
       </div>
       <div class="group">
         <label>Varilla #4 y Celdas Llenas</label>
-        <select id="b-varilla" onchange="calcBloques()">
+        <select id="b-varilla" onchange="calcBloques(false)">
           <option value="2">Varilla #4 cada 24" (2 ft) + Escalerilla</option>
           <option value="2.67">Varilla #4 cada 32" + Escalerilla</option>
           <option value="4">Varilla #4 cada 48" (4 ft) + Escalerilla</option>
@@ -696,7 +727,7 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
       </div>
       <div class="group">
         <label>Empañete de Pared (1/2")</label>
-        <select id="b-empanete" onchange="calcBloques()">
+        <select id="b-empanete" onchange="calcBloques(false)">
           <option value="2">Empañete a 2 Caras (Ambos lados)</option>
           <option value="1">Empañete a 1 Cara</option>
           <option value="0">Sin Empañete</option>
@@ -704,11 +735,12 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
       </div>
       <div class="price-box">
         <div class="grid-3">
-          <div><label>Precio Bloque ($)</label><input type="number" step="any" id="b-precio-blq" value="1.65" oninput="calcBloques()"></div>
-          <div><label>Precio Saco ($)</label><input type="number" step="any" id="b-precio-saco" value="8.50" oninput="calcBloques()"></div>
-          <div><label>Precio Varilla ($)</label><input type="number" step="any" id="b-precio-var" value="11.50" oninput="calcBloques()"></div>
+          <div><label>Precio Bloque ($)</label><input type="number" step="any" id="b-precio-blq" value="1.65" oninput="calcBloques(false)"></div>
+          <div><label>Precio Saco ($)</label><input type="number" step="any" id="b-precio-saco" value="8.50" oninput="calcBloques(false)"></div>
+          <div><label>Precio Varilla ($)</label><input type="number" step="any" id="b-precio-var" value="11.50" oninput="calcBloques(false)"></div>
         </div>
       </div>
+      <button type="button" class="btn-calc" onclick="calcBloques(true)" data-es="💾 Calcular y Guardar en Historial" data-en="💾 Calculate & Save to History">💾 Calcular y Guardar en Historial</button>
       <div class="res-box">
         <div class="res-big-wrap">
           <div class="res-big"><span id="b-total">284</span> <small>Bloques</small></div>
@@ -731,15 +763,16 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
       <h1 data-es="Calculadora de Aire Acondicionado (BTU)" data-en="AC BTU Calculator">Calculadora de Aire Acondicionado (BTU)</h1>
       <p class="sub" data-es="Capacidad recomendada en BTU y toneladas." data-en="Recommended cooling capacity in BTU and tons.">Capacidad recomendada en BTU y toneladas.</p>
       <div class="price-grid">
-        <div class="group"><label>Largo (ft)</label><input type="number" step="any" id="a-largo" value="15" oninput="calcBTU()"></div>
-        <div class="group"><label>Ancho (ft)</label><input type="number" step="any" id="a-ancho" value="12" oninput="calcBTU()"></div>
+        <div class="group"><label>Largo (ft)</label><input type="number" step="any" id="a-largo" value="15" oninput="calcBTU(false)"></div>
+        <div class="group"><label>Ancho (ft)</label><input type="number" step="any" id="a-ancho" value="12" oninput="calcBTU(false)"></div>
       </div>
       <div class="price-box">
         <div class="price-grid">
-          <div><label>Precio Unidad A/C ($)</label><input type="number" step="any" id="a-precio-equipo" value="580" oninput="calcBTU()"></div>
-          <div><label>Materiales Instalación ($)</label><input type="number" step="any" id="a-precio-mat" value="145" oninput="calcBTU()"></div>
+          <div><label>Precio Unidad A/C ($)</label><input type="number" step="any" id="a-precio-equipo" value="580" oninput="calcBTU(false)"></div>
+          <div><label>Materiales Instalación ($)</label><input type="number" step="any" id="a-precio-mat" value="145" oninput="calcBTU(false)"></div>
         </div>
       </div>
+      <button type="button" class="btn-calc" onclick="calcBTU(true)" data-es="💾 Calcular y Guardar en Historial" data-en="💾 Calculate & Save to History">💾 Calcular y Guardar en Historial</button>
       <div class="res-box">
         <div class="res-big-wrap">
           <div class="res-big"><span id="a-btu">12,000</span> BTU</div>
@@ -755,7 +788,18 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
   </div>
 
   <!-- ========================================================= -->
-  <!-- PLANTILLA DE IMPRESIÓN OFICIAL (1 PÁGINA EJECUTIVA LIMPIA)-->
+  <!-- TARJETA DE HISTORIAL PERMANENTE (SIEMPRE SE MANTIENE)     -->
+  <!-- ========================================================= -->
+  <div class="history-card">
+    <div class="history-header">
+      <h3 data-es="📋 Historial Guardado de Cálculos y Estimados" data-en="📋 Saved Calculation & Estimate History">📋 Historial Guardado de Cálculos y Estimados</h3>
+      <button type="button" class="clear-btn" onclick="clearCalcHistory()" data-es="Borrar Historial" data-en="Clear History">Borrar Historial</button>
+    </div>
+    <ul class="history-list" id="calcHistoryList"></ul>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- PLANTILLA DE IMPRESIÓN OFICIAL (SOLO AL DESCARGAR PDF)    -->
   <!-- ========================================================= -->
   <div id="printMasterDocument">
     <div class="print-top">
@@ -812,7 +856,7 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
 </div>
 
 <!-- ========================================================= -->
-<!-- MODAL DE HOJA COMPLETA: EJEMPLO DE COMPAÑÍA CON LOGO      -->
+<!-- MODAL DE EJEMPLO (SIEMPRE MUESTRA APEX CONSTRUCTORA LLC)  -->
 <!-- ========================================================= -->
 <div class="doc-modal-overlay" id="docPreviewModal" onclick="if(event.target===this) closeDocPreviewModal()">
   <div class="doc-modal-container">
@@ -834,7 +878,7 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
 
 <footer>
   &copy; 2026 MaterialCalcPro.org | Professional Estimating & Invoicing Suite
-  <span onclick="activateOwnerMode()" style="cursor:pointer; opacity:0.65; margin-left:8px; padding:2px 6px; border:1px solid #475569; border-radius:4px;" id="ownerKeyBtn" title="Modo Dueño">🔑</span>
+  <span onclick="activateOwnerMode()" style="cursor:pointer; opacity:0.65; margin-left:8px; padding:2px 6px; border:1px solid #475569; border-radius:4px;" id="ownerKeyBtn" title="Modo Dueño">🔒 Modo Cliente: ON</span>
 </footer>
 
 <script>
@@ -867,17 +911,20 @@ const PRESET_TRANSLATIONS = [
   { es: 'Pintura General y Sellado de Superficies', en: 'General Painting & Surface Sealing' }
 ];
 
+/* LIMPIAR CUALQUIER MODO DUEÑO GUARDADO ANTERIORMENTE PARA QUE SIEMPRE ENTRE COMO CLIENTE */
+localStorage.removeItem('mcp_owner_unlocked');
+const isReturningFromStripe = new URLSearchParams(window.location.search).get('paid') === 'true';
+
 let currentLang = localStorage.getItem('mcp_lang') || 'es';
 let unitSys = localStorage.getItem('mcp_unit_sys') || 'imp';
 let currentCurr = localStorage.getItem('mcp_currency') || 'USD';
-let isPaidUser = new URLSearchParams(window.location.search).get('paid') === 'true' || localStorage.getItem('mcp_owner_unlocked') === 'true';
+let isPaidUser = isReturningFromStripe;
 let uploadedLogoData = localStorage.getItem('mcp_company_logo') || '';
 let uploadedHwQuoteImg = localStorage.getItem('mcp_hw_quote_img') || '';
+
+/* SIEMPRE EMPIEZA EN CERO AL ENTRAR A LA APP */
 let projectCart = [];
-let customLineItems = [
-  { desc: 'Trabajos de Albañilería y Losa de Hormigón', price: '1850' },
-  { desc: 'Pintura General y Sellado de Superficies', price: '950' }
-];
+let customLineItems = [{ desc: '', price: '' }];
 let deferredPrompt = null;
 
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -897,6 +944,63 @@ function getCurrObj() { return CURRENCIES[currentCurr] || CURRENCIES.USD; }
 function formatUSD(num) {
   const c = getCurrObj();
   return c.sym + (Number(num) || 0).toLocaleString('en-US', { minimumFractionDigits: c.dec, maximumFractionDigits: c.dec });
+}
+
+/* FUNCIONES DEL HISTORIAL PERMANENTE */
+function saveHistoryItem(labelEs, labelEn, resultText) {
+  let hist = [];
+  try { hist = JSON.parse(localStorage.getItem('mcp_calc_history') || '[]'); } catch(e) {}
+  const time = new Date().toLocaleDateString([], { month: '2-digit', day: '2-digit' }) + ' ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  hist.unshift({ es: labelEs, en: labelEn, res: resultText, time: time });
+  if (hist.length > 12) hist = hist.slice(0, 12);
+  localStorage.setItem('mcp_calc_history', JSON.stringify(hist));
+  renderHistory();
+}
+
+function renderHistory() {
+  const list = document.getElementById('calcHistoryList');
+  if (!list) return;
+  let hist = [];
+  try { hist = JSON.parse(localStorage.getItem('mcp_calc_history') || '[]'); } catch(e) {}
+  if (hist.length === 0) {
+    list.innerHTML = '<li style="color:#94a3b8;">' +
+      (currentLang === 'es'
+        ? 'Tus cálculos y cotizaciones recientes se guardarán aquí automáticamente.'
+        : 'Your recent calculations and quotes will be saved here automatically.') +
+      '</li>';
+    return;
+  }
+  list.innerHTML = hist.map(item =>
+    '<li><span><strong>' + (currentLang === 'es' ? item.es : item.en) + '</strong> <small style="color:#94a3b8;">(' + item.time + ')</small></span>' +
+    '<strong style="color:#0f172a;">' + item.res + '</strong></li>'
+  ).join('');
+}
+
+function clearCalcHistory() {
+  localStorage.removeItem('mcp_calc_history');
+  renderHistory();
+}
+
+/* LIMPIAR EL COTIZADOR A $0.00 EN CUALQUIER MOMENTO */
+function resetBuilderToZero() {
+  projectCart = [];
+  customLineItems = [{ desc: '', price: '' }];
+  localStorage.removeItem('mcp_project_cart');
+  localStorage.removeItem('mcp_custom_lines');
+  localStorage.removeItem('mcp_checkout_state');
+  const idsToZero = ['qb-hw-cost', 'qb-lab', 'qb-tax', 'qb-dep'];
+  idsToZero.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '0';
+  });
+  const idsToClear = ['qb-comp', 'qb-phone', 'qb-client', 'qb-hw-name', 'qb-notes'];
+  idsToClear.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  renderProjectCart();
+  renderCustomLines();
+  recalcMasterTotals();
 }
 
 function switchMainView(viewId) {
@@ -928,19 +1032,17 @@ function upgradeScopeTitle(rawTitle, lang) {
 function syncLockVisualState() {
   document.body.classList.toggle('locked-view', !isPaidUser);
   const keyEl = document.getElementById('ownerKeyBtn');
-  if (keyEl) keyEl.innerText = isPaidUser ? '🔑 Modo Dueño: ON' : '🔒 Modo Cliente: ON';
+  if (keyEl) keyEl.innerText = isPaidUser ? '🔑 Modo Dueño: ON (Solo esta sesión)' : '🔒 Modo Cliente: ON';
 }
 
 function activateOwnerMode() {
   isPaidUser = !isPaidUser;
-  if (isPaidUser) localStorage.setItem('mcp_owner_unlocked', 'true');
-  else localStorage.removeItem('mcp_owner_unlocked');
   syncLockVisualState();
   updatePayButtonState();
   recalcMasterTotals();
   alert(isPaidUser
-    ? '✅ Modo Dueño Activado: Puedes ver tu documento oficial con tu logo y descargar el PDF gratis.'
-    : '🔒 Modo Cliente Activado: El botón amarillo muestra el Documento de Ejemplo de Apex Constructora LLC y pide pagar $1.99 para generar el documento real.');
+    ? '✅ Modo Dueño Activado temporalmente para esta sesión (Al cerrar o recargar la página volverá automáticamente a Modo Cliente).'
+    : '🔒 Modo Cliente Activado: Para descargar el PDF pide pagar $1.99 en Stripe.');
 }
 
 function openDocPreviewModal(defaultType) {
@@ -953,6 +1055,7 @@ function closeDocPreviewModal() {
   document.getElementById('docPreviewModal').style.display = 'none';
 }
 
+/* SIEMPRE MUESTRA EXCLUSIVAMENTE LA COMPAÑÍA DE EJEMPLO (APEX CONSTRUCTORA LLC) */
 function renderModalSheet(mode) {
   const isEs = currentLang === 'es';
   const isInv = mode === 'invoice';
@@ -963,158 +1066,85 @@ function renderModalSheet(mode) {
   const unlockBtn = document.getElementById('modalUnlockBtn');
   if (!paper) return;
 
-  if (!isPaidUser) {
-    unlockBtn.innerText = isEs
-      ? '🔒 Desbloquear Mi Documento Oficial con Mi Logo y Mis Números ($1.99)'
-      : '🔒 Unlock My Official Document with My Logo & My Numbers ($1.99)';
+  unlockBtn.innerText = isPaidUser
+    ? (isEs ? '🖨️ Generar y Descargar Mi PDF Oficial con Mi Logo Ahora' : '🖨️ Generate & Download My Official PDF with My Logo Now')
+    : (isEs ? '🔒 Generar Mi Documento Oficial con Mi Logo y Mis Números ($1.99)' : '🔒 Generate My Official Document with My Logo & My Numbers ($1.99)');
 
-    const docBadgeTitle = isInv
-      ? (isEs ? 'FACTURA OFICIAL (INVOICE)' : 'OFFICIAL INVOICE')
-      : (isEs ? 'COTIZACIÓN OFICIAL' : 'OFFICIAL ESTIMATE');
-    const docNum = isInv ? 'INV #2026-0842' : 'EST #2026-0842';
+  const docBadgeTitle = isInv
+    ? (isEs ? 'FACTURA OFICIAL (INVOICE)' : 'OFFICIAL INVOICE')
+    : (isEs ? 'COTIZACIÓN OFICIAL' : 'OFFICIAL ESTIMATE');
+  const docNum = isInv ? 'INV #2026-0842' : 'EST #2026-0842';
 
-    paper.innerHTML =
-      '<div class="lux-sample-ribbon">' +
-        (isEs
-          ? '✨ EJEMPLO DE FORMATO OFICIAL • Así quedará tu documento con TU LOGO y TUS NÚMEROS al desbloquear por $1.99'
-          : '✨ OFFICIAL FORMAT SAMPLE • Your document will look just like this with YOUR LOGO & NUMBERS for $1.99') +
-      '</div>' +
-      '<div class="lux-header">' +
-        '<div class="lux-brand">' +
-          '<div class="lux-logo-box"><svg width="52" height="52"><use href="#apexSampleLogo"/></svg></div>' +
-          '<div>' +
-            '<div class="lux-comp-name">APEX CONSTRUCTORA & REMODELACIONES LLC</div>' +
-            '<div class="lux-comp-sub">' +
-              (isEs
-                ? 'Contratista General Certificado • Lic. DACO #GC-89421<br>Tel: (787) 555-0199 • San Juan, PR • proyectos@apexconstructora.com'
-                : 'Licensed General Contractor • Lic. #GC-89421<br>Phone: (787) 555-0199 • info@apexconstructora.com') +
-            '</div>' +
+  paper.innerHTML =
+    '<div class="lux-sample-ribbon">' +
+      (isEs
+        ? '✨ EJEMPLO DE OTRA COMPAÑÍA (MUESTRA) • Tu PDF final saldrá con este diseño, TU LOGO y TUS NÚMEROS al desbloquear'
+        : '✨ SAMPLE COMPANY PREVIEW • Your final PDF will be generated with this layout, YOUR LOGO & YOUR NUMBERS') +
+    '</div>' +
+    '<div class="lux-header">' +
+      '<div class="lux-brand">' +
+        '<div class="lux-logo-box"><svg width="52" height="52"><use href="#apexSampleLogo"/></svg></div>' +
+        '<div>' +
+          '<div class="lux-comp-name">APEX CONSTRUCTORA & REMODELACIONES LLC</div>' +
+          '<div class="lux-comp-sub">' +
+            (isEs
+              ? 'Contratista General Certificado • Lic. DACO #GC-89421<br>Tel: (787) 555-0199 • San Juan, PR • proyectos@apexconstructora.com'
+              : 'Licensed General Contractor • Lic. #GC-89421<br>Phone: (787) 555-0199 • info@apexconstructora.com') +
           '</div>' +
         '</div>' +
-        '<div class="lux-badge-box">' +
-          '<div class="lux-doc-title">' + docBadgeTitle + '</div>' +
-          '<div class="lux-doc-num">' + docNum + '</div>' +
-          '<div class="lux-doc-date">' + (isEs ? 'Fecha: 03/11/2026 • Validez: 30 Días' : 'Date: 11/03/2026 • Valid: 30 Days') + '</div>' +
-        '</div>' +
       '</div>' +
-      '<div class="lux-client-grid">' +
-        '<div><strong>' + (isEs ? 'PREPARADO PARA EL CLIENTE:' : 'PREPARED FOR CLIENT:') + '</strong><span>Ing. Carlos M. Rodríguez</span><div style="color:#475569; margin-top:2px;">Tel: (787) 555-8420</div></div>' +
-        '<div><strong>' + (isEs ? 'DIRECCIÓN Y PROYECTO:' : 'PROJECT LOCATION:') + '</strong><span>Urb. Los Paseos, Calle Real #114</span><div style="color:#475569; margin-top:2px;">' + (isEs ? 'Construcción de Muro, Sellado de Techo y Remodelación' : 'Wall Construction, Roof Coating & Remodel') + '</div></div>' +
+      '<div class="lux-badge-box">' +
+        '<div class="lux-doc-title">' + docBadgeTitle + '</div>' +
+        '<div class="lux-doc-num">' + docNum + '</div>' +
+        '<div class="lux-doc-date">' + (isEs ? 'Fecha: 03/11/2026 • Validez: 30 Días' : 'Date: 11/03/2026 • Valid: 30 Days') + '</div>' +
       '</div>' +
-      '<div class="lux-scope-box">' +
-        '<div class="lux-scope-hdr">' + (isEs ? 'Alcance Técnico y Desglose de Materiales Calculados (Ejemplo)' : 'Technical Scope & Calculated Materials (Sample)') + '</div>' +
-        '<div class="lux-scope-item"><strong>1. ' + (isEs ? 'Construcción de Muro de Bloques (CMU):' : 'CMU Block Wall Construction:') + '</strong> ' +
-          (isEs ? 'Pared de 30 ft × 8 ft (240 sq ft) • ➔ 284 Bloques (8×8×16), 22 Sacos Mortero, 9 Varillas #4, 19 Escalerillas, 59 Sacos en Celdas y Empañete a 2 Caras.' : '30 ft × 8 ft Wall (240 sq ft) • ➔ 284 CMU Blocks, 22 Mortar Bags, 9 #4 Rebars, 59 Grout Bags & Both-Sides Plaster.') +
-        '</div>' +
-        '<div class="lux-scope-item"><strong>2. ' + (isEs ? 'Sellado e Impermeabilización Elastomérica de Techo:' : 'Elastomeric Roof Waterproofing:') + '</strong> ' +
-          (isEs ? 'Área de 1,500 sq ft a 2 Capas • ➔ 12 Pailas de Sellador Elastomérico (5 Gal) + 3 Pailas de Primer Acrílico.' : '1,500 sq ft at 2 Coats • ➔ 12 Pails (5 Gal) Elastomeric Coating + 3 Pails Primer.') +
-        '</div>' +
-        '<div class="lux-scope-item"><strong>3. ' + (isEs ? 'Suministro e Instalación de Ventanas de Seguridad:' : 'Security Window Supply & Installation:') + '</strong> ' +
-          (isEs ? '4 Ventanas corredizas en aluminio pesado y cristal laminado de impacto.' : '4 Heavy-gauge aluminum impact-resistant sliding windows.') +
-        '</div>' +
+    '</div>' +
+    '<div class="lux-client-grid">' +
+      '<div><strong>' + (isEs ? 'CLIENTE DE EJEMPLO:' : 'SAMPLE CLIENT:') + '</strong><span>Ing. Carlos M. Rodríguez</span><div style="color:#475569; margin-top:2px;">Tel: (787) 555-8420</div></div>' +
+      '<div><strong>' + (isEs ? 'PROYECTO DE MUESTRA:' : 'SAMPLE PROJECT:') + '</strong><span>Urb. Los Paseos, Calle Real #114</span><div style="color:#475569; margin-top:2px;">' + (isEs ? 'Construcción de Muro, Sellado de Techo y Remodelación' : 'Wall Construction, Roof Coating & Remodel') + '</div></div>' +
+    '</div>' +
+    '<div class="lux-scope-box">' +
+      '<div class="lux-scope-hdr">' + (isEs ? 'Alcance Técnico y Desglose de Materiales Calculados (Ejemplo)' : 'Technical Scope & Calculated Materials (Sample)') + '</div>' +
+      '<div class="lux-scope-item"><strong>1. ' + (isEs ? 'Construcción de Muro de Bloques (CMU):' : 'CMU Block Wall Construction:') + '</strong> ' +
+        (isEs ? 'Pared de 30 ft × 8 ft (240 sq ft) • ➔ 284 Bloques (8×8×16), 22 Sacos Mortero, 9 Varillas #4, 19 Escalerillas, 59 Sacos en Celdas y Empañete a 2 Caras.' : '30 ft × 8 ft Wall (240 sq ft) • ➔ 284 CMU Blocks, 22 Mortar Bags, 9 #4 Rebars, 59 Grout Bags & Both-Sides Plaster.') +
       '</div>' +
-      '<table class="lux-table">' +
-        '<thead><tr><th>' + (isEs ? 'Descripción / Partida de Obra (Ejemplo)' : 'Description / Line Item (Sample)') + '</th><th>' + (isEs ? 'Monto (USD)' : 'Amount (USD)') + '</th></tr></thead>' +
-        '<tbody>' +
-          '<tr><td>Construcción de Muro de Bloques (284 Bloques + Acero + Mezclas)</td><td>$1,413.60</td></tr>' +
-          '<tr><td>Sellado e Impermeabilización Elastomérica de Techo (12 Pailas 5G + Primer)</td><td>$1,575.00</td></tr>' +
-          '<tr><td>Materiales de Ferretería y Acarreo (National Lumber & Hardware)</td><td>$1,850.00</td></tr>' +
-          '<tr><td>Suministro e Instalación de 4 Ventanas de Seguridad</td><td>$2,400.00</td></tr>' +
-          '<tr><td>Mano de Obra Profesional, Supervisión y Limpieza Final (Labor)</td><td>$4,200.00</td></tr>' +
-          '<tr class="lux-tot-row"><td>' + (isInv ? 'TOTAL FACTURADO (INVOICE SAMPLE)' : 'TOTAL COTIZADO (ESTIMATE SAMPLE)') + '</td><td>$11,438.60</td></tr>' +
-          '<tr><td>' + (isEs ? 'Menos Depósito Inicial (50%)' : 'Less Initial Deposit (50%)') + '</td><td>-$5,719.30</td></tr>' +
-          '<tr class="lux-bal-row"><td>' + (isEs ? 'BALANCE PENDIENTE AL FINALIZAR' : 'BALANCE DUE UPON COMPLETION') + '</td><td>$5,719.30</td></tr>' +
-        '</tbody>' +
-      '</table>' +
-      '<div style="font-size:0.76rem; font-style:italic; color:#334155; margin-bottom:0.5rem;">📌 ' +
-        (isEs ? 'Notas y Garantía: Incluye acarreo de materiales, bote de escombros y 1 año de garantía en mano de obra.' : 'Notes & Warranty: Includes material hauling, debris removal, and 1-year labor warranty.') +
+      '<div class="lux-scope-item"><strong>2. ' + (isEs ? 'Sellado e Impermeabilización Elastomérica de Techo:' : 'Elastomeric Roof Waterproofing:') + '</strong> ' +
+        (isEs ? 'Área de 1,500 sq ft a 2 Capas • ➔ 12 Pailas de Sellador Elastomérico (5 Gal) + 3 Pailas de Primer Acrílico.' : '1,500 sq ft at 2 Coats • ➔ 12 Pails (5 Gal) Elastomeric Coating + 3 Pails Primer.') +
       '</div>' +
-      '<div class="lux-sign-box">' +
-        '<div style="font-size:0.76rem; font-weight:900; text-transform:uppercase; color:#0f172a;">' +
-          (isInv ? (isEs ? 'Conformidad y Recibo de Obra:' : 'Completion & Acknowledgment:') : (isEs ? 'Decisión y Autorización del Cliente:' : 'Client Decision & Authorization:')) +
-        '</div>' +
-        (isInv ? '' : '<div class="lux-checks"><span>☑️ ACEPTO LA COTIZACIÓN Y AUTORIZO EL TRABAJO</span><span>⬜ NO ACEPTO</span></div>') +
-        '<div style="font-size:0.71rem; color:#475569;">' +
-          (isEs ? 'Al marcar Acepto y firmar debajo, el cliente aprueba los costos y términos descritos en esta cotización.' : 'By checking Accept and signing below, the client approves the costs and terms described in this estimate.') +
-        '</div>' +
-        '<div class="lux-signs">' +
-          '<div class="lux-sign-line">' + (isEs ? 'Firma del Cliente' : 'Client Signature') + '</div>' +
-          '<div class="lux-sign-line">' + (isEs ? 'Firma del Contratista' : 'Contractor Signature') + '</div>' +
-          '<div class="lux-sign-line">' + (isEs ? 'Fecha' : 'Date') + '</div>' +
-        '</div>' +
-      '</div>';
-  } else {
-    syncCustomLinesFromDOM();
-    unlockBtn.innerText = isEs
-      ? '🖨️ Imprimir / Guardar Mi PDF Oficial Ahora (1 Página)'
-      : '🖨️ Print / Save My Official 1-Page PDF Now';
-
-    const comp = document.getElementById('qb-comp')?.value.trim() || 'ASD Building Solutions LLC';
-    const phone = document.getElementById('qb-phone')?.value.trim() || '';
-    const client = document.getElementById('qb-client')?.value.trim() || (isEs ? 'Cliente / Proyecto' : 'Client / Project');
-    const docNum = document.getElementById('qb-docnum')?.value.trim() || '2026-0101';
-    const hwName = document.getElementById('qb-hw-name')?.value.trim() || '';
-    const hwRaw = parseFloat(document.getElementById('qb-hw-cost')?.value) || 0;
-    const hwMarkup = parseFloat(document.getElementById('qb-hw-markup')?.value) || 0;
-    const hwClientTotal = hwRaw * (1 + (hwMarkup / 100));
-    const lab = parseFloat(document.getElementById('qb-lab')?.value) || 0;
-    const tax = parseFloat(document.getElementById('qb-tax')?.value) || 0;
-    const dep = parseFloat(document.getElementById('qb-dep')?.value) || 0;
-    const notes = document.getElementById('qb-notes')?.value.trim() || '';
-
-    const logoHtml = uploadedLogoData
-      ? '<img src="' + uploadedLogoData + '" style="max-height:64px; max-width:140px; object-fit:contain; border-radius:6px;">'
-      : '<div class="lux-logo-box"><svg width="48" height="36"><use href="#tapeIcon"/></svg></div>';
-
-    let rows = '';
-    let grandTotal = 0;
-    projectCart.forEach(it => {
-      const c = parseFloat(it.cost) || 0;
-      const t = upgradeScopeTitle(isEs ? it.title_es : it.title_en, currentLang);
-      const sh = isEs ? it.short_es : it.short_en;
-      rows += '<tr><td>' + t + ' (' + sh + ')</td><td>' + formatUSD(c) + '</td></tr>';
-      grandTotal += c;
-    });
-    if (hwClientTotal > 0) {
-      rows += '<tr><td>' + (isEs ? 'Materiales de Ferretería y Acarreo' : 'Hardware Materials & Hauling') + (hwName ? ' (' + hwName + ')' : '') + '</td><td>' + formatUSD(hwClientTotal) + '</td></tr>';
-      grandTotal += hwClientTotal;
-    }
-    customLineItems.forEach(it => {
-      const p = parseFloat(it.price) || 0;
-      if (p > 0) {
-        rows += '<tr><td>' + (it.desc.trim() || 'Partida') + '</td><td>' + formatUSD(p) + '</td></tr>';
-        grandTotal += p;
-      }
-    });
-    if (lab > 0) { rows += '<tr><td>' + (isEs ? 'Mano de Obra Profesional (Labor)' : 'Professional Labor') + '</td><td>' + formatUSD(lab) + '</td></tr>'; grandTotal += lab; }
-    if (tax > 0) { rows += '<tr><td>' + (isEs ? 'Impuestos / Permisos' : 'Taxes / Permits') + '</td><td>' + formatUSD(tax) + '</td></tr>'; grandTotal += tax; }
-
-    const balance = Math.max(0, grandTotal - dep);
-    rows += '<tr class="lux-tot-row"><td>TOTAL (' + currentCurr + ')</td><td>' + formatUSD(grandTotal) + '</td></tr>';
-    if (dep > 0) {
-      rows += '<tr><td>' + (isEs ? 'Menos Depósito Recibido' : 'Less Deposit Paid') + '</td><td>-' + formatUSD(dep) + '</td></tr>';
-      rows += '<tr class="lux-bal-row"><td>' + (isEs ? 'BALANCE PENDIENTE' : 'BALANCE DUE') + '</td><td>' + formatUSD(balance) + '</td></tr>';
-    }
-
-    paper.innerHTML =
-      '<div class="lux-header">' +
-        '<div class="lux-brand">' + logoHtml +
-          '<div><div class="lux-comp-name">' + comp + '</div><div class="lux-comp-sub">' + (phone ? 'Tel / Lic: ' + phone : '') + '</div></div>' +
-        '</div>' +
-        '<div class="lux-badge-box">' +
-          '<div class="lux-doc-title">' + (isInv ? 'FACTURA OFICIAL' : 'COTIZACIÓN OFICIAL') + '</div>' +
-          '<div class="lux-doc-num">' + (isInv ? 'INV #' : 'EST #') + docNum + '</div>' +
-          '<div class="lux-doc-date">' + new Date().toLocaleDateString(isEs ? 'es-PR' : 'en-US') + '</div>' +
-        '</div>' +
+      '<div class="lux-scope-item"><strong>3. ' + (isEs ? 'Suministro e Instalación de Ventanas de Seguridad:' : 'Security Window Supply & Installation:') + '</strong> ' +
+        (isEs ? '4 Ventanas corredizas en aluminio pesado y cristal laminado de impacto.' : '4 Heavy-gauge aluminum impact-resistant sliding windows.') +
       '</div>' +
-      '<div class="lux-client-grid"><div><strong>CLIENTE / PROYECTO:</strong><span>' + client + '</span></div></div>' +
-      '<table class="lux-table"><thead><tr><th>Descripción / Partida</th><th>Monto</th></tr></thead><tbody>' + rows + '</tbody></table>' +
-      (notes ? '<div style="font-size:0.76rem; font-style:italic; margin-bottom:0.5rem;">📌 ' + notes + '</div>' : '') +
-      '<div class="lux-sign-box">' +
-        (isInv ? '' : '<div class="lux-checks"><span>⬜ ACEPTO LA COTIZACIÓN Y AUTORIZO EL TRABAJO</span><span>⬜ NO ACEPTO</span></div>') +
-        '<div class="lux-signs"><div class="lux-sign-line">Firma del Cliente</div><div class="lux-sign-line">Firma del Contratista</div><div class="lux-sign-line">Fecha</div></div>' +
-      '</div>';
-  }
+    '</div>' +
+    '<table class="lux-table">' +
+      '<thead><tr><th>' + (isEs ? 'Descripción / Partida de Obra (Ejemplo)' : 'Description / Line Item (Sample)') + '</th><th>' + (isEs ? 'Monto (USD)' : 'Amount (USD)') + '</th></tr></thead>' +
+      '<tbody>' +
+        '<tr><td>Construcción de Muro de Bloques (284 Bloques + Acero + Mezclas)</td><td>$1,413.60</td></tr>' +
+        '<tr><td>Sellado e Impermeabilización Elastomérica de Techo (12 Pailas 5G + Primer)</td><td>$1,575.00</td></tr>' +
+        '<tr><td>Materiales de Ferretería y Acarreo (National Lumber & Hardware)</td><td>$1,850.00</td></tr>' +
+        '<tr><td>Suministro e Instalación de 4 Ventanas de Seguridad</td><td>$2,400.00</td></tr>' +
+        '<tr><td>Mano de Obra Profesional, Supervisión y Limpieza Final (Labor)</td><td>$4,200.00</td></tr>' +
+        '<tr class="lux-tot-row"><td>' + (isInv ? 'TOTAL FACTURADO (EJEMPLO)' : 'TOTAL COTIZADO (EJEMPLO)') + '</td><td>$11,438.60</td></tr>' +
+        '<tr><td>' + (isEs ? 'Menos Depósito Inicial (50%)' : 'Less Initial Deposit (50%)') + '</td><td>-$5,719.30</td></tr>' +
+        '<tr class="lux-bal-row"><td>' + (isEs ? 'BALANCE PENDIENTE (EJEMPLO)' : 'BALANCE DUE (SAMPLE)') + '</td><td>$5,719.30</td></tr>' +
+      '</tbody>' +
+    '</table>' +
+    '<div style="font-size:0.76rem; font-style:italic; color:#334155; margin-bottom:0.5rem;">📌 ' +
+      (isEs ? 'Notas y Garantía: Incluye acarreo de materiales, bote de escombros y 1 año de garantía en mano de obra.' : 'Notes & Warranty: Includes material hauling, debris removal, and 1-year labor warranty.') +
+    '</div>' +
+    '<div class="lux-sign-box">' +
+      '<div style="font-size:0.76rem; font-weight:900; text-transform:uppercase; color:#0f172a;">' +
+        (isInv ? (isEs ? 'Conformidad y Recibo de Obra:' : 'Completion & Acknowledgment:') : (isEs ? 'Decisión y Autorización del Cliente:' : 'Client Decision & Authorization:')) +
+      '</div>' +
+      (isInv ? '' : '<div class="lux-checks"><span>☑️ ACEPTO LA COTIZACIÓN Y AUTORIZO EL TRABAJO</span><span>⬜ NO ACEPTO</span></div>') +
+      '<div style="font-size:0.71rem; color:#475569;">' +
+        (isEs ? 'Al marcar Acepto y firmar debajo, el cliente aprueba los costos y términos descritos en esta cotización.' : 'By checking Accept and signing below, the client approves the costs and terms described in this estimate.') +
+      '</div>' +
+      '<div class="lux-signs">' +
+        '<div class="lux-sign-line">' + (isEs ? 'Firma del Cliente' : 'Client Signature') + '</div>' +
+        '<div class="lux-sign-line">' + (isEs ? 'Firma del Contratista' : 'Contractor Signature') + '</div>' +
+        '<div class="lux-sign-line">' + (isEs ? 'Fecha' : 'Date') + '</div>' +
+      '</div>' +
+    '</div>';
 }
 
 function toggleUnitSystem() {
@@ -1150,10 +1180,11 @@ function applyLanguageUI() {
   updatePayButtonState();
   syncLockVisualState();
   recalcMasterTotals();
+  renderHistory();
 }
 
-/* CALCULADORAS DE MATERIALES */
-function calcHormigon() {
+/* CALCULADORAS DE MATERIALES (GUARDAN EN EL HISTORIAL CUANDO SE PRESIONA EL BOTÓN O SE AÑADEN) */
+function calcHormigon(logHist) {
   const isImp = unitSys === 'imp';
   let l = parseFloat(document.getElementById('h-largo').value) || 0;
   let w = parseFloat(document.getElementById('h-ancho').value) || 0;
@@ -1175,9 +1206,10 @@ function calcHormigon() {
   card.dataset.shortEn = vol + (isImp ? ' yd³' : ' m³');
   card.dataset.sumEs = vol + (isImp ? ' yd³ (Sacos 80lb: ' + bagMain + ')' : ' m³ (Bultos 50kg: ' + bagMain + ')');
   card.dataset.sumEn = vol + (isImp ? ' yd³ (80lb Bags: ' + bagMain + ')' : ' m³ (50kg Bags: ' + bagMain + ')');
+  if (logHist) saveHistoryItem('Hormigón (' + l + '×' + w + ')', 'Concrete (' + l + '×' + w + ')', vol + (isImp ? ' yd³ • ' : ' m³ • ') + formatUSD(cost));
 }
 
-function calcSellador() {
+function calcSellador(logHist) {
   let area = parseFloat(document.getElementById('s-area').value) || 0;
   let capas = parseFloat(document.getElementById('s-capas').value) || 2;
   let rend = parseFloat(document.getElementById('s-rend').value) || 250;
@@ -1194,9 +1226,10 @@ function calcSellador() {
   card.dataset.shortEn = pailas + ' Pails (5G)';
   card.dataset.sumEs = pailas + ' Pailas 5G + ' + primer + ' Primer';
   card.dataset.sumEn = pailas + ' Pails 5G + ' + primer + ' Primer';
+  if (logHist) saveHistoryItem('Sellador Techo (' + area + ' sq ft)', 'Roof Coat (' + area + ' sq ft)', pailas + ' Pailas • ' + formatUSD(cost));
 }
 
-function calcPintura() {
+function calcPintura(logHist) {
   let area = parseFloat(document.getElementById('p-area').value) || 0;
   let capas = parseFloat(document.getElementById('p-capas').value) || 2;
   let rend = parseFloat(document.getElementById('p-rend').value) || 350;
@@ -1213,9 +1246,10 @@ function calcPintura() {
   card.dataset.shortEn = gal + ' Gallons';
   card.dataset.sumEs = gal + ' Galones Pintura + ' + primer + ' Gal Primer';
   card.dataset.sumEn = gal + ' Gal Paint + ' + primer + ' Gal Primer';
+  if (logHist) saveHistoryItem('Pintura (' + area + ' sq ft)', 'Paint (' + area + ' sq ft)', gal + ' Gal • ' + formatUSD(cost));
 }
 
-function calcGypsum() {
+function calcGypsum(logHist) {
   let area = parseFloat(document.getElementById('g-area').value) || 0;
   let sizeVal = parseFloat(document.getElementById('g-tipo').value) || 32;
   let paneles = Math.ceil((area / sizeVal) * 1.10);
@@ -1231,9 +1265,10 @@ function calcGypsum() {
   card.dataset.shortEn = paneles + ' Panels';
   card.dataset.sumEs = paneles + ' Paneles/Losas + Masilla: ' + masilla;
   card.dataset.sumEn = paneles + ' Panels/Tiles + Mud: ' + masilla;
+  if (logHist) saveHistoryItem('Gypsum/Plafón (' + area + ' sq ft)', 'Drywall/Ceiling (' + area + ' sq ft)', paneles + ' Paneles • ' + formatUSD(cost));
 }
 
-function calcBloques() {
+function calcBloques(logHist) {
   let l = parseFloat(document.getElementById('b-largo').value) || 0;
   let h = parseFloat(document.getElementById('b-alto').value) || 0;
   let rebarVal = parseFloat(document.getElementById('b-varilla').value) || 0;
@@ -1265,9 +1300,10 @@ function calcBloques() {
   card.dataset.shortEn = bloques + ' Blocks';
   card.dataset.sumEs = bloques + ' Bloques | Mortero: ' + mortero + ' | Varillas: ' + varillas + ' | Celdas: ' + celdas + ' | Empañete: ' + empSacos + ' Sacos';
   card.dataset.sumEn = bloques + ' Blocks | Mortar: ' + mortero + ' | Rebar: ' + varillas + ' | Grout: ' + celdas + ' | Plaster: ' + empSacos + ' Bags';
+  if (logHist) saveHistoryItem('Muro Bloques (' + l + '×' + h + ' ft)', 'CMU Wall (' + l + '×' + h + ' ft)', bloques + ' Blq • ' + formatUSD(cost));
 }
 
-function calcBTU() {
+function calcBTU(logHist) {
   let l = parseFloat(document.getElementById('a-largo').value) || 0;
   let w = parseFloat(document.getElementById('a-ancho').value) || 0;
   let area = l * w;
@@ -1285,26 +1321,29 @@ function calcBTU() {
   card.dataset.shortEn = btu.toLocaleString() + ' BTU';
   card.dataset.sumEs = btu.toLocaleString() + ' BTU (' + ton + ')';
   card.dataset.sumEn = btu.toLocaleString() + ' BTU (' + ton + ')';
+  if (logHist) saveHistoryItem('Aire BTU (' + l + '×' + w + ' ft)', 'AC BTU (' + l + '×' + w + ' ft)', btu.toLocaleString() + ' BTU • ' + formatUSD(cost));
 }
 
 function runAllCalcs() {
-  calcHormigon(); calcSellador(); calcPintura(); calcGypsum(); calcBloques(); calcBTU();
+  calcHormigon(false); calcSellador(false); calcPintura(false); calcGypsum(false); calcBloques(false); calcBTU(false);
 }
 
 function addActiveCalcToProject(btn) {
   const card = btn.closest('.calc-card');
   if (!card) return;
   const scopeObj = PRO_SCOPE_TITLES[card.id];
-  projectCart.push({
+  const cost = parseFloat(card.getAttribute('data-cost')) || 0;
+  const itemObj = {
     title_es: scopeObj ? scopeObj.es : 'Partida Calculada',
     title_en: scopeObj ? scopeObj.en : 'Calculated Scope',
     summary_es: card.dataset.sumEs || '',
     summary_en: card.dataset.sumEn || '',
     short_es: card.dataset.shortEs || '',
     short_en: card.dataset.shortEn || '',
-    cost: parseFloat(card.getAttribute('data-cost')) || 0
-  });
-  try { localStorage.setItem('mcp_project_cart', JSON.stringify(projectCart)); } catch(e) {}
+    cost: cost
+  };
+  projectCart.push(itemObj);
+  saveHistoryItem(itemObj.title_es, itemObj.title_en, itemObj.short_es + ' • ' + formatUSD(cost));
   renderProjectCart();
   recalcMasterTotals();
   switchMainView('quoteView');
@@ -1313,13 +1352,11 @@ function addActiveCalcToProject(btn) {
 function updateCartItemPrice(idx, val) {
   if (!projectCart[idx]) return;
   projectCart[idx].cost = parseFloat(val) || 0;
-  try { localStorage.setItem('mcp_project_cart', JSON.stringify(projectCart)); } catch(e) {}
   recalcMasterTotals();
 }
 
 function removeCartItem(idx) {
   projectCart.splice(idx, 1);
-  try { localStorage.setItem('mcp_project_cart', JSON.stringify(projectCart)); } catch(e) {}
   renderProjectCart();
   recalcMasterTotals();
 }
@@ -1350,7 +1387,11 @@ function addPresetChip(idx) {
 
 function addCustomLine(desc, price) {
   syncCustomLinesFromDOM();
-  customLineItems.push({ desc: desc || '', price: price || '' });
+  if (customLineItems.length === 1 && customLineItems[0].desc === '' && customLineItems[0].price === '' && desc) {
+    customLineItems[0] = { desc: desc, price: price || '' };
+  } else {
+    customLineItems.push({ desc: desc || '', price: price || '' });
+  }
   renderCustomLines();
   recalcMasterTotals();
 }
@@ -1370,14 +1411,13 @@ function syncCustomLinesFromDOM() {
     desc: r.querySelector('.cl-desc')?.value || '',
     price: r.querySelector('.cl-price')?.value || ''
   }));
-  try { localStorage.setItem('mcp_custom_lines', JSON.stringify(customLineItems)); } catch(e) {}
 }
 
 function renderCustomLines() {
   const wrap = document.getElementById('customLinesContainer');
   if (!wrap) return;
-  const phD = currentLang === 'es' ? 'Descripción del trabajo o partida' : 'Work or line item description';
-  const phP = currentLang === 'es' ? 'Monto ($)' : 'Amount ($)';
+  const phD = currentLang === 'es' ? 'Descripción del trabajo o partida (Opcional)' : 'Work or line item description (Optional)';
+  const phP = currentLang === 'es' ? 'Monto ($0.00)' : 'Amount ($0.00)';
   wrap.innerHTML = customLineItems.map((item, idx) =>
     '<div class="custom-line-row">' +
     '<input type="text" class="cl-desc" value="' + (item.desc || '').replace(/"/g, '&quot;') + '" placeholder="' + phD + '" oninput="recalcMasterTotals()">' +
@@ -1393,9 +1433,8 @@ function handleLogoUpload(input) {
   reader.onload = function(e) {
     uploadedLogoData = e.target.result;
     try { localStorage.setItem('mcp_company_logo', uploadedLogoData); } catch(err) {}
-    const prev = document.getElementById('mainLogoPreview');
-    if (prev) { prev.src = uploadedLogoData; prev.style.display = 'inline-block'; }
-    recalcMasterTotals();
+    const msg = document.getElementById('logoLoadedMsg');
+    if (msg) msg.style.display = 'block';
   };
   reader.readAsDataURL(file);
 }
@@ -1407,8 +1446,6 @@ function handleHwQuoteUpload(input) {
   reader.onload = function(e) {
     uploadedHwQuoteImg = e.target.result;
     try { localStorage.setItem('mcp_hw_quote_img', uploadedHwQuoteImg); } catch(err) {}
-    const prev = document.getElementById('hwQuotePreview');
-    if (prev) { prev.src = uploadedHwQuoteImg; prev.style.display = 'inline-block'; }
   };
   reader.readAsDataURL(file);
 }
@@ -1445,32 +1482,34 @@ function updatePayButtonState() {
   const btn = document.getElementById('finalActionBtn');
   const waBtn = document.getElementById('finalWaBtn');
   const note = document.getElementById('finalActionNote');
-  const topSample = document.getElementById('topSampleBtn');
-  const botSample = document.getElementById('bottomSampleBtn');
   if (!btn) return;
   const isEs = currentLang === 'es';
   if (isPaidUser) {
-    btn.innerText = isEs ? '🖨️ Descargar / Imprimir Mi Estimado o Factura PDF con Logo (1 Página)' : '🖨️ Download / Print Official 1-Page Quote or Invoice PDF';
+    btn.innerText = isEs ? '🖨️ Descargar / Imprimir Mi Estimado o Factura PDF con Mi Logo (1 Página)' : '🖨️ Download / Print Official 1-Page Quote or Invoice PDF';
     waBtn.innerText = isEs ? '📲 Enviar Mi Estimado / Factura Oficial por WhatsApp' : '📲 Send Official Quote / Invoice via WhatsApp';
-    note.innerText = isEs ? '✅ Documento Oficial Desbloqueado • Listo para PDF y WhatsApp' : '✅ Official Document Unlocked • Ready for PDF & WhatsApp';
-    if (topSample) topSample.innerText = isEs ? '👁️ Ver Vista Previa de Mi Documento Oficial con Mi Logo' : '👁️ Preview My Unlocked Official Document';
-    if (botSample) botSample.innerText = isEs ? '👁️ Ver Vista Previa de Mi Documento Oficial con Mi Logo' : '👁️ Preview My Unlocked Official Document';
+    note.innerText = isEs ? '✅ Documento Oficial Desbloqueado • Al tocar el botón verde se genera tu PDF real con tu logo' : '✅ Official Document Unlocked • Click green button to print your real PDF';
   } else {
     btn.innerText = isEs ? '🔒 Generar Mi Documento Final con Mi Logo y Mis Números ($1.99)' : '🔒 Generate My Final Document with My Logo & Numbers ($1.99)';
     waBtn.innerText = isEs ? '🔒 Desbloquear y Enviar Mi Estimado / Factura por WhatsApp ($1.99)' : '🔒 Unlock & Send My Official Quote / Invoice via WhatsApp ($1.99)';
-    note.innerText = isEs ? '🔒 Toca el botón amarillo para ver el documento de ejemplo • Paga $1.99 en Stripe para generar tu PDF Oficial con tu logo' : '🔒 Tap the yellow button to view the sample document • Pay $1.99 via Stripe to generate your Official PDF with your logo';
-    if (topSample) topSample.innerText = isEs ? '👁️ Ver Ejemplo de Documento Final con Logo (Abrir Hoja Completa)' : '👁️ View Full Sample Document with Logo';
-    if (botSample) botSample.innerText = isEs ? '👁️ Ver Ejemplo de Cómo Quedará el Documento Final con Logo' : '👁️ View Sample of How the Final Document Looks';
+    note.innerText = isEs ? '🔒 La vista previa amarilla es solo un ejemplo de otra compañía • Paga $1.99 en Stripe para generar tu PDF Oficial con tu logo' : '🔒 The yellow button shows a sample company • Pay $1.99 via Stripe to generate your Official PDF with your logo';
   }
 }
 
+/* GUARDA LOS NÚMEROS EN MEMORIA Y EN EL HISTORIAL JUSTO ANTES DE IR A STRIPE O IMPRIMIR */
 function saveAllBuilderState() {
   syncCustomLinesFromDOM();
+  const clientName = document.getElementById('qb-client')?.value.trim() || 'Cliente';
+  const totalTxt = document.getElementById('contractorBigTotal')?.innerText || '$0.00';
+  if (totalTxt !== '$0.00') {
+    saveHistoryItem('Cotización: ' + clientName, 'Quote: ' + clientName, totalTxt);
+  }
   const inputs = {};
   document.querySelectorAll('input[id], select[id]').forEach(el => {
     if (el.type === 'checkbox') inputs[el.id] = el.checked;
     else if (el.type !== 'file') inputs[el.id] = el.value;
   });
+  localStorage.setItem('mcp_project_cart', JSON.stringify(projectCart));
+  localStorage.setItem('mcp_custom_lines', JSON.stringify(customLineItems));
   localStorage.setItem('mcp_checkout_state', JSON.stringify({
     lang: currentLang, unit: unitSys, curr: currentCurr, inputs: inputs
   }));
@@ -1650,7 +1689,14 @@ function sendUnlockedMasterWhatsApp() {
   window.open('https://wa.me/?text=' + encodeURIComponent(lines.join('\n')), '_blank');
 }
 
-function restoreSavedState() {
+/* SOLO RECUPERA EL FORMULARIO SI EL CLIENTE REGRESA DE PAGAR EN STRIPE (?paid=true) */
+function restoreIfReturningFromStripe() {
+  if (!isReturningFromStripe) {
+    localStorage.removeItem('mcp_project_cart');
+    localStorage.removeItem('mcp_custom_lines');
+    localStorage.removeItem('mcp_checkout_state');
+    return;
+  }
   try {
     const savedCart = JSON.parse(localStorage.getItem('mcp_project_cart') || '[]');
     if (Array.isArray(savedCart)) projectCart = savedCart;
@@ -1670,14 +1716,14 @@ function restoreSavedState() {
       });
     }
   } catch (e) {}
-  if (uploadedLogoData) {
-    const prev = document.getElementById('mainLogoPreview');
-    if (prev) { prev.src = uploadedLogoData; prev.style.display = 'inline-block'; }
-  }
 }
 
 window.addEventListener('DOMContentLoaded', function() {
-  restoreSavedState();
+  restoreIfReturningFromStripe();
+  if (uploadedLogoData) {
+    const msg = document.getElementById('logoLoadedMsg');
+    if (msg) msg.style.display = 'block';
+  }
   applyLanguageUI();
 });
 </script>
