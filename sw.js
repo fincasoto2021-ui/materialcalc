@@ -1,3 +1,4 @@
+// Service Worker MaterialCalcPro
 const CACHE_NAME = 'materialcalcpro-v2026-final';
 
 self.addEventListener('install', function(event) {
