@@ -8,7 +8,7 @@
 <meta name="description" content="Professional contractor estimate & invoice builder with built-in construction material calculators: Concrete, Roof Coating, CMU Blocks, AC BTU, Paint & Drywall.">
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#0f172a">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 90'%3E%3Crect width='120' height='90' rx='18' fill='%230b0f19' stroke='%23facc15' stroke-width='3'/%3E%3Cpath d='M14 66 L54 52 L62 63 L22 77 Z' fill='%23facc15' stroke='%23111' stroke-width='1.5'/%3E%3Cpath d='M55 52 C56 30 72 20 90 23 C103 26 107 40 103 56 C100 66 91 70 78 70 L58 70 Z' fill='%23facc15'/%3E%3Ccircle cx='84' cy='48' r='14' fill='%23e2e8f0' stroke='%23475569' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 130 92'%3E%3Crect width='130' height='92' rx='18' fill='%23090d16' stroke='%23facc15' stroke-width='3'/%3E%3Cpath d='M14 66 L58 50 L68 63 L24 80 Z' fill='%23facc15' stroke='%23111827' stroke-width='1.5'/%3E%3Cpath d='M10 62 L16 59 L26 75 L20 82 L12 72 Z' fill='%23cbd5e1' stroke='%231e293b' stroke-width='1.5'/%3E%3Cpath d='M52 46 C52 17 75 5 100 11 C119 16 125 36 120 57 C116 71 104 78 88 78 L56 78 C49 78 49 65 52 46 Z' fill='%231e293b' stroke='%23000' stroke-width='1.8'/%3E%3Cpath d='M56 50 C57 26 75 16 96 20 C111 23 116 39 112 56 C109 67 99 72 84 72 L58 72 Z' fill='%23facc15' stroke='%23111827' stroke-width='1.4'/%3E%3Ccircle cx='90' cy='48' r='19' fill='%23facc15' stroke='%23b45309' stroke-width='1.5'/%3E%3Cpath d='M84 31 L98 31 L95 64 C95 67 83 67 83 64 Z' fill='%23cbd5e1' stroke='%23334155' stroke-width='1.4'/%3E%3Ccircle cx='90' cy='46' r='3' fill='%2394a3b8' stroke='%231e293b' stroke-width='1'/%3E%3C/svg%3E">
 <script>
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.getRegistrations().then(function(regs) {
@@ -33,15 +33,18 @@ header { background: #090d16; color: white; padding: 1rem; border-bottom: 3px so
   display: flex; justify-content: space-between; align-items: center;
   max-width: 720px; margin: 0 auto 0.85rem; gap: 0.5rem; flex-wrap: wrap;
 }
-.brand-logo { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; color: white; }
+.brand-logo { display: flex; align-items: center; gap: 0.75rem; color: white; }
 .brand-icon {
-  width: 56px; height: 44px; background: #1e293b; border: 2px solid var(--accent);
-  border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  width: 62px; height: 48px; background: radial-gradient(circle at center, #1e293b 0%, #05080f 100%);
+  border: 2px solid var(--accent); border-radius: 11px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), 0 0 8px rgba(250, 204, 21, 0.25); flex-shrink: 0;
+  overflow: hidden;
 }
-.logo-main { font-size: 1.25rem; font-weight: 900; color: #fff; }
+.logo-main { font-size: 1.28rem; font-weight: 900; letter-spacing: -0.5px; color: #fff; }
 .logo-main span { color: var(--accent); }
-.logo-main small { font-size: 0.8rem; color: #94a3b8; }
-.logo-sub { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 1.2px; color: #cbd5e1; font-weight: 700; }
+.logo-main small { font-size: 0.82rem; color: #94a3b8; font-weight: 700; }
+.logo-sub { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 1.3px; color: #cbd5e1; font-weight: 700; margin-top: 2px; }
 .top-actions { display: flex; gap: 0.35rem; align-items: center; flex-wrap: wrap; }
 .lang-btn, .unit-btn, .curr-select, .install-top-btn {
   background: #1e293b; color: white; border: 1px solid var(--accent);
@@ -140,9 +143,8 @@ input, select, textarea {
   color: #0f172a; border: 2px solid #ffffff; padding: 0.85rem 1rem; border-radius: 10px;
   font-size: 0.92rem; font-weight: 900; cursor: pointer; margin-bottom: 1rem;
   display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-  box-shadow: 0 4px 14px rgba(250, 204, 21, 0.35); transition: transform 0.12s;
+  box-shadow: 0 4px 14px rgba(250, 204, 21, 0.35);
 }
-.open-sample-btn:active { transform: scale(0.99); }
 .mb-section {
   background: #1e293b; border: 1px solid #334155; border-radius: 10px;
   padding: 0.9rem; margin-bottom: 0.9rem;
@@ -220,7 +222,7 @@ input, select, textarea {
 }
 .history-list li:last-child { border-bottom: none; }
 
-/* MODAL DE EJEMPLO (SIEMPRE MUESTRA APEX CONSTRUCTORA LLC) */
+/* MODAL DE EJEMPLO (SOLO CIERRA CON EL BOTÓN ROJO CERRAR) */
 .doc-modal-overlay {
   position: fixed; inset: 0; background: rgba(9, 13, 22, 0.88);
   display: none; justify-content: center; align-items: flex-start;
@@ -324,8 +326,8 @@ input, select, textarea {
   }
   .print-brand-wrap { display: flex; align-items: center; gap: 0.65rem; }
   .print-default-badge {
-    width: 56px; height: 42px; background: #090d16 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
-    border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 2px solid #facc15;
+    width: 58px; height: 44px; background: #090d16 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    border-radius: 9px; display: flex; align-items: center; justify-content: center; border: 2px solid #facc15;
   }
   .print-logo { max-height: 58px; max-width: 160px; object-fit: contain; }
   .print-doc-badge {
@@ -364,12 +366,57 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
 </head>
 <body class="locked-view">
 <svg style="display:none;" xmlns="http://www.w3.org/2000/svg">
-  <symbol id="tapeIcon" viewBox="0 0 120 90">
-    <path d="M14 66 L54 52 L62 63 L22 77 Z" fill="#facc15" stroke="#111" stroke-width="2"/>
-    <path d="M50 48 C50 22 70 10 92 14 C108 17 114 34 110 54 C107 68 96 74 82 74 L54 74 C48 74 47 64 50 48 Z" fill="#0f172a" stroke="#facc15" stroke-width="2.5"/>
-    <path d="M55 52 C56 30 72 20 90 23 C103 26 107 40 103 56 C100 66 91 70 78 70 L58 70 Z" fill="#facc15"/>
-    <circle cx="84" cy="48" r="13" fill="#e2e8f0" stroke="#334155" stroke-width="2"/>
+  <defs>
+    <linearGradient id="tmYellowCase" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fde047"/>
+      <stop offset="45%" stop-color="#facc15"/>
+      <stop offset="85%" stop-color="#ca8a04"/>
+      <stop offset="100%" stop-color="#854d0e"/>
+    </linearGradient>
+    <linearGradient id="tmRubber" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="40%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#090d16"/>
+    </linearGradient>
+    <linearGradient id="tmSteelClip" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/>
+      <stop offset="35%" stop-color="#cbd5e1"/>
+      <stop offset="55%" stop-color="#64748b"/>
+      <stop offset="80%" stop-color="#e2e8f0"/>
+      <stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+    <linearGradient id="tmBlade" x1="0%" y1="0%" x2="20%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a"/>
+      <stop offset="50%" stop-color="#facc15"/>
+      <stop offset="100%" stop-color="#ca8a04"/>
+    </linearGradient>
+  </defs>
+  <!-- LOGO 3D ORIGINAL: LA BESTIA AMARILLA -->
+  <symbol id="realisticTapeLogo" viewBox="0 0 130 92">
+    <ellipse cx="68" cy="80" rx="52" ry="7" fill="rgba(0,0,0,0.55)"/>
+    <path d="M14 66 L58 50 L68 63 L24 80 Z" fill="url(#tmBlade)" stroke="#111827" stroke-width="1.4"/>
+    <line x1="25" y1="62" x2="28" y2="67" stroke="#111827" stroke-width="1.3"/>
+    <line x1="30" y1="60" x2="34" y2="66" stroke="#111827" stroke-width="1.5"/>
+    <line x1="35" y1="58" x2="38" y2="63" stroke="#111827" stroke-width="1.3"/>
+    <line x1="40" y1="56" x2="45" y2="64" stroke="#111827" stroke-width="2.2"/>
+    <line x1="46" y1="54" x2="49" y2="59" stroke="#111827" stroke-width="1.3"/>
+    <line x1="51" y1="52" x2="55" y2="58" stroke="#111827" stroke-width="1.5"/>
+    <text x="36" y="72" fill="#111827" font-size="10.5" font-weight="900" font-family="Arial, sans-serif" transform="rotate(-20 36 72)">1</text>
+    <path d="M10 62 L16 59 L26 75 L20 82 L12 72 Z" fill="url(#tmSteelClip)" stroke="#1e293b" stroke-width="1.3"/>
+    <circle cx="21" cy="70" r="2.1" fill="#e2e8f0" stroke="#334155" stroke-width="0.9"/>
+    <circle cx="27" cy="68" r="2.1" fill="#e2e8f0" stroke="#334155" stroke-width="0.9"/>
+    <path d="M52 46 C52 17 75 5 100 11 C119 16 125 36 120 57 C116 71 104 78 88 78 L56 78 C49 78 49 65 52 46 Z" fill="url(#tmRubber)" stroke="#000000" stroke-width="1.8"/>
+    <path d="M74 9 L78 16 M84 8 L87 15 M94 9 L95 16 M104 12 L103 19 M113 18 L110 24" stroke="#090d16" stroke-width="3.2" stroke-linecap="round"/>
+    <path d="M56 50 C57 26 75 16 96 20 C111 23 116 39 112 56 C109 67 99 72 84 72 L58 72 Z" fill="url(#tmYellowCase)" stroke="#111827" stroke-width="1.4"/>
+    <path d="M51 54 L63 54 L65 73 L52 73 Z" fill="#090d16"/>
+    <rect x="49" y="29" width="13" height="17" rx="3.5" transform="rotate(14 49 29)" fill="url(#tmRubber)" stroke="#000000" stroke-width="1.4"/>
+    <line x1="51" y1="34" x2="59" y2="36" stroke="#64748b" stroke-width="1.5"/>
+    <line x1="50" y1="38" x2="58" y2="40" stroke="#64748b" stroke-width="1.5"/>
+    <circle cx="90" cy="48" r="19" fill="url(#tmYellowCase)" stroke="#b45309" stroke-width="1.5"/>
+    <path d="M84 31 L98 31 L95 64 C95 67 83 67 83 64 Z" fill="url(#tmSteelClip)" stroke="#334155" stroke-width="1.4"/>
+    <circle cx="90" cy="46" r="3" fill="#94a3b8" stroke="#1e293b" stroke-width="1"/>
   </symbol>
+  <!-- LOGO EXCLUSIVO PARA LA COMPAÑÍA DE EJEMPLO (APEX CONSTRUCTORA) -->
   <symbol id="apexSampleLogo" viewBox="0 0 100 100">
     <polygon points="50,6 90,22 90,56 50,94 10,56 10,22" fill="#0f172a" stroke="#facc15" stroke-width="4"/>
     <path d="M22 52 L50 26 L78 52" fill="none" stroke="#facc15" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -383,14 +430,14 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
 <header>
   <div class="top-bar">
     <div class="brand-logo">
-      <div class="brand-icon"><svg width="48" height="36"><use href="#tapeIcon"/></svg></div>
+      <div class="brand-icon"><svg width="58" height="44"><use href="#realisticTapeLogo"/></svg></div>
       <div>
         <div class="logo-main">Material<span>Calc</span>Pro<small>.org</small></div>
         <div class="logo-sub" data-es="Cotizador Oficial, Facturas y Calculadora" data-en="Official Quote, Invoice & Material Calculator">Cotizador Oficial, Facturas y Calculadora</div>
       </div>
     </div>
     <div class="top-actions">
-      <button class="install-top-btn" id="installPwaBtn" onclick="installPWA()">📲 App</button>
+      <button class="install-top-btn" id="installPwaBtn" onclick="installPWA()" data-es="📲 App" data-en="📲 App">📲 App</button>
       <button class="unit-btn" id="unitBtn" onclick="toggleUnitSystem()">📏 ft / yd³</button>
       <select class="curr-select" id="currSelect" onchange="changeCurrency(this.value)">
         <option value="USD">💵 USD ($)</option>
@@ -806,7 +853,7 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
       <div class="print-brand-wrap">
         <img id="pLogoImg" class="print-logo" alt="Logo" style="display:none;">
         <div id="pDefaultBadge" class="print-default-badge">
-          <svg width="48" height="36"><use href="#tapeIcon"/></svg>
+          <svg width="52" height="38"><use href="#realisticTapeLogo"/></svg>
         </div>
         <div>
           <h2 id="pCompanyTitle" style="font-size:1.28rem; color:#0f172a; font-weight:900;">Constructora / Contratista</h2>
@@ -856,9 +903,9 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
 </div>
 
 <!-- ========================================================= -->
-<!-- MODAL DE EJEMPLO (SIEMPRE MUESTRA APEX CONSTRUCTORA LLC)  -->
+<!-- MODAL DE EJEMPLO (SOLO SE CIERRA CON EL BOTÓN CERRAR)     -->
 <!-- ========================================================= -->
-<div class="doc-modal-overlay" id="docPreviewModal" onclick="if(event.target===this) closeDocPreviewModal()">
+<div class="doc-modal-overlay" id="docPreviewModal">
   <div class="doc-modal-container">
     <div class="doc-modal-topbar">
       <div class="sample-switch-group">
@@ -911,7 +958,7 @@ const PRESET_TRANSLATIONS = [
   { es: 'Pintura General y Sellado de Superficies', en: 'General Painting & Surface Sealing' }
 ];
 
-/* LIMPIAR CUALQUIER MODO DUEÑO GUARDADO ANTERIORMENTE PARA QUE SIEMPRE ENTRE COMO CLIENTE */
+/* SIEMPRE ENTRA COMO CLIENTE POR DEFECTO */
 localStorage.removeItem('mcp_owner_unlocked');
 const isReturningFromStripe = new URLSearchParams(window.location.search).get('paid') === 'true';
 
@@ -922,7 +969,7 @@ let isPaidUser = isReturningFromStripe;
 let uploadedLogoData = localStorage.getItem('mcp_company_logo') || '';
 let uploadedHwQuoteImg = localStorage.getItem('mcp_hw_quote_img') || '';
 
-/* SIEMPRE EMPIEZA EN CERO AL ENTRAR A LA APP */
+/* SIEMPRE EMPIEZA EN $0.00 AL ENTRAR A LA APP */
 let projectCart = [];
 let customLineItems = [{ desc: '', price: '' }];
 let deferredPrompt = null;
@@ -937,7 +984,11 @@ window.addEventListener('beforeinstallprompt', (e) => {
 function installPWA() {
   if (!deferredPrompt) return;
   deferredPrompt.prompt();
-  deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+  deferredPrompt.userChoice.then(() => {
+    deferredPrompt = null;
+    const btn = document.getElementById('installPwaBtn');
+    if (btn) btn.style.display = 'none';
+  });
 }
 
 function getCurrObj() { return CURRENCIES[currentCurr] || CURRENCIES.USD; }
@@ -981,20 +1032,17 @@ function clearCalcHistory() {
   renderHistory();
 }
 
-/* LIMPIAR EL COTIZADOR A $0.00 EN CUALQUIER MOMENTO */
 function resetBuilderToZero() {
   projectCart = [];
   customLineItems = [{ desc: '', price: '' }];
   localStorage.removeItem('mcp_project_cart');
   localStorage.removeItem('mcp_custom_lines');
   localStorage.removeItem('mcp_checkout_state');
-  const idsToZero = ['qb-hw-cost', 'qb-lab', 'qb-tax', 'qb-dep'];
-  idsToZero.forEach(id => {
+  ['qb-hw-cost', 'qb-lab', 'qb-tax', 'qb-dep'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = '0';
   });
-  const idsToClear = ['qb-comp', 'qb-phone', 'qb-client', 'qb-hw-name', 'qb-notes'];
-  idsToClear.forEach(id => {
+  ['qb-comp', 'qb-phone', 'qb-client', 'qb-hw-name', 'qb-notes'].forEach(id => {
     const el = document.getElementById(id);
     if (el) el.value = '';
   });
@@ -1041,7 +1089,7 @@ function activateOwnerMode() {
   updatePayButtonState();
   recalcMasterTotals();
   alert(isPaidUser
-    ? '✅ Modo Dueño Activado temporalmente para esta sesión (Al cerrar o recargar la página volverá automáticamente a Modo Cliente).'
+    ? '✅ Modo Dueño Activado temporalmente para esta sesión (Al cerrar o recargar volverá automáticamente a Modo Cliente).'
     : '🔒 Modo Cliente Activado: Para descargar el PDF pide pagar $1.99 en Stripe.');
 }
 
@@ -1183,7 +1231,7 @@ function applyLanguageUI() {
   renderHistory();
 }
 
-/* CALCULADORAS DE MATERIALES (GUARDAN EN EL HISTORIAL CUANDO SE PRESIONA EL BOTÓN O SE AÑADEN) */
+/* CALCULADORAS DE MATERIALES */
 function calcHormigon(logHist) {
   const isImp = unitSys === 'imp';
   let l = parseFloat(document.getElementById('h-largo').value) || 0;
@@ -1495,7 +1543,6 @@ function updatePayButtonState() {
   }
 }
 
-/* GUARDA LOS NÚMEROS EN MEMORIA Y EN EL HISTORIAL JUSTO ANTES DE IR A STRIPE O IMPRIMIR */
 function saveAllBuilderState() {
   syncCustomLinesFromDOM();
   const clientName = document.getElementById('qb-client')?.value.trim() || 'Cliente';
@@ -1689,7 +1736,6 @@ function sendUnlockedMasterWhatsApp() {
   window.open('https://wa.me/?text=' + encodeURIComponent(lines.join('\n')), '_blank');
 }
 
-/* SOLO RECUPERA EL FORMULARIO SI EL CLIENTE REGRESA DE PAGAR EN STRIPE (?paid=true) */
 function restoreIfReturningFromStripe() {
   if (!isReturningFromStripe) {
     localStorage.removeItem('mcp_project_cart');
