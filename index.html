@@ -6,13 +6,19 @@
 <meta name="google-site-verification" content="QK9UkO8Wa6ApdBs0sG4Gk8ojj5vx9duiBlAG9b618-g" />
 <title>MaterialCalcPro.org | Estimados, Facturas y Calculadora de Materiales</title>
 <meta name="description" content="Professional contractor estimate & invoice builder with built-in construction material calculators: Concrete, Roof Coating, CMU Blocks, AC BTU, Paint & Drywall.">
-<link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#0f172a">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 130 92'%3E%3Crect width='130' height='92' rx='18' fill='%23090d16' stroke='%23facc15' stroke-width='3'/%3E%3Cpath d='M14 66 L58 50 L68 63 L24 80 Z' fill='%23facc15' stroke='%23111827' stroke-width='1.5'/%3E%3Cpath d='M10 62 L16 59 L26 75 L20 82 L12 72 Z' fill='%23cbd5e1' stroke='%231e293b' stroke-width='1.5'/%3E%3Cpath d='M52 46 C52 17 75 5 100 11 C119 16 125 36 120 57 C116 71 104 78 88 78 L56 78 C49 78 49 65 52 46 Z' fill='%231e293b' stroke='%23000' stroke-width='1.8'/%3E%3Cpath d='M56 50 C57 26 75 16 96 20 C111 23 116 39 112 56 C109 67 99 72 84 72 L58 72 Z' fill='%23facc15' stroke='%23111827' stroke-width='1.4'/%3E%3Ccircle cx='90' cy='48' r='19' fill='%23facc15' stroke='%23b45309' stroke-width='1.5'/%3E%3Cpath d='M84 31 L98 31 L95 64 C95 67 83 67 83 64 Z' fill='%23cbd5e1' stroke='%23334155' stroke-width='1.4'/%3E%3Ccircle cx='90' cy='46' r='3' fill='%2394a3b8' stroke='%231e293b' stroke-width='1'/%3E%3C/svg%3E">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-Title" content="MaterialCalcPro">
+<link rel="manifest" id="mainManifestLink" href="/manifest.json">
+<link rel="icon" id="dynamicFavicon" type="image/png" sizes="512x512" href="">
+<link rel="apple-touch-icon" id="dynamicAppleIcon" href="">
 <script>
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistrations().then(function(regs) {
-    for (let reg of regs) { reg.update(); }
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').then(function(reg) {
+      reg.update();
+    }).catch(function() {});
   });
 }
 </script>
@@ -52,7 +58,7 @@ header { background: #090d16; color: white; padding: 1rem; border-bottom: 3px so
 }
 .unit-btn { border-color: #38bdf8; color: #bae6fd; }
 .curr-select { border-color: #4ade80; color: #bbf7d0; }
-.install-top-btn { background: var(--accent); color: #000; display: none; font-weight: 900; }
+.install-top-btn { background: var(--accent); color: #000; display: inline-block; font-weight: 900; }
 
 /* BOTONES PRINCIPALES DE NAVEGACIÓN */
 .main-mode-switch {
@@ -222,7 +228,7 @@ input, select, textarea {
 }
 .history-list li:last-child { border-bottom: none; }
 
-/* MODAL DE EJEMPLO (SOLO CIERRA CON EL BOTÓN ROJO CERRAR) */
+/* MODAL DE EJEMPLO E INSTALACIÓN */
 .doc-modal-overlay {
   position: fixed; inset: 0; background: rgba(9, 13, 22, 0.88);
   display: none; justify-content: center; align-items: flex-start;
@@ -365,7 +371,7 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
 </style>
 </head>
 <body class="locked-view">
-<svg style="display:none;" xmlns="http://www.w3.org/2000/svg">
+<svg id="masterSvgDefs" style="display:none;" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="tmYellowCase" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#fde047"/>
@@ -437,7 +443,7 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
       </div>
     </div>
     <div class="top-actions">
-      <button class="install-top-btn" id="installPwaBtn" onclick="installPWA()" data-es="📲 App" data-en="📲 App">📲 App</button>
+      <button class="install-top-btn" id="installPwaBtn" onclick="installPWA()" data-es="📲 Instalar App" data-en="📲 Install App">📲 Instalar App</button>
       <button class="unit-btn" id="unitBtn" onclick="toggleUnitSystem()">📏 ft / yd³</button>
       <select class="curr-select" id="currSelect" onchange="changeCurrency(this.value)">
         <option value="USD">💵 USD ($)</option>
@@ -977,18 +983,81 @@ let deferredPrompt = null;
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  const btn = document.getElementById('installPwaBtn');
-  if (btn) btn.style.display = 'inline-block';
 });
 
 function installPWA() {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  deferredPrompt.userChoice.then(() => {
-    deferredPrompt = null;
-    const btn = document.getElementById('installPwaBtn');
-    if (btn) btn.style.display = 'none';
-  });
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+  } else {
+    alert(currentLang === 'es'
+      ? '📲 Para instalar la App en tu celular ahora mismo:\n\n1. Toca los 3 puntitos (⋮) arriba a la derecha en tu navegador Chrome.\n2. Toca "Añadir a la pantalla de inicio" o "Instalar aplicación".'
+      : '📲 To install the App on your phone right now:\n\n1. Tap the 3 dots (⋮) at the top right of Chrome.\n2. Tap "Add to Home screen" or "Install app".');
+  }
+}
+
+/* GENERADOR AUTOMÁTICO DE ÍCONO PNG 512x512 DE LA BESTIA AMARILLA PARA ANDROID / IPHONE */
+function buildBeastAppIcons() {
+  const svgStr = `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 130 130">
+    <defs>
+      <linearGradient id="y" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#fde047"/><stop offset="45%" stop-color="#facc15"/><stop offset="85%" stop-color="#ca8a04"/><stop offset="100%" stop-color="#854d0e"/>
+      </linearGradient>
+      <linearGradient id="r" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#334155"/><stop offset="40%" stop-color="#1e293b"/><stop offset="100%" stop-color="#090d16"/>
+      </linearGradient>
+      <linearGradient id="s" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#f8fafc"/><stop offset="50%" stop-color="#94a3b8"/><stop offset="100%" stop-color="#475569"/>
+      </linearGradient>
+    </defs>
+    <rect width="130" height="130" rx="26" fill="#090d16" stroke="#facc15" stroke-width="5"/>
+    <g transform="translate(0, 19)">
+      <ellipse cx="68" cy="80" rx="52" ry="7" fill="rgba(0,0,0,0.55)"/>
+      <path d="M14 66 L58 50 L68 63 L24 80 Z" fill="url(#y)" stroke="#111827" stroke-width="1.4"/>
+      <text x="36" y="72" fill="#111827" font-size="10.5" font-weight="900" font-family="Arial" transform="rotate(-20 36 72)">1</text>
+      <path d="M10 62 L16 59 L26 75 L20 82 L12 72 Z" fill="url(#s)" stroke="#1e293b" stroke-width="1.3"/>
+      <path d="M52 46 C52 17 75 5 100 11 C119 16 125 36 120 57 C116 71 104 78 88 78 L56 78 C49 78 49 65 52 46 Z" fill="url(#r)" stroke="#000" stroke-width="1.8"/>
+      <path d="M56 50 C57 26 75 16 96 20 C111 23 116 39 112 56 C109 67 99 72 84 72 L58 72 Z" fill="url(#y)" stroke="#111827" stroke-width="1.4"/>
+      <circle cx="90" cy="48" r="19" fill="url(#y)" stroke="#b45309" stroke-width="1.5"/>
+      <path d="M84 31 L98 31 L95 64 C95 67 83 67 83 64 Z" fill="url(#s)" stroke="#334155" stroke-width="1.4"/>
+      <circle cx="90" cy="46" r="3" fill="#94a3b8" stroke="#1e293b" stroke-width="1"/>
+    </g>
+  </svg>`;
+  const img = new Image();
+  img.onload = function() {
+    const c512 = document.createElement('canvas');
+    c512.width = 512; c512.height = 512;
+    c512.getContext('2d').drawImage(img, 0, 0, 512, 512);
+    const png512 = c512.toDataURL('image/png');
+
+    const c192 = document.createElement('canvas');
+    c192.width = 192; c192.height = 192;
+    c192.getContext('2d').drawImage(img, 0, 0, 192, 192);
+    const png192 = c192.toDataURL('image/png');
+
+    const fav = document.getElementById('dynamicFavicon');
+    const appIc = document.getElementById('dynamicAppleIcon');
+    if (fav) fav.href = png512;
+    if (appIc) appIc.href = png192;
+
+    const dynManifest = {
+      name: "MaterialCalcPro | Estimados y Calculadora",
+      short_name: "MaterialCalcPro",
+      start_url: window.location.origin + "/?app=1",
+      scope: window.location.origin + "/",
+      display: "standalone",
+      background_color: "#090d16",
+      theme_color: "#0f172a",
+      icons: [
+        { src: png192, sizes: "192x192", type: "image/png", purpose: "any maskable" },
+        { src: png512, sizes: "512x512", type: "image/png", purpose: "any maskable" }
+      ]
+    };
+    const blob = new Blob([JSON.stringify(dynManifest)], { type: 'application/manifest+json' });
+    const mLink = document.getElementById('mainManifestLink');
+    if (mLink) mLink.href = URL.createObjectURL(blob);
+  };
+  img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgStr);
 }
 
 function getCurrObj() { return CURRENCIES[currentCurr] || CURRENCIES.USD; }
@@ -1765,6 +1834,7 @@ function restoreIfReturningFromStripe() {
 }
 
 window.addEventListener('DOMContentLoaded', function() {
+  buildBeastAppIcons();
   restoreIfReturningFromStripe();
   if (uploadedLogoData) {
     const msg = document.getElementById('logoLoadedMsg');
