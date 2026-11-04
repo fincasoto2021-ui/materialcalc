@@ -6,12 +6,17 @@
 <meta name="google-site-verification" content="QK9UkO8Wa6ApdBs0sG4Gk8ojj5vx9duiBlAG9b618-g" />
 <title>MaterialCalcPro.org | Estimados, Facturas y Calculadora de Materiales</title>
 <meta name="description" content="Professional contractor estimate & invoice builder with built-in construction material calculators: Concrete, Roof Coating, CMU Blocks, AC BTU, Paint & Drywall.">
+<link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#0f172a">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 130 92'%3E%3Crect width='130' height='92' rx='18' fill='%23090d16' stroke='%23facc15' stroke-width='3'/%3E%3Cpath d='M14 66 L58 50 L68 63 L24 80 Z' fill='%23facc15' stroke='%23111827' stroke-width='1.5'/%3E%3Cpath d='M10 62 L16 59 L26 75 L20 82 L12 72 Z' fill='%23cbd5e1' stroke='%231e293b' stroke-width='1.5'/%3E%3Cpath d='M52 46 C52 17 75 5 100 11 C119 16 125 36 120 57 C116 71 104 78 88 78 L56 78 C49 78 49 65 52 46 Z' fill='%231e293b' stroke='%23000' stroke-width='1.8'/%3E%3Cpath d='M56 50 C57 26 75 16 96 20 C111 23 116 39 112 56 C109 67 99 72 84 72 L58 72 Z' fill='%23facc15' stroke='%23111827' stroke-width='1.4'/%3E%3Ccircle cx='90' cy='48' r='19' fill='%23facc15' stroke='%23b45309' stroke-width='1.5'/%3E%3Cpath d='M84 31 L98 31 L95 64 C95 67 83 67 83 64 Z' fill='%23cbd5e1' stroke='%23334155' stroke-width='1.4'/%3E%3Ccircle cx='90' cy='46' r='3' fill='%2394a3b8' stroke='%231e293b' stroke-width='1'/%3E%3C/svg%3E">
 <script>
-window.addEventListener('beforeinstallprompt', function(e) { e.preventDefault(); e.stopImmediatePropagation(); return false; });
-if ('serviceWorker' in navigator) { navigator.serviceWorker.getRegistrations().then(function(r) { for (let x of r) x.unregister(); }); }
-if ('caches' in window) { caches.keys().then(function(k) { for (let n of k) caches.delete(n); }); }
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').then(function(reg) {
+      reg.update();
+    }).catch(function() {});
+  });
+}
 </script>
 <script data-goatcounter="https://materialcalcpro.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <style>
@@ -27,9 +32,10 @@ header { background:#090d16; color:#fff; padding:1rem; border-bottom:3px solid v
 .logo-main small { font-size:0.82rem; color:#94a3b8; font-weight:700; }
 .logo-sub { font-size:0.62rem; text-transform:uppercase; letter-spacing:1.3px; color:#cbd5e1; font-weight:700; margin-top:2px; }
 .top-actions { display:flex; gap:0.35rem; align-items:center; flex-wrap:wrap; }
-.lang-btn, .unit-btn, .curr-select { background:#1e293b; color:#fff; border:1px solid var(--accent); padding:0.35rem 0.55rem; border-radius:6px; font-weight:700; font-size:0.75rem; cursor:pointer; }
+.lang-btn, .unit-btn, .curr-select, .install-top-btn { background:#1e293b; color:#fff; border:1px solid var(--accent); padding:0.35rem 0.55rem; border-radius:6px; font-weight:700; font-size:0.75rem; cursor:pointer; }
 .unit-btn { border-color:#38bdf8; color:#bae6fd; }
 .curr-select { border-color:#4ade80; color:#bbf7d0; }
+.install-top-btn { background:var(--accent); color:#000; display:none; font-weight:900; }
 .main-mode-switch { display:grid; grid-template-columns:1.2fr 1fr; gap:0.55rem; max-width:720px; margin:0 auto; }
 @media (max-width:520px) { .main-mode-switch { grid-template-columns:1fr; } }
 .mode-btn { background:#1e293b; color:#e2e8f0; border:2px solid #334155; padding:0.75rem 0.8rem; border-radius:10px; font-weight:800; font-size:0.9rem; cursor:pointer; text-align:center; }
@@ -80,9 +86,9 @@ input, select, textarea { width:100%; padding:0.65rem; border:1px solid #cbd5e1;
 .logo-upload-box { border:2px dashed var(--accent); border-radius:10px; padding:0.75rem; text-align:center; margin-top:0.65rem; background:#0f172a; }
 .logo-pic-badge { display:inline-block; background:var(--accent); color:#000; font-weight:900; font-size:0.72rem; padding:0.18rem 0.55rem; border-radius:5px; letter-spacing:0.5px; margin-bottom:0.35rem; text-transform:uppercase; }
 .logo-upload-box input[type="file"] { font-size:0.78rem; color:#cbd5e1; border:none; padding:0.2rem; background:transparent; }
-.logo-id-wrap { display:none; align-items:center; justify-content:center; gap:0.6rem; margin-top:0.45rem; background:#1e293b; padding:0.4rem 0.65rem; border-radius:8px; border:1px solid #10b981; }
-.logo-mini-thumb { width:42px; height:42px; object-fit:contain; background:#fff; border-radius:6px; padding:2px; border:1px solid #fde047; }
-.logo-status-msg { font-size:0.76rem; color:#4ade80; font-weight:800; text-align:left; }
+.logo-id-wrap { display:none; align-items:center; justify-content:space-between; gap:0.6rem; margin-top:0.45rem; background:#1e293b; padding:0.4rem 0.65rem; border-radius:8px; border:1px solid #10b981; }
+.logo-mini-thumb { width:42px; height:42px; object-fit:contain; background:#fff; border-radius:6px; padding:2px; border:1px solid #fde047; flex-shrink:0; }
+.logo-status-msg { font-size:0.75rem; color:#4ade80; font-weight:800; text-align:left; flex:1; }
 .contractor-numbers-bar { background:#064e3b; border:1.5px solid #10b981; border-radius:8px; padding:0.75rem 0.9rem; margin:0.85rem 0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; }
 .contractor-numbers-bar strong { font-size:1.25rem; color:#6ee7b7; }
 .stripe-pay-btn { width:100%; background:var(--green-pay); color:#fff; border:none; padding:0.95rem; border-radius:8px; font-size:0.95rem; font-weight:900; cursor:pointer; box-shadow:0 4px 10px rgba(16,185,129,0.25); margin-top:0.4rem; }
@@ -209,6 +215,7 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
       </div>
     </div>
     <div class="top-actions">
+      <button class="install-top-btn" id="installPwaBtn" onclick="installPWA()">📲 App</button>
       <button class="unit-btn" id="unitBtn" onclick="toggleUnitSystem()">📏 ft / yd³</button>
       <select class="curr-select" id="currSelect" onchange="changeCurrency(this.value)">
         <option value="USD">💵 USD ($)</option>
@@ -268,11 +275,12 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
         </div>
         <div class="logo-upload-box">
           <div class="logo-pic-badge">🖼️ LOGO PICTURE</div>
-          <label style="color:#fde047;font-size:0.8rem;" data-es="📷 Sube aquí tu Logo Picture (Foto del Logo de tu Compañía para el PDF)" data-en="📷 Upload your Logo Picture here (Your Company Logo Photo for the PDF)">📷 Sube aquí tu Logo Picture (Foto del Logo de tu Compañía para el PDF)</label>
-          <input type="file" accept="image/*" onchange="handleLogoUpload(this)">
+          <label style="color:#fde047;font-size:0.8rem;" data-es="📷 Sube aquí tu Logo Picture (Se limpia al salir para que puedas usar varias compañías)" data-en="📷 Upload your Logo Picture here (Clears on exit so you can use multiple companies)">📷 Sube aquí tu Logo Picture (Se limpia al salir para que puedas usar varias compañías)</label>
+          <input type="file" id="qb-logo-input" accept="image/*" onchange="handleLogoUpload(this)">
           <div id="logoIdentifiedBox" class="logo-id-wrap">
             <img id="logoMiniThumb" class="logo-mini-thumb" alt="Logo Picture">
-            <div id="logoLoadedMsg" class="logo-status-msg" data-es="✅ Logo Picture identificado y listo para tu PDF oficial" data-en="✅ Logo Picture identified and ready for your official PDF">✅ Logo Picture identificado y listo para tu PDF oficial</div>
+            <div id="logoLoadedMsg" class="logo-status-msg" data-es="✅ Logo Picture listo para este documento" data-en="✅ Logo Picture ready for this document">✅ Logo Picture listo para este documento</div>
+            <button type="button" class="cart-remove" onclick="clearLogoPicture()" data-es="✕ Quitar / Cambiar" data-en="✕ Remove / Change">✕ Quitar / Cambiar</button>
           </div>
         </div>
       </div>
@@ -315,7 +323,7 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
         </div>
         <div class="logo-upload-box" style="border-color:#64748b;">
           <label data-es="📎 Adjuntar Foto de Cotización de Ferretería como 2da Página (Opcional)" data-en="📎 Attach Hardware Quote Photo as 2nd Page (Optional)">📎 Adjuntar Foto de Cotización de Ferretería como 2da Página (Opcional)</label>
-          <input type="file" accept="image/*" onchange="handleHwQuoteUpload(this)">
+          <input type="file" id="qb-hw-input" accept="image/*" onchange="handleHwQuoteUpload(this)">
           <div style="margin-top:0.3rem;font-size:0.74rem;">
             <label style="display:inline;color:#cbd5e1;cursor:pointer;"><input type="checkbox" id="qb-hw-print-attach" style="width:auto;margin-right:0.3rem;"><span data-es="Incluir esta foto en el PDF" data-en="Include photo in PDF">Incluir esta foto en el PDF</span></label>
           </div>
@@ -555,10 +563,24 @@ let currentLang = localStorage.getItem('mcp_lang') || 'es';
 let unitSys = localStorage.getItem('mcp_unit_sys') || 'imp';
 let currentCurr = localStorage.getItem('mcp_currency') || 'USD';
 let isPaidUser = isReturningFromStripe;
-let uploadedLogoData = localStorage.getItem('mcp_company_logo') || '';
-let uploadedHwQuoteImg = localStorage.getItem('mcp_hw_quote_img') || '';
+let uploadedLogoData = '';
+let uploadedHwQuoteImg = '';
 let projectCart = [];
 let customLineItems = [{desc:'',price:''}];
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  const btn = document.getElementById('installPwaBtn');
+  if (btn) btn.style.display = 'inline-block';
+});
+
+function installPWA() {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+}
 
 function getCurrObj() { return CURRENCIES[currentCurr] || CURRENCIES.USD; }
 function formatUSD(num) { const c = getCurrObj(); return c.sym + (Number(num)||0).toLocaleString('en-US',{minimumFractionDigits:c.dec,maximumFractionDigits:c.dec}); }
@@ -587,8 +609,22 @@ function renderHistory() {
 
 function clearCalcHistory() { localStorage.removeItem('mcp_calc_history'); renderHistory(); }
 
+function clearLogoPicture() {
+  uploadedLogoData = '';
+  localStorage.removeItem('mcp_company_logo');
+  const inp = document.getElementById('qb-logo-input');
+  if (inp) inp.value = '';
+  const wrap = document.getElementById('logoIdentifiedBox');
+  if (wrap) wrap.style.display = 'none';
+}
+
 function resetBuilderToZero() {
   projectCart = []; customLineItems = [{desc:'',price:''}];
+  clearLogoPicture();
+  uploadedHwQuoteImg = '';
+  localStorage.removeItem('mcp_hw_quote_img');
+  const hwInp = document.getElementById('qb-hw-input');
+  if (hwInp) hwInp.value = '';
   localStorage.removeItem('mcp_project_cart'); localStorage.removeItem('mcp_custom_lines'); localStorage.removeItem('mcp_checkout_state');
   ['qb-hw-cost','qb-lab','qb-tax','qb-dep'].forEach(id => { const el=document.getElementById(id); if(el) el.value='0'; });
   ['qb-comp','qb-phone','qb-client','qb-hw-name','qb-notes'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
@@ -821,13 +857,13 @@ function showIdentifiedLogoPicture(dataUrl) {
 function handleLogoUpload(input) {
   const file = input.files && input.files[0]; if (!file) return;
   const reader = new FileReader();
-  reader.onload = function(e) { uploadedLogoData = e.target.result; try { localStorage.setItem('mcp_company_logo',uploadedLogoData); } catch(err) {} showIdentifiedLogoPicture(uploadedLogoData); };
+  reader.onload = function(e) { uploadedLogoData = e.target.result; showIdentifiedLogoPicture(uploadedLogoData); };
   reader.readAsDataURL(file);
 }
 function handleHwQuoteUpload(input) {
   const file = input.files && input.files[0]; if (!file) return;
   const reader = new FileReader();
-  reader.onload = function(e) { uploadedHwQuoteImg = e.target.result; try { localStorage.setItem('mcp_hw_quote_img',uploadedHwQuoteImg); } catch(err) {} };
+  reader.onload = function(e) { uploadedHwQuoteImg = e.target.result; };
   reader.readAsDataURL(file);
 }
 
@@ -873,6 +909,8 @@ function saveAllBuilderState() {
   });
   localStorage.setItem('mcp_project_cart', JSON.stringify(projectCart));
   localStorage.setItem('mcp_custom_lines', JSON.stringify(customLineItems));
+  if (uploadedLogoData) { try { localStorage.setItem('mcp_company_logo', uploadedLogoData); } catch(e) {} }
+  if (uploadedHwQuoteImg) { try { localStorage.setItem('mcp_hw_quote_img', uploadedHwQuoteImg); } catch(e) {} }
   localStorage.setItem('mcp_checkout_state', JSON.stringify({lang:currentLang,unit:unitSys,curr:currentCurr,inputs:inputs}));
 }
 
@@ -955,9 +993,20 @@ function sendUnlockedMasterWhatsApp() {
 }
 
 function restoreIfReturningFromStripe() {
-  if (!isReturningFromStripe) { localStorage.removeItem('mcp_project_cart'); localStorage.removeItem('mcp_custom_lines'); localStorage.removeItem('mcp_checkout_state'); return; }
+  if (!isReturningFromStripe) {
+    localStorage.removeItem('mcp_project_cart');
+    localStorage.removeItem('mcp_custom_lines');
+    localStorage.removeItem('mcp_checkout_state');
+    localStorage.removeItem('mcp_company_logo');
+    localStorage.removeItem('mcp_hw_quote_img');
+    uploadedLogoData = '';
+    uploadedHwQuoteImg = '';
+    return;
+  }
   try { const savedCart = JSON.parse(localStorage.getItem('mcp_project_cart')||'[]'); if (Array.isArray(savedCart)) projectCart = savedCart; } catch(e) {}
   try { const savedLines = JSON.parse(localStorage.getItem('mcp_custom_lines')||'[]'); if (Array.isArray(savedLines)&&savedLines.length>0) customLineItems = savedLines; } catch(e) {}
+  uploadedLogoData = localStorage.getItem('mcp_company_logo') || '';
+  uploadedHwQuoteImg = localStorage.getItem('mcp_hw_quote_img') || '';
   try {
     const st = JSON.parse(localStorage.getItem('mcp_checkout_state')||'null');
     if (st && st.inputs) Object.keys(st.inputs).forEach(id => { const el = document.getElementById(id); if (!el) return; if (el.type==='checkbox') el.checked = !!st.inputs[id]; else el.value = st.inputs[id]; });
