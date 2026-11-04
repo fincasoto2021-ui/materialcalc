@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "org.materialcalcpro.twa",
+        "sha256_cert_fingerprints": ["12:B0:25:D4:DE:82:FA:70:4B:CF:1E:87:EC:16:DD:DF:6C:90:DE:F3:FC:2C:F2:17:CB:E9:14:0B:92:C8:0F:0F"]
+      }
+    }]
