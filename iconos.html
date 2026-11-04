@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Descargar Iconos PNG</title>
+<style>
+  body { background:#090d16; color:#fff; font-family:system-ui,sans-serif; text-align:center; padding:2rem 1rem; }
+  .box { max-width:420px; margin:0 auto; background:#1e293b; border:2px solid #facc15; border-radius:12px; padding:1.5rem; }
+  canvas { border-radius:20px; margin:1rem auto; display:block; max-width:192px; height:auto; }
+  .btn { display:block; width:100%; background:#10b981; color:#fff; font-weight:900; padding:0.9rem; border-radius:8px; margin-top:0.8rem; border:none; font-size:0.95rem; cursor:pointer; }
+</style>
+</head>
+<body>
+<div class="box">
+  <h2 style="color:#facc15;">Generador Oficial de Iconos PNG</h2>
+  <canvas id="c512" width="512" height="512"></canvas>
+  <canvas id="c192" width="192" height="192" style="display:none;"></canvas>
+  <button class="btn" onclick="dl(512)">⬇️ 1. Descargar icon-512.png</button>
+  <button class="btn" style="background:#3b82f6;" onclick="dl(192)">⬇️ 2. Descargar icon-192.png</button>
+</div>
+<script>
+const svgStr = `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 160 160">
+  <defs>
+    <linearGradient id="tmY" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fde047"/><stop offset="45%" stop-color="#facc15"/><stop offset="85%" stop-color="#ca8a04"/><stop offset="100%" stop-color="#854d0e"/>
+    </linearGradient>
+    <linearGradient id="tmR" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#334155"/><stop offset="40%" stop-color="#1e293b"/><stop offset="100%" stop-color="#090d16"/>
+    </linearGradient>
+    <linearGradient id="tmS" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc"/><stop offset="50%" stop-color="#94a3b8"/><stop offset="100%" stop-color="#475569"/>
+    </linearGradient>
+  </defs>
+  <rect width="160" height="160" rx="34" fill="#090d16" stroke="#facc15" stroke-width="4"/>
+  <g transform="translate(14, 34)">
+    <ellipse cx="68" cy="80" rx="50" ry="7" fill="rgba(0,0,0,0.55)"/>
+    <path d="M14 66 L58 50 L68 63 L24 80 Z" fill="url(#tmY)" stroke="#111827" stroke-width="1.5"/>
+    <line x1="28" y1="61" x2="32" y2="67" stroke="#111827" stroke-width="1.5"/>
+    <line x1="38" y1="57" x2="43" y2='65' stroke="#111827" stroke-width="2"/>
+    <line x1="48" y1="53" x2="52" y2="59" stroke="#111827" stroke-width="1.5"/>
+    <path d="M10 62 L16 59 L26 75 L20 82 L12 72 Z" fill="url(#tmS)" stroke="#1e293b" stroke-width="1.3"/>
+    <path d="M52 46 C52 17 75 5 100 11 C119 16 125 36 120 57 C116 71 104 78 88 78 L56 78 C49 78 49 65 52 46 Z" fill="url(#tmR)" stroke="#000000" stroke-width="2"/>
+    <path d="M56 50 C57 26 75 16 96 20 C111 23 116 39 112 56 C109 67 99 72 84 72 L58 72 Z" fill="url(#tmY)" stroke="#111827" stroke-width="1.4"/>
+    <path d="M51 54 L63 54 L65 73 L52 73 Z" fill="#090d16"/>
+    <rect x="49" y="29" width="13" height="17" rx="3.5" transform="rotate(14 49 29)" fill="url(#tmR)" stroke="#000000" stroke-width="1.4"/>
+    <circle cx="90" cy="48" r="19" fill="url(#tmY)" stroke="#b45309" stroke-width="1.5"/>
+    <path d="M84 31 L98 31 L95 64 C95 67 83 67 83 64 Z" fill="url(#tmS)" stroke="#334155" stroke-width="1.4"/>
+    <circle cx="90" cy="46" r="3.2" fill="#94a3b8" stroke="#1e293b" stroke-width="1"/>
+  </g>
+</svg>`;
+const img = new Image();
+img.onload = function() {
+  [512, 192].forEach(sz => {
+    const cv = document.getElementById('c' + sz);
+    cv.getContext('2d').drawImage(img, 0, 0, sz, sz);
+  });
+};
+img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgStr);
+function dl(sz) {
+  const a = document.createElement('a');
+  a.download = 'icon-' + sz + '.png';
+  a.href = document.getElementById('c' + sz).toDataURL('image/png');
+  a.click();
+}
+</script>
+</body>
+</html>
