@@ -6,439 +6,195 @@
 <meta name="google-site-verification" content="QK9UkO8Wa6ApdBs0sG4Gk8ojj5vx9duiBlAG9b618-g" />
 <title>MaterialCalcPro.org | Estimados, Facturas y Calculadora de Materiales</title>
 <meta name="description" content="Professional contractor estimate & invoice builder with built-in construction material calculators: Concrete, Roof Coating, CMU Blocks, AC BTU, Paint & Drywall.">
-<link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#0f172a">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 130 92'%3E%3Crect width='130' height='92' rx='18' fill='%23090d16' stroke='%23facc15' stroke-width='3'/%3E%3Cpath d='M14 66 L58 50 L68 63 L24 80 Z' fill='%23facc15' stroke='%23111827' stroke-width='1.5'/%3E%3Cpath d='M10 62 L16 59 L26 75 L20 82 L12 72 Z' fill='%23cbd5e1' stroke='%231e293b' stroke-width='1.5'/%3E%3Cpath d='M52 46 C52 17 75 5 100 11 C119 16 125 36 120 57 C116 71 104 78 88 78 L56 78 C49 78 49 65 52 46 Z' fill='%231e293b' stroke='%23000' stroke-width='1.8'/%3E%3Cpath d='M56 50 C57 26 75 16 96 20 C111 23 116 39 112 56 C109 67 99 72 84 72 L58 72 Z' fill='%23facc15' stroke='%23111827' stroke-width='1.4'/%3E%3Ccircle cx='90' cy='48' r='19' fill='%23facc15' stroke='%23b45309' stroke-width='1.5'/%3E%3Cpath d='M84 31 L98 31 L95 64 C95 67 83 67 83 64 Z' fill='%23cbd5e1' stroke='%23334155' stroke-width='1.4'/%3E%3Ccircle cx='90' cy='46' r='3' fill='%2394a3b8' stroke='%231e293b' stroke-width='1'/%3E%3C/svg%3E">
 <script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/sw.js').then(function(reg) {
-      reg.update();
-    }).catch(function() {});
-  });
-}
+window.addEventListener('beforeinstallprompt', function(e) { e.preventDefault(); e.stopImmediatePropagation(); return false; });
+if ('serviceWorker' in navigator) { navigator.serviceWorker.getRegistrations().then(function(r) { for (let x of r) x.unregister(); }); }
+if ('caches' in window) { caches.keys().then(function(k) { for (let n of k) caches.delete(n); }); }
 </script>
 <script data-goatcounter="https://materialcalcpro.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <style>
-:root {
-  --primary: #0f172a;
-  --accent: #facc15;
-  --bg: #f1f5f9;
-  --card: #ffffff;
-  --text: #334155;
-  --green-pay: #10b981;
-}
-html, * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
-body { background: var(--bg); color: var(--text); padding-bottom: 2.5rem; }
-header { background: #090d16; color: white; padding: 1rem; border-bottom: 3px solid var(--accent); }
-.top-bar {
-  display: flex; justify-content: space-between; align-items: center;
-  max-width: 720px; margin: 0 auto 0.85rem; gap: 0.5rem; flex-wrap: wrap;
-}
-.brand-logo { display: flex; align-items: center; gap: 0.75rem; color: white; }
-.brand-icon {
-  width: 62px; height: 48px; background: radial-gradient(circle at center, #1e293b 0%, #05080f 100%);
-  border: 2px solid var(--accent); border-radius: 11px;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6), 0 0 8px rgba(250, 204, 21, 0.25); flex-shrink: 0;
-  overflow: hidden;
-}
-.logo-main { font-size: 1.28rem; font-weight: 900; letter-spacing: -0.5px; color: #fff; }
-.logo-main span { color: var(--accent); }
-.logo-main small { font-size: 0.82rem; color: #94a3b8; font-weight: 700; }
-.logo-sub { font-size: 0.62rem; text-transform: uppercase; letter-spacing: 1.3px; color: #cbd5e1; font-weight: 700; margin-top: 2px; }
-.top-actions { display: flex; gap: 0.35rem; align-items: center; flex-wrap: wrap; }
-.lang-btn, .unit-btn, .curr-select {
-  background: #1e293b; color: white; border: 1px solid var(--accent);
-  padding: 0.35rem 0.55rem; border-radius: 6px; font-weight: 700; font-size: 0.75rem; cursor: pointer;
-}
-.unit-btn { border-color: #38bdf8; color: #bae6fd; }
-.curr-select { border-color: #4ade80; color: #bbf7d0; }
-
-/* BOTONES PRINCIPALES DE NAVEGACIÓN */
-.main-mode-switch {
-  display: grid; grid-template-columns: 1.2fr 1fr; gap: 0.55rem;
-  max-width: 720px; margin: 0 auto;
-}
-@media (max-width: 520px) { .main-mode-switch { grid-template-columns: 1fr; } }
-.mode-btn {
-  background: #1e293b; color: #e2e8f0; border: 2px solid #334155;
-  padding: 0.75rem 0.8rem; border-radius: 10px; font-weight: 800; font-size: 0.9rem;
-  cursor: pointer; text-align: center; transition: 0.15s;
-}
-.mode-btn.active {
-  background: var(--accent); color: #000; border-color: #fff; font-weight: 900;
-  box-shadow: 0 4px 12px rgba(250, 204, 21, 0.3);
-}
-
-.container { max-width: 720px; margin: 1rem auto; padding: 0 1rem; }
-.view-panel { display: none; }
-.view-panel.active { display: block; }
-
-/* SUB-PESTAÑAS DE CALCULADORAS */
-.tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; margin-bottom: 0.9rem; }
-@media (max-width: 480px) { .tabs { grid-template-columns: repeat(2, 1fr); } }
-.tab-btn {
-  background: #0f172a; color: #cbd5e1; border: 1px solid #334155;
-  padding: 0.55rem 0.4rem; border-radius: 8px; font-weight: 700; font-size: 0.78rem; cursor: pointer;
-}
-.tab-btn.active { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 900; }
-
-.calc-card {
-  background: var(--card); padding: 1.35rem; border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06); display: none;
-}
-.calc-card.active { display: block; }
-h1 { font-size: 1.22rem; color: var(--primary); margin-bottom: 0.25rem; }
-.sub { font-size: 0.83rem; color: #64748b; margin-bottom: 1rem; }
-.group { margin-bottom: 0.8rem; }
-.price-box {
-  background: #fefce8; border: 1.5px solid #fde047; border-radius: 10px;
-  padding: 0.8rem; margin: 0.8rem 0;
-}
-.price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
-.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.55rem; }
-@media (max-width: 500px) { .price-grid, .grid-3 { grid-template-columns: 1fr; } }
-label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--primary); margin-bottom: 0.25rem; }
-input, select, textarea {
-  width: 100%; padding: 0.65rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 0.92rem; background: #fff;
-}
-.btn-calc {
-  width: 100%; background: var(--accent); color: #000; border: none;
-  padding: 0.8rem; border-radius: 8px; font-size: 0.92rem; font-weight: 900; cursor: pointer; margin-top: 0.2rem;
-}
-.res-box { margin-top: 1rem; background: var(--primary); color: white; padding: 1.1rem; border-radius: 10px; }
-.res-title { font-size: 0.72rem; text-transform: uppercase; color: var(--accent); font-weight: 700; }
-.res-big-wrap {
-  display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;
-  gap: 0.5rem; margin: 0.3rem 0 0.7rem; border-bottom: 1px solid #334155; padding-bottom: 0.5rem;
-}
-.res-big { font-size: 1.5rem; font-weight: 800; }
-.res-cost-tag {
-  background: #064e3b; border: 1px solid #10b981; color: #6ee7b7;
-  padding: 0.25rem 0.6rem; border-radius: 8px; font-size: 1.1rem; font-weight: 900;
-}
-.res-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; font-size: 0.82rem; }
-.res-grid span { display: block; font-size: 1rem; font-weight: 700; color: #fff; }
-.add-project-btn {
-  width: 100%; background: #3b82f6; color: #fff; border: none; margin-top: 0.9rem;
-  padding: 0.8rem; border-radius: 8px; font-size: 0.9rem; font-weight: 800; cursor: pointer;
-}
-
-/* TARJETA PRINCIPAL DE ESTIMADOS Y FACTURAS */
-.builder-card {
-  background: #0f172a; color: #fff; padding: 1.25rem; border-radius: 12px;
-  border: 2px solid var(--accent); box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-}
-.mb-header {
-  display: flex; justify-content: space-between; align-items: center;
-  border-bottom: 1px solid #334155; padding-bottom: 0.75rem; margin-bottom: 0.95rem; flex-wrap: wrap; gap: 0.5rem;
-}
-.mb-header h2 { font-size: 1.15rem; color: var(--accent); font-weight: 900; }
-.reset-zero-btn {
-  background: #334155; color: #f8fafc; border: 1px solid #64748b;
-  padding: 0.32rem 0.65rem; border-radius: 6px; font-size: 0.74rem; font-weight: 800; cursor: pointer;
-}
-.open-sample-btn {
-  width: 100%; background: linear-gradient(135deg, #fde047 0%, #eab308 100%);
-  color: #0f172a; border: 2px solid #ffffff; padding: 0.85rem 1rem; border-radius: 10px;
-  font-size: 0.92rem; font-weight: 900; cursor: pointer; margin-bottom: 1rem;
-  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-  box-shadow: 0 4px 14px rgba(250, 204, 21, 0.35); transition: transform 0.12s;
-}
-.open-sample-btn:active { transform: scale(0.99); }
-.mb-section {
-  background: #1e293b; border: 1px solid #334155; border-radius: 10px;
-  padding: 0.9rem; margin-bottom: 0.9rem;
-}
-.mb-sec-title {
-  font-size: 0.86rem; font-weight: 800; color: #fde047; margin-bottom: 0.6rem;
-  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.4rem;
-}
-.qb-field label { color: #cbd5e1; font-size: 0.74rem; margin-bottom: 0.2rem; }
-.qb-field input, .qb-field select {
-  background: #0f172a; color: #fff; border: 1px solid #475569; padding: 0.55rem 0.65rem; font-size: 0.86rem; border-radius: 6px;
-}
-.chip-bar { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.6rem; }
-.chip-btn {
-  background: #0f172a; color: #fde047; border: 1px solid var(--accent);
-  padding: 0.3rem 0.55rem; border-radius: 6px; font-size: 0.73rem; font-weight: 700; cursor: pointer;
-}
-.custom-line-row {
-  display: grid; grid-template-columns: 2fr 1fr auto; gap: 0.4rem; margin-bottom: 0.4rem; align-items: center;
-}
-.custom-line-row input {
-  background: #0f172a; color: #fff; border: 1px solid #475569; padding: 0.5rem; font-size: 0.84rem; border-radius: 6px;
-}
-.cart-item {
-  background: #0f172a; border: 1px solid #334155; border-radius: 6px;
-  padding: 0.55rem 0.65rem; margin-bottom: 0.4rem; display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap;
-}
-.cart-price-input {
-  width: 105px !important; background: #1e293b !important; color: #6ee7b7 !important;
-  border: 1px solid #10b981 !important; padding: 0.3rem 0.45rem !important; font-weight: 800; text-align: right;
-}
-.cart-remove {
-  background: #ef4444; color: #fff; border: none; border-radius: 4px;
-  padding: 0.3rem 0.55rem; font-size: 0.75rem; font-weight: 800; cursor: pointer;
-}
-
-/* CAJA IDENTIFICADA DE LOGO PICTURE */
-.logo-upload-box {
-  border: 2px dashed var(--accent); border-radius: 10px; padding: 0.75rem; text-align: center;
-  margin-top: 0.65rem; background: #0f172a;
-}
-.logo-pic-badge {
-  display: inline-block; background: var(--accent); color: #000; font-weight: 900;
-  font-size: 0.72rem; padding: 0.18rem 0.55rem; border-radius: 5px; letter-spacing: 0.5px;
-  margin-bottom: 0.35rem; text-transform: uppercase;
-}
-.logo-upload-box input[type="file"] { font-size: 0.78rem; color: #cbd5e1; border: none; padding: 0.2rem; background: transparent; }
-.logo-id-wrap {
-  display: none; align-items: center; justify-content: center; gap: 0.6rem;
-  margin-top: 0.45rem; background: #1e293b; padding: 0.4rem 0.65rem; border-radius: 8px; border: 1px solid #10b981;
-}
-.logo-mini-thumb {
-  width: 42px; height: 42px; object-fit: contain; background: #fff; border-radius: 6px; padding: 2px; border: 1px solid #fde047;
-}
-.logo-status-msg { font-size: 0.76rem; color: #4ade80; font-weight: 800; text-align: left; }
-
-.contractor-numbers-bar {
-  background: #064e3b; border: 1.5px solid #10b981; border-radius: 8px;
-  padding: 0.75rem 0.9rem; margin: 0.85rem 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;
-}
-.contractor-numbers-bar strong { font-size: 1.25rem; color: #6ee7b7; }
-
-.stripe-pay-btn {
-  width: 100%; background: var(--green-pay); color: #ffffff; border: none;
-  padding: 0.95rem; border-radius: 8px; font-size: 0.95rem; font-weight: 900;
-  cursor: pointer; box-shadow: 0 4px 10px rgba(16, 185, 129, 0.25); margin-top: 0.4rem;
-}
-.wa-master-btn {
-  width: 100%; background: #1e293b; color: #4ade80; border: 1.5px solid #25D366;
-  padding: 0.88rem; border-radius: 8px; font-size: 0.92rem; font-weight: 800; cursor: pointer; margin-top: 0.5rem;
-}
-.stripe-note { text-align: center; font-size: 0.74rem; color: #cbd5e1; margin-top: 0.45rem; }
-
-/* TARJETA DE HISTORIAL PERMANENTE */
-.history-card {
-  background: var(--card); padding: 1.15rem; border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-top: 1.15rem; border: 1px solid #cbd5e1;
-}
-.history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
-.history-header h3 { font-size: 0.96rem; color: var(--primary); font-weight: 900; }
-.clear-btn {
-  background: transparent; border: 1px solid #ef4444; color: #ef4444;
-  padding: 0.24rem 0.6rem; border-radius: 6px; font-size: 0.74rem; font-weight: 700; cursor: pointer;
-}
-.history-list { list-style: none; font-size: 0.82rem; color: #475569; }
-.history-list li {
-  padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0;
-  display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap;
-}
-.history-list li:last-child { border-bottom: none; }
-
-/* MODAL DE EJEMPLO (SOLO CIERRA CON EL BOTÓN ROJO CERRAR) */
-.doc-modal-overlay {
-  position: fixed; inset: 0; background: rgba(9, 13, 22, 0.88);
-  display: none; justify-content: center; align-items: flex-start;
-  padding: 1rem 0.65rem; z-index: 9999; overflow-y: auto;
-}
-.doc-modal-container { width: 100%; max-width: 720px; margin: 0 auto 2rem; }
-.doc-modal-topbar {
-  background: #1e293b; border: 2px solid var(--accent); border-radius: 10px;
-  padding: 0.7rem 0.85rem; margin-bottom: 0.75rem; color: #fff;
-  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;
-}
-.sample-switch-group { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-.sample-type-btn {
-  background: #0f172a; color: #cbd5e1; border: 1px solid #475569;
-  padding: 0.35rem 0.65rem; border-radius: 6px; font-size: 0.76rem; font-weight: 800; cursor: pointer;
-}
-.sample-type-btn.active { background: var(--accent); color: #000; border-color: #fff; }
-.close-modal-x {
-  background: #ef4444; color: #fff; border: none; padding: 0.38rem 0.75rem;
-  border-radius: 6px; font-weight: 900; font-size: 0.8rem; cursor: pointer;
-}
-
-.luxury-paper-sheet {
-  background: #ffffff; color: #0f172a; border-radius: 10px;
-  padding: 1.5rem 1.35rem; box-shadow: 0 20px 45px rgba(0,0,0,0.55);
-  border-top: 6px solid #0f172a; position: relative;
-}
-@media (max-width: 480px) { .luxury-paper-sheet { padding: 1.05rem 0.85rem; } }
-.lux-sample-ribbon {
-  background: linear-gradient(90deg, #1e293b, #0f172a); color: #fde047;
-  text-align: center; padding: 0.42rem 0.6rem; border-radius: 6px;
-  font-size: 0.73rem; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase;
-  margin-bottom: 1rem; border: 1px solid #facc15;
-}
-.lux-header {
-  display: flex; justify-content: space-between; align-items: flex-start;
-  border-bottom: 2.5px solid #0f172a; padding-bottom: 0.8rem; margin-bottom: 0.85rem;
-  gap: 0.8rem; flex-wrap: wrap;
-}
-.lux-brand { display: flex; align-items: center; gap: 0.75rem; }
-.lux-logo-box {
-  width: 68px; height: 68px; background: linear-gradient(145deg, #0f172a, #1e293b);
-  border: 2.5px solid #eab308; border-radius: 14px; display: flex; align-items: center;
-  justify-content: center; flex-shrink: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.18);
-}
-.lux-comp-name { font-size: 1.2rem; font-weight: 900; color: #0f172a; letter-spacing: -0.3px; }
-.lux-comp-sub { font-size: 0.76rem; color: #475569; font-weight: 600; line-height: 1.35; margin-top: 2px; }
-.lux-badge-box {
-  background: #f8fafc; border: 1.5px solid #cbd5e1; border-right: 4px solid #eab308;
-  padding: 0.5rem 0.8rem; border-radius: 8px; text-align: right; min-width: 170px;
-}
-.lux-doc-title { font-size: 0.92rem; font-weight: 900; color: #0f172a; text-transform: uppercase; }
-.lux-doc-num { font-size: 0.84rem; font-weight: 800; color: #b45309; margin-top: 2px; }
-.lux-doc-date { font-size: 0.73rem; color: #64748b; margin-top: 2px; font-weight: 600; }
-
-.lux-client-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem;
-  background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 8px;
-  padding: 0.65rem 0.8rem; margin-bottom: 0.85rem; font-size: 0.79rem;
-}
-@media (max-width: 500px) { .lux-client-grid { grid-template-columns: 1fr; } }
-.lux-client-grid strong { display: block; font-size: 0.7rem; text-transform: uppercase; color: #64748b; }
-.lux-client-grid span { font-weight: 800; color: #0f172a; font-size: 0.85rem; }
-
-.lux-scope-box {
-  border: 1.5px solid #0f172a; border-radius: 8px; padding: 0.65rem 0.8rem; margin-bottom: 0.85rem;
-}
-.lux-scope-hdr {
-  font-size: 0.78rem; font-weight: 900; text-transform: uppercase; color: #0f172a;
-  border-bottom: 1px solid #cbd5e1; padding-bottom: 0.3rem; margin-bottom: 0.45rem;
-}
-.lux-scope-item { font-size: 0.79rem; padding: 0.28rem 0; border-bottom: 1px dashed #e2e8f0; line-height: 1.38; }
-.lux-scope-item:last-child { border-bottom: none; }
-
-.lux-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-bottom: 0.75rem; }
-.lux-table th { background: #0f172a; color: #ffffff; padding: 0.45rem 0.65rem; text-align: left; font-weight: 800; }
-.lux-table td { border: 1px solid #cbd5e1; padding: 0.42rem 0.65rem; }
-.lux-table td:last-child, .lux-table th:last-child { text-align: right; font-weight: 700; }
-.lux-tot-row { background: #fef3c7; font-weight: 900; font-size: 0.92rem; }
-.lux-bal-row { background: #dcfce7; color: #065f46; font-weight: 900; font-size: 0.96rem; }
-
-.lux-sign-box {
-  border: 1.5px solid #0f172a; border-radius: 8px; padding: 0.65rem 0.8rem; margin-top: 0.6rem;
-}
-.lux-checks { display: flex; gap: 1.4rem; flex-wrap: wrap; font-size: 0.8rem; font-weight: 800; margin: 0.35rem 0 0.5rem; }
-.lux-signs { display: grid; grid-template-columns: 2fr 2fr 1fr; gap: 0.85rem; margin-top: 1.15rem; font-size: 0.74rem; }
-.lux-sign-line { border-top: 1.5px solid #0f172a; padding-top: 0.25rem; font-weight: 700; color: #334155; }
-
-/* IMPRESIÓN OFICIAL (SOLO SE ACTIVA AL DESCARGAR EL PDF TRAS PAGAR) */
-#printMasterDocument { display: none; }
+:root { --primary:#0f172a; --accent:#facc15; --bg:#f1f5f9; --card:#ffffff; --text:#334155; --green-pay:#10b981; }
+html, * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,-apple-system,sans-serif; }
+body { background:var(--bg); color:var(--text); padding-bottom:2.5rem; }
+header { background:#090d16; color:#fff; padding:1rem; border-bottom:3px solid var(--accent); }
+.top-bar { display:flex; justify-content:space-between; align-items:center; max-width:720px; margin:0 auto 0.85rem; gap:0.5rem; flex-wrap:wrap; }
+.brand-logo { display:flex; align-items:center; gap:0.75rem; color:#fff; }
+.brand-icon { width:62px; height:48px; background:radial-gradient(circle at center,#1e293b 0%,#05080f 100%); border:2px solid var(--accent); border-radius:11px; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(0,0,0,0.6),0 0 8px rgba(250,204,21,0.25); flex-shrink:0; overflow:hidden; }
+.logo-main { font-size:1.28rem; font-weight:900; letter-spacing:-0.5px; color:#fff; }
+.logo-main span { color:var(--accent); }
+.logo-main small { font-size:0.82rem; color:#94a3b8; font-weight:700; }
+.logo-sub { font-size:0.62rem; text-transform:uppercase; letter-spacing:1.3px; color:#cbd5e1; font-weight:700; margin-top:2px; }
+.top-actions { display:flex; gap:0.35rem; align-items:center; flex-wrap:wrap; }
+.lang-btn, .unit-btn, .curr-select { background:#1e293b; color:#fff; border:1px solid var(--accent); padding:0.35rem 0.55rem; border-radius:6px; font-weight:700; font-size:0.75rem; cursor:pointer; }
+.unit-btn { border-color:#38bdf8; color:#bae6fd; }
+.curr-select { border-color:#4ade80; color:#bbf7d0; }
+.main-mode-switch { display:grid; grid-template-columns:1.2fr 1fr; gap:0.55rem; max-width:720px; margin:0 auto; }
+@media (max-width:520px) { .main-mode-switch { grid-template-columns:1fr; } }
+.mode-btn { background:#1e293b; color:#e2e8f0; border:2px solid #334155; padding:0.75rem 0.8rem; border-radius:10px; font-weight:800; font-size:0.9rem; cursor:pointer; text-align:center; }
+.mode-btn.active { background:var(--accent); color:#000; border-color:#fff; font-weight:900; box-shadow:0 4px 12px rgba(250,204,21,0.3); }
+.container { max-width:720px; margin:1rem auto; padding:0 1rem; }
+.view-panel { display:none; }
+.view-panel.active { display:block; }
+.tabs { display:grid; grid-template-columns:repeat(3,1fr); gap:0.4rem; margin-bottom:0.9rem; }
+@media (max-width:480px) { .tabs { grid-template-columns:repeat(2,1fr); } }
+.tab-btn { background:#0f172a; color:#cbd5e1; border:1px solid #334155; padding:0.55rem 0.4rem; border-radius:8px; font-weight:700; font-size:0.78rem; cursor:pointer; }
+.tab-btn.active { background:var(--accent); color:#000; border-color:var(--accent); font-weight:900; }
+.calc-card { background:var(--card); padding:1.35rem; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.06); display:none; }
+.calc-card.active { display:block; }
+h1 { font-size:1.22rem; color:var(--primary); margin-bottom:0.25rem; }
+.sub { font-size:0.83rem; color:#64748b; margin-bottom:1rem; }
+.group { margin-bottom:0.8rem; }
+.price-box { background:#fefce8; border:1.5px solid #fde047; border-radius:10px; padding:0.8rem; margin:0.8rem 0; }
+.price-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; }
+.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.55rem; }
+@media (max-width:500px) { .price-grid, .grid-3 { grid-template-columns:1fr; } }
+label { display:block; font-size:0.8rem; font-weight:700; color:var(--primary); margin-bottom:0.25rem; }
+input, select, textarea { width:100%; padding:0.65rem; border:1px solid #cbd5e1; border-radius:8px; font-size:0.92rem; background:#fff; }
+.btn-calc { width:100%; background:var(--accent); color:#000; border:none; padding:0.8rem; border-radius:8px; font-size:0.92rem; font-weight:900; cursor:pointer; margin-top:0.2rem; }
+.res-box { margin-top:1rem; background:var(--primary); color:#fff; padding:1.1rem; border-radius:10px; }
+.res-title { font-size:0.72rem; text-transform:uppercase; color:var(--accent); font-weight:700; }
+.res-big-wrap { display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:0.5rem; margin:0.3rem 0 0.7rem; border-bottom:1px solid #334155; padding-bottom:0.5rem; }
+.res-big { font-size:1.5rem; font-weight:800; }
+.res-cost-tag { background:#064e3b; border:1px solid #10b981; color:#6ee7b7; padding:0.25rem 0.6rem; border-radius:8px; font-size:1.1rem; font-weight:900; }
+.res-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.7rem; font-size:0.82rem; }
+.res-grid span { display:block; font-size:1rem; font-weight:700; color:#fff; }
+.add-project-btn { width:100%; background:#3b82f6; color:#fff; border:none; margin-top:0.9rem; padding:0.8rem; border-radius:8px; font-size:0.9rem; font-weight:800; cursor:pointer; }
+.builder-card { background:#0f172a; color:#fff; padding:1.25rem; border-radius:12px; border:2px solid var(--accent); box-shadow:0 6px 18px rgba(0,0,0,0.12); }
+.mb-header { display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:0.75rem; margin-bottom:0.95rem; flex-wrap:wrap; gap:0.5rem; }
+.mb-header h2 { font-size:1.15rem; color:var(--accent); font-weight:900; }
+.reset-zero-btn { background:#334155; color:#f8fafc; border:1px solid #64748b; padding:0.32rem 0.65rem; border-radius:6px; font-size:0.74rem; font-weight:800; cursor:pointer; }
+.open-sample-btn { width:100%; background:linear-gradient(135deg,#fde047 0%,#eab308 100%); color:#0f172a; border:2px solid #fff; padding:0.85rem 1rem; border-radius:10px; font-size:0.92rem; font-weight:900; cursor:pointer; margin-bottom:1rem; display:flex; align-items:center; justify-content:center; gap:0.5rem; box-shadow:0 4px 14px rgba(250,204,21,0.35); }
+.mb-section { background:#1e293b; border:1px solid #334155; border-radius:10px; padding:0.9rem; margin-bottom:0.9rem; }
+.mb-sec-title { font-size:0.86rem; font-weight:800; color:#fde047; margin-bottom:0.6rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.4rem; }
+.qb-field label { color:#cbd5e1; font-size:0.74rem; margin-bottom:0.2rem; }
+.qb-field input, .qb-field select { background:#0f172a; color:#fff; border:1px solid #475569; padding:0.55rem 0.65rem; font-size:0.86rem; border-radius:6px; }
+.chip-bar { display:flex; flex-wrap:wrap; gap:0.35rem; margin-bottom:0.6rem; }
+.chip-btn { background:#0f172a; color:#fde047; border:1px solid var(--accent); padding:0.3rem 0.55rem; border-radius:6px; font-size:0.73rem; font-weight:700; cursor:pointer; }
+.custom-line-row { display:grid; grid-template-columns:2fr 1fr auto; gap:0.4rem; margin-bottom:0.4rem; align-items:center; }
+.custom-line-row input { background:#0f172a; color:#fff; border:1px solid #475569; padding:0.5rem; font-size:0.84rem; border-radius:6px; }
+.cart-item { background:#0f172a; border:1px solid #334155; border-radius:6px; padding:0.55rem 0.65rem; margin-bottom:0.4rem; display:flex; justify-content:space-between; align-items:center; gap:0.5rem; flex-wrap:wrap; }
+.cart-price-input { width:105px !important; background:#1e293b !important; color:#6ee7b7 !important; border:1px solid #10b981 !important; padding:0.3rem 0.45rem !important; font-weight:800; text-align:right; }
+.cart-remove { background:#ef4444; color:#fff; border:none; border-radius:4px; padding:0.3rem 0.55rem; font-size:0.75rem; font-weight:800; cursor:pointer; }
+.logo-upload-box { border:2px dashed var(--accent); border-radius:10px; padding:0.75rem; text-align:center; margin-top:0.65rem; background:#0f172a; }
+.logo-pic-badge { display:inline-block; background:var(--accent); color:#000; font-weight:900; font-size:0.72rem; padding:0.18rem 0.55rem; border-radius:5px; letter-spacing:0.5px; margin-bottom:0.35rem; text-transform:uppercase; }
+.logo-upload-box input[type="file"] { font-size:0.78rem; color:#cbd5e1; border:none; padding:0.2rem; background:transparent; }
+.logo-id-wrap { display:none; align-items:center; justify-content:center; gap:0.6rem; margin-top:0.45rem; background:#1e293b; padding:0.4rem 0.65rem; border-radius:8px; border:1px solid #10b981; }
+.logo-mini-thumb { width:42px; height:42px; object-fit:contain; background:#fff; border-radius:6px; padding:2px; border:1px solid #fde047; }
+.logo-status-msg { font-size:0.76rem; color:#4ade80; font-weight:800; text-align:left; }
+.contractor-numbers-bar { background:#064e3b; border:1.5px solid #10b981; border-radius:8px; padding:0.75rem 0.9rem; margin:0.85rem 0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; }
+.contractor-numbers-bar strong { font-size:1.25rem; color:#6ee7b7; }
+.stripe-pay-btn { width:100%; background:var(--green-pay); color:#fff; border:none; padding:0.95rem; border-radius:8px; font-size:0.95rem; font-weight:900; cursor:pointer; box-shadow:0 4px 10px rgba(16,185,129,0.25); margin-top:0.4rem; }
+.wa-master-btn { width:100%; background:#1e293b; color:#4ade80; border:1.5px solid #25D366; padding:0.88rem; border-radius:8px; font-size:0.92rem; font-weight:800; cursor:pointer; margin-top:0.5rem; }
+.stripe-note { text-align:center; font-size:0.74rem; color:#cbd5e1; margin-top:0.45rem; }
+.history-card { background:var(--card); padding:1.15rem; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.05); margin-top:1.15rem; border:1px solid #cbd5e1; }
+.history-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; }
+.history-header h3 { font-size:0.96rem; color:var(--primary); font-weight:900; }
+.clear-btn { background:transparent; border:1px solid #ef4444; color:#ef4444; padding:0.24rem 0.6rem; border-radius:6px; font-size:0.74rem; font-weight:700; cursor:pointer; }
+.history-list { list-style:none; font-size:0.82rem; color:#475569; }
+.history-list li { padding:0.5rem 0; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center; gap:0.5rem; flex-wrap:wrap; }
+.history-list li:last-child { border-bottom:none; }
+.doc-modal-overlay { position:fixed; inset:0; background:rgba(9,13,22,0.88); display:none; justify-content:center; align-items:flex-start; padding:1rem 0.65rem; z-index:9999; overflow-y:auto; }
+.doc-modal-container { width:100%; max-width:720px; margin:0 auto 2rem; }
+.doc-modal-topbar { background:#1e293b; border:2px solid var(--accent); border-radius:10px; padding:0.7rem 0.85rem; margin-bottom:0.75rem; color:#fff; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; }
+.sample-switch-group { display:flex; gap:0.4rem; flex-wrap:wrap; }
+.sample-type-btn { background:#0f172a; color:#cbd5e1; border:1px solid #475569; padding:0.35rem 0.65rem; border-radius:6px; font-size:0.76rem; font-weight:800; cursor:pointer; }
+.sample-type-btn.active { background:var(--accent); color:#000; border-color:#fff; }
+.close-modal-x { background:#ef4444; color:#fff; border:none; padding:0.38rem 0.75rem; border-radius:6px; font-weight:900; font-size:0.8rem; cursor:pointer; }
+.luxury-paper-sheet { background:#fff; color:#0f172a; border-radius:10px; padding:1.5rem 1.35rem; box-shadow:0 20px 45px rgba(0,0,0,0.55); border-top:6px solid #0f172a; }
+@media (max-width:480px) { .luxury-paper-sheet { padding:1.05rem 0.85rem; } }
+.lux-sample-ribbon { background:linear-gradient(90deg,#1e293b,#0f172a); color:#fde047; text-align:center; padding:0.42rem 0.6rem; border-radius:6px; font-size:0.73rem; font-weight:900; text-transform:uppercase; margin-bottom:1rem; border:1px solid #facc15; }
+.lux-header { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2.5px solid #0f172a; padding-bottom:0.8rem; margin-bottom:0.85rem; gap:0.8rem; flex-wrap:wrap; }
+.lux-brand { display:flex; align-items:center; gap:0.75rem; }
+.lux-logo-box { width:68px; height:68px; background:linear-gradient(145deg,#0f172a,#1e293b); border:2.5px solid #eab308; border-radius:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.lux-comp-name { font-size:1.2rem; font-weight:900; color:#0f172a; }
+.lux-comp-sub { font-size:0.76rem; color:#475569; font-weight:600; line-height:1.35; margin-top:2px; }
+.lux-badge-box { background:#f8fafc; border:1.5px solid #cbd5e1; border-right:4px solid #eab308; padding:0.5rem 0.8rem; border-radius:8px; text-align:right; min-width:170px; }
+.lux-doc-title { font-size:0.92rem; font-weight:900; color:#0f172a; text-transform:uppercase; }
+.lux-doc-num { font-size:0.84rem; font-weight:800; color:#b45309; margin-top:2px; }
+.lux-doc-date { font-size:0.73rem; color:#64748b; margin-top:2px; font-weight:600; }
+.lux-client-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.65rem; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:0.65rem 0.8rem; margin-bottom:0.85rem; font-size:0.79rem; }
+@media (max-width:500px) { .lux-client-grid { grid-template-columns:1fr; } }
+.lux-client-grid strong { display:block; font-size:0.7rem; text-transform:uppercase; color:#64748b; }
+.lux-client-grid span { font-weight:800; color:#0f172a; font-size:0.85rem; }
+.lux-scope-box { border:1.5px solid #0f172a; border-radius:8px; padding:0.65rem 0.8rem; margin-bottom:0.85rem; }
+.lux-scope-hdr { font-size:0.78rem; font-weight:900; text-transform:uppercase; color:#0f172a; border-bottom:1px solid #cbd5e1; padding-bottom:0.3rem; margin-bottom:0.45rem; }
+.lux-scope-item { font-size:0.79rem; padding:0.28rem 0; border-bottom:1px dashed #e2e8f0; line-height:1.38; }
+.lux-scope-item:last-child { border-bottom:none; }
+.lux-table { width:100%; border-collapse:collapse; font-size:0.82rem; margin-bottom:0.75rem; }
+.lux-table th { background:#0f172a; color:#fff; padding:0.45rem 0.65rem; text-align:left; font-weight:800; }
+.lux-table td { border:1px solid #cbd5e1; padding:0.42rem 0.65rem; }
+.lux-table td:last-child, .lux-table th:last-child { text-align:right; font-weight:700; }
+.lux-tot-row { background:#fef3c7; font-weight:900; font-size:0.92rem; }
+.lux-bal-row { background:#dcfce7; color:#065f46; font-weight:900; font-size:0.96rem; }
+.lux-sign-box { border:1.5px solid #0f172a; border-radius:8px; padding:0.65rem 0.8rem; margin-top:0.6rem; }
+.lux-checks { display:flex; gap:1.4rem; flex-wrap:wrap; font-size:0.8rem; font-weight:800; margin:0.35rem 0 0.5rem; }
+.lux-signs { display:grid; grid-template-columns:2fr 2fr 1fr; gap:0.85rem; margin-top:1.15rem; font-size:0.74rem; }
+.lux-sign-line { border-top:1.5px solid #0f172a; padding-top:0.25rem; font-weight:700; color:#334155; }
+#printMasterDocument { display:none; }
 @media print {
-  @page { size: letter; margin: 0.38in; }
-  header, .container > *:not(#printMasterDocument), .doc-modal-overlay, footer { display: none !important; }
-  body { background: #fff; color: #000; padding: 0; font-size: 11.5px; }
-  .container { max-width: 100%; margin: 0; padding: 0; }
-  #printMasterDocument { display: block !important; }
-  body.locked-view #printMasterDocument { display: none !important; }
-  .print-top {
-    display: flex; justify-content: space-between; align-items: flex-start;
-    border-bottom: 2.5px solid #0f172a; padding-bottom: 0.55rem; margin-bottom: 0.65rem; gap: 1rem;
-  }
-  .print-brand-wrap { display: flex; align-items: center; gap: 0.65rem; }
-  .print-default-badge {
-    width: 58px; height: 44px; background: #090d16 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
-    border-radius: 9px; display: flex; align-items: center; justify-content: center; border: 2px solid #facc15;
-  }
-  .print-logo { max-height: 58px; max-width: 160px; object-fit: contain; }
-  .print-doc-badge {
-    text-align: right; background: #f1f5f9 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
-    padding: 0.4rem 0.7rem; border-radius: 6px; border: 1px solid #cbd5e1;
-  }
-  .print-section-box {
-    border: 1.5px solid #0f172a; border-radius: 7px; padding: 0.6rem 0.75rem;
-    margin-bottom: 0.6rem; page-break-inside: avoid;
-  }
-  .print-sec-hdr {
-    font-size: 0.82rem; font-weight: 900; text-transform: uppercase; color: #0f172a;
-    border-bottom: 1px solid #cbd5e1; padding-bottom: 0.25rem; margin-bottom: 0.4rem;
-  }
-  .print-scope-item { padding: 0.28rem 0; border-bottom: 1px dashed #e2e8f0; font-size: 0.8rem; line-height: 1.35; }
-  .print-scope-item:last-child { border-bottom: none; }
-  .print-cost-table { width: 100%; border-collapse: collapse; margin-top: 0.4rem; font-size: 0.83rem; page-break-inside: avoid; }
-  .print-cost-table th, .print-cost-table td { border: 1px solid #cbd5e1; padding: 0.36rem 0.6rem; text-align: left; }
-  .print-cost-table th {
-    background: #0f172a !important; color: #fff !important; font-weight: 800;
-    -webkit-print-color-adjust: exact; print-color-adjust: exact;
-  }
-  .print-cost-table td:last-child, .print-cost-table th:last-child { text-align: right; }
-  .print-total-row { font-size: 0.95rem; font-weight: 800; background: #fef3c7 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .print-balance-row { font-size: 1.02rem; font-weight: 900; background: #dcfce7 !important; color: #065f46 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .print-sign-box { margin-top: 0.6rem; border: 1.5px solid #0f172a; border-radius: 7px; padding: 0.6rem 0.75rem; page-break-inside: avoid; }
-  .accept-options { display: flex; gap: 1.8rem; font-weight: 800; font-size: 0.84rem; margin: 0.35rem 0 0.65rem; }
-  .check-box-sq { display: inline-block; width: 13px; height: 13px; border: 2px solid #0f172a; margin-right: 0.3rem; vertical-align: middle; }
-  .sign-grid { display: grid; grid-template-columns: 2fr 2fr 1fr; gap: 1rem; margin-top: 1.15rem; font-size: 0.75rem; }
-  .sign-line { border-top: 1px solid #0f172a; padding-top: 0.22rem; font-weight: 700; color: #334155; }
-  .print-hw-attachment { margin-top: 0.8rem; page-break-before: always; text-align: center; }
-  .print-hw-attachment img { max-width: 95%; max-height: 8.5in; border: 1px solid #cbd5e1; margin-top: 0.4rem; }
+  @page { size:letter; margin:0.38in; }
+  header, .container > *:not(#printMasterDocument), .doc-modal-overlay, footer { display:none !important; }
+  body { background:#fff; color:#000; padding:0; font-size:11.5px; }
+  .container { max-width:100%; margin:0; padding:0; }
+  #printMasterDocument { display:block !important; }
+  body.locked-view #printMasterDocument { display:none !important; }
+  .print-top { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2.5px solid #0f172a; padding-bottom:0.55rem; margin-bottom:0.65rem; gap:1rem; }
+  .print-brand-wrap { display:flex; align-items:center; gap:0.65rem; }
+  .print-default-badge { width:58px; height:44px; background:#090d16 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; border-radius:9px; display:flex; align-items:center; justify-content:center; border:2px solid #facc15; }
+  .print-logo { max-height:58px; max-width:160px; object-fit:contain; }
+  .print-doc-badge { text-align:right; background:#f1f5f9 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; padding:0.4rem 0.7rem; border-radius:6px; border:1px solid #cbd5e1; }
+  .print-section-box { border:1.5px solid #0f172a; border-radius:7px; padding:0.6rem 0.75rem; margin-bottom:0.6rem; page-break-inside:avoid; }
+  .print-sec-hdr { font-size:0.82rem; font-weight:900; text-transform:uppercase; color:#0f172a; border-bottom:1px solid #cbd5e1; padding-bottom:0.25rem; margin-bottom:0.4rem; }
+  .print-scope-item { padding:0.28rem 0; border-bottom:1px dashed #e2e8f0; font-size:0.8rem; line-height:1.35; }
+  .print-scope-item:last-child { border-bottom:none; }
+  .print-cost-table { width:100%; border-collapse:collapse; margin-top:0.4rem; font-size:0.83rem; page-break-inside:avoid; }
+  .print-cost-table th, .print-cost-table td { border:1px solid #cbd5e1; padding:0.36rem 0.6rem; text-align:left; }
+  .print-cost-table th { background:#0f172a !important; color:#fff !important; font-weight:800; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .print-cost-table td:last-child, .print-cost-table th:last-child { text-align:right; }
+  .print-total-row { font-size:0.95rem; font-weight:800; background:#fef3c7 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .print-balance-row { font-size:1.02rem; font-weight:900; background:#dcfce7 !important; color:#065f46 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  .print-sign-box { margin-top:0.6rem; border:1.5px solid #0f172a; border-radius:7px; padding:0.6rem 0.75rem; page-break-inside:avoid; }
+  .accept-options { display:flex; gap:1.8rem; font-weight:800; font-size:0.84rem; margin:0.35rem 0 0.65rem; }
+  .check-box-sq { display:inline-block; width:13px; height:13px; border:2px solid #0f172a; margin-right:0.3rem; vertical-align:middle; }
+  .sign-grid { display:grid; grid-template-columns:2fr 2fr 1fr; gap:1rem; margin-top:1.15rem; font-size:0.75rem; }
+  .sign-line { border-top:1px solid #0f172a; padding-top:0.22rem; font-weight:700; color:#334155; }
+  .print-hw-attachment { margin-top:0.8rem; page-break-before:always; text-align:center; }
+  .print-hw-attachment img { max-width:95%; max-height:8.5in; border:1px solid #cbd5e1; margin-top:0.4rem; }
 }
-footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem; }
+footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
 </style>
 </head>
 <body class="locked-view">
-<svg style="position:absolute; width:0; height:0; overflow:hidden;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+<svg style="position:absolute;width:0;height:0;overflow:hidden;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <linearGradient id="tmYellowCase" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#fde047"/>
-      <stop offset="45%" stop-color="#facc15"/>
-      <stop offset="85%" stop-color="#ca8a04"/>
-      <stop offset="100%" stop-color="#854d0e"/>
-    </linearGradient>
-    <linearGradient id="tmRubber" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#334155"/>
-      <stop offset="40%" stop-color="#1e293b"/>
-      <stop offset="100%" stop-color="#090d16"/>
-    </linearGradient>
-    <linearGradient id="tmSteelClip" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#f8fafc"/>
-      <stop offset="35%" stop-color="#cbd5e1"/>
-      <stop offset="55%" stop-color="#64748b"/>
-      <stop offset="80%" stop-color="#e2e8f0"/>
-      <stop offset="100%" stop-color="#475569"/>
-    </linearGradient>
-    <linearGradient id="tmBlade" x1="0%" y1="0%" x2="20%" y2="100%">
-      <stop offset="0%" stop-color="#fef08a"/>
-      <stop offset="50%" stop-color="#facc15"/>
-      <stop offset="100%" stop-color="#ca8a04"/>
-    </linearGradient>
+    <linearGradient id="tmYellowCase" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#fde047"/><stop offset="45%" stop-color="#facc15"/><stop offset="85%" stop-color="#ca8a04"/><stop offset="100%" stop-color="#854d0e"/></linearGradient>
+    <linearGradient id="tmRubber" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#334155"/><stop offset="40%" stop-color="#1e293b"/><stop offset="100%" stop-color="#090d16"/></linearGradient>
+    <linearGradient id="tmSteelClip" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f8fafc"/><stop offset="35%" stop-color="#cbd5e1"/><stop offset="55%" stop-color="#64748b"/><stop offset="80%" stop-color="#e2e8f0"/><stop offset="100%" stop-color="#475569"/></linearGradient>
+    <linearGradient id="tmBlade" x1="0%" y1="0%" x2="20%" y2="100%"><stop offset="0%" stop-color="#fef08a"/><stop offset="50%" stop-color="#facc15"/><stop offset="100%" stop-color="#ca8a04"/></linearGradient>
   </defs>
-  <!-- LOGO 3D ORIGINAL: LA BESTIA AMARILLA -->
   <symbol id="realisticTapeLogo" viewBox="0 0 130 92">
     <ellipse cx="68" cy="80" rx="52" ry="7" fill="rgba(0,0,0,0.55)"/>
     <path d="M14 66 L58 50 L68 63 L24 80 Z" fill="url(#tmBlade)" stroke="#111827" stroke-width="1.4"/>
-    <line x1="25" y1="62" x2="28" y2="67" stroke="#111827" stroke-width="1.3"/>
-    <line x1="30" y1="60" x2="34" y2="66" stroke="#111827" stroke-width="1.5"/>
-    <line x1="35" y1="58" x2="38" y2="63" stroke="#111827" stroke-width="1.3"/>
-    <line x1="40" y1="56" x2="45" y2="64" stroke="#111827" stroke-width="2.2"/>
-    <line x1="46" y1="54" x2="49" y2="59" stroke="#111827" stroke-width="1.3"/>
-    <line x1="51" y1="52" x2="55" y2="58" stroke="#111827" stroke-width="1.5"/>
-    <text x="36" y="72" fill="#111827" font-size="10.5" font-weight="900" font-family="Arial, sans-serif" transform="rotate(-20 36 72)">1</text>
+    <line x1="25" y1="62" x2="28" y2="67" stroke="#111827" stroke-width="1.3"/><line x1="30" y1="60" x2="34" y2="66" stroke="#111827" stroke-width="1.5"/><line x1="35" y1="58" x2="38" y2="63" stroke="#111827" stroke-width="1.3"/><line x1="40" y1="56" x2="45" y2="64" stroke="#111827" stroke-width="2.2"/><line x1="46" y1="54" x2="49" y2="59" stroke="#111827" stroke-width="1.3"/><line x1="51" y1="52" x2="55" y2="58" stroke="#111827" stroke-width="1.5"/>
+    <text x="36" y="72" fill="#111827" font-size="10.5" font-weight="900" font-family="Arial,sans-serif" transform="rotate(-20 36 72)">1</text>
     <path d="M10 62 L16 59 L26 75 L20 82 L12 72 Z" fill="url(#tmSteelClip)" stroke="#1e293b" stroke-width="1.3"/>
-    <circle cx="21" cy="70" r="2.1" fill="#e2e8f0" stroke="#334155" stroke-width="0.9"/>
-    <circle cx="27" cy="68" r="2.1" fill="#e2e8f0" stroke="#334155" stroke-width="0.9"/>
-    <path d="M52 46 C52 17 75 5 100 11 C119 16 125 36 120 57 C116 71 104 78 88 78 L56 78 C49 78 49 65 52 46 Z" fill="url(#tmRubber)" stroke="#000000" stroke-width="1.8"/>
+    <circle cx="21" cy="70" r="2.1" fill="#e2e8f0" stroke="#334155" stroke-width="0.9"/><circle cx="27" cy="68" r="2.1" fill="#e2e8f0" stroke="#334155" stroke-width="0.9"/>
+    <path d="M52 46 C52 17 75 5 100 11 C119 16 125 36 120 57 C116 71 104 78 88 78 L56 78 C49 78 49 65 52 46 Z" fill="url(#tmRubber)" stroke="#000" stroke-width="1.8"/>
     <path d="M74 9 L78 16 M84 8 L87 15 M94 9 L95 16 M104 12 L103 19 M113 18 L110 24" stroke="#090d16" stroke-width="3.2" stroke-linecap="round"/>
     <path d="M56 50 C57 26 75 16 96 20 C111 23 116 39 112 56 C109 67 99 72 84 72 L58 72 Z" fill="url(#tmYellowCase)" stroke="#111827" stroke-width="1.4"/>
     <path d="M51 54 L63 54 L65 73 L52 73 Z" fill="#090d16"/>
-    <rect x="49" y="29" width="13" height="17" rx="3.5" transform="rotate(14 49 29)" fill="url(#tmRubber)" stroke="#000000" stroke-width="1.4"/>
-    <line x1="51" y1="34" x2="59" y2="36" stroke="#64748b" stroke-width="1.5"/>
-    <line x1="50" y1="38" x2="58" y2="40" stroke="#64748b" stroke-width="1.5"/>
+    <rect x="49" y="29" width="13" height="17" rx="3.5" transform="rotate(14 49 29)" fill="url(#tmRubber)" stroke="#000" stroke-width="1.4"/>
+    <line x1="51" y1="34" x2="59" y2="36" stroke="#64748b" stroke-width="1.5"/><line x1="50" y1="38" x2="58" y2="40" stroke="#64748b" stroke-width="1.5"/>
     <circle cx="90" cy="48" r="19" fill="url(#tmYellowCase)" stroke="#b45309" stroke-width="1.5"/>
     <path d="M84 31 L98 31 L95 64 C95 67 83 67 83 64 Z" fill="url(#tmSteelClip)" stroke="#334155" stroke-width="1.4"/>
     <circle cx="90" cy="46" r="3" fill="#94a3b8" stroke="#1e293b" stroke-width="1"/>
   </symbol>
-  <!-- LOGO EXCLUSIVO PARA LA COMPAÑÍA DE EJEMPLO (APEX CONSTRUCTORA) -->
   <symbol id="apexSampleLogo" viewBox="0 0 100 100">
     <polygon points="50,6 90,22 90,56 50,94 10,56 10,22" fill="#0f172a" stroke="#facc15" stroke-width="4"/>
     <path d="M22 52 L50 26 L78 52" fill="none" stroke="#facc15" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-    <rect x="33" y="48" width="10" height="24" fill="#e2e8f0"/>
-    <rect x="46" y="40" width="10" height="32" fill="#facc15"/>
-    <rect x="59" y="52" width="10" height="20" fill="#e2e8f0"/>
+    <rect x="33" y="48" width="10" height="24" fill="#e2e8f0"/><rect x="46" y="40" width="10" height="32" fill="#facc15"/><rect x="59" y="52" width="10" height="20" fill="#e2e8f0"/>
     <line x1="25" y1="73" x2="75" y2="73" stroke="#facc15" stroke-width="3"/>
   </symbol>
 </svg>
@@ -466,7 +222,6 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
       <button class="lang-btn" onclick="toggleLang()" id="langBtn">🇺🇸 EN</button>
     </div>
   </div>
-
   <div class="main-mode-switch">
     <button class="mode-btn active" id="btnModeQuote" onclick="switchMainView('quoteView')" data-es="📄 Crear Estimado / Factura Oficial" data-en="📄 Create Official Estimate / Invoice">📄 Crear Estimado / Factura Oficial</button>
     <button class="mode-btn" id="btnModeCalcs" onclick="switchMainView('calcsView')" data-es="🧮 Calculadora de Materiales" data-en="🧮 Material Calculator">🧮 Calculadora de Materiales</button>
@@ -474,27 +229,16 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
 </header>
 
 <div class="container">
-
-  <!-- ========================================================= -->
-  <!-- VISTA 1 (PRINCIPAL): CONSTRUCTOR DE ESTIMADOS Y FACTURAS  -->
-  <!-- ========================================================= -->
   <div id="quoteView" class="view-panel active">
     <div class="builder-card">
       <div class="mb-header">
         <h2 data-es="📄 Generador de Estimados y Facturas (Invoice)" data-en="📄 Official Estimate & Invoice Builder">📄 Generador de Estimados y Facturas (Invoice)</h2>
         <button type="button" class="reset-zero-btn" onclick="resetBuilderToZero()" data-es="🔄 Limpiar a $0.00" data-en="🔄 Reset to $0.00">🔄 Limpiar a $0.00</button>
       </div>
+      <button type="button" class="open-sample-btn" id="topSampleBtn" onclick="openDocPreviewModal('quote')" data-es="👁️ Ver Ejemplo de Documento Final (Compañía de Muestra)" data-en="👁️ View Sample Final Document (Example Company)">👁️ Ver Ejemplo de Documento Final (Compañía de Muestra)</button>
 
-      <!-- BOTÓN QUE SIEMPRE ABRE EL EJEMPLO DE OTRA COMPAÑÍA (APEX CONSTRUCTORA) -->
-      <button type="button" class="open-sample-btn" id="topSampleBtn" onclick="openDocPreviewModal('quote')" data-es="👁️ Ver Ejemplo de Documento Final (Compañía de Muestra)" data-en="👁️ View Sample Final Document (Example Company)">
-        👁️ Ver Ejemplo de Documento Final (Compañía de Muestra)
-      </button>
-
-      <!-- PASO 1: DATOS DE LA EMPRESA, LOGO PICTURE Y CLIENTE -->
       <div class="mb-section">
-        <div class="mb-sec-title">
-          <span data-es="1️⃣ Tipo de Documento, Logo Picture y Datos del Cliente" data-en="1️⃣ Document Type, Logo Picture & Client Info">1️⃣ Tipo de Documento, Logo Picture y Datos del Cliente</span>
-        </div>
+        <div class="mb-sec-title"><span data-es="1️⃣ Tipo de Documento, Logo Picture y Datos del Cliente" data-en="1️⃣ Document Type, Logo Picture & Client Info">1️⃣ Tipo de Documento, Logo Picture y Datos del Cliente</span></div>
         <div class="price-grid">
           <div class="qb-field">
             <label data-es="Tipo de Documento" data-en="Document Type">Tipo de Documento</label>
@@ -522,11 +266,9 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
           <label data-es="Nombre del Cliente y Dirección del Proyecto" data-en="Client Name & Project Address">Nombre del Cliente y Dirección del Proyecto</label>
           <input type="text" id="qb-client" placeholder="Ej. Residencia Familia Rivera - San Juan" oninput="recalcMasterTotals()">
         </div>
-
-        <!-- SECCIÓN IDENTIFICADA: LOGO PICTURE -->
         <div class="logo-upload-box">
           <div class="logo-pic-badge">🖼️ LOGO PICTURE</div>
-          <label style="color:#fde047; font-size:0.8rem;" data-es="📷 Sube aquí tu Logo Picture (Foto del Logo de tu Compañía para el PDF)" data-en="📷 Upload your Logo Picture here (Your Company Logo Photo for the PDF)">📷 Sube aquí tu Logo Picture (Foto del Logo de tu Compañía para el PDF)</label>
+          <label style="color:#fde047;font-size:0.8rem;" data-es="📷 Sube aquí tu Logo Picture (Foto del Logo de tu Compañía para el PDF)" data-en="📷 Upload your Logo Picture here (Your Company Logo Photo for the PDF)">📷 Sube aquí tu Logo Picture (Foto del Logo de tu Compañía para el PDF)</label>
           <input type="file" accept="image/*" onchange="handleLogoUpload(this)">
           <div id="logoIdentifiedBox" class="logo-id-wrap">
             <img id="logoMiniThumb" class="logo-mini-thumb" alt="Logo Picture">
@@ -535,15 +277,12 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
         </div>
       </div>
 
-      <!-- PASO 2: PARTIDAS DE LA COTIZACIÓN / FACTURA -->
       <div class="mb-section">
         <div class="mb-sec-title">
           <span data-es="2️⃣ Trabajos, Materiales y Precios a Cotizar" data-en="2️⃣ Scope of Work, Materials & Prices">2️⃣ Trabajos, Materiales y Precios a Cotizar</span>
-          <button type="button" class="chip-btn" style="background:#38bdf8; color:#000; border-color:#38bdf8;" onclick="switchMainView('calcsView')" data-es="🧮 Ir a Calculadora de Materiales" data-en="🧮 Open Material Calculator">🧮 Ir a Calculadora de Materiales</button>
+          <button type="button" class="chip-btn" style="background:#38bdf8;color:#000;border-color:#38bdf8;" onclick="switchMainView('calcsView')" data-es="🧮 Ir a Calculadora de Materiales" data-en="🧮 Open Material Calculator">🧮 Ir a Calculadora de Materiales</button>
         </div>
-
-        <ul id="projectCartList" style="list-style:none; margin-bottom:0.6rem;"></ul>
-
+        <ul id="projectCartList" style="list-style:none;margin-bottom:0.6rem;"></ul>
         <div class="chip-bar">
           <button type="button" class="chip-btn" onclick="addPresetChip(0)" data-es="+ 🪟 Ventanas" data-en="+ 🪟 Windows">+ 🪟 Ventanas</button>
           <button type="button" class="chip-btn" onclick="addPresetChip(1)" data-es="+ 🚪 Puertas" data-en="+ 🚪 Doors">+ 🚪 Puertas</button>
@@ -551,82 +290,44 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
           <button type="button" class="chip-btn" onclick="addPresetChip(3)" data-es="+ 🚰 Plomería" data-en="+ 🚰 Plumbing">+ 🚰 Plomería</button>
           <button type="button" class="chip-btn" onclick="addPresetChip(4)" data-es="+ 🧱 Albañilería/Losa" data-en="+ 🧱 Masonry/Slab">+ 🧱 Albañilería/Losa</button>
           <button type="button" class="chip-btn" onclick="addPresetChip(5)" data-es="+ 🎨 Pintura/Sellado" data-en="+ 🎨 Paint/Coating">+ 🎨 Pintura/Sellado</button>
-          <button type="button" class="chip-btn" style="background:#facc15; color:#000;" onclick="addCustomLine('', '')" data-es="➕ Añadir Otra Partida" data-en="➕ Add Line Item">➕ Añadir Otra Partida</button>
+          <button type="button" class="chip-btn" style="background:#facc15;color:#000;" onclick="addCustomLine('','')" data-es="➕ Añadir Otra Partida" data-en="➕ Add Line Item">➕ Añadir Otra Partida</button>
         </div>
         <div id="customLinesContainer"></div>
       </div>
 
-      <!-- PASO 3: MANO DE OBRA, FERRETERÍA Y TOTALES -->
       <div class="mb-section">
-        <div class="mb-sec-title">
-          <span data-es="3️⃣ Mano de Obra, Ferretería y Depósito" data-en="3️⃣ Labor, Hardware Quote & Deposit">3️⃣ Mano de Obra, Ferretería y Depósito</span>
-        </div>
+        <div class="mb-sec-title"><span data-es="3️⃣ Mano de Obra, Ferretería y Depósito" data-en="3️⃣ Labor, Hardware Quote & Deposit">3️⃣ Mano de Obra, Ferretería y Depósito</span></div>
         <div class="grid-3">
-          <div class="qb-field">
-            <label data-es="Ferretería (Opcional)" data-en="Hardware Store">Ferretería (Opcional)</label>
-            <input type="text" id="qb-hw-name" placeholder="Ej. True Value / Home Depot" oninput="recalcMasterTotals()">
-          </div>
-          <div class="qb-field">
-            <label data-es="Costo Ferretería ($)" data-en="Hardware Cost ($)">Costo Ferretería ($)</label>
-            <input type="number" step="any" id="qb-hw-cost" value="0" oninput="recalcMasterTotals()">
-          </div>
+          <div class="qb-field"><label data-es="Ferretería (Opcional)" data-en="Hardware Store">Ferretería (Opcional)</label><input type="text" id="qb-hw-name" placeholder="Ej. True Value / Home Depot" oninput="recalcMasterTotals()"></div>
+          <div class="qb-field"><label data-es="Costo Ferretería ($)" data-en="Hardware Cost ($)">Costo Ferretería ($)</label><input type="number" step="any" id="qb-hw-cost" value="0" oninput="recalcMasterTotals()"></div>
           <div class="qb-field">
             <label data-es="Tu Margen Ferretería" data-en="Hardware Markup %">Tu Margen Ferretería</label>
-            <select id="qb-hw-markup" onchange="recalcMasterTotals()">
-              <option value="0">+0%</option>
-              <option value="15" selected>+15%</option>
-              <option value="20">+20%</option>
-              <option value="30">+30%</option>
-              <option value="50">+50%</option>
-            </select>
+            <select id="qb-hw-markup" onchange="recalcMasterTotals()"><option value="0">+0%</option><option value="15" selected>+15%</option><option value="20">+20%</option><option value="30">+30%</option><option value="50">+50%</option></select>
           </div>
         </div>
-
         <div class="price-grid" style="margin-top:0.55rem;">
-          <div class="qb-field">
-            <label data-es="Mano de Obra Total (Labor $)" data-en="Total Professional Labor ($)">Mano de Obra Total (Labor $)</label>
-            <input type="number" step="any" id="qb-lab" value="0" oninput="recalcMasterTotals()">
-          </div>
-          <div class="qb-field">
-            <label data-es="Impuestos / Permisos / Otros ($)" data-en="Taxes / Permits / Other ($)">Impuestos / Permisos / Otros ($)</label>
-            <input type="number" step="any" id="qb-tax" value="0" oninput="recalcMasterTotals()">
-          </div>
+          <div class="qb-field"><label data-es="Mano de Obra Total (Labor $)" data-en="Total Professional Labor ($)">Mano de Obra Total (Labor $)</label><input type="number" step="any" id="qb-lab" value="0" oninput="recalcMasterTotals()"></div>
+          <div class="qb-field"><label data-es="Impuestos / Permisos / Otros ($)" data-en="Taxes / Permits / Other ($)">Impuestos / Permisos / Otros ($)</label><input type="number" step="any" id="qb-tax" value="0" oninput="recalcMasterTotals()"></div>
         </div>
-
         <div class="price-grid" style="margin-top:0.55rem;">
-          <div class="qb-field">
-            <label data-es="Depósito / Pronto Recibido ($)" data-en="Deposit / Amount Paid ($)">Depósito / Pronto Recibido ($)</label>
-            <input type="number" step="any" id="qb-dep" value="0" oninput="recalcMasterTotals()">
-          </div>
-          <div class="qb-field">
-            <label data-es="Notas / Garantía / Condiciones" data-en="Notes / Warranty / Terms">Notas / Garantía / Condiciones</label>
-            <input type="text" id="qb-notes" placeholder="Ej. 50% depósito para iniciar. Garantía 1 año." oninput="recalcMasterTotals()">
-          </div>
+          <div class="qb-field"><label data-es="Depósito / Pronto Recibido ($)" data-en="Deposit / Amount Paid ($)">Depósito / Pronto Recibido ($)</label><input type="number" step="any" id="qb-dep" value="0" oninput="recalcMasterTotals()"></div>
+          <div class="qb-field"><label data-es="Notas / Garantía / Condiciones" data-en="Notes / Warranty / Terms">Notas / Garantía / Condiciones</label><input type="text" id="qb-notes" placeholder="Ej. 50% depósito para iniciar. Garantía 1 año." oninput="recalcMasterTotals()"></div>
         </div>
-
         <div class="logo-upload-box" style="border-color:#64748b;">
           <label data-es="📎 Adjuntar Foto de Cotización de Ferretería como 2da Página (Opcional)" data-en="📎 Attach Hardware Quote Photo as 2nd Page (Optional)">📎 Adjuntar Foto de Cotización de Ferretería como 2da Página (Opcional)</label>
           <input type="file" accept="image/*" onchange="handleHwQuoteUpload(this)">
-          <div style="margin-top:0.3rem; font-size:0.74rem;">
-            <label style="display:inline; color:#cbd5e1; cursor:pointer;">
-              <input type="checkbox" id="qb-hw-print-attach" style="width:auto; margin-right:0.3rem;">
-              <span data-es="Incluir esta foto en el PDF" data-en="Include photo in PDF">Incluir esta foto en el PDF</span>
-            </label>
+          <div style="margin-top:0.3rem;font-size:0.74rem;">
+            <label style="display:inline;color:#cbd5e1;cursor:pointer;"><input type="checkbox" id="qb-hw-print-attach" style="width:auto;margin-right:0.3rem;"><span data-es="Incluir esta foto en el PDF" data-en="Include photo in PDF">Incluir esta foto en el PDF</span></label>
           </div>
         </div>
-
         <div class="contractor-numbers-bar">
           <div>
-            <div style="font-size:0.74rem; color:#a7f3d0; font-weight:700;" data-es="TOTAL ACUMULADO DE TU COTIZACIÓN / FACTURA:" data-en="YOUR ACCUMULATED QUOTE / INVOICE TOTAL:">TOTAL ACUMULADO DE TU COTIZACIÓN / FACTURA:</div>
-            <div id="contractorSummaryLine" style="font-size:0.82rem; color:#fff;">Total: $0.00</div>
+            <div style="font-size:0.74rem;color:#a7f3d0;font-weight:700;" data-es="TOTAL ACUMULADO DE TU COTIZACIÓN / FACTURA:" data-en="YOUR ACCUMULATED QUOTE / INVOICE TOTAL:">TOTAL ACUMULADO DE TU COTIZACIÓN / FACTURA:</div>
+            <div id="contractorSummaryLine" style="font-size:0.82rem;color:#fff;">Total: $0.00</div>
           </div>
           <strong id="contractorBigTotal">$0.00</strong>
         </div>
-
-        <button type="button" class="open-sample-btn" id="bottomSampleBtn" onclick="openDocPreviewModal('quote')" style="margin-top:0.4rem; margin-bottom:0.5rem;" data-es="👁️ Ver Ejemplo de Cómo Queda el Formato Final (Compañía de Muestra)" data-en="👁️ View Sample of How the Final Format Looks (Example Company)">
-          👁️ Ver Ejemplo de Cómo Queda el Formato Final (Compañía de Muestra)
-        </button>
-
+        <button type="button" class="open-sample-btn" id="bottomSampleBtn" onclick="openDocPreviewModal('quote')" style="margin-top:0.4rem;margin-bottom:0.5rem;" data-es="👁️ Ver Ejemplo de Cómo Queda el Formato Final (Compañía de Muestra)" data-en="👁️ View Sample of How the Final Format Looks (Example Company)">👁️ Ver Ejemplo de Cómo Queda el Formato Final (Compañía de Muestra)</button>
         <button type="button" class="stripe-pay-btn" id="finalActionBtn" onclick="handleFinalDownloadClick()"></button>
         <button type="button" class="wa-master-btn" id="finalWaBtn" onclick="handleWhatsAppQuoteClick()"></button>
         <div class="stripe-note" id="finalActionNote"></div>
@@ -634,20 +335,16 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
     </div>
   </div>
 
-  <!-- ========================================================= -->
-  <!-- VISTA 2: CALCULADORA DE MATERIALES (6 EN 1)               -->
-  <!-- ========================================================= -->
   <div id="calcsView" class="view-panel">
     <div class="tabs">
-      <button class="tab-btn active" onclick="openTab('hormigon', this)" data-es="🧱 Hormigón" data-en="🧱 Concrete">🧱 Hormigón</button>
-      <button class="tab-btn" onclick="openTab('sellador', this)" data-es="🪣 Sellador" data-en="🪣 Roof Coat">🪣 Sellador</button>
-      <button class="tab-btn" onclick="openTab('pintura', this)" data-es="🎨 Pintura" data-en="🎨 Paint">🎨 Pintura</button>
-      <button class="tab-btn" onclick="openTab('gypsum', this)" data-es="📐 Gypsum/Plafón" data-en="📐 Drywall/Ceiling">📐 Gypsum/Plafón</button>
-      <button class="tab-btn" onclick="openTab('bloques', this)" data-es="🧱 Bloques" data-en="🧱 CMU Blocks">🧱 Bloques</button>
-      <button class="tab-btn" onclick="openTab('btu', this)" data-es="❄️ Aire BTU" data-en="❄️ AC BTU">❄️ Aire BTU</button>
+      <button class="tab-btn active" onclick="openTab('hormigon',this)" data-es="🧱 Hormigón" data-en="🧱 Concrete">🧱 Hormigón</button>
+      <button class="tab-btn" onclick="openTab('sellador',this)" data-es="🪣 Sellador" data-en="🪣 Roof Coat">🪣 Sellador</button>
+      <button class="tab-btn" onclick="openTab('pintura',this)" data-es="🎨 Pintura" data-en="🎨 Paint">🎨 Pintura</button>
+      <button class="tab-btn" onclick="openTab('gypsum',this)" data-es="📐 Gypsum/Plafón" data-en="📐 Drywall/Ceiling">📐 Gypsum/Plafón</button>
+      <button class="tab-btn" onclick="openTab('bloques',this)" data-es="🧱 Bloques" data-en="🧱 CMU Blocks">🧱 Bloques</button>
+      <button class="tab-btn" onclick="openTab('btu',this)" data-es="❄️ Aire BTU" data-en="❄️ AC BTU">❄️ Aire BTU</button>
     </div>
 
-    <!-- 1. HORMIGÓN -->
     <div id="hormigon" class="calc-card active" data-cost="0">
       <h1 data-es="Calculadora de Hormigón / Concreto" data-en="Concrete Calculator">Calculadora de Hormigón / Concreto</h1>
       <p class="sub" data-es="Calcula yardas/m³, sacos y envíalo con un clic a tu Estimado." data-en="Calculate volume, bags, and send with one click to your Estimate.">Calcula yardas/m³, sacos y envíalo con un clic a tu Estimado.</p>
@@ -657,14 +354,7 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
       </div>
       <div class="group"><label>Espesor (Pulgadas / in)</label><input type="number" step="any" id="h-espesor" value="4" oninput="calcHormigon(false)"></div>
       <div class="price-box">
-        <div class="group">
-          <label>Modo de Precio</label>
-          <select id="h-modo-precio" onchange="calcHormigon(false)">
-            <option value="vol">Por Yarda Cúbica (Camión)</option>
-            <option value="bagMain">Por Saco de 80 lb</option>
-            <option value="bagAlt">Por Saco de 60 lb</option>
-          </select>
-        </div>
+        <div class="group"><label>Modo de Precio</label><select id="h-modo-precio" onchange="calcHormigon(false)"><option value="vol">Por Yarda Cúbica (Camión)</option><option value="bagMain">Por Saco de 80 lb</option><option value="bagAlt">Por Saco de 60 lb</option></select></div>
         <div class="price-grid">
           <div><label>Precio Volumen ($)</label><input type="number" step="any" id="h-precio-yd" value="165" oninput="calcHormigon(false)"></div>
           <div><label>Precio Saco ($)</label><input type="number" step="any" id="h-precio-saco" value="7.50" oninput="calcHormigon(false)"></div>
@@ -673,19 +363,12 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
       <button type="button" class="btn-calc" onclick="calcHormigon(true)" data-es="💾 Calcular y Guardar en Historial" data-en="💾 Calculate & Save to History">💾 Calcular y Guardar en Historial</button>
       <div class="res-box">
         <div class="res-title">Incluye 10% de desperdicio</div>
-        <div class="res-big-wrap">
-          <div class="res-big"><span id="h-yd">4.07</span> <small>yd³</small></div>
-          <div class="res-cost-tag" id="h-cost-tag">$671.55</div>
-        </div>
-        <div class="res-grid">
-          <div><em>Sacos 60 lb</em><span id="h-60">245</span></div>
-          <div><em>Sacos 80 lb</em><span id="h-80">184</span></div>
-        </div>
+        <div class="res-big-wrap"><div class="res-big"><span id="h-yd">4.07</span> <small>yd³</small></div><div class="res-cost-tag" id="h-cost-tag">$671.55</div></div>
+        <div class="res-grid"><div><em>Sacos 60 lb</em><span id="h-60">245</span></div><div><em>Sacos 80 lb</em><span id="h-80">184</span></div></div>
         <button type="button" class="add-project-btn" onclick="addActiveCalcToProject(this)" data-es="➕ Pasar este Cálculo y Precio a mi Estimado / Factura" data-en="➕ Send Calculation & Price to My Estimate / Invoice">➕ Pasar este Cálculo y Precio a mi Estimado / Factura</button>
       </div>
     </div>
 
-    <!-- 2. SELLADOR -->
     <div id="sellador" class="calc-card" data-cost="0">
       <h1 data-es="Sellador Elastomérico de Techo" data-en="Roof Coating Calculator">Sellador Elastomérico de Techo</h1>
       <p class="sub" data-es="Calcula pailas, primer y envíalo a tu Estimado." data-en="Calculate pails, primer, and send to your Estimate.">Calcula pailas, primer y envíalo a tu Estimado.</p>
@@ -694,27 +377,15 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
         <div class="group"><label>Capas (Manos)</label><input type="number" step="any" id="s-capas" value="2" oninput="calcSellador(false)"></div>
       </div>
       <div class="group"><label>Rendimiento por Paila 5G (sq ft)</label><input type="number" step="any" id="s-rend" value="250" oninput="calcSellador(false)"></div>
-      <div class="price-box">
-        <div class="price-grid">
-          <div><label>Precio Paila Sellador ($)</label><input type="number" step="any" id="s-precio-paila" value="115" oninput="calcSellador(false)"></div>
-          <div><label>Precio Paila Primer ($)</label><input type="number" step="any" id="s-precio-primer" value="65" oninput="calcSellador(false)"></div>
-        </div>
-      </div>
+      <div class="price-box"><div class="price-grid"><div><label>Precio Paila Sellador ($)</label><input type="number" step="any" id="s-precio-paila" value="115" oninput="calcSellador(false)"></div><div><label>Precio Paila Primer ($)</label><input type="number" step="any" id="s-precio-primer" value="65" oninput="calcSellador(false)"></div></div></div>
       <button type="button" class="btn-calc" onclick="calcSellador(true)" data-es="💾 Calcular y Guardar en Historial" data-en="💾 Calculate & Save to History">💾 Calcular y Guardar en Historial</button>
       <div class="res-box">
-        <div class="res-big-wrap">
-          <div class="res-big"><span id="s-pailas">12</span> <small>Pailas (5G)</small></div>
-          <div class="res-cost-tag" id="s-cost-tag">$1,575.00</div>
-        </div>
-        <div class="res-grid">
-          <div><em>Total Galones</em><span id="s-gal">60</span></div>
-          <div><em>Primer (5G)</em><span id="s-primer">3</span></div>
-        </div>
+        <div class="res-big-wrap"><div class="res-big"><span id="s-pailas">12</span> <small>Pailas (5G)</small></div><div class="res-cost-tag" id="s-cost-tag">$1,575.00</div></div>
+        <div class="res-grid"><div><em>Total Galones</em><span id="s-gal">60</span></div><div><em>Primer (5G)</em><span id="s-primer">3</span></div></div>
         <button type="button" class="add-project-btn" onclick="addActiveCalcToProject(this)" data-es="➕ Pasar este Cálculo y Precio a mi Estimado / Factura" data-en="➕ Send Calculation & Price to My Estimate / Invoice">➕ Pasar este Cálculo y Precio a mi Estimado / Factura</button>
       </div>
     </div>
 
-    <!-- 3. PINTURA -->
     <div id="pintura" class="calc-card" data-cost="0">
       <h1 data-es="Calculadora de Pintura" data-en="Paint Calculator">Calculadora de Pintura</h1>
       <p class="sub" data-es="Calcula galones, pailas y primer." data-en="Estimate gallons, pails, and primer.">Calcula galones, pailas y primer.</p>
@@ -723,60 +394,29 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
         <div class="group"><label>Manos (Capas)</label><input type="number" step="any" id="p-capas" value="2" oninput="calcPintura(false)"></div>
       </div>
       <div class="group"><label>Rendimiento por Galón (sq ft)</label><input type="number" step="any" id="p-rend" value="350" oninput="calcPintura(false)"></div>
-      <div class="price-box">
-        <div class="price-grid">
-          <div><label>Precio Galón Pintura ($)</label><input type="number" step="any" id="p-precio-gal" value="38" oninput="calcPintura(false)"></div>
-          <div><label>Precio Galón Primer ($)</label><input type="number" step="any" id="p-precio-primer" value="26" oninput="calcPintura(false)"></div>
-        </div>
-      </div>
+      <div class="price-box"><div class="price-grid"><div><label>Precio Galón Pintura ($)</label><input type="number" step="any" id="p-precio-gal" value="38" oninput="calcPintura(false)"></div><div><label>Precio Galón Primer ($)</label><input type="number" step="any" id="p-precio-primer" value="26" oninput="calcPintura(false)"></div></div></div>
       <button type="button" class="btn-calc" onclick="calcPintura(true)" data-es="💾 Calcular y Guardar en Historial" data-en="💾 Calculate & Save to History">💾 Calcular y Guardar en Historial</button>
       <div class="res-box">
-        <div class="res-big-wrap">
-          <div class="res-big"><span id="p-gal">12</span> <small>Galones</small></div>
-          <div class="res-cost-tag" id="p-cost-tag">$612.00</div>
-        </div>
-        <div class="res-grid">
-          <div><em>En Pailas (5G)</em><span id="p-pailas">2.4 Pailas</span></div>
-          <div><em>Primer (1 Mano)</em><span id="p-primer">6 Gal</span></div>
-        </div>
+        <div class="res-big-wrap"><div class="res-big"><span id="p-gal">12</span> <small>Galones</small></div><div class="res-cost-tag" id="p-cost-tag">$612.00</div></div>
+        <div class="res-grid"><div><em>En Pailas (5G)</em><span id="p-pailas">2.4 Pailas</span></div><div><em>Primer (1 Mano)</em><span id="p-primer">6 Gal</span></div></div>
         <button type="button" class="add-project-btn" onclick="addActiveCalcToProject(this)" data-es="➕ Pasar este Cálculo y Precio a mi Estimado / Factura" data-en="➕ Send Calculation & Price to My Estimate / Invoice">➕ Pasar este Cálculo y Precio a mi Estimado / Factura</button>
       </div>
     </div>
 
-    <!-- 4. GYPSUM / PLAFÓN -->
     <div id="gypsum" class="calc-card" data-cost="0">
       <h1 data-es="Gypsum Board y Plafón Acústico" data-en="Drywall & Acoustic Ceiling">Gypsum Board y Plafón Acústico</h1>
       <p class="sub" data-es="Calcula paneles, losas de plafón y masilla." data-en="Estimate sheets, ceiling tiles, and joint compound.">Calcula paneles, losas de plafón y masilla.</p>
       <div class="group"><label>Área Total (sq ft)</label><input type="number" step="any" id="g-area" value="1000" oninput="calcGypsum(false)"></div>
-      <div class="group">
-        <label>Tamaño de Panel / Losa</label>
-        <select id="g-tipo" onchange="calcGypsum(false)">
-          <option value="32">Gypsum Board 4x8 ft (32 sq ft)</option>
-          <option value="8">Plafón Comercial 2x4 ft (8 sq ft)</option>
-          <option value="4">Plafón 2x2 ft (4 sq ft)</option>
-        </select>
-      </div>
-      <div class="price-box">
-        <div class="price-grid">
-          <div><label>Precio por Panel ($)</label><input type="number" step="any" id="g-precio-panel" value="16.50" oninput="calcGypsum(false)"></div>
-          <div><label>Precio Paila Masilla ($)</label><input type="number" step="any" id="g-precio-masilla" value="24.00" oninput="calcGypsum(false)"></div>
-        </div>
-      </div>
+      <div class="group"><label>Tamaño de Panel / Losa</label><select id="g-tipo" onchange="calcGypsum(false)"><option value="32">Gypsum Board 4x8 ft (32 sq ft)</option><option value="8">Plafón Comercial 2x4 ft (8 sq ft)</option><option value="4">Plafón 2x2 ft (4 sq ft)</option></select></div>
+      <div class="price-box"><div class="price-grid"><div><label>Precio por Panel ($)</label><input type="number" step="any" id="g-precio-panel" value="16.50" oninput="calcGypsum(false)"></div><div><label>Precio Paila Masilla ($)</label><input type="number" step="any" id="g-precio-masilla" value="24.00" oninput="calcGypsum(false)"></div></div></div>
       <button type="button" class="btn-calc" onclick="calcGypsum(true)" data-es="💾 Calcular y Guardar en Historial" data-en="💾 Calculate & Save to History">💾 Calcular y Guardar en Historial</button>
       <div class="res-box">
-        <div class="res-big-wrap">
-          <div class="res-big"><span id="g-paneles">35</span> <small>Paneles</small></div>
-          <div class="res-cost-tag" id="g-cost-tag">$649.50</div>
-        </div>
-        <div class="res-grid">
-          <div><em>Masilla (Pailas)</em><span id="g-masilla">3</span></div>
-          <div><em>Tornillos</em><span id="g-tornillos">1,120</span></div>
-        </div>
+        <div class="res-big-wrap"><div class="res-big"><span id="g-paneles">35</span> <small>Paneles</small></div><div class="res-cost-tag" id="g-cost-tag">$649.50</div></div>
+        <div class="res-grid"><div><em>Masilla (Pailas)</em><span id="g-masilla">3</span></div><div><em>Tornillos</em><span id="g-tornillos">1,120</span></div></div>
         <button type="button" class="add-project-btn" onclick="addActiveCalcToProject(this)" data-es="➕ Pasar este Cálculo y Precio a mi Estimado / Factura" data-en="➕ Send Calculation & Price to My Estimate / Invoice">➕ Pasar este Cálculo y Precio a mi Estimado / Factura</button>
       </div>
     </div>
 
-    <!-- 5. BLOQUES -->
     <div id="bloques" class="calc-card" data-cost="0">
       <h1 data-es="Muro de Bloques Completo" data-en="CMU Block Wall Calculator">Muro de Bloques Completo</h1>
       <p class="sub" data-es="Bloques, mortero, varillas, celdas y empañete." data-en="Blocks, mortar, rebar, cell grout & plastering.">Bloques, mortero, varillas, celdas y empañete.</p>
@@ -784,49 +424,21 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
         <div class="group"><label>Largo de Pared (ft)</label><input type="number" step="any" id="b-largo" value="30" oninput="calcBloques(false)"></div>
         <div class="group"><label>Alto de Pared (ft)</label><input type="number" step="any" id="b-alto" value="8" oninput="calcBloques(false)"></div>
       </div>
-      <div class="group">
-        <label>Varilla #4 y Celdas Llenas</label>
-        <select id="b-varilla" onchange="calcBloques(false)">
-          <option value="2">Varilla #4 cada 24" (2 ft) + Escalerilla</option>
-          <option value="2.67">Varilla #4 cada 32" + Escalerilla</option>
-          <option value="4">Varilla #4 cada 48" (4 ft) + Escalerilla</option>
-          <option value="0">Sin varilla ni celdas</option>
-        </select>
-      </div>
-      <div class="group">
-        <label>Empañete de Pared (1/2")</label>
-        <select id="b-empanete" onchange="calcBloques(false)">
-          <option value="2">Empañete a 2 Caras (Ambos lados)</option>
-          <option value="1">Empañete a 1 Cara</option>
-          <option value="0">Sin Empañete</option>
-        </select>
-      </div>
-      <div class="price-box">
-        <div class="grid-3">
-          <div><label>Precio Bloque ($)</label><input type="number" step="any" id="b-precio-blq" value="1.65" oninput="calcBloques(false)"></div>
-          <div><label>Precio Saco ($)</label><input type="number" step="any" id="b-precio-saco" value="8.50" oninput="calcBloques(false)"></div>
-          <div><label>Precio Varilla ($)</label><input type="number" step="any" id="b-precio-var" value="11.50" oninput="calcBloques(false)"></div>
-        </div>
-      </div>
+      <div class="group"><label>Varilla #4 y Celdas Llenas</label><select id="b-varilla" onchange="calcBloques(false)"><option value="2">Varilla #4 cada 24" (2 ft) + Escalerilla</option><option value="2.67">Varilla #4 cada 32" + Escalerilla</option><option value="4">Varilla #4 cada 48" (4 ft) + Escalerilla</option><option value="0">Sin varilla ni celdas</option></select></div>
+      <div class="group"><label>Empañete de Pared (1/2")</label><select id="b-empanete" onchange="calcBloques(false)"><option value="2">Empañete a 2 Caras (Ambos lados)</option><option value="1">Empañete a 1 Cara</option><option value="0">Sin Empañete</option></select></div>
+      <div class="price-box"><div class="grid-3"><div><label>Precio Bloque ($)</label><input type="number" step="any" id="b-precio-blq" value="1.65" oninput="calcBloques(false)"></div><div><label>Precio Saco ($)</label><input type="number" step="any" id="b-precio-saco" value="8.50" oninput="calcBloques(false)"></div><div><label>Precio Varilla ($)</label><input type="number" step="any" id="b-precio-var" value="11.50" oninput="calcBloques(false)"></div></div></div>
       <button type="button" class="btn-calc" onclick="calcBloques(true)" data-es="💾 Calcular y Guardar en Historial" data-en="💾 Calculate & Save to History">💾 Calcular y Guardar en Historial</button>
       <div class="res-box">
-        <div class="res-big-wrap">
-          <div class="res-big"><span id="b-total">284</span> <small>Bloques</small></div>
-          <div class="res-cost-tag" id="b-cost-tag">$1,413.10</div>
-        </div>
+        <div class="res-big-wrap"><div class="res-big"><span id="b-total">284</span> <small>Bloques</small></div><div class="res-cost-tag" id="b-cost-tag">$1,413.10</div></div>
         <div class="res-grid">
-          <div><em>Área</em><span id="b-area">240 sq ft</span></div>
-          <div><em>Mortero Pega</em><span id="b-mortero">22 Sacos</span></div>
-          <div><em>Varilla #4</em><span id="b-rebar">9 Varillas</span></div>
-          <div><em>Escalerilla</em><span id="b-durowal">19 Piezas</span></div>
-          <div><em>Celdas</em><span id="b-celdas">59 Sacos</span></div>
-          <div><em>Empañete</em><span id="b-plaster">18 Sacos + 0.82 yd³</span></div>
+          <div><em>Área</em><span id="b-area">240 sq ft</span></div><div><em>Mortero Pega</em><span id="b-mortero">22 Sacos</span></div>
+          <div><em>Varilla #4</em><span id="b-rebar">9 Varillas</span></div><div><em>Escalerilla</em><span id="b-durowal">19 Piezas</span></div>
+          <div><em>Celdas</em><span id="b-celdas">59 Sacos</span></div><div><em>Empañete</em><span id="b-plaster">18 Sacos + 0.82 yd³</span></div>
         </div>
         <button type="button" class="add-project-btn" onclick="addActiveCalcToProject(this)" data-es="➕ Pasar este Cálculo y Precio a mi Estimado / Factura" data-en="➕ Send Calculation & Price to My Estimate / Invoice">➕ Pasar este Cálculo y Precio a mi Estimado / Factura</button>
       </div>
     </div>
 
-    <!-- 6. AIRE BTU -->
     <div id="btu" class="calc-card" data-cost="0">
       <h1 data-es="Calculadora de Aire Acondicionado (BTU)" data-en="AC BTU Calculator">Calculadora de Aire Acondicionado (BTU)</h1>
       <p class="sub" data-es="Capacidad recomendada en BTU y toneladas." data-en="Recommended cooling capacity in BTU and tons.">Capacidad recomendada en BTU y toneladas.</p>
@@ -834,30 +446,16 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
         <div class="group"><label>Largo (ft)</label><input type="number" step="any" id="a-largo" value="15" oninput="calcBTU(false)"></div>
         <div class="group"><label>Ancho (ft)</label><input type="number" step="any" id="a-ancho" value="12" oninput="calcBTU(false)"></div>
       </div>
-      <div class="price-box">
-        <div class="price-grid">
-          <div><label>Precio Unidad A/C ($)</label><input type="number" step="any" id="a-precio-equipo" value="580" oninput="calcBTU(false)"></div>
-          <div><label>Materiales Instalación ($)</label><input type="number" step="any" id="a-precio-mat" value="145" oninput="calcBTU(false)"></div>
-        </div>
-      </div>
+      <div class="price-box"><div class="price-grid"><div><label>Precio Unidad A/C ($)</label><input type="number" step="any" id="a-precio-equipo" value="580" oninput="calcBTU(false)"></div><div><label>Materiales Instalación ($)</label><input type="number" step="any" id="a-precio-mat" value="145" oninput="calcBTU(false)"></div></div></div>
       <button type="button" class="btn-calc" onclick="calcBTU(true)" data-es="💾 Calcular y Guardar en Historial" data-en="💾 Calculate & Save to History">💾 Calcular y Guardar en Historial</button>
       <div class="res-box">
-        <div class="res-big-wrap">
-          <div class="res-big"><span id="a-btu">12,000</span> BTU</div>
-          <div class="res-cost-tag" id="a-cost-tag">$725.00</div>
-        </div>
-        <div class="res-grid">
-          <div><em>Tonelaje</em><span id="a-ton">1.0 Ton</span></div>
-          <div><em>Área</em><span id="a-area">180 sq ft</span></div>
-        </div>
+        <div class="res-big-wrap"><div class="res-big"><span id="a-btu">12,000</span> BTU</div><div class="res-cost-tag" id="a-cost-tag">$725.00</div></div>
+        <div class="res-grid"><div><em>Tonelaje</em><span id="a-ton">1.0 Ton</span></div><div><em>Área</em><span id="a-area">180 sq ft</span></div></div>
         <button type="button" class="add-project-btn" onclick="addActiveCalcToProject(this)" data-es="➕ Pasar este Cálculo y Precio a mi Estimado / Factura" data-en="➕ Send Calculation & Price to My Estimate / Invoice">➕ Pasar este Cálculo y Precio a mi Estimado / Factura</button>
       </div>
     </div>
   </div>
 
-  <!-- ========================================================= -->
-  <!-- TARJETA DE HISTORIAL PERMANENTE (SIEMPRE SE MANTIENE)     -->
-  <!-- ========================================================= -->
   <div class="history-card">
     <div class="history-header">
       <h3 data-es="📋 Historial Guardado de Cálculos y Estimados" data-en="📋 Saved Calculation & Estimate History">📋 Historial Guardado de Cálculos y Estimados</h3>
@@ -866,26 +464,21 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
     <ul class="history-list" id="calcHistoryList"></ul>
   </div>
 
-  <!-- ========================================================= -->
-  <!-- PLANTILLA DE IMPRESIÓN OFICIAL (SOLO AL DESCARGAR PDF)    -->
-  <!-- ========================================================= -->
   <div id="printMasterDocument">
     <div class="print-top">
       <div class="print-brand-wrap">
         <img id="pLogoImg" class="print-logo" alt="Logo Picture" style="display:none;">
-        <div id="pDefaultBadge" class="print-default-badge">
-          <svg width="52" height="38"><use href="#realisticTapeLogo"/></svg>
-        </div>
+        <div id="pDefaultBadge" class="print-default-badge"><svg width="52" height="38"><use href="#realisticTapeLogo"/></svg></div>
         <div>
-          <h2 id="pCompanyTitle" style="font-size:1.28rem; color:#0f172a; font-weight:900;">Constructora / Contratista</h2>
-          <p id="pCompanyPhone" style="font-size:0.84rem; color:#334155; font-weight:700;"></p>
-          <p id="pClientLine" style="font-size:0.88rem; color:#0f172a; margin-top:0.2rem; font-weight:800;"></p>
+          <h2 id="pCompanyTitle" style="font-size:1.28rem;color:#0f172a;font-weight:900;">Constructora / Contratista</h2>
+          <p id="pCompanyPhone" style="font-size:0.84rem;color:#334155;font-weight:700;"></p>
+          <p id="pClientLine" style="font-size:0.88rem;color:#0f172a;margin-top:0.2rem;font-weight:800;"></p>
         </div>
       </div>
       <div class="print-doc-badge">
-        <div id="pDocTypeBadge" style="font-size:0.92rem; font-weight:900; color:#0f172a; text-transform:uppercase;">COTIZACIÓN OFICIAL</div>
-        <div id="pDocNumLine" style="font-size:0.8rem; font-weight:700; color:#b45309;">#EST-2026-0101</div>
-        <div id="pDateLine" style="font-size:0.76rem; color:#475569; margin-top:2px;"></div>
+        <div id="pDocTypeBadge" style="font-size:0.92rem;font-weight:900;color:#0f172a;text-transform:uppercase;">COTIZACIÓN OFICIAL</div>
+        <div id="pDocNumLine" style="font-size:0.8rem;font-weight:700;color:#b45309;">#EST-2026-0101</div>
+        <div id="pDateLine" style="font-size:0.76rem;color:#475569;margin-top:2px;"></div>
       </div>
     </div>
     <div class="print-section-box" id="pScopeBox">
@@ -893,22 +486,17 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
       <div id="pScopeItemsContainer"></div>
     </div>
     <table class="print-cost-table">
-      <thead>
-        <tr>
-          <th id="thConcept">Descripción / Partida de Obra</th>
-          <th id="thAmount">Monto</th>
-        </tr>
-      </thead>
+      <thead><tr><th id="thConcept">Descripción / Partida de Obra</th><th id="thAmount">Monto</th></tr></thead>
       <tbody id="pCostTableBody"></tbody>
     </table>
-    <p id="pNotesLine" style="margin-top:0.45rem; font-size:0.82rem; color:#1e293b; font-style:italic; display:none;"></p>
+    <p id="pNotesLine" style="margin-top:0.45rem;font-size:0.82rem;color:#1e293b;font-style:italic;display:none;"></p>
     <div class="print-sign-box">
-      <div id="pAuthHeader" style="font-size:0.82rem; font-weight:900; color:#0f172a; text-transform:uppercase;">Decisión y Autorización del Cliente:</div>
+      <div id="pAuthHeader" style="font-size:0.82rem;font-weight:900;color:#0f172a;text-transform:uppercase;">Decisión y Autorización del Cliente:</div>
       <div class="accept-options" id="pAcceptChecks">
         <span><span class="check-box-sq"></span> <span id="lblAcceptYes">ACEPTO LA COTIZACIÓN Y AUTORIZO EL TRABAJO</span></span>
         <span><span class="check-box-sq"></span> <span id="lblAcceptNo">NO ACEPTO</span></span>
       </div>
-      <p id="pLegalText" style="font-size:0.73rem; color:#475569; line-height:1.35;">Al marcar Acepto y firmar debajo, el cliente aprueba los costos y términos descritos en esta cotización.</p>
+      <p id="pLegalText" style="font-size:0.73rem;color:#475569;line-height:1.35;">Al marcar Acepto y firmar debajo, el cliente aprueba los costos y términos descritos en esta cotización.</p>
       <div class="sign-grid">
         <div class="sign-line" id="sigClientLbl">Firma del Cliente</div>
         <div class="sign-line" id="sigContractorLbl">Firma del Contratista</div>
@@ -916,16 +504,12 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
       </div>
     </div>
     <div id="pHardwareAttachmentPage" class="print-hw-attachment" style="display:none;">
-      <h3 id="pHwAttachTitle" style="font-size:1rem; color:#0f172a;">Anejo: Cotización de Ferretería</h3>
+      <h3 id="pHwAttachTitle" style="font-size:1rem;color:#0f172a;">Anejo: Cotización de Ferretería</h3>
       <img id="pHwAttachImg" alt="Ferretería">
     </div>
   </div>
-
 </div>
 
-<!-- ========================================================= -->
-<!-- MODAL DE EJEMPLO (SOLO SE CIERRA CON EL BOTÓN CERRAR)     -->
-<!-- ========================================================= -->
 <div class="doc-modal-overlay" id="docPreviewModal">
   <div class="doc-modal-container">
     <div class="doc-modal-topbar">
@@ -935,78 +519,56 @@ footer { text-align: center; font-size: 0.8rem; color: #64748b; margin-top: 2rem
       </div>
       <button type="button" class="close-modal-x" onclick="closeDocPreviewModal()">✕ Cerrar</button>
     </div>
-
     <div class="luxury-paper-sheet" id="modalPaperContent"></div>
-
-    <div style="margin-top:0.85rem;">
-      <button type="button" class="stripe-pay-btn" id="modalUnlockBtn" onclick="handleFinalDownloadClick()"></button>
-    </div>
+    <div style="margin-top:0.85rem;"><button type="button" class="stripe-pay-btn" id="modalUnlockBtn" onclick="handleFinalDownloadClick()"></button></div>
   </div>
 </div>
 
 <footer>
   &copy; 2026 MaterialCalcPro.org | Professional Estimating & Invoicing Suite
-  <span onclick="activateOwnerMode()" style="cursor:pointer; opacity:0.65; margin-left:8px; padding:2px 6px; border:1px solid #475569; border-radius:4px;" id="ownerKeyBtn" title="Modo Dueño">🔒 Modo Cliente: ON</span>
+  <span onclick="activateOwnerMode()" style="cursor:pointer;opacity:0.65;margin-left:8px;padding:2px 6px;border:1px solid #475569;border-radius:4px;" id="ownerKeyBtn" title="Modo Dueño">🔒 Modo Cliente: ON</span>
 </footer>
 
 <script>
 const STRIPE_URL = "https://buy.stripe.com/28E8wR0J9cqp8ei17Y7ok00";
-const CURRENCIES = {
-  USD: { sym: '$', code: 'USD', dec: 2 },
-  DOP: { sym: 'RD$', code: 'DOP', dec: 2 },
-  MXN: { sym: '$', code: 'MXN', dec: 2 },
-  COP: { sym: '$', code: 'COP', dec: 0 },
-  CLP: { sym: '$', code: 'CLP', dec: 0 },
-  PEN: { sym: 'S/', code: 'PEN', dec: 2 },
-  EUR: { sym: '€', code: 'EUR', dec: 2 }
-};
-
+const CURRENCIES = { USD:{sym:'$',code:'USD',dec:2}, DOP:{sym:'RD$',code:'DOP',dec:2}, MXN:{sym:'$',code:'MXN',dec:2}, COP:{sym:'$',code:'COP',dec:0}, CLP:{sym:'$',code:'CLP',dec:0}, PEN:{sym:'S/',code:'PEN',dec:2}, EUR:{sym:'€',code:'EUR',dec:2} };
 const PRO_SCOPE_TITLES = {
-  hormigon: { es: 'Suministro y Vaciado de Hormigón / Concreto', en: 'Concrete Supply & Pouring' },
-  sellador: { es: 'Sellado e Impermeabilización Elastomérica de Techo', en: 'Elastomeric Roof Waterproofing & Coating' },
-  pintura: { es: 'Pintura y Preparación de Superficies', en: 'Surface Preparation & Paint Application' },
-  gypsum: { es: 'Instalación de Gypsum Board y Plafón Acústico', en: 'Drywall & Acoustic Ceiling Installation' },
-  bloques: { es: 'Construcción de Muro de Bloques (CMU)', en: 'CMU Block Wall Construction' },
-  btu: { es: 'Suministro e Instalación de Unidad A/C (BTU)', en: 'A/C Unit Supply & Installation (BTU)' }
+  hormigon:{es:'Suministro y Vaciado de Hormigón / Concreto',en:'Concrete Supply & Pouring'},
+  sellador:{es:'Sellado e Impermeabilización Elastomérica de Techo',en:'Elastomeric Roof Waterproofing & Coating'},
+  pintura:{es:'Pintura y Preparación de Superficies',en:'Surface Preparation & Paint Application'},
+  gypsum:{es:'Instalación de Gypsum Board y Plafón Acústico',en:'Drywall & Acoustic Ceiling Installation'},
+  bloques:{es:'Construcción de Muro de Bloques (CMU)',en:'CMU Block Wall Construction'},
+  btu:{es:'Suministro e Instalación de Unidad A/C (BTU)',en:'A/C Unit Supply & Installation (BTU)'}
 };
-
 const PRESET_TRANSLATIONS = [
-  { es: 'Suministro e instalación de Ventanas', en: 'Window Supply & Installation' },
-  { es: 'Suministro e instalación de Puertas', en: 'Door Supply & Installation' },
-  { es: 'Trabajos de Electricidad y Lámparas', en: 'Electrical Work & Fixtures' },
-  { es: 'Trabajos de Plomería y Tuberías', en: 'Plumbing & Piping Work' },
-  { es: 'Trabajos de Albañilería y Losa de Hormigón', en: 'Masonry & Concrete Slab Work' },
-  { es: 'Pintura General y Sellado de Superficies', en: 'General Painting & Surface Sealing' }
+  {es:'Suministro e instalación de Ventanas',en:'Window Supply & Installation'},
+  {es:'Suministro e instalación de Puertas',en:'Door Supply & Installation'},
+  {es:'Trabajos de Electricidad y Lámparas',en:'Electrical Work & Fixtures'},
+  {es:'Trabajos de Plomería y Tuberías',en:'Plumbing & Piping Work'},
+  {es:'Trabajos de Albañilería y Losa de Hormigón',en:'Masonry & Concrete Slab Work'},
+  {es:'Pintura General y Sellado de Superficies',en:'General Painting & Surface Sealing'}
 ];
 
-/* SIEMPRE ENTRA COMO CLIENTE POR DEFECTO */
 localStorage.removeItem('mcp_owner_unlocked');
 const isReturningFromStripe = new URLSearchParams(window.location.search).get('paid') === 'true';
-
 let currentLang = localStorage.getItem('mcp_lang') || 'es';
 let unitSys = localStorage.getItem('mcp_unit_sys') || 'imp';
 let currentCurr = localStorage.getItem('mcp_currency') || 'USD';
 let isPaidUser = isReturningFromStripe;
 let uploadedLogoData = localStorage.getItem('mcp_company_logo') || '';
 let uploadedHwQuoteImg = localStorage.getItem('mcp_hw_quote_img') || '';
-
-/* SIEMPRE EMPIEZA EN $0.00 AL ENTRAR A LA APP */
 let projectCart = [];
-let customLineItems = [{ desc: '', price: '' }];
+let customLineItems = [{desc:'',price:''}];
 
 function getCurrObj() { return CURRENCIES[currentCurr] || CURRENCIES.USD; }
-function formatUSD(num) {
-  const c = getCurrObj();
-  return c.sym + (Number(num) || 0).toLocaleString('en-US', { minimumFractionDigits: c.dec, maximumFractionDigits: c.dec });
-}
+function formatUSD(num) { const c = getCurrObj(); return c.sym + (Number(num)||0).toLocaleString('en-US',{minimumFractionDigits:c.dec,maximumFractionDigits:c.dec}); }
 
-/* FUNCIONES DEL HISTORIAL PERMANENTE */
 function saveHistoryItem(labelEs, labelEn, resultText) {
   let hist = [];
   try { hist = JSON.parse(localStorage.getItem('mcp_calc_history') || '[]'); } catch(e) {}
-  const time = new Date().toLocaleDateString([], { month: '2-digit', day: '2-digit' }) + ' ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-  hist.unshift({ es: labelEs, en: labelEn, res: resultText, time: time });
-  if (hist.length > 12) hist = hist.slice(0, 12);
+  const time = new Date().toLocaleDateString([],{month:'2-digit',day:'2-digit'}) + ' ' + new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  hist.unshift({es:labelEs, en:labelEn, res:resultText, time:time});
+  if (hist.length > 12) hist = hist.slice(0,12);
   localStorage.setItem('mcp_calc_history', JSON.stringify(hist));
   renderHistory();
 }
@@ -1017,49 +579,28 @@ function renderHistory() {
   let hist = [];
   try { hist = JSON.parse(localStorage.getItem('mcp_calc_history') || '[]'); } catch(e) {}
   if (hist.length === 0) {
-    list.innerHTML = '<li style="color:#94a3b8;">' +
-      (currentLang === 'es'
-        ? 'Tus cálculos y cotizaciones recientes se guardarán aquí automáticamente.'
-        : 'Your recent calculations and quotes will be saved here automatically.') +
-      '</li>';
+    list.innerHTML = '<li style="color:#94a3b8;">' + (currentLang==='es' ? 'Tus cálculos y cotizaciones recientes se guardarán aquí automáticamente.' : 'Your recent calculations and quotes will be saved here automatically.') + '</li>';
     return;
   }
-  list.innerHTML = hist.map(item =>
-    '<li><span><strong>' + (currentLang === 'es' ? item.es : item.en) + '</strong> <small style="color:#94a3b8;">(' + item.time + ')</small></span>' +
-    '<strong style="color:#0f172a;">' + item.res + '</strong></li>'
-  ).join('');
+  list.innerHTML = hist.map(item => '<li><span><strong>' + (currentLang==='es'?item.es:item.en) + '</strong> <small style="color:#94a3b8;">(' + item.time + ')</small></span><strong style="color:#0f172a;">' + item.res + '</strong></li>').join('');
 }
 
-function clearCalcHistory() {
-  localStorage.removeItem('mcp_calc_history');
-  renderHistory();
-}
+function clearCalcHistory() { localStorage.removeItem('mcp_calc_history'); renderHistory(); }
 
 function resetBuilderToZero() {
-  projectCart = [];
-  customLineItems = [{ desc: '', price: '' }];
-  localStorage.removeItem('mcp_project_cart');
-  localStorage.removeItem('mcp_custom_lines');
-  localStorage.removeItem('mcp_checkout_state');
-  ['qb-hw-cost', 'qb-lab', 'qb-tax', 'qb-dep'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = '0';
-  });
-  ['qb-comp', 'qb-phone', 'qb-client', 'qb-hw-name', 'qb-notes'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.value = '';
-  });
-  renderProjectCart();
-  renderCustomLines();
-  recalcMasterTotals();
+  projectCart = []; customLineItems = [{desc:'',price:''}];
+  localStorage.removeItem('mcp_project_cart'); localStorage.removeItem('mcp_custom_lines'); localStorage.removeItem('mcp_checkout_state');
+  ['qb-hw-cost','qb-lab','qb-tax','qb-dep'].forEach(id => { const el=document.getElementById(id); if(el) el.value='0'; });
+  ['qb-comp','qb-phone','qb-client','qb-hw-name','qb-notes'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+  renderProjectCart(); renderCustomLines(); recalcMasterTotals();
 }
 
 function switchMainView(viewId) {
-  document.getElementById('quoteView').classList.toggle('active', viewId === 'quoteView');
-  document.getElementById('calcsView').classList.toggle('active', viewId === 'calcsView');
-  document.getElementById('btnModeQuote').classList.toggle('active', viewId === 'quoteView');
-  document.getElementById('btnModeCalcs').classList.toggle('active', viewId === 'calcsView');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('quoteView').classList.toggle('active', viewId==='quoteView');
+  document.getElementById('calcsView').classList.toggle('active', viewId==='calcsView');
+  document.getElementById('btnModeQuote').classList.toggle('active', viewId==='quoteView');
+  document.getElementById('btnModeCalcs').classList.toggle('active', viewId==='calcsView');
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
 function openTab(id, btn) {
@@ -1070,13 +611,13 @@ function openTab(id, btn) {
 }
 
 function upgradeScopeTitle(rawTitle, lang) {
-  const t = (rawTitle || '').toLowerCase();
-  if (t.indexOf('hormig') !== -1 || t.indexOf('concret') !== -1) return PRO_SCOPE_TITLES.hormigon[lang];
-  if (t.indexOf('sellador') !== -1 || t.indexOf('roof') !== -1) return PRO_SCOPE_TITLES.sellador[lang];
-  if (t.indexOf('pintura') !== -1 || t.indexOf('paint') !== -1) return PRO_SCOPE_TITLES.pintura[lang];
-  if (t.indexOf('gypsum') !== -1 || t.indexOf('drywall') !== -1 || t.indexOf('plaf') !== -1) return PRO_SCOPE_TITLES.gypsum[lang];
-  if (t.indexOf('bloque') !== -1 || t.indexOf('cmu') !== -1) return PRO_SCOPE_TITLES.bloques[lang];
-  if (t.indexOf('aire') !== -1 || t.indexOf('btu') !== -1) return PRO_SCOPE_TITLES.btu[lang];
+  const t = (rawTitle||'').toLowerCase();
+  if (t.includes('hormig')||t.includes('concret')) return PRO_SCOPE_TITLES.hormigon[lang];
+  if (t.includes('sellador')||t.includes('roof')) return PRO_SCOPE_TITLES.sellador[lang];
+  if (t.includes('pintura')||t.includes('paint')) return PRO_SCOPE_TITLES.pintura[lang];
+  if (t.includes('gypsum')||t.includes('drywall')||t.includes('plaf')) return PRO_SCOPE_TITLES.gypsum[lang];
+  if (t.includes('bloque')||t.includes('cmu')) return PRO_SCOPE_TITLES.bloques[lang];
+  if (t.includes('aire')||t.includes('btu')) return PRO_SCOPE_TITLES.btu[lang];
   return rawTitle;
 }
 
@@ -1087,13 +628,8 @@ function syncLockVisualState() {
 }
 
 function activateOwnerMode() {
-  isPaidUser = !isPaidUser;
-  syncLockVisualState();
-  updatePayButtonState();
-  recalcMasterTotals();
-  alert(isPaidUser
-    ? '✅ Modo Dueño Activado temporalmente para esta sesión (Al cerrar o recargar volverá automáticamente a Modo Cliente).'
-    : '🔒 Modo Cliente Activado: Para descargar el PDF pide pagar $1.99 en Stripe.');
+  isPaidUser = !isPaidUser; syncLockVisualState(); updatePayButtonState(); recalcMasterTotals();
+  alert(isPaidUser ? '✅ Modo Dueño Activado temporalmente para esta sesión.' : '🔒 Modo Cliente Activado ($1.99 en Stripe).');
 }
 
 function openDocPreviewModal(defaultType) {
@@ -1101,133 +637,338 @@ function openDocPreviewModal(defaultType) {
   renderModalSheet(docType);
   document.getElementById('docPreviewModal').style.display = 'flex';
 }
+function closeDocPreviewModal() { document.getElementById('docPreviewModal').style.display = 'none'; }
 
-function closeDocPreviewModal() {
-  document.getElementById('docPreviewModal').style.display = 'none';
-}
-
-/* SIEMPRE MUESTRA EXCLUSIVAMENTE LA COMPAÑÍA DE EJEMPLO (APEX CONSTRUCTORA LLC) */
 function renderModalSheet(mode) {
   const isEs = currentLang === 'es';
   const isInv = mode === 'invoice';
   document.getElementById('btnSampleQuote')?.classList.toggle('active', !isInv);
   document.getElementById('btnSampleInv')?.classList.toggle('active', isInv);
-
   const paper = document.getElementById('modalPaperContent');
   const unlockBtn = document.getElementById('modalUnlockBtn');
   if (!paper) return;
-
   unlockBtn.innerText = isPaidUser
     ? (isEs ? '🖨️ Generar y Descargar Mi PDF Oficial con Mi Logo Picture Ahora' : '🖨️ Generate & Download My Official PDF with My Logo Picture Now')
     : (isEs ? '🔒 Generar Mi Documento Oficial con Mi Logo Picture y Mis Números ($1.99)' : '🔒 Generate My Official Document with My Logo Picture & My Numbers ($1.99)');
-
-  const docBadgeTitle = isInv
-    ? (isEs ? 'FACTURA OFICIAL (INVOICE)' : 'OFFICIAL INVOICE')
-    : (isEs ? 'COTIZACIÓN OFICIAL' : 'OFFICIAL ESTIMATE');
+  const docBadgeTitle = isInv ? (isEs?'FACTURA OFICIAL (INVOICE)':'OFFICIAL INVOICE') : (isEs?'COTIZACIÓN OFICIAL':'OFFICIAL ESTIMATE');
   const docNum = isInv ? 'INV #2026-0842' : 'EST #2026-0842';
-
   paper.innerHTML =
-    '<div class="lux-sample-ribbon">' +
-      (isEs
-        ? '✨ EJEMPLO DE OTRA COMPAÑÍA (MUESTRA) • Tu PDF final saldrá con este diseño, TU LOGO PICTURE y TUS NÚMEROS al desbloquear'
-        : '✨ SAMPLE COMPANY PREVIEW • Your final PDF will be generated with this layout, YOUR LOGO PICTURE & YOUR NUMBERS') +
-    '</div>' +
-    '<div class="lux-header">' +
-      '<div class="lux-brand">' +
-        '<div class="lux-logo-box"><svg width="52" height="52"><use href="#apexSampleLogo"/></svg></div>' +
-        '<div>' +
-          '<div class="lux-comp-name">APEX CONSTRUCTORA & REMODELACIONES LLC</div>' +
-          '<div class="lux-comp-sub">' +
-            (isEs
-              ? 'Contratista General Certificado • Lic. DACO #GC-89421<br>Tel: (787) 555-0199 • San Juan, PR • proyectos@apexconstructora.com'
-              : 'Licensed General Contractor • Lic. #GC-89421<br>Phone: (787) 555-0199 • info@apexconstructora.com') +
-          '</div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="lux-badge-box">' +
-        '<div class="lux-doc-title">' + docBadgeTitle + '</div>' +
-        '<div class="lux-doc-num">' + docNum + '</div>' +
-        '<div class="lux-doc-date">' + (isEs ? 'Fecha: 03/11/2026 • Validez: 30 Días' : 'Date: 11/03/2026 • Valid: 30 Days') + '</div>' +
-      '</div>' +
-    '</div>' +
-    '<div class="lux-client-grid">' +
-      '<div><strong>' + (isEs ? 'CLIENTE DE EJEMPLO:' : 'SAMPLE CLIENT:') + '</strong><span>Ing. Carlos M. Rodríguez</span><div style="color:#475569; margin-top:2px;">Tel: (787) 555-8420</div></div>' +
-      '<div><strong>' + (isEs ? 'PROYECTO DE MUESTRA:' : 'SAMPLE PROJECT:') + '</strong><span>Urb. Los Paseos, Calle Real #114</span><div style="color:#475569; margin-top:2px;">' + (isEs ? 'Construcción de Muro, Sellado de Techo y Remodelación' : 'Wall Construction, Roof Coating & Remodel') + '</div></div>' +
-    '</div>' +
-    '<div class="lux-scope-box">' +
-      '<div class="lux-scope-hdr">' + (isEs ? 'Alcance Técnico y Desglose de Materiales Calculados (Ejemplo)' : 'Technical Scope & Calculated Materials (Sample)') + '</div>' +
-      '<div class="lux-scope-item"><strong>1. ' + (isEs ? 'Construcción de Muro de Bloques (CMU):' : 'CMU Block Wall Construction:') + '</strong> ' +
-        (isEs ? 'Pared de 30 ft × 8 ft (240 sq ft) • ➔ 284 Bloques (8×8×16), 22 Sacos Mortero, 9 Varillas #4, 19 Escalerillas, 59 Sacos en Celdas y Empañete a 2 Caras.' : '30 ft × 8 ft Wall (240 sq ft) • ➔ 284 CMU Blocks, 22 Mortar Bags, 9 #4 Rebars, 59 Grout Bags & Both-Sides Plaster.') +
-      '</div>' +
-      '<div class="lux-scope-item"><strong>2. ' + (isEs ? 'Sellado e Impermeabilización Elastomérica de Techo:' : 'Elastomeric Roof Waterproofing:') + '</strong> ' +
-        (isEs ? 'Área de 1,500 sq ft a 2 Capas • ➔ 12 Pailas de Sellador Elastomérico (5 Gal) + 3 Pailas de Primer Acrílico.' : '1,500 sq ft at 2 Coats • ➔ 12 Pails (5 Gal) Elastomeric Coating + 3 Pails Primer.') +
-      '</div>' +
-      '<div class="lux-scope-item"><strong>3. ' + (isEs ? 'Suministro e Instalación de Ventanas de Seguridad:' : 'Security Window Supply & Installation:') + '</strong> ' +
-        (isEs ? '4 Ventanas corredizas en aluminio pesado y cristal laminado de impacto.' : '4 Heavy-gauge aluminum impact-resistant sliding windows.') +
-      '</div>' +
-    '</div>' +
-    '<table class="lux-table">' +
-      '<thead><tr><th>' + (isEs ? 'Descripción / Partida de Obra (Ejemplo)' : 'Description / Line Item (Sample)') + '</th><th>' + (isEs ? 'Monto (USD)' : 'Amount (USD)') + '</th></tr></thead>' +
-      '<tbody>' +
-        '<tr><td>Construcción de Muro de Bloques (284 Bloques + Acero + Mezclas)</td><td>$1,413.60</td></tr>' +
-        '<tr><td>Sellado e Impermeabilización Elastomérica de Techo (12 Pailas 5G + Primer)</td><td>$1,575.00</td></tr>' +
-        '<tr><td>Materiales de Ferretería y Acarreo (National Lumber & Hardware)</td><td>$1,850.00</td></tr>' +
-        '<tr><td>Suministro e Instalación de 4 Ventanas de Seguridad</td><td>$2,400.00</td></tr>' +
-        '<tr><td>Mano de Obra Profesional, Supervisión y Limpieza Final (Labor)</td><td>$4,200.00</td></tr>' +
-        '<tr class="lux-tot-row"><td>' + (isInv ? 'TOTAL FACTURADO (EJEMPLO)' : 'TOTAL COTIZADO (EJEMPLO)') + '</td><td>$11,438.60</td></tr>' +
-        '<tr><td>' + (isEs ? 'Menos Depósito Inicial (50%)' : 'Less Initial Deposit (50%)') + '</td><td>-$5,719.30</td></tr>' +
-        '<tr class="lux-bal-row"><td>' + (isEs ? 'BALANCE PENDIENTE (EJEMPLO)' : 'BALANCE DUE (SAMPLE)') + '</td><td>$5,719.30</td></tr>' +
-      '</tbody>' +
-    '</table>' +
-    '<div style="font-size:0.76rem; font-style:italic; color:#334155; margin-bottom:0.5rem;">📌 ' +
-      (isEs ? 'Notas y Garantía: Incluye acarreo de materiales, bote de escombros y 1 año de garantía en mano de obra.' : 'Notes & Warranty: Includes material hauling, debris removal, and 1-year labor warranty.') +
-    '</div>' +
-    '<div class="lux-sign-box">' +
-      '<div style="font-size:0.76rem; font-weight:900; text-transform:uppercase; color:#0f172a;">' +
-        (isInv ? (isEs ? 'Conformidad y Recibo de Obra:' : 'Completion & Acknowledgment:') : (isEs ? 'Decisión y Autorización del Cliente:' : 'Client Decision & Authorization:')) +
-      '</div>' +
-      (isInv ? '' : '<div class="lux-checks"><span>☑️ ACEPTO LA COTIZACIÓN Y AUTORIZO EL TRABAJO</span><span>⬜ NO ACEPTO</span></div>') +
-      '<div style="font-size:0.71rem; color:#475569;">' +
-        (isEs ? 'Al marcar Acepto y firmar debajo, el cliente aprueba los costos y términos descritos en esta cotización.' : 'By checking Accept and signing below, the client approves the costs and terms described in this estimate.') +
-      '</div>' +
-      '<div class="lux-signs">' +
-        '<div class="lux-sign-line">' + (isEs ? 'Firma del Cliente' : 'Client Signature') + '</div>' +
-        '<div class="lux-sign-line">' + (isEs ? 'Firma del Contratista' : 'Contractor Signature') + '</div>' +
-        '<div class="lux-sign-line">' + (isEs ? 'Fecha' : 'Date') + '</div>' +
-      '</div>' +
-    '</div>';
+    '<div class="lux-sample-ribbon">' + (isEs ? '✨ EJEMPLO DE OTRA COMPAÑÍA (MUESTRA) • Tu PDF saldrá con TU LOGO PICTURE y TUS NÚMEROS al desbloquear' : '✨ SAMPLE COMPANY PREVIEW • Your PDF will be generated with YOUR LOGO PICTURE & YOUR NUMBERS') + '</div>' +
+    '<div class="lux-header"><div class="lux-brand"><div class="lux-logo-box"><svg width="52" height="52"><use href="#apexSampleLogo"/></svg></div><div><div class="lux-comp-name">APEX CONSTRUCTORA & REMODELACIONES LLC</div><div class="lux-comp-sub">' + (isEs ? 'Contratista General Certificado • Lic. DACO #GC-89421<br>Tel: (787) 555-0199 • San Juan, PR' : 'Licensed General Contractor • Lic. #GC-89421<br>Phone: (787) 555-0199') + '</div></div></div><div class="lux-badge-box"><div class="lux-doc-title">' + docBadgeTitle + '</div><div class="lux-doc-num">' + docNum + '</div><div class="lux-doc-date">' + (isEs?'Fecha: 03/11/2026 • Validez: 30 Días':'Date: 11/03/2026 • Valid: 30 Days') + '</div></div></div>' +
+    '<div class="lux-client-grid"><div><strong>' + (isEs?'CLIENTE DE EJEMPLO:':'SAMPLE CLIENT:') + '</strong><span>Ing. Carlos M. Rodríguez</span><div style="color:#475569;margin-top:2px;">Tel: (787) 555-8420</div></div><div><strong>' + (isEs?'PROYECTO DE MUESTRA:':'SAMPLE PROJECT:') + '</strong><span>Urb. Los Paseos, Calle Real #114</span><div style="color:#475569;margin-top:2px;">' + (isEs?'Construcción de Muro, Sellado de Techo y Remodelación':'Wall Construction, Roof Coating & Remodel') + '</div></div></div>' +
+    '<div class="lux-scope-box"><div class="lux-scope-hdr">' + (isEs?'Alcance Técnico y Desglose de Materiales Calculados (Ejemplo)':'Technical Scope & Calculated Materials (Sample)') + '</div>' +
+    '<div class="lux-scope-item"><strong>1. ' + (isEs?'Construcción de Muro de Bloques (CMU):':'CMU Block Wall Construction:') + '</strong> ' + (isEs?'Pared de 30 ft × 8 ft (240 sq ft) • ➔ 284 Bloques, 22 Sacos Mortero, 9 Varillas #4, 19 Escalerillas, 59 Sacos en Celdas y Empañete a 2 Caras.':'30 ft × 8 ft Wall (240 sq ft) • ➔ 284 CMU Blocks, 22 Mortar Bags, 9 #4 Rebars, 59 Grout Bags & Plaster.') + '</div>' +
+    '<div class="lux-scope-item"><strong>2. ' + (isEs?'Sellado Elastomérico de Techo:':'Elastomeric Roof Waterproofing:') + '</strong> ' + (isEs?'Área de 1,500 sq ft a 2 Capas • ➔ 12 Pailas de Sellador (5 Gal) + 3 Pailas de Primer.':'1,500 sq ft at 2 Coats • ➔ 12 Pails (5 Gal) Coating + 3 Pails Primer.') + '</div></div>' +
+    '<table class="lux-table"><thead><tr><th>' + (isEs?'Descripción / Partida de Obra (Ejemplo)':'Description / Line Item (Sample)') + '</th><th>' + (isEs?'Monto (USD)':'Amount (USD)') + '</th></tr></thead><tbody>' +
+    '<tr><td>Construcción de Muro de Bloques (284 Bloques + Acero + Mezclas)</td><td>$1,413.60</td></tr>' +
+    '<tr><td>Sellado e Impermeabilización de Techo (12 Pailas 5G + Primer)</td><td>$1,575.00</td></tr>' +
+    '<tr><td>Materiales de Ferretería y Acarreo (National Lumber & Hardware)</td><td>$1,850.00</td></tr>' +
+    '<tr><td>Suministro e Instalación de 4 Ventanas de Seguridad</td><td>$2,400.00</td></tr>' +
+    '<tr><td>Mano de Obra Profesional, Supervisión y Limpieza Final (Labor)</td><td>$4,200.00</td></tr>' +
+    '<tr class="lux-tot-row"><td>' + (isInv?'TOTAL FACTURADO (EJEMPLO)':'TOTAL COTIZADO (EJEMPLO)') + '</td><td>$11,438.60</td></tr>' +
+    '<tr><td>' + (isEs?'Menos Depósito Inicial (50%)':'Less Initial Deposit (50%)') + '</td><td>-$5,719.30</td></tr>' +
+    '<tr class="lux-bal-row"><td>' + (isEs?'BALANCE PENDIENTE (EJEMPLO)':'BALANCE DUE (SAMPLE)') + '</td><td>$5,719.30</td></tr></tbody></table>' +
+    '<div class="lux-sign-box"><div style="font-size:0.76rem;font-weight:900;text-transform:uppercase;color:#0f172a;">' + (isInv?(isEs?'Conformidad y Recibo de Obra:':'Completion & Acknowledgment:'):(isEs?'Decisión y Autorización del Cliente:':'Client Decision & Authorization:')) + '</div>' +
+    (isInv?'':'<div class="lux-checks"><span>☑️ ACEPTO LA COTIZACIÓN Y AUTORIZO EL TRABAJO</span><span>⬜ NO ACEPTO</span></div>') +
+    '<div class="lux-signs"><div class="lux-sign-line">' + (isEs?'Firma del Cliente':'Client Signature') + '</div><div class="lux-sign-line">' + (isEs?'Firma del Contratista':'Contractor Signature') + '</div><div class="lux-sign-line">' + (isEs?'Fecha':'Date') + '</div></div></div>';
 }
 
-function toggleUnitSystem() {
-  unitSys = unitSys === 'imp' ? 'met' : 'imp';
-  localStorage.setItem('mcp_unit_sys', unitSys);
-  document.getElementById('unitBtn').innerText = unitSys === 'imp' ? '📏 ft / yd³' : '📏 m / m³';
-  runAllCalcs();
-}
-
-function changeCurrency(val) {
-  currentCurr = val;
-  localStorage.setItem('mcp_currency', val);
-  runAllCalcs();
-  renderProjectCart();
-  recalcMasterTotals();
-}
-
-function toggleLang() {
-  currentLang = currentLang === 'es' ? 'en' : 'es';
-  localStorage.setItem('mcp_lang', currentLang);
-  applyLanguageUI();
-}
+function toggleUnitSystem() { unitSys = unitSys==='imp'?'met':'imp'; localStorage.setItem('mcp_unit_sys',unitSys); document.getElementById('unitBtn').innerText = unitSys==='imp'?'📏 ft / yd³':'📏 m / m³'; runAllCalcs(); }
+function changeCurrency(val) { currentCurr = val; localStorage.setItem('mcp_currency',val); runAllCalcs(); renderProjectCart(); recalcMasterTotals(); }
+function toggleLang() { currentLang = currentLang==='es'?'en':'es'; localStorage.setItem('mcp_lang',currentLang); applyLanguageUI(); }
 
 function applyLanguageUI() {
   document.documentElement.lang = currentLang;
-  document.getElementById('langBtn').innerText = currentLang === 'es' ? '🇺🇸 EN' : '🇪🇸 ES';
-  document.querySelectorAll('[data-es]').forEach(el => {
-    el.innerText = el.getAttribute('data-' + currentLang);
+  document.getElementById('langBtn').innerText = currentLang==='es'?'🇺🇸 EN':'🇪🇸 ES';
+  document.querySelectorAll('[data-es]').forEach(el => { el.innerText = el.getAttribute('data-'+currentLang); });
+  renderCustomLines(); runAllCalcs(); renderProjectCart(); updatePayButtonState(); syncLockVisualState(); recalcMasterTotals(); renderHistory();
+}
+
+function calcHormigon(logHist) {
+  const isImp = unitSys==='imp';
+  let l = parseFloat(document.getElementById('h-largo').value)||0, w = parseFloat(document.getElementById('h-ancho').value)||0, t = parseFloat(document.getElementById('h-espesor').value)||0;
+  let vol = isImp ? (((l*w*(t/12))*1.10)/27).toFixed(2) : ((l*w*(t/100))*1.10).toFixed(2);
+  let bagAlt = isImp ? Math.ceil((l*w*(t/12)*1.10)/0.45) : Math.ceil(vol*48);
+  let bagMain = isImp ? Math.ceil((l*w*(t/12)*1.10)/0.60) : Math.ceil(vol*7.5);
+  let modo = document.getElementById('h-modo-precio').value;
+  let pVol = parseFloat(document.getElementById('h-precio-yd').value)||0, pSaco = parseFloat(document.getElementById('h-precio-saco').value)||0;
+  let cost = modo==='vol' ? (parseFloat(vol)*pVol) : (modo==='bagMain' ? bagMain*pSaco : bagAlt*pSaco);
+  document.getElementById('h-yd').innerText = vol; document.getElementById('h-60').innerText = bagAlt; document.getElementById('h-80').innerText = bagMain; document.getElementById('h-cost-tag').innerText = formatUSD(cost);
+  const card = document.getElementById('hormigon');
+  card.setAttribute('data-cost', cost.toFixed(2));
+  card.dataset.shortEs = vol+(isImp?' yd³':' m³'); card.dataset.shortEn = vol+(isImp?' yd³':' m³');
+  card.dataset.sumEs = vol+(isImp?' yd³ (Sacos 80lb: '+bagMain+')':' m³ (Bultos 50kg: '+bagMain+')');
+  card.dataset.sumEn = vol+(isImp?' yd³ (80lb Bags: '+bagMain+')':' m³ (50kg Bags: '+bagMain+')');
+  if (logHist) saveHistoryItem('Hormigón ('+l+'×'+w+')','Concrete ('+l+'×'+w+')',vol+(isImp?' yd³ • ':' m³ • ')+formatUSD(cost));
+}
+
+function calcSellador(logHist) {
+  let area = parseFloat(document.getElementById('s-area').value)||0, capas = parseFloat(document.getElementById('s-capas').value)||2, rend = parseFloat(document.getElementById('s-rend').value)||250;
+  let pailas = Math.ceil((area*capas)/rend), primer = Math.ceil(area/500);
+  let cost = (pailas*(parseFloat(document.getElementById('s-precio-paila').value)||0)) + (primer*(parseFloat(document.getElementById('s-precio-primer').value)||0));
+  document.getElementById('s-pailas').innerText = pailas; document.getElementById('s-gal').innerText = pailas*5; document.getElementById('s-primer').innerText = primer; document.getElementById('s-cost-tag').innerText = formatUSD(cost);
+  const card = document.getElementById('sellador');
+  card.setAttribute('data-cost', cost.toFixed(2));
+  card.dataset.shortEs = pailas+' Pailas (5G)'; card.dataset.shortEn = pailas+' Pails (5G)';
+  card.dataset.sumEs = pailas+' Pailas 5G + '+primer+' Primer'; card.dataset.sumEn = pailas+' Pails 5G + '+primer+' Primer';
+  if (logHist) saveHistoryItem('Sellador Techo ('+area+' sq ft)','Roof Coat ('+area+' sq ft)',pailas+' Pailas • '+formatUSD(cost));
+}
+
+function calcPintura(logHist) {
+  let area = parseFloat(document.getElementById('p-area').value)||0, capas = parseFloat(document.getElementById('p-capas').value)||2, rend = parseFloat(document.getElementById('p-rend').value)||350;
+  let gal = Math.ceil((area*capas)/rend), primer = Math.ceil(area/rend);
+  let cost = (gal*(parseFloat(document.getElementById('p-precio-gal').value)||0)) + (primer*(parseFloat(document.getElementById('p-precio-primer').value)||0));
+  document.getElementById('p-gal').innerText = gal; document.getElementById('p-pailas').innerText = (gal/5).toFixed(1)+' Pailas'; document.getElementById('p-primer').innerText = primer+' Gal'; document.getElementById('p-cost-tag').innerText = formatUSD(cost);
+  const card = document.getElementById('pintura');
+  card.setAttribute('data-cost', cost.toFixed(2));
+  card.dataset.shortEs = gal+' Galones'; card.dataset.shortEn = gal+' Gallons';
+  card.dataset.sumEs = gal+' Galones Pintura + '+primer+' Gal Primer'; card.dataset.sumEn = gal+' Gal Paint + '+primer+' Gal Primer';
+  if (logHist) saveHistoryItem('Pintura ('+area+' sq ft)','Paint ('+area+' sq ft)',gal+' Gal • '+formatUSD(cost));
+}
+
+function calcGypsum(logHist) {
+  let area = parseFloat(document.getElementById('g-area').value)||0, sizeVal = parseFloat(document.getElementById('g-tipo').value)||32;
+  let paneles = Math.ceil((area/sizeVal)*1.10), masilla = sizeVal===32 ? Math.ceil(paneles/12) : 0;
+  let cost = (paneles*(parseFloat(document.getElementById('g-precio-panel').value)||0)) + (masilla*(parseFloat(document.getElementById('g-precio-masilla').value)||0));
+  document.getElementById('g-paneles').innerText = paneles; document.getElementById('g-masilla').innerText = sizeVal===32?masilla:'N/A'; document.getElementById('g-tornillos').innerText = sizeVal===32?(paneles*32).toLocaleString():'N/A'; document.getElementById('g-cost-tag').innerText = formatUSD(cost);
+  const card = document.getElementById('gypsum');
+  card.setAttribute('data-cost', cost.toFixed(2));
+  card.dataset.shortEs = paneles+' Paneles'; card.dataset.shortEn = paneles+' Panels';
+  card.dataset.sumEs = paneles+' Paneles/Losas + Masilla: '+masilla; card.dataset.sumEn = paneles+' Panels/Tiles + Mud: '+masilla;
+  if (logHist) saveHistoryItem('Gypsum/Plafón ('+area+' sq ft)','Drywall/Ceiling ('+area+' sq ft)',paneles+' Paneles • '+formatUSD(cost));
+}
+
+function calcBloques(logHist) {
+  let l = parseFloat(document.getElementById('b-largo').value)||0, h = parseFloat(document.getElementById('b-alto').value)||0, rebarVal = parseFloat(document.getElementById('b-varilla').value)||0, plasterSides = parseInt(document.getElementById('b-empanete').value)||0;
+  let area = l*h, bloques = Math.ceil(area*1.125*1.05), mortero = Math.ceil((bloques/100)*7.5);
+  let numCells = rebarVal>0 ? (Math.floor(l/rebarVal)+1) : 0;
+  let varillas = rebarVal>0 ? Math.ceil((numCells*(h+2)*1.10)/20) : 0;
+  let durowal = rebarVal>0 ? Math.ceil(((Math.floor(Math.ceil((h*12)/8)/2)*l)*1.05)/10) : 0;
+  let celdas = rebarVal>0 ? Math.ceil((numCells*h*0.25*1.10)/0.60) : 0;
+  let empSacos = plasterSides>0 ? Math.ceil(((area*plasterSides)/30)*1.10) : 0;
+  let arena = plasterSides>0 ? ((((area*plasterSides)*0.0417)*1.10)/27).toFixed(2) : '0';
+  let cost = (bloques*(parseFloat(document.getElementById('b-precio-blq').value)||0)) + ((mortero+celdas+empSacos)*(parseFloat(document.getElementById('b-precio-saco').value)||0)) + (varillas*(parseFloat(document.getElementById('b-precio-var').value)||0));
+  document.getElementById('b-total').innerText = bloques; document.getElementById('b-area').innerText = area+' sq ft'; document.getElementById('b-mortero').innerText = mortero+' Sacos'; document.getElementById('b-rebar').innerText = varillas+' Varillas'; document.getElementById('b-durowal').innerText = durowal+' Piezas'; document.getElementById('b-celdas').innerText = celdas+' Sacos'; document.getElementById('b-plaster').innerText = empSacos+' Sacos + '+arena+' yd³'; document.getElementById('b-cost-tag').innerText = formatUSD(cost);
+  const card = document.getElementById('bloques');
+  card.setAttribute('data-cost', cost.toFixed(2));
+  card.dataset.shortEs = bloques+' Bloques'; card.dataset.shortEn = bloques+' Blocks';
+  card.dataset.sumEs = bloques+' Bloques | Mortero: '+mortero+' | Varillas: '+varillas+' | Celdas: '+celdas+' | Empañete: '+empSacos+' Sacos';
+  card.dataset.sumEn = bloques+' Blocks | Mortar: '+mortero+' | Rebar: '+varillas+' | Grout: '+celdas+' | Plaster: '+empSacos+' Bags';
+  if (logHist) saveHistoryItem('Muro Bloques ('+l+'×'+h+' ft)','CMU Wall ('+l+'×'+h+' ft)',bloques+' Blq • '+formatUSD(cost));
+}
+
+function calcBTU(logHist) {
+  let l = parseFloat(document.getElementById('a-largo').value)||0, w = parseFloat(document.getElementById('a-ancho').value)||0, area = l*w, raw = area*45;
+  let btu = raw<=9000?9000:(raw<=12500?12000:(raw<=18500?18000:(raw<=24500?24000:36000)));
+  let cost = (parseFloat(document.getElementById('a-precio-equipo').value)||0) + (parseFloat(document.getElementById('a-precio-mat').value)||0);
+  let ton = (btu/12000).toFixed(1)+' Ton';
+  document.getElementById('a-btu').innerText = btu.toLocaleString(); document.getElementById('a-ton').innerText = ton; document.getElementById('a-area').innerText = area+' sq ft'; document.getElementById('a-cost-tag').innerText = formatUSD(cost);
+  const card = document.getElementById('btu');
+  card.setAttribute('data-cost', cost.toFixed(2));
+  card.dataset.shortEs = btu.toLocaleString()+' BTU'; card.dataset.shortEn = btu.toLocaleString()+' BTU';
+  card.dataset.sumEs = btu.toLocaleString()+' BTU ('+ton+')'; card.dataset.sumEn = btu.toLocaleString()+' BTU ('+ton+')';
+  if (logHist) saveHistoryItem('Aire BTU ('+l+'×'+w+' ft)','AC BTU ('+l+'×'+w+' ft)',btu.toLocaleString()+' BTU • '+formatUSD(cost));
+}
+
+function runAllCalcs() { calcHormigon(false); calcSellador(false); calcPintura(false); calcGypsum(false); calcBloques(false); calcBTU(false); }
+
+function addActiveCalcToProject(btn) {
+  const card = btn.closest('.calc-card'); if (!card) return;
+  const scopeObj = PRO_SCOPE_TITLES[card.id], cost = parseFloat(card.getAttribute('data-cost'))||0;
+  const itemObj = { title_es:scopeObj?scopeObj.es:'Partida Calculada', title_en:scopeObj?scopeObj.en:'Calculated Scope', summary_es:card.dataset.sumEs||'', summary_en:card.dataset.sumEn||'', short_es:card.dataset.shortEs||'', short_en:card.dataset.shortEn||'', cost:cost };
+  projectCart.push(itemObj);
+  saveHistoryItem(itemObj.title_es, itemObj.title_en, itemObj.short_es+' • '+formatUSD(cost));
+  renderProjectCart(); recalcMasterTotals(); switchMainView('quoteView');
+}
+
+function updateCartItemPrice(idx, val) { if (!projectCart[idx]) return; projectCart[idx].cost = parseFloat(val)||0; recalcMasterTotals(); }
+function removeCartItem(idx) { projectCart.splice(idx,1); renderProjectCart(); recalcMasterTotals(); }
+
+function renderProjectCart() {
+  const list = document.getElementById('projectCartList'); if (!list) return;
+  if (projectCart.length===0) { list.innerHTML=''; return; }
+  const cSym = getCurrObj().sym;
+  list.innerHTML = projectCart.map((item,i) => {
+    const t = upgradeScopeTitle(currentLang==='es'?item.title_es:item.title_en, currentLang);
+    const sm = currentLang==='es'?item.summary_es:item.summary_en;
+    return '<li class="cart-item"><div style="flex:1;min-width:180px;"><strong style="color:#fde047;">'+t+'</strong><div style="color:#4ade80;font-size:0.76rem;">➔ '+sm+'</div></div><div style="display:flex;align-items:center;gap:0.35rem;"><span>'+cSym+'</span><input type="number" step="any" class="cart-price-input" value="'+(Number(item.cost)||0).toFixed(getCurrObj().dec)+'" oninput="updateCartItemPrice('+i+',this.value)"><button type="button" class="cart-remove" onclick="removeCartItem('+i+')">✕</button></div></li>';
+  }).join('');
+}
+
+function addPresetChip(idx) { const p = PRESET_TRANSLATIONS[idx]; if (p) addCustomLine(p[currentLang],''); }
+function addCustomLine(desc, price) {
+  syncCustomLinesFromDOM();
+  if (customLineItems.length===1 && customLineItems[0].desc==='' && customLineItems[0].price==='' && desc) customLineItems[0] = {desc:desc,price:price||''};
+  else customLineItems.push({desc:desc||'',price:price||''});
+  renderCustomLines(); recalcMasterTotals();
+}
+function removeCustomLine(idx) { syncCustomLinesFromDOM(); customLineItems.splice(idx,1); if (customLineItems.length===0) customLineItems.push({desc:'',price:''}); renderCustomLines(); recalcMasterTotals(); }
+function syncCustomLinesFromDOM() {
+  const rows = document.querySelectorAll('.custom-line-row'); if (rows.length===0) return;
+  customLineItems = Array.from(rows).map(r => ({ desc:r.querySelector('.cl-desc')?.value||'', price:r.querySelector('.cl-price')?.value||'' }));
+}
+function renderCustomLines() {
+  const wrap = document.getElementById('customLinesContainer'); if (!wrap) return;
+  const phD = currentLang==='es'?'Descripción del trabajo o partida (Opcional)':'Work or line item description (Optional)';
+  const phP = currentLang==='es'?'Monto ($0.00)':'Amount ($0.00)';
+  wrap.innerHTML = customLineItems.map((item,idx) => '<div class="custom-line-row"><input type="text" class="cl-desc" value="'+(item.desc||'').replace(/"/g,'&quot;')+'" placeholder="'+phD+'" oninput="recalcMasterTotals()"><input type="number" step="any" class="cl-price" value="'+(item.price||'')+'" placeholder="'+phP+'" oninput="recalcMasterTotals()"><button type="button" class="cart-remove" onclick="removeCustomLine('+idx+')">✕</button></div>').join('');
+}
+
+function showIdentifiedLogoPicture(dataUrl) {
+  const wrap = document.getElementById('logoIdentifiedBox'), thumb = document.getElementById('logoMiniThumb');
+  if (wrap && thumb && dataUrl) { thumb.src = dataUrl; wrap.style.display = 'flex'; }
+}
+function handleLogoUpload(input) {
+  const file = input.files && input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) { uploadedLogoData = e.target.result; try { localStorage.setItem('mcp_company_logo',uploadedLogoData); } catch(err) {} showIdentifiedLogoPicture(uploadedLogoData); };
+  reader.readAsDataURL(file);
+}
+function handleHwQuoteUpload(input) {
+  const file = input.files && input.files[0]; if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) { uploadedHwQuoteImg = e.target.result; try { localStorage.setItem('mcp_hw_quote_img',uploadedHwQuoteImg); } catch(err) {} };
+  reader.readAsDataURL(file);
+}
+
+function recalcMasterTotals() {
+  syncCustomLinesFromDOM();
+  const isEs = currentLang==='es';
+  const hwRaw = parseFloat(document.getElementById('qb-hw-cost')?.value)||0, hwMarkup = parseFloat(document.getElementById('qb-hw-markup')?.value)||0;
+  const hwClientTotal = hwRaw*(1+(hwMarkup/100)), lab = parseFloat(document.getElementById('qb-lab')?.value)||0, tax = parseFloat(document.getElementById('qb-tax')?.value)||0, dep = parseFloat(document.getElementById('qb-dep')?.value)||0;
+  let grandTotal = 0;
+  projectCart.forEach(it => { grandTotal += (parseFloat(it.cost)||0); });
+  customLineItems.forEach(it => { const p = parseFloat(it.price)||0; if (p>0) grandTotal += p; });
+  grandTotal += hwClientTotal + lab + tax;
+  const balance = Math.max(0, grandTotal - dep);
+  const sumLine = document.getElementById('contractorSummaryLine'), bigTot = document.getElementById('contractorBigTotal');
+  if (sumLine) sumLine.innerText = (isEs?'Total Cotizado: ':'Total Quoted: ')+formatUSD(grandTotal)+(dep>0?((isEs?' | Menos Depósito: -':' | Less Deposit: -')+formatUSD(dep)):'');
+  if (bigTot) bigTot.innerText = formatUSD(balance);
+}
+
+function updatePayButtonState() {
+  const btn = document.getElementById('finalActionBtn'), waBtn = document.getElementById('finalWaBtn'), note = document.getElementById('finalActionNote');
+  if (!btn) return;
+  const isEs = currentLang==='es';
+  if (isPaidUser) {
+    btn.innerText = isEs ? '🖨️ Descargar / Imprimir Mi Estimado o Factura PDF con Mi Logo Picture (1 Página)' : '🖨️ Download / Print Official 1-Page Quote or Invoice PDF';
+    waBtn.innerText = isEs ? '📲 Enviar Mi Estimado / Factura Oficial por WhatsApp' : '📲 Send Official Quote / Invoice via WhatsApp';
+    note.innerText = isEs ? '✅ Documento Oficial Desbloqueado • Al tocar el botón verde se genera tu PDF real con tu Logo Picture' : '✅ Official Document Unlocked • Click green button to print your real PDF';
+  } else {
+    btn.innerText = isEs ? '🔒 Generar Mi Documento Final con Mi Logo Picture y Mis Números ($1.99)' : '🔒 Generate My Final Document with My Logo Picture & Numbers ($1.99)';
+    waBtn.innerText = isEs ? '🔒 Desbloquear y Enviar Mi Estimado / Factura por WhatsApp ($1.99)' : '🔒 Unlock & Send My Official Quote / Invoice via WhatsApp ($1.99)';
+    note.innerText = isEs ? '🔒 La vista previa amarilla es solo un ejemplo • Paga $1.99 en Stripe para generar tu PDF Oficial con tu Logo Picture' : '🔒 The yellow button shows a sample company • Pay $1.99 via Stripe to generate your Official PDF with your Logo Picture';
+  }
+}
+
+function saveAllBuilderState() {
+  syncCustomLinesFromDOM();
+  const clientName = document.getElementById('qb-client')?.value.trim() || 'Cliente';
+  const totalTxt = document.getElementById('contractorBigTotal')?.innerText || '$0.00';
+  if (totalTxt !== '$0.00') saveHistoryItem('Cotización: '+clientName, 'Quote: '+clientName, totalTxt);
+  const inputs = {};
+  document.querySelectorAll('input[id], select[id]').forEach(el => {
+    if (el.type==='checkbox') inputs[el.id] = el.checked;
+    else if (el.type!=='file') inputs[el.id] = el.value;
   });
-  renderCustomLines();
-  runAllCalcs();
-  renderProjectCart();
-  updatePayButtonState();
-  syncLockVisualState();
-  recalcMasterTotals();
+  localStorage.setItem('mcp_project_cart', JSON.stringify(projectCart));
+  localStorage.setItem('mcp_custom_lines', JSON.stringify(customLineItems));
+  localStorage.setItem('mcp_checkout_state', JSON.stringify({lang:currentLang,unit:unitSys,curr:currentCurr,inputs:inputs}));
+}
+
+function handleFinalDownloadClick() { saveAllBuilderState(); if (!isPaidUser) { window.location.href = STRIPE_URL; return; } closeDocPreviewModal(); printMasterDocument(); }
+function handleWhatsAppQuoteClick() { saveAllBuilderState(); if (!isPaidUser) { window.location.href = STRIPE_URL; return; } sendUnlockedMasterWhatsApp(); }
+
+function printMasterDocument() {
+  if (!isPaidUser) { window.location.href = STRIPE_URL; return; }
+  syncCustomLinesFromDOM();
+  const isEs = currentLang==='es', isInvoice = (document.getElementById('qb-doctype')?.value||'quote')==='invoice';
+  const docNum = document.getElementById('qb-docnum')?.value.trim()||'2026-0101', comp = document.getElementById('qb-comp')?.value.trim()||'MaterialCalcPro.org', phone = document.getElementById('qb-phone')?.value.trim()||'', client = document.getElementById('qb-client')?.value.trim()||'';
+  const hwName = document.getElementById('qb-hw-name')?.value.trim()||'', hwRaw = parseFloat(document.getElementById('qb-hw-cost')?.value)||0, hwMarkup = parseFloat(document.getElementById('qb-hw-markup')?.value)||0, hwClientTotal = hwRaw*(1+(hwMarkup/100));
+  const lab = parseFloat(document.getElementById('qb-lab')?.value)||0, tax = parseFloat(document.getElementById('qb-tax')?.value)||0, dep = parseFloat(document.getElementById('qb-dep')?.value)||0, notes = document.getElementById('qb-notes')?.value.trim()||'';
+
+  document.getElementById('pCompanyTitle').innerText = comp;
+  document.getElementById('pCompanyPhone').innerText = phone ? ((isEs?'Tel / Lic: ':'Phone / Lic: ')+phone) : '';
+  document.getElementById('pClientLine').innerText = client ? ((isEs?'Cliente / Proyecto: ':'Client / Project: ')+client) : '';
+  document.getElementById('pDocTypeBadge').innerText = isInvoice ? (isEs?'FACTURA OFICIAL (INVOICE)':'OFFICIAL INVOICE') : (isEs?'COTIZACIÓN OFICIAL':'OFFICIAL ESTIMATE');
+  document.getElementById('pDocNumLine').innerText = (isInvoice?'INV #':'EST #')+docNum;
+  document.getElementById('pDateLine').innerText = new Date().toLocaleDateString(isEs?'es-PR':'en-US');
+
+  const logoImg = document.getElementById('pLogoImg'), defBadge = document.getElementById('pDefaultBadge');
+  if (uploadedLogoData) { logoImg.src = uploadedLogoData; logoImg.style.display = 'block'; defBadge.style.display = 'none'; }
+  else { logoImg.style.display = 'none'; defBadge.style.display = 'flex'; }
+
+  const scopeBox = document.getElementById('pScopeBox');
+  if (projectCart.length > 0) {
+    scopeBox.style.display = 'block';
+    document.getElementById('pScopeItemsContainer').innerHTML = projectCart.map((it,idx) => '<div class="print-scope-item"><strong>'+(idx+1)+'. '+upgradeScopeTitle(isEs?it.title_es:it.title_en,currentLang)+':</strong> <em>➔ '+(isEs?it.summary_es:it.summary_en)+'</em></div>').join('');
+  } else scopeBox.style.display = 'none';
+
+  let tbody = '', grandTotal = 0;
+  projectCart.forEach(it => { const c = parseFloat(it.cost)||0; tbody += '<tr><td>'+upgradeScopeTitle(isEs?it.title_es:it.title_en,currentLang)+' ('+(isEs?it.short_es:it.short_en)+')</td><td>'+formatUSD(c)+'</td></tr>'; grandTotal += c; });
+  if (hwClientTotal > 0) { tbody += '<tr><td>'+(isEs?'Materiales de Ferretería y Acarreo':'Hardware Store Materials & Hauling')+(hwName?' ('+hwName+')':'')+'</td><td>'+formatUSD(hwClientTotal)+'</td></tr>'; grandTotal += hwClientTotal; }
+  customLineItems.forEach(it => { const p = parseFloat(it.price)||0; if (p>0) { tbody += '<tr><td>'+(it.desc.trim()||(isEs?'Partida de Obra':'Work Item'))+'</td><td>'+formatUSD(p)+'</td></tr>'; grandTotal += p; } });
+  if (lab > 0) { tbody += '<tr><td>'+(isEs?'Mano de Obra Profesional (Labor)':'Professional Labor')+'</td><td>'+formatUSD(lab)+'</td></tr>'; grandTotal += lab; }
+  if (tax > 0) { tbody += '<tr><td>'+(isEs?'Impuestos / Permisos / Otros':'Taxes / Permits / Other')+'</td><td>'+formatUSD(tax)+'</td></tr>'; grandTotal += tax; }
+
+  const balance = Math.max(0, grandTotal - dep);
+  tbody += '<tr class="print-total-row"><td>'+(isInvoice?'TOTAL INVOICE ('+currentCurr+')':'TOTAL COTIZADO ('+currentCurr+')')+'</td><td>'+formatUSD(grandTotal)+'</td></tr>';
+  if (dep > 0) {
+    tbody += '<tr><td>'+(isEs?'Menos Depósito / Pronto Recibido':'Less Deposit Paid')+'</td><td>-'+formatUSD(dep)+'</td></tr>';
+    tbody += '<tr class="print-balance-row"><td>'+(isEs?'BALANCE PENDIENTE A PAGAR':'BALANCE DUE')+'</td><td>'+formatUSD(balance)+'</td></tr>';
+  }
+  document.getElementById('pCostTableBody').innerHTML = tbody;
+
+  const notesEl = document.getElementById('pNotesLine');
+  if (notes) { notesEl.innerText = (isEs?'Notas y Condiciones: ':'Notes & Terms: ')+notes; notesEl.style.display = 'block'; } else notesEl.style.display = 'none';
+  document.getElementById('pAcceptChecks').style.display = isInvoice ? 'none' : 'flex';
+
+  const attachCheck = document.getElementById('qb-hw-print-attach')?.checked, attachPage = document.getElementById('pHardwareAttachmentPage');
+  if (attachCheck && uploadedHwQuoteImg) { document.getElementById('pHwAttachImg').src = uploadedHwQuoteImg; attachPage.style.display = 'block'; } else attachPage.style.display = 'none';
+  window.print();
+}
+
+function sendUnlockedMasterWhatsApp() {
+  syncCustomLinesFromDOM();
+  const isEs = currentLang==='es', isInvoice = (document.getElementById('qb-doctype')?.value||'quote')==='invoice';
+  const docNum = document.getElementById('qb-docnum')?.value.trim()||'2026-0101', comp = document.getElementById('qb-comp')?.value.trim()||'MaterialCalcPro.org', phone = document.getElementById('qb-phone')?.value.trim()||'', client = document.getElementById('qb-client')?.value.trim()||'';
+  const hwName = document.getElementById('qb-hw-name')?.value.trim()||'', hwRaw = parseFloat(document.getElementById('qb-hw-cost')?.value)||0, hwMarkup = parseFloat(document.getElementById('qb-hw-markup')?.value)||0, hwClientTotal = hwRaw*(1+(hwMarkup/100));
+  const lab = parseFloat(document.getElementById('qb-lab')?.value)||0, tax = parseFloat(document.getElementById('qb-tax')?.value)||0, dep = parseFloat(document.getElementById('qb-dep')?.value)||0, notes = document.getElementById('qb-notes')?.value.trim()||'';
+
+  let lines = [], grandTotal = 0;
+  lines.push(isInvoice ? ('🧾 *FACTURA OFICIAL #'+docNum+'*') : ('📄 *ESTIMADO OFICIAL #'+docNum+'*'));
+  lines.push('🏢 *'+comp+'*'+(phone?' ('+phone+')':''));
+  if (client) lines.push('👤 '+client);
+  lines.push('────────────────');
+  projectCart.forEach((it,idx) => { const c = parseFloat(it.cost)||0; grandTotal += c; lines.push('*'+(idx+1)+'. '+upgradeScopeTitle(isEs?it.title_es:it.title_en,currentLang)+'* ('+(isEs?it.summary_es:it.summary_en)+'): *'+formatUSD(c)+'*'); });
+  if (hwClientTotal > 0) { grandTotal += hwClientTotal; lines.push('• Materiales de Ferretería y Acarreo'+(hwName?' ('+hwName+')':'')+': *'+formatUSD(hwClientTotal)+'*'); }
+  customLineItems.forEach(it => { const p = parseFloat(it.price)||0; if (p>0) { grandTotal += p; lines.push('• '+(it.desc.trim()||'Partida')+': *'+formatUSD(p)+'*'); } });
+  if (lab > 0) { grandTotal += lab; lines.push('• Mano de Obra Profesional: *'+formatUSD(lab)+'*'); }
+  if (tax > 0) { grandTotal += tax; lines.push('• Impuestos / Permisos: *'+formatUSD(tax)+'*'); }
+  const balance = Math.max(0, grandTotal - dep);
+  lines.push('────────────────');
+  lines.push('💰 *TOTAL ('+currentCurr+'): '+formatUSD(grandTotal)+'*');
+  if (dep > 0) { lines.push('➖ Depósito: -'+formatUSD(dep)); lines.push('✅ *BALANCE PENDIENTE: '+formatUSD(balance)+'*'); }
+  if (notes) lines.push('📌 '+notes);
+  if (!isInvoice) { lines.push('────────────────'); lines.push(isEs ? '✅ *Para aprobar esta cotización, puede responder "ACEPTO" a este mensaje o devolver el PDF firmado.*' : '✅ *To approve this estimate, reply "ACCEPT" to this message or return the signed PDF.*'); }
+  window.open('https://wa.me/?text='+encodeURIComponent(lines.join('\n')), '_blank');
+}
+
+function restoreIfReturningFromStripe() {
+  if (!isReturningFromStripe) { localStorage.removeItem('mcp_project_cart'); localStorage.removeItem('mcp_custom_lines'); localStorage.removeItem('mcp_checkout_state'); return; }
+  try { const savedCart = JSON.parse(localStorage.getItem('mcp_project_cart')||'[]'); if (Array.isArray(savedCart)) projectCart = savedCart; } catch(e) {}
+  try { const savedLines = JSON.parse(localStorage.getItem('mcp_custom_lines')||'[]'); if (Array.isArray(savedLines)&&savedLines.length>0) customLineItems = savedLines; } catch(e) {}
+  try {
+    const st = JSON.parse(localStorage.getItem('mcp_checkout_state')||'null');
+    if (st && st.inputs) Object.keys(st.inputs).forEach(id => { const el = document.getElementById(id); if (!el) return; if (el.type==='checkbox') el.checked = !!st.inputs[id]; else el.value = st.inputs[id]; });
+  } catch(e) {}
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+  restoreIfReturningFromStripe();
+  if (uploadedLogoData) showIdentifiedLogoPicture(uploadedLogoData);
+  applyLanguageUI();
+});
+</script>
+</body>
+</html>
