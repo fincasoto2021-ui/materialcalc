@@ -1,5 +1,5 @@
-// Service Worker MaterialCalcPro
-const CACHE_NAME = 'materialcalcpro-v2026-final';
+/* Service Worker MaterialCalcPro */
+const CACHE_NAME = 'mcp-clean-2026';
 
 self.addEventListener('install', function(event) {
   self.skipWaiting();
@@ -7,10 +7,10 @@ self.addEventListener('install', function(event) {
 
 self.addEventListener('activate', function(event) {
   event.waitUntil(
-    caches.keys().then(function(cacheNames) {
+    caches.keys().then(function(names) {
       return Promise.all(
-        cacheNames.map(function(cacheName) {
-          return caches.delete(cacheName);
+        names.map(function(name) {
+          return caches.delete(name);
         })
       );
     }).then(function() {
@@ -22,12 +22,8 @@ self.addEventListener('activate', function(event) {
 self.addEventListener('fetch', function(event) {
   if (event.request.method !== 'GET') return;
   event.respondWith(
-    fetch(event.request)
-      .then(function(networkResponse) {
-        return networkResponse;
-      })
-      .catch(function() {
-        return caches.match(event.request);
-      })
+    fetch(event.request).catch(function() {
+      return caches.match(event.request);
+    })
   );
 });
