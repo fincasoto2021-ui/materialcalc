@@ -4,49 +4,90 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="QK9UkO8Wa6ApdBs0sG4Gk8ojj5vx9duiBlAG9b618-g" />
-<title>Mr. Invoice Pro | Estimados, Facturas y Contratos PDF</title>
-<meta name="description" content="Mr. Invoice Pro: Generador profesional de estimados, facturas, contratos de compraventa, contratos de servicios y recibos en archivo PDF oficial.">
-<link rel="manifest" href="/manifest.json?v=102">
+<title>Mr. Invoice Pro | Official PDF Suite</title>
+<meta name="description" content="Mr. Invoice Pro: Estimates, Invoices, Bills of Sale, Leases & Legal Contracts in PDF.">
+<link id="manifestLink" rel="manifest" href="/manifest.json?v=200">
 <meta name="theme-color" content="#0f172a">
-<link rel="icon" type="image/jpeg" href="/1793842789444.jpg">
-<link rel="apple-touch-icon" href="/1793842789444.jpg">
+<link id="favIcon" rel="icon" type="image/png" href="/icon-192%20(1).png?v=200">
+<link id="appleIcon" rel="apple-touch-icon" href="/icon-512%20(1).png?v=200">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
+// Auto-generador de ícono cuadrado 100% negro sin bordes blancos desde 1793842789444.jpg
+(function fixSquareHeroIcon() {
+  const img = new Image();
+  img.crossOrigin = "anonymous";
+  img.src = "/1793842789444.jpg";
+  img.onload = function() {
+    try {
+      const makeSquare = (size) => {
+        const c = document.createElement('canvas');
+        c.width = size; c.height = size;
+        const ctx = c.getContext('2d');
+        ctx.fillStyle = "#000000";
+        ctx.fillRect(0, 0, size, size);
+        const s = Math.min(img.width, img.height);
+        const sx = (img.width - s) / 2;
+        const sy = (img.height - s) * 0.18;
+        ctx.drawImage(img, sx, sy, s, s, 0, 0, size, size);
+        return c.toDataURL('image/png');
+      };
+      const icon192 = makeSquare(192);
+      const icon512 = makeSquare(512);
+      document.getElementById('favIcon').href = icon192;
+      document.getElementById('appleIcon').href = icon512;
+      const dynManifest = {
+        id: window.location.origin + "/?v=square200",
+        name: "Mr. Invoice Pro",
+        short_name: "Mr. Invoice Pro",
+        start_url: window.location.origin + "/?v=square200",
+        scope: window.location.origin + "/",
+        display: "standalone",
+        background_color: "#000000",
+        theme_color: "#0f172a",
+        icons: [
+          { src: icon192, sizes: "192x192", type: "image/png", purpose: "any maskable" },
+          { src: icon512, sizes: "512x512", type: "image/png", purpose: "any maskable" }
+        ]
+      };
+      const blob = new Blob([JSON.stringify(dynManifest)], {type: 'application/json'});
+      document.getElementById('manifestLink').href = URL.createObjectURL(blob);
+    } catch(e) {}
+  };
+})();
+
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/sw.js').then(function(reg) {
-      reg.update();
-    }).catch(function() {});
+    navigator.serviceWorker.register('/sw.js').then(function(reg) { reg.update(); }).catch(function() {});
   });
 }
 </script>
 <script data-goatcounter="https://materialcalcpro.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <style>
-:root { --primary:#0f172a; --accent:#facc15; --bg:#f1f5f9; --card:#ffffff; --text:#334155; --green-pay:#10b981; }
+:root { --primary:#0f172a; --accent:#facc15; --bg:#f1f5f9; --card:#ffffff; --text:#334155; }
 html, * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,-apple-system,sans-serif; }
 body { background:var(--bg); color:var(--text); padding-bottom:2.5rem; }
 header { background:#090d16; color:#fff; padding:1rem; border-bottom:3px solid var(--accent); }
 .top-bar { display:flex; justify-content:space-between; align-items:center; max-width:740px; margin:0 auto; gap:0.5rem; flex-wrap:wrap; }
 .brand-logo { display:flex; align-items:center; gap:0.75rem; color:#fff; }
-.brand-icon { width:54px; height:54px; background:#000; border:2px solid var(--accent); border-radius:12px; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(0,0,0,0.6),0 0 8px rgba(250,204,21,0.25); flex-shrink:0; overflow:hidden; }
-.brand-icon img { width:100%; height:100%; object-fit:cover; }
+.brand-icon { width:56px; height:56px; background:#000; border:2px solid var(--accent); border-radius:14px; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(0,0,0,0.6); flex-shrink:0; overflow:hidden; }
+.brand-icon img { width:100%; height:100%; object-fit:cover; object-position:center 20%; }
 .logo-main { font-size:1.32rem; font-weight:900; letter-spacing:-0.5px; color:#fff; }
 .logo-main span { color:var(--accent); }
-.logo-sub { font-size:0.65rem; text-transform:uppercase; letter-spacing:1.2px; color:#cbd5e1; font-weight:700; margin-top:2px; }
+.logo-sub { font-size:0.65rem; text-transform:uppercase; letter-spacing:1.1px; color:#cbd5e1; font-weight:700; margin-top:2px; }
 .top-actions { display:flex; gap:0.4rem; align-items:center; flex-wrap:wrap; }
-.lang-btn, .curr-select, .install-top-btn { background:#1e293b; color:#fff; border:1px solid var(--accent); padding:0.4rem 0.65rem; border-radius:6px; font-weight:700; font-size:0.78rem; cursor:pointer; }
+.lang-select, .curr-select, .install-top-btn { background:#1e293b; color:#fff; border:1px solid var(--accent); padding:0.4rem 0.6rem; border-radius:6px; font-weight:700; font-size:0.78rem; cursor:pointer; width:auto; }
 .curr-select { border-color:#4ade80; color:#bbf7d0; }
 .install-top-btn { background:var(--accent); color:#000; display:none; font-weight:900; }
 
 .container { max-width:740px; margin:1.1rem auto; padding:0 1rem; }
 .builder-card { background:#0f172a; color:#fff; padding:1.25rem; border-radius:12px; border:2px solid var(--accent); box-shadow:0 6px 18px rgba(0,0,0,0.12); }
 .mb-header { display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:0.75rem; margin-bottom:0.95rem; flex-wrap:wrap; gap:0.5rem; }
-.mb-header h2 { font-size:1.15rem; color:var(--accent); font-weight:900; }
+.mb-header h2 { font-size:1.12rem; color:var(--accent); font-weight:900; }
 .reset-zero-btn { background:#334155; color:#f8fafc; border:1px solid #64748b; padding:0.35rem 0.7rem; border-radius:6px; font-size:0.76rem; font-weight:800; cursor:pointer; }
-.open-sample-btn { width:100%; background:linear-gradient(135deg,#fde047 0%,#eab308 100%); color:#0f172a; border:2px solid #fff; padding:0.85rem 1rem; border-radius:10px; font-size:0.92rem; font-weight:900; cursor:pointer; margin-bottom:1rem; display:flex; align-items:center; justify-content:center; gap:0.5rem; box-shadow:0 4px 14px rgba(250,204,21,0.35); }
+.open-sample-btn { width:100%; background:linear-gradient(135deg,#fde047 0%,#eab308 100%); color:#0f172a; border:2px solid #fff; padding:0.85rem 1rem; border-radius:10px; font-size:0.9rem; font-weight:900; cursor:pointer; margin-bottom:1rem; display:flex; align-items:center; justify-content:center; gap:0.5rem; box-shadow:0 4px 14px rgba(250,204,21,0.35); }
 
 .mb-section { background:#1e293b; border:1px solid #334155; border-radius:10px; padding:0.95rem; margin-bottom:0.95rem; }
-.mb-sec-title { font-size:0.88rem; font-weight:800; color:#fde047; margin-bottom:0.65rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.4rem; }
+.mb-sec-title { font-size:0.88rem; font-weight:800; color:#fde047; margin-bottom:0.65rem; }
 .price-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.65rem; }
 @media (max-width:520px) { .price-grid { grid-template-columns:1fr; } }
 
@@ -61,96 +102,79 @@ textarea { resize:vertical; min-height:62px; line-height:1.4; }
 .cart-remove { background:#ef4444; color:#fff; border:none; border-radius:5px; padding:0.25rem 0.55rem; font-size:0.74rem; font-weight:800; cursor:pointer; }
 
 .logo-upload-box { border:2px dashed var(--accent); border-radius:10px; padding:0.75rem; text-align:center; margin-top:0.65rem; background:#0f172a; }
-.logo-pic-badge { display:inline-block; background:var(--accent); color:#000; font-weight:900; font-size:0.72rem; padding:0.18rem 0.55rem; border-radius:5px; letter-spacing:0.5px; margin-bottom:0.35rem; text-transform:uppercase; }
+.logo-pic-badge { display:inline-block; background:var(--accent); color:#000; font-weight:900; font-size:0.72rem; padding:0.18rem 0.55rem; border-radius:5px; margin-bottom:0.35rem; text-transform:uppercase; }
 .logo-upload-box input[type="file"] { font-size:0.78rem; color:#cbd5e1; border:none; padding:0.2rem; background:transparent; }
 .logo-id-wrap { display:none; align-items:center; justify-content:space-between; gap:0.6rem; margin-top:0.45rem; background:#1e293b; padding:0.4rem 0.65rem; border-radius:8px; border:1px solid #10b981; }
-.logo-mini-thumb { width:42px; height:42px; object-fit:contain; background:#fff; border-radius:6px; padding:2px; border:1px solid #fde047; flex-shrink:0; }
+.logo-mini-thumb { width:42px; height:42px; object-fit:contain; background:#fff; border-radius:6px; padding:2px; border:1px solid #fde047; }
 .logo-status-msg { font-size:0.75rem; color:#4ade80; font-weight:800; text-align:left; flex:1; }
 
 .contractor-numbers-bar { background:#064e3b; border:1.5px solid #10b981; border-radius:8px; padding:0.8rem 0.95rem; margin:0.85rem 0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; }
 .contractor-numbers-bar strong { font-size:1.3rem; color:#6ee7b7; }
-.wa-master-btn { width:100%; background:#25D366; color:#052e16; border:2px solid #bbf7d0; padding:0.95rem; border-radius:8px; font-size:0.95rem; font-weight:900; cursor:pointer; margin-top:0.4rem; box-shadow:0 4px 12px rgba(37,211,102,0.3); }
+.wa-master-btn { width:100%; background:#25D366; color:#052e16; border:2px solid #bbf7d0; padding:0.95rem; border-radius:8px; font-size:0.95rem; font-weight:900; cursor:pointer; margin-top:0.4rem; }
 .stripe-pay-btn { width:100%; background:#1e293b; color:#fde047; border:1.5px solid var(--accent); padding:0.9rem; border-radius:8px; font-size:0.92rem; font-weight:900; cursor:pointer; margin-top:0.55rem; }
 .stripe-note { text-align:center; font-size:0.74rem; color:#cbd5e1; margin-top:0.45rem; line-height:1.4; }
 
-.history-card { background:var(--card); padding:1.15rem; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.05); margin-top:1.15rem; border:1px solid #cbd5e1; }
+.history-card { background:var(--card); padding:1.15rem; border-radius:12px; margin-top:1.15rem; border:1px solid #cbd5e1; }
 .history-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; }
 .history-header h3 { font-size:0.96rem; color:var(--primary); font-weight:900; }
 .clear-btn { background:transparent; border:1px solid #ef4444; color:#ef4444; padding:0.24rem 0.6rem; border-radius:6px; font-size:0.74rem; font-weight:700; cursor:pointer; }
 .history-list { list-style:none; font-size:0.82rem; color:#475569; }
 .history-list li { padding:0.5rem 0; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center; gap:0.5rem; flex-wrap:wrap; }
-.history-list li:last-child { border-bottom:none; }
 
 .doc-modal-overlay { position:fixed; inset:0; background:rgba(9,13,22,0.88); display:none; justify-content:center; align-items:flex-start; padding:1rem 0.65rem; z-index:9999; overflow-y:auto; }
 .doc-modal-container { width:100%; max-width:720px; margin:0 auto 2rem; }
 .doc-modal-topbar { background:#1e293b; border:2px solid var(--accent); border-radius:10px; padding:0.7rem 0.85rem; margin-bottom:0.75rem; color:#fff; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; }
 .sample-switch-group { display:flex; gap:0.35rem; flex-wrap:wrap; }
-.sample-type-btn { background:#0f172a; color:#cbd5e1; border:1px solid #475569; padding:0.35rem 0.6rem; border-radius:6px; font-size:0.74rem; font-weight:800; cursor:pointer; }
+.sample-type-btn { background:#0f172a; color:#cbd5e1; border:1px solid #475569; padding:0.35rem 0.55rem; border-radius:6px; font-size:0.72rem; font-weight:800; cursor:pointer; }
 .sample-type-btn.active { background:var(--accent); color:#000; border-color:#fff; }
 .close-modal-x { background:#ef4444; color:#fff; border:none; padding:0.38rem 0.75rem; border-radius:6px; font-weight:900; font-size:0.8rem; cursor:pointer; }
-
-.luxury-paper-sheet { background:#fff; color:#0f172a; border-radius:10px; padding:1.5rem 1.35rem; box-shadow:0 20px 45px rgba(0,0,0,0.55); border-top:6px solid #0f172a; }
-@media (max-width:480px) { .luxury-paper-sheet { padding:1.05rem 0.85rem; } }
-.lux-sample-ribbon { background:linear-gradient(90deg,#1e293b,#0f172a); color:#fde047; text-align:center; padding:0.42rem 0.6rem; border-radius:6px; font-size:0.73rem; font-weight:900; text-transform:uppercase; margin-bottom:1rem; border:1px solid #facc15; }
+.luxury-paper-sheet { background:#fff; color:#0f172a; border-radius:10px; padding:1.35rem; border-top:6px solid #0f172a; }
 .lux-header { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2.5px solid #0f172a; padding-bottom:0.8rem; margin-bottom:0.85rem; gap:0.8rem; flex-wrap:wrap; }
 .lux-brand { display:flex; align-items:center; gap:0.75rem; }
-.lux-logo-box { width:64px; height:64px; background:#000; border:2.5px solid #eab308; border-radius:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0; overflow:hidden; }
-.lux-logo-box img { width:100%; height:100%; object-fit:cover; }
-.lux-comp-name { font-size:1.18rem; font-weight:900; color:#0f172a; }
-.lux-comp-sub { font-size:0.76rem; color:#475569; font-weight:600; line-height:1.35; margin-top:2px; }
-.lux-badge-box { background:#f8fafc; border:1.5px solid #cbd5e1; border-right:4px solid #eab308; padding:0.5rem 0.8rem; border-radius:8px; text-align:right; min-width:170px; }
-.lux-doc-title { font-size:0.88rem; font-weight:900; color:#0f172a; text-transform:uppercase; }
-.lux-doc-num { font-size:0.84rem; font-weight:800; color:#b45309; margin-top:2px; }
-.lux-doc-date { font-size:0.73rem; color:#64748b; margin-top:2px; font-weight:600; }
-.lux-client-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.65rem; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:0.65rem 0.8rem; margin-bottom:0.85rem; font-size:0.79rem; }
-@media (max-width:500px) { .lux-client-grid { grid-template-columns:1fr; } }
-.lux-client-grid strong { display:block; font-size:0.7rem; text-transform:uppercase; color:#64748b; }
-.lux-client-grid span { font-weight:800; color:#0f172a; font-size:0.85rem; }
-.lux-table { width:100%; border-collapse:collapse; font-size:0.82rem; margin-bottom:0.75rem; }
-.lux-table th { background:#0f172a; color:#fff; padding:0.45rem 0.65rem; text-align:left; font-weight:800; }
-.lux-table td { border:1px solid #cbd5e1; padding:0.5rem 0.65rem; vertical-align:top; }
-.lux-table td:last-child, .lux-table th:last-child { text-align:right; font-weight:700; width:120px; }
-.lux-tot-row { background:#fef3c7; font-weight:900; font-size:0.92rem; }
-.lux-bal-row { background:#dcfce7; color:#065f46; font-weight:900; font-size:0.96rem; }
+.lux-logo-box { width:60px; height:60px; background:#000; border:2px solid #eab308; border-radius:12px; overflow:hidden; flex-shrink:0; }
+.lux-logo-box img { width:100%; height:100%; object-fit:cover; object-position:center 20%; }
+.lux-badge-box { background:#f8fafc; border:1.5px solid #cbd5e1; border-right:4px solid #eab308; padding:0.5rem 0.8rem; border-radius:8px; text-align:right; }
+.lux-table { width:100%; border-collapse:collapse; font-size:0.82rem; margin:0.75rem 0; }
+.lux-table th { background:#0f172a; color:#fff; padding:0.45rem 0.65rem; text-align:left; }
+.lux-table td { border:1px solid #cbd5e1; padding:0.5rem 0.65rem; }
+.lux-table td:last-child, .lux-table th:last-child { text-align:right; font-weight:700; }
+.lux-tot-row { background:#fef3c7; font-weight:900; }
 .lux-sign-box { border:1.5px solid #0f172a; border-radius:8px; padding:0.65rem 0.8rem; margin-top:0.6rem; }
-.lux-checks { display:flex; gap:1.4rem; flex-wrap:wrap; font-size:0.8rem; font-weight:800; margin:0.35rem 0 0.5rem; }
-.lux-signs { display:grid; grid-template-columns:2fr 2fr 1fr; gap:0.85rem; margin-top:1.15rem; font-size:0.74rem; }
-.lux-sign-line { border-top:1.5px solid #0f172a; padding-top:0.25rem; font-weight:700; color:#334155; }
+.lux-signs { display:grid; grid-template-columns:2fr 2fr 1fr; gap:0.85rem; margin-top:1.1rem; font-size:0.74rem; }
+.lux-sign-line { border-top:1.5px solid #0f172a; padding-top:0.25rem; font-weight:700; }
 footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
 </style>
 </head>
-<body class="locked-view">
-<svg style="position:absolute;width:0;height:0;overflow:hidden;" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
-  <symbol id="proEmblemLogo" viewBox="0 0 100 100">
-    <circle cx="50" cy="50" r="44" fill="#0f172a" stroke="#facc15" stroke-width="5"/>
-    <path d="M26 70V30h13l11 22 11-22h13v40H62V47L50 68 38 47v23H26z" fill="#facc15"/>
-  </symbol>
-</svg>
-
+<body>
 <header>
   <div class="top-bar">
     <div class="brand-logo">
       <div class="brand-icon">
-        <img src="1793842789444.jpg" alt="Mr. Invoice Pro" onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
-        <svg width="40" height="40" style="display:none;"><use href="#proEmblemLogo"/></svg>
+        <img src="1793842789444.jpg" alt="Mr. Invoice Pro">
       </div>
       <div>
         <div class="logo-main">Mr. <span>Invoice</span> Pro</div>
-        <div class="logo-sub" data-es="Estimados, Facturas, Recibos y Contratos PDF" data-en="Official PDF Estimates, Invoices & Contracts">Estimados, Facturas, Recibos y Contratos PDF</div>
+        <div class="logo-sub" id="ui-sub">Estimados, Facturas y Contratos PDF</div>
       </div>
     </div>
     <div class="top-actions">
       <button class="install-top-btn" id="installPwaBtn" onclick="installPWA()">📲 App</button>
       <select class="curr-select" id="currSelect" onchange="changeCurrency(this.value)">
         <option value="USD">💵 USD ($)</option>
+        <option value="EUR">🇪🇺 EUR (€)</option>
+        <option value="PLN">🇵🇱 PLN (zł)</option>
+        <option value="BRL">🇧🇷 BRL (R$)</option>
         <option value="DOP">🇩🇴 DOP (RD$)</option>
         <option value="MXN">🇲🇽 MXN ($)</option>
         <option value="COP">🇨🇴 COP ($)</option>
-        <option value="CLP">🇨🇱 CLP ($)</option>
-        <option value="PEN">🇵🇪 PEN (S/)</option>
-        <option value="EUR">🇪🇸 EUR (€)</option>
       </select>
-      <button class="lang-btn" onclick="toggleLang()" id="langBtn">🇺🇸 EN</button>
+      <select class="lang-select" id="langSelect" onchange="changeLang(this.value)">
+        <option value="es">🇪🇸 ES</option>
+        <option value="en">🇺🇸 EN</option>
+        <option value="fr">🇫🇷 FR</option>
+        <option value="pl">🇵🇱 PL</option>
+        <option value="pt">🇧🇷 PT</option>
+      </select>
     </div>
   </div>
 </header>
@@ -158,92 +182,83 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
 <div class="container">
   <div class="builder-card">
     <div class="mb-header">
-      <h2 data-es="📄 Crear Documento Oficial o Contrato (PDF)" data-en="📄 Create Official Document or Contract (PDF)">📄 Crear Documento Oficial o Contrato (PDF)</h2>
-      <button type="button" class="reset-zero-btn" onclick="resetBuilderToZero()" data-es="🔄 Limpiar Todo ($0.00)" data-en="🔄 Clear All ($0.00)">🔄 Limpiar Todo ($0.00)</button>
+      <h2 id="ui-h2">📄 Crear Documento Oficial o Contrato (PDF)</h2>
+      <button type="button" class="reset-zero-btn" id="ui-reset" onclick="resetBuilderToZero()">🔄 Limpiar ($0.00)</button>
     </div>
 
-    <button type="button" class="open-sample-btn" onclick="openDocPreviewModal()" data-es="👁️ Ver Ejemplo de Cómo Queda el PDF Final" data-en="👁️ View Sample of Final PDF Format">👁️ Ver Ejemplo de Cómo Queda el PDF Final</button>
+    <button type="button" class="open-sample-btn" id="ui-sample-btn" onclick="openDocPreviewModal()">👁️ Ver Ejemplo de Cómo Queda el PDF Final</button>
 
     <div class="mb-section">
-      <div class="mb-sec-title"><span data-es="1️⃣ Tipo de Documento y Datos de las Partes" data-en="1️⃣ Document Type & Party Details">1️⃣ Tipo de Documento y Datos de las Partes</span></div>
+      <div class="mb-sec-title" id="ui-sec1">1️⃣ Tipo de Documento y Datos de las Partes</div>
       <div class="price-grid">
         <div>
-          <label data-es="Tipo de Documento Oficial" data-en="Official Document Type">Tipo de Documento Oficial</label>
-          <select id="qb-doctype" onchange="updateDocTypeLabels(); recalcMasterTotals();">
-            <option value="quote" data-es="📄 Estimado / Cotización (Con Acepto / No Acepto)" data-en="📄 Estimate / Quote (With Accept / Decline)">📄 Estimado / Cotización (Con Acepto / No Acepto)</option>
-            <option value="invoice" data-es="🧾 Factura / Invoice Oficial (Para Cobro)" data-en="🧾 Official Invoice (For Billing)">🧾 Factura / Invoice Oficial (Para Cobro)</option>
-            <option value="billsale" data-es="🚗 Contrato de Compraventa (Bill of Sale)" data-en="🚗 Bill of Sale Contract (Vehicle / Item)">🚗 Contrato de Compraventa (Bill of Sale)</option>
-            <option value="contract" data-es="🤝 Contrato de Servicios / Obra" data-en="🤝 Service / Work Contract Agreement">🤝 Contrato de Servicios / Obra</option>
-            <option value="receipt" data-es="✅ Recibo de Pago / Abono Oficial" data-en="✅ Official Payment / Deposit Receipt">✅ Recibo de Pago / Abono Oficial</option>
-            <option value="change" data-es="🔄 Orden de Cambio (Change Order)" data-en="🔄 Official Change Order">🔄 Orden de Cambio (Change Order)</option>
-          </select>
+          <label id="ui-lbl-doctype">Tipo de Documento Oficial</label>
+          <select id="qb-doctype" onchange="recalcMasterTotals()"></select>
         </div>
         <div>
-          <label data-es="Número de Documento (#)" data-en="Document Number (#)">Número de Documento (#)</label>
+          <label id="ui-lbl-docnum">Número de Documento (#)</label>
           <input type="text" id="qb-docnum" value="2026-0101" oninput="recalcMasterTotals()">
         </div>
       </div>
       <div class="price-grid" style="margin-top:0.6rem;">
         <div>
-          <label id="lbl-comp" data-es="Nombre de tu Negocio o Profesional" data-en="Your Business or Professional Name">Nombre de tu Negocio o Profesional</label>
-          <input type="text" id="qb-comp" placeholder="Ej. ASD Building Solutions LLC" oninput="recalcMasterTotals()">
+          <label id="lbl-comp">Nombre de tu Negocio / Emisor</label>
+          <input type="text" id="qb-comp" placeholder="ASD Building Solutions LLC" oninput="recalcMasterTotals()">
         </div>
         <div>
-          <label id="lbl-phone" data-es="Tu Teléfono / Email / Licencia / ID" data-en="Your Phone / Email / License / ID">Tu Teléfono / Email / Licencia / ID</label>
+          <label id="lbl-phone">Teléfono / Licencia / ID</label>
           <input type="text" id="qb-phone" placeholder="(787) 000-0000" oninput="recalcMasterTotals()">
         </div>
       </div>
       <div style="margin-top:0.6rem;">
-        <label id="lbl-client" data-es="Cliente y Dirección / Detalles de Contacto" data-en="Client Name & Address / Contact Info">Cliente y Dirección / Detalles de Contacto</label>
-        <input type="text" id="qb-client" placeholder="Ej. Nombre del Cliente - Dirección o Teléfono" oninput="recalcMasterTotals()">
+        <label id="lbl-client">Cliente / Comprador y Dirección</label>
+        <input type="text" id="qb-client" placeholder="Nombre - Dirección - Teléfono" oninput="recalcMasterTotals()">
       </div>
       <div class="logo-upload-box">
         <div class="logo-pic-badge">🖼️ LOGO PICTURE</div>
-        <label style="color:#fde047;font-size:0.8rem;" data-es="📷 Sube aquí el Logo de tu Negocio (Opcional)" data-en="📷 Upload your Business Logo here (Optional)">📷 Sube aquí el Logo de tu Negocio (Opcional)</label>
+        <label style="color:#fde047;font-size:0.8rem;" id="ui-lbl-logo">📷 Sube aquí el Logo de tu Negocio (Opcional)</label>
         <input type="file" id="qb-logo-input" accept="image/*" onchange="handleLogoUpload(this)">
         <div id="logoIdentifiedBox" class="logo-id-wrap">
-          <img id="logoMiniThumb" class="logo-mini-thumb" alt="Logo Picture">
-          <div id="logoLoadedMsg" class="logo-status-msg" data-es="✅ Logo listo para tu PDF" data-en="✅ Logo ready for your PDF">✅ Logo listo para tu PDF</div>
-          <button type="button" class="cart-remove" onclick="clearLogoPicture()" data-es="✕ Quitar" data-en="✕ Remove">✕ Quitar</button>
+          <img id="logoMiniThumb" class="logo-mini-thumb" alt="Logo">
+          <div class="logo-status-msg">✅ Logo OK</div>
+          <button type="button" class="cart-remove" onclick="clearLogoPicture()">✕</button>
         </div>
       </div>
     </div>
 
     <div class="mb-section">
-      <div class="mb-sec-title">
-        <span id="lbl-sec2" data-es="2️⃣ Descripción, Bienes, Medidas o Servicios (Espacio Abierto)" data-en="2️⃣ Description, Goods, Measurements or Services">2️⃣ Descripción, Bienes, Medidas o Servicios (Espacio Abierto)</span>
-      </div>
+      <div class="mb-sec-title" id="ui-sec2">2️⃣ Descripción, Bienes, Medidas o Servicios</div>
       <div id="customLinesContainer"></div>
-      <button type="button" class="add-line-btn" onclick="addCustomLine('','1','')" data-es="➕ Añadir Otra Línea / Concepto en Blanco" data-en="➕ Add Another Blank Line Item">➕ Añadir Otra Línea / Concepto en Blanco</button>
+      <button type="button" class="add-line-btn" id="ui-add-line" onclick="addCustomLine('','1','')">➕ Añadir Otra Línea / Concepto</button>
     </div>
 
     <div class="mb-section">
-      <div class="mb-sec-title"><span data-es="3️⃣ Impuestos, Depósito, Cláusulas/Notas y Envío en PDF" data-en="3️⃣ Taxes, Deposit, Terms/Notes & Send PDF">3️⃣ Impuestos, Depósito, Cláusulas/Notas y Envío en PDF</span></div>
+      <div class="mb-sec-title" id="ui-sec3">3️⃣ Impuestos, Depósito, Condiciones y Envío PDF</div>
       <div class="price-grid">
         <div>
-          <label data-es="Impuestos / Tax / Otros ($)" data-en="Taxes / Other Fees ($)">Impuestos / Tax / Otros ($)</label>
+          <label id="ui-lbl-tax">Impuestos / Tax ($)</label>
           <input type="number" step="any" id="qb-tax" value="0" oninput="recalcMasterTotals()">
         </div>
         <div>
-          <label data-es="Depósito / Abono Recibido ($)" data-en="Deposit / Amount Paid ($)">Depósito / Abono Recibido ($)</label>
+          <label id="ui-lbl-dep">Depósito / Abono Pagado ($)</label>
           <input type="number" step="any" id="qb-dep" value="0" oninput="recalcMasterTotals()">
         </div>
       </div>
       <div style="margin-top:0.6rem;">
-        <label id="lbl-notes" data-es="Notas, Garantía o Condiciones Especiales (Opcional)" data-en="Notes, Warranty or Special Conditions (Optional)">Notas, Garantía o Condiciones Especiales (Opcional)</label>
-        <textarea id="qb-notes" placeholder="Ej. 1 año de garantía / Venta 'As-Is' (Como está) / 50% de depósito." oninput="recalcMasterTotals()"></textarea>
+        <label id="ui-lbl-notes">Notas, Garantía o Condiciones Especiales</label>
+        <textarea id="qb-notes" oninput="recalcMasterTotals()"></textarea>
       </div>
       <div class="logo-upload-box" style="border-color:#64748b;">
-        <label data-es="📎 Adjuntar Foto, ID, Título o Documento en 2da Página (Opcional)" data-en="📎 Attach Photo, ID, Title or Document on 2nd Page (Optional)">📎 Adjuntar Foto, ID, Título o Documento en 2da Página (Opcional)</label>
+        <label id="ui-lbl-attach">📎 Adjuntar Foto, ID o Documento en 2da Página (Opcional)</label>
         <input type="file" id="qb-hw-input" accept="image/*" onchange="handleHwQuoteUpload(this)">
         <div style="margin-top:0.3rem;font-size:0.74rem;">
-          <label style="display:inline;color:#cbd5e1;cursor:pointer;"><input type="checkbox" id="qb-hw-print-attach" style="width:auto;margin-right:0.3rem;"><span data-es="Incluir esta imagen en la 2da página del PDF" data-en="Include this image on 2nd page of PDF">Incluir esta imagen en la 2da página del PDF</span></label>
+          <label style="display:inline;color:#cbd5e1;cursor:pointer;"><input type="checkbox" id="qb-hw-print-attach" style="width:auto;margin-right:0.3rem;"><span id="ui-lbl-attach-chk">Incluir imagen en 2da página del PDF</span></label>
         </div>
       </div>
 
       <div class="contractor-numbers-bar">
         <div>
-          <div style="font-size:0.74rem;color:#a7f3d0;font-weight:700;" data-es="BALANCE TOTAL DEL DOCUMENTO:" data-en="DOCUMENT TOTAL BALANCE:">BALANCE TOTAL DEL DOCUMENTO:</div>
+          <div style="font-size:0.74rem;color:#a7f3d0;font-weight:700;" id="ui-bal-lbl">BALANCE TOTAL:</div>
           <div id="contractorSummaryLine" style="font-size:0.82rem;color:#fff;">Total: $0.00</div>
         </div>
         <strong id="contractorBigTotal">$0.00</strong>
@@ -257,8 +272,8 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
 
   <div class="history-card">
     <div class="history-header">
-      <h3 data-es="📋 Historial Reciente de Documentos y Contratos" data-en="📋 Recent Document & Contract History">📋 Historial Reciente de Documentos y Contratos</h3>
-      <button type="button" class="clear-btn" onclick="clearCalcHistory()" data-es="Borrar Historial" data-en="Clear History">Borrar Historial</button>
+      <h3 id="ui-hist-title">📋 Historial Reciente</h3>
+      <button type="button" class="clear-btn" id="ui-hist-clear" onclick="clearCalcHistory()">Borrar</button>
     </div>
     <ul class="history-list" id="calcHistoryList"></ul>
   </div>
@@ -268,30 +283,178 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
   <div class="doc-modal-container">
     <div class="doc-modal-topbar">
       <div class="sample-switch-group">
-        <button type="button" class="sample-type-btn active" id="btnSampleQuote" onclick="renderModalSheet('quote')">📄 Estimado</button>
-        <button type="button" class="sample-type-btn" id="btnSampleInv" onclick="renderModalSheet('invoice')">🧾 Factura</button>
-        <button type="button" class="sample-type-btn" id="btnSampleSale" onclick="renderModalSheet('billsale')">🚗 Compraventa</button>
-        <button type="button" class="sample-type-btn" id="btnSampleCont" onclick="renderModalSheet('contract')">🤝 Contrato</button>
+        <button type="button" class="sample-type-btn active" onclick="renderModalSheet('quote')">📄 Quote</button>
+        <button type="button" class="sample-type-btn" onclick="renderModalSheet('invoice')">🧾 Invoice</button>
+        <button type="button" class="sample-type-btn" onclick="renderModalSheet('billsale')">🚗 Bill of Sale</button>
+        <button type="button" class="sample-type-btn" onclick="renderModalSheet('lease')">🏠 Lease</button>
       </div>
-      <button type="button" class="close-modal-x" onclick="closeDocPreviewModal()">✕ Cerrar</button>
+      <button type="button" class="close-modal-x" onclick="closeDocPreviewModal()">✕</button>
     </div>
     <div class="luxury-paper-sheet" id="modalPaperContent"></div>
-    <div style="margin-top:0.85rem;"><button type="button" class="wa-master-btn" id="modalUnlockBtn" onclick="handleWhatsAppQuoteClick()"></button></div>
   </div>
 </div>
 
 <footer>
-  &copy; 2026 Mr. Invoice Pro | Official Estimate, Invoice & Contract PDF Suite
-  <span onclick="activateOwnerMode()" style="cursor:pointer;opacity:0.65;margin-left:8px;padding:2px 6px;border:1px solid #475569;border-radius:4px;" id="ownerKeyBtn" title="Modo Dueño">🔒 Modo Cliente: ON</span>
+  &copy; 2026 Mr. Invoice Pro | Official PDF Suite
+  <span onclick="activateOwnerMode()" style="cursor:pointer;opacity:0.65;margin-left:8px;padding:2px 6px;border:1px solid #475569;border-radius:4px;" id="ownerKeyBtn">🔒 Modo Cliente: ON</span>
 </footer>
 
 <script>
 const STRIPE_URL = "https://buy.stripe.com/28E8wR0J9cqp8ei17Y7ok00";
-const CURRENCIES = { USD:{sym:'$',code:'USD',dec:2}, DOP:{sym:'RD$',code:'DOP',dec:2}, MXN:{sym:'$',code:'MXN',dec:2}, COP:{sym:'$',code:'COP',dec:0}, CLP:{sym:'$',code:'CLP',dec:0}, PEN:{sym:'S/',code:'PEN',dec:2}, EUR:{sym:'€',code:'EUR',dec:2} };
+const CURRENCIES = { USD:{sym:'$',dec:2}, EUR:{sym:'€',dec:2}, PLN:{sym:'zł',dec:2}, BRL:{sym:'R$',dec:2}, DOP:{sym:'RD$',dec:2}, MXN:{sym:'$',dec:2}, COP:{sym:'$',dec:0} };
+
+const I18N = {
+  es: {
+    sub: "Estimados, Facturas y Contratos PDF", h2: "📄 Crear Documento Oficial o Contrato (PDF)", reset: "🔄 Limpiar ($0.00)",
+    sampleBtn: "👁️ Ver Ejemplo de Cómo Queda el PDF Final", sec1: "1️⃣ Tipo de Documento y Datos de las Partes",
+    docType: "Tipo de Documento Oficial", docNum: "Número de Documento (#)", comp: "Nombre de tu Negocio / Emisor",
+    phone: "Teléfono / Licencia / ID", client: "Cliente / Comprador y Dirección", logo: "📷 Sube aquí el Logo de tu Negocio (Opcional)",
+    sec2: "2️⃣ Descripción, Bienes, Medidas o Servicios", addLine: "➕ Añadir Otra Línea / Concepto",
+    sec3: "3️⃣ Impuestos, Depósito, Condiciones y Envío PDF", tax: "Impuestos / Tax ($)", dep: "Depósito / Abono Pagado ($)",
+    notes: "Notas, Garantía o Condiciones Especiales", attach: "📎 Adjuntar Foto, ID o Documento en 2da Página",
+    attachChk: "Incluir imagen en 2da página del PDF", balLbl: "BALANCE TOTAL:", histTitle: "📋 Historial Reciente", histClear: "Borrar",
+    qty: "Cantidad", price: "Precio Unitario", itemLbl: "Partida #", descPh: "Descripción detallada (ej. Vehículo/VIN, Propiedad, Servicios o Materiales)...",
+    waPaid: "📲 Enviar Archivo PDF Oficial (1 Página) por WhatsApp", dlPaid: "📥 Descargar / Guardar PDF en mi Teléfono",
+    waLock: "🔒 Generar y Enviar Archivo PDF Oficial ($1.99)", dlLock: "🔒 Descargar Archivo PDF Oficial con Mi Logo ($1.99)",
+    notePaid: "✅ Modo PDF Vectorial Directo Activo (1 sola página)", noteLock: "🔒 Paga $1.99 en Stripe para desbloquear y enviar tu PDF oficial",
+    dateLbl: "Fecha", accept: "ACEPTO", decline: "NO ACEPTO", remBal: "BALANCE PENDIENTE", paidAmt: "MONTO ABONADO / PAGADO",
+    types: {
+      quote: ["📄 Estimado / Cotización Oficial", "ESTIMADO OFICIAL", "EST #", "EMISOR / NEGOCIO:", "CLIENTE:", "TOTAL ESTIMADO", "APROBACIÓN DEL CLIENTE:", "Al firmar debajo, el cliente aprueba los conceptos, montos y condiciones detallados en este estimado.", "Firma del Cliente", "Firma Autorizada", true],
+      invoice: ["🧾 Factura / Invoice Oficial", "FACTURA OFICIAL", "INV #", "EMISOR / NEGOCIO:", "FACTURADO A:", "TOTAL FACTURADO", "CONFORMIDAD DE FACTURA:", "El cliente certifica haber recibido a satisfacción los bienes o servicios descritos y acepta el balance indicado.", "Firma del Cliente", "Firma Autorizada", false],
+      billsale: ["🚗 Contrato de Compraventa (Bill of Sale)", "CONTRATO DE COMPRAVENTA", "BOS #", "VENDEDOR (SELLER):", "COMPRADOR (BUYER):", "PRECIO TOTAL DE VENTA", "CLÁUSULA DE TRASPASO Y COMPRAVENTA:", "El Vendedor declara ser el dueño legítimo del bien descrito libre de gravámenes y transfiere la propiedad al Comprador por el monto acordado en su condición actual (As-Is).", "Firma del Comprador", "Firma del Vendedor", false],
+      contract: ["🤝 Contrato de Servicios / Obra", "CONTRATO DE SERVICIOS", "CNT #", "CONTRATISTA / PROVEEDOR:", "CLIENTE / CONTRATANTE:", "MONTO TOTAL DEL CONTRATO", "ACUERDO VINCULANTE DE SERVICIOS:", "Ambas partes acuerdan ejecutar los trabajos o servicios detallados bajo los montos y condiciones estipulados en este contrato.", "Firma del Cliente", "Firma del Contratista", false],
+      lease: ["🏠 Contrato de Alquiler / Renta (Lease)", "CONTRATO DE ALQUILER", "LSE #", "ARRENDADOR / PROPIETARIO:", "INQUILINO / ARRENDATARIO:", "MONTO TOTAL / RENTA", "CLÁUSULA DE ARRENDAMIENTO:", "El Arrendatario recibe la propiedad o equipo en buen estado y se compromete al pago puntual de la renta y al cuidado del bien arrendado.", "Firma del Inquilino", "Firma del Propietario", false],
+      waiver: ["🛡️ Relevo de Responsabilidad y Entrega", "RELEVO Y ENTREGA FINAL", "WAV #", "EMPRESA / PROFESIONAL:", "CLIENTE / RECEPTOR:", "MONTO LIQUIDADO", "CERTIFICACIÓN DE ENTREGA Y RELEVO:", "El cliente certifica que el trabajo o bien fue entregado a total satisfacción, relevando al emisor de reclamaciones posteriores.", "Firma del Cliente", "Firma del Emisor", false],
+      promissory: ["💵 Pagaré / Acuerdo de Plan de Pago", "PAGARÉ OFICIAL DE DEUDA", "PRM #", "ACREEDOR / BENEFICIARIO:", "DEUDOR / OBLIGADO:", "MONTO RECONOCIDO", "COMPROMISO INCONDICIONAL DE PAGO:", "El Deudor reconoce deber y se compromete incondicionalmente a pagar al Acreedor la suma indicada en los plazos acordados.", "Firma del Deudor", "Firma del Acreedor", false],
+      delivery: ["📦 Conduce de Entrega / Recibo Materiales", "CONDUCE DE ENTREGA", "DEL #", "DESPACHADO POR:", "RECIBIDO POR:", "VALOR DE MERCANCÍA", "CONFIRMACIÓN DE RECEPCIÓN CONFORME:", "El receptor confirma haber verificado y recibido en buen estado las cantidades y materiales detallados arriba.", "Recibido Conforme (Firma)", "Entregado Por", false],
+      workorder: ["🔧 Orden de Trabajo / Servicio", "ORDEN DE TRABAJO", "WO #", "EMPRESA / TÉCNICO:", "CLIENTE / UBICACIÓN:", "TOTAL ORDEN DE TRABAJO", "AUTORIZACIÓN Y CIERRE DE ORDEN:", "Autorizo la ejecución de las tareas descritas y certifico su cumplimiento en campo.", "Firma del Cliente", "Firma del Técnico", true],
+      po: ["🛒 Orden de Compra (Purchase Order)", "ORDEN DE COMPRA (PO)", "PO #", "COMPRADOR / EMPRESA:", "SUPLIDOR / VENDEDOR:", "TOTAL ORDEN DE COMPRA", "AUTORIZACIÓN DE COMPRA:", "Se autoriza el despacho y facturación de los artículos listados bajo los precios y cantidades especificados.", "Compra Autorizada Por", "Suplidor / Vendedor", false],
+      receipt: ["✅ Recibo de Pago / Abono Oficial", "RECIBO OFICIAL DE PAGO", "REC #", "RECIBIDO POR:", "PAGADO POR:", "MONTO DEL CONCEPTO", "CONSTANCIA DE PAGO RECIBIDO:", "Se expide el presente recibo oficial como comprobante de los pagos o abonos detallados.", "Firma del Cliente", "Recibido Por (Firma)", false],
+      change: ["🔄 Orden de Cambio (Change Order)", "ORDEN DE CAMBIO OFICIAL", "CO #", "CONTRATISTA:", "CLIENTE:", "TOTAL ORDEN DE CAMBIO", "APROBACIÓN DE ADICIONALES:", "El cliente autoriza los cambios o trabajos adicionales descritos y aprueba sumar su costo al acuerdo principal.", "Firma del Cliente", "Firma del Contratista", true]
+    }
+  },
+  en: {
+    sub: "Official PDF Estimates, Invoices & Contracts", h2: "📄 Create Official Document or Contract (PDF)", reset: "🔄 Clear ($0.00)",
+    sampleBtn: "👁️ View Sample of Final PDF Format", sec1: "1️⃣ Document Type & Party Details",
+    docType: "Official Document Type", docNum: "Document Number (#)", comp: "Your Business / Issuer Name",
+    phone: "Phone / License / ID", client: "Client / Buyer Name & Address", logo: "📷 Upload Business Logo (Optional)",
+    sec2: "2️⃣ Description, Goods, Measurements or Services", addLine: "➕ Add Another Line Item",
+    sec3: "3️⃣ Taxes, Deposit, Terms & Send PDF", tax: "Taxes / Fees ($)", dep: "Deposit / Amount Paid ($)",
+    notes: "Notes, Warranty or Special Terms", attach: "📎 Attach Photo, ID or Doc on 2nd Page",
+    attachChk: "Include image on 2nd page of PDF", balLbl: "TOTAL BALANCE:", histTitle: "📋 Recent History", histClear: "Clear",
+    qty: "Quantity", price: "Unit Price", itemLbl: "Item #", descPh: "Detailed description (e.g. Vehicle/VIN, Property, Services or Materials)...",
+    waPaid: "📲 Send Official 1-Page PDF via WhatsApp", dlPaid: "📥 Download / Save PDF to Phone",
+    waLock: "🔒 Generate & Send Official PDF ($1.99)", dlLock: "🔒 Download Official PDF with My Logo ($1.99)",
+    notePaid: "✅ Direct Vector 1-Page PDF Mode Active", noteLock: "🔒 Pay $1.99 via Stripe to unlock & send your official PDF",
+    dateLbl: "Date", accept: "I ACCEPT", decline: "DECLINE", remBal: "REMAINING BALANCE", paidAmt: "AMOUNT PAID / DEPOSIT",
+    types: {
+      quote: ["📄 Official Estimate / Quote", "OFFICIAL ESTIMATE", "EST #", "ISSUED BY:", "PREPARED FOR:", "ESTIMATE TOTAL", "CLIENT APPROVAL:", "By signing below, the client approves the items, amounts, and terms detailed in this official estimate.", "Client Signature", "Authorized Signature", true],
+      invoice: ["🧾 Official Invoice", "OFFICIAL INVOICE", "INV #", "ISSUED BY:", "BILL TO:", "INVOICE TOTAL", "INVOICE ACKNOWLEDGMENT:", "The client certifies receipt of the goods or services described and agrees to pay the stated balance.", "Client Signature", "Authorized Signature", false],
+      billsale: ["🚗 Bill of Sale Contract", "BILL OF SALE CONTRACT", "BOS #", "SELLER / TRANSFEROR:", "BUYER / PURCHASER:", "TOTAL SALE PRICE", "LEGAL TRANSFER & BILL OF SALE CLAUSE:", "The Seller declares full legal ownership of the item described free of liens and transfers all ownership rights to the Buyer As-Is for the agreed price.", "Buyer Signature", "Seller Signature", false],
+      contract: ["🤝 Service / Work Contract", "SERVICE AGREEMENT", "CNT #", "CONTRACTOR / PROVIDER:", "CLIENT / HIRING PARTY:", "TOTAL CONTRACT AMOUNT", "BINDING SERVICE AGREEMENT:", "Both parties agree to execute the work or services detailed above under the amounts and terms stipulated in this contract.", "Client Signature", "Contractor Signature", false],
+      lease: ["🏠 Lease / Rental Agreement", "LEASE AGREEMENT", "LSE #", "LANDLORD / LESSOR:", "TENANT / LESSEE:", "TOTAL RENT / LEASE", "LEASE TERMS & CONDITIONS:", "The Tenant receives the property or equipment in good condition and agrees to timely rental payments and proper care.", "Tenant Signature", "Landlord Signature", false],
+      waiver: ["🛡️ Liability Waiver & Final Release", "RELEASE & WAIVER", "WAV #", "PROVIDER / COMPANY:", "CLIENT / RECIPIENT:", "SETTLED AMOUNT", "FINAL RELEASE & SATISFACTION:", "The client certifies that the work or property was delivered to full satisfaction and releases the provider from further claims.", "Client Signature", "Provider Signature", false],
+      promissory: ["💵 Promissory Note / Payment Plan", "PROMISSORY NOTE", "PRM #", "LENDER / CREDITOR:", "BORROWER / DEBTOR:", "PRINCIPAL AMOUNT", "UNCONDITIONAL PROMISE TO PAY:", "The Borrower acknowledges the debt and unconditionally promises to pay the Creditor the stated sum according to the agreed schedule.", "Borrower Signature", "Creditor Signature", false],
+      delivery: ["📦 Delivery Ticket / Material Receipt", "DELIVERY TICKET", "DEL #", "DELIVERED BY:", "RECEIVED BY:", "MERCHANDISE VALUE", "DELIVERY CONFIRMATION:", "The recipient confirms having inspected and received the items and quantities listed above in good order.", "Received By (Signature)", "Delivered By", false],
+      workorder: ["🔧 Work / Service Order", "WORK ORDER", "WO #", "COMPANY / TECH:", "CLIENT / LOCATION:", "WORK ORDER TOTAL", "WORK ORDER AUTHORIZATION:", "I authorize the execution of the tasks described and certify completion on site.", "Client Signature", "Technician Signature", true],
+      po: ["🛒 Purchase Order (PO)", "PURCHASE ORDER", "PO #", "BUYER / COMPANY:", "VENDOR / SUPPLIER:", "PURCHASE ORDER TOTAL", "PURCHASE AUTHORIZATION:", "Supply and billing of the listed items are authorized under the specified quantities and prices.", "Authorized Buyer", "Vendor Representative", false],
+      receipt: ["✅ Official Payment Receipt", "PAYMENT RECEIPT", "REC #", "RECEIVED BY:", "PAID BY:", "TOTAL ITEM AMOUNT", "OFFICIAL PAYMENT CONFIRMATION:", "This official receipt is issued as proof of the payments or deposits detailed above.", "Client Signature", "Received By", false],
+      change: ["🔄 Official Change Order", "CHANGE ORDER", "CO #", "CONTRACTOR:", "CLIENT:", "CHANGE ORDER TOTAL", "CHANGE ORDER APPROVAL:", "The client authorizes the additional work or modifications described and agrees to add its cost to the main contract.", "Client Signature", "Contractor Signature", true]
+    }
+  },
+  fr: {
+    sub: "Devis, Factures et Contrats Officiels PDF", h2: "📄 Créer un Document ou Contrat Officiel (PDF)", reset: "🔄 Effacer (0,00)",
+    sampleBtn: "👁️ Voir un Exemple du PDF Final", sec1: "1️⃣ Type de Document et Coordonnées des Parties",
+    docType: "Type de Document Officiel", docNum: "Numéro du Document (#)", comp: "Nom de votre Entreprise / Émetteur",
+    phone: "Téléphone / Licence / ID", client: "Client / Acheteur et Adresse", logo: "📷 Télécharger le Logo de l'Entreprise (Optionnel)",
+    sec2: "2️⃣ Description, Biens, Mesures ou Services", addLine: "➕ Ajouter une Ligne / Article",
+    sec3: "3️⃣ Taxes, Acompte, Conditions et Envoi PDF", tax: "Taxes / TVA ($)", dep: "Acompte / Montant Payé ($)",
+    notes: "Notes, Garantie ou Conditions Particulières", attach: "📎 Joindre Photo ou Pièce d'Identité (2e Page)",
+    attachChk: "Inclure l'image sur la 2e page du PDF", balLbl: "SOLDE TOTAL :", histTitle: "📋 Historique Récent", histClear: "Effacer",
+    qty: "Quantité", price: "Prix Unitaire", itemLbl: "Ligne #", descPh: "Description détaillée (ex. Véhicule/VIN, Bien, Services ou Matériaux)...",
+    waPaid: "📲 Envoyer le PDF Officiel (1 Page) via WhatsApp", dlPaid: "📥 Télécharger / Enregistrer le PDF",
+    waLock: "🔒 Générer et Envoyer le PDF Officiel (1,99 $)", dlLock: "🔒 Télécharger le PDF Officiel avec Logo (1,99 $)",
+    notePaid: "✅ Mode PDF Vectoriel Direct Actif (1 seule page)", noteLock: "🔒 Payez 1,99 $ via Stripe pour débloquer votre PDF officiel",
+    dateLbl: "Date", accept: "J'ACCEPTE", decline: "JE REFUSE", remBal: "SOLDE RESTANT", paidAmt: "MONTANT PAYÉ / ACOMPTE",
+    types: {
+      quote: ["📄 Devis Officiel", "DEVIS OFFICIEL", "DEV #", "ÉMETTEUR / ENTREPRISE :", "PRÉPARÉ POUR :", "TOTAL DU DEVIS", "APPROBATION DU CLIENT :", "En signant ci-dessous, le client accepte les articles, montants et conditions détaillés dans ce devis officiel.", "Signature du Client", "Signature Autorisée", true],
+      invoice: ["🧾 Facture Officielle", "FACTURE OFFICIELLE", "FAC #", "ÉMETTEUR / ENTREPRISE :", "FACTURÉ À :", "TOTAL FACTURÉ", "VALIDATION DE FACTURE :", "Le client certifie avoir reçu les biens ou services décrits et s'engage à régler le solde indiqué.", "Signature du Client", "Signature Autorisée", false],
+      billsale: ["🚗 Contrat de Vente (Acte de Cession)", "CONTRAT DE VENTE", "VEN #", "VENDEUR / CÉDANT :", "ACHETEUR / ACQUÉREUR :", "PRIX TOTAL DE VENTE", "CLAUSE LÉGALE DE CESSION ET VENTE :", "Le Vendeur déclare être le propriétaire légitime du bien décrit libre de tout gage et en transfère la propriété à l'Acheteur en l'état au prix convenu.", "Signature de l'Acheteur", "Signature du Vendeur", false],
+      contract: ["🤝 Contrat de Prestation de Services", "CONTRAT DE SERVICES", "CNT #", "PRESTATAIRE / ENTREPRENEUR :", "CLIENT / COMMANDITAIRE :", "MONTANT DU CONTRAT", "ACCORD CONTRACTUEL DES PARTIES :", "Les deux parties conviennent d'exécuter les travaux ou services détaillés selon les montants et conditions stipulés.", "Signature du Client", "Signature du Prestataire", false],
+      lease: ["🏠 Contrat de Location / Bail", "CONTRAT DE LOCATION", "LOC #", "BAILLEUR / PROPRIÉTAIRE :", "LOCATAIRE / PRENEUR :", "LOYER / MONTANT TOTAL", "CONDITIONS DE LOCATION :", "Le Locataire reçoit le bien ou l'équipement en bon état et s'engage à payer le loyer convenu et à en prendre soin.", "Signature du Locataire", "Signature du Bailleur", false],
+      waiver: ["🛡️ Décharge de Responsabilité et Réception", "DÉCHARGE ET RÉCEPTION", "DEC #", "ENTREPRISE / ÉMETTEUR :", "CLIENT / BÉNÉFICIAIRE :", "MONTANT RÉGLÉ", "ATTESTATION DE BONNE FIN ET DÉCHARGE :", "Le client certifie que le travail ou le bien a été livré à son entière satisfaction et décharge l'émetteur de toute réclamation ultérieure.", "Signature du Client", "Signature de l'Émetteur", false],
+      promissory: ["💵 Reconnaissance de Dette / Échéancier", "RECONNAISSANCE DE DETTE", "DET #", "CRÉANCIER / BÉNÉFICIAIRE :", "DÉBITEUR / SOUSCRIPTEUR :", "MONTANT RECONNU", "ENGAGEMENT INCONDITIONNEL DE PAIEMENT :", "Le Débiteur reconnaît devoir et s'engage inconditionnellement à payer au Créancier la somme indiquée selon les échéances convenues.", "Signature du Débiteur", "Signature du Créancier", false],
+      delivery: ["📦 Bon de Livraison / Réception", "BON DE LIVRAISON", "BL #", "EXPÉDIÉ PAR :", "REÇU PAR :", "VALEUR TOTALE", "CONFIRMATION DE RÉCEPTION :", "Le destinataire confirme avoir vérifié et reçu en bon état les marchandises et quantités détaillées ci-dessus.", "Reçu Conforme (Signature)", "Livré Par", false],
+      workorder: ["🔧 Ordre de Travail / Intervention", "ORDRE DE TRAVAIL", "OT #", "ENTREPRISE / TECHNICIEN :", "CLIENT / SITE :", "TOTAL INTERVENTION", "AUTORISATION D'INTERVENTION :", "J'autorise l'exécution des travaux décrits et certifie leur réalisation.", "Signature du Client", "Signature du Technicien", true],
+      po: ["🛒 Bon de Commande (PO)", "BON DE COMMANDE", "BC #", "ACHETEUR / SOCIÉTÉ :", "FOURNISSEUR :", "TOTAL DE LA COMMANDE", "AUTORISATION DE COMMANDE :", "La livraison et la facturation des articles listés sont autorisées aux quantités et prix spécifiés.", "Acheteur Autorisé", "Fournisseur", false],
+      receipt: ["✅ Reçu Officiel de Paiement", "REÇU DE PAIEMENT", "REC #", "REÇU PAR :", "PAYÉ PAR :", "MONTANT TOTAL", "ATTESTATION DE PAIEMENT REÇU :", "Ce reçu officiel est délivré comme preuve des paiements ou acomptes détaillés ci-dessus.", "Signature du Client", "Reçu Par (Signature)", false],
+      change: ["🔄 Avenant / Ordre de Modification", "AVENANT AU CONTRAT", "AVN #", "ENTREPRENEUR :", "CLIENT :", "TOTAL DE L'AVENANT", "APPROBATION DE L'AVENANT :", "Le client autorise les travaux supplémentaires décrits et accepte d'ajouter leur coût au contrat principal.", "Signature du Client", "Signature de l'Entrepreneur", true]
+    }
+  },
+  pl: {
+    sub: "Kosztorysy, Faktury i Umowy w PDF", h2: "📄 Utwórz Oficjalny Dokument lub Umowę (PDF)", reset: "🔄 Wyczyść (0.00)",
+    sampleBtn: "👁️ Zobacz Przykład Gotowego Pliku PDF", sec1: "1️⃣ Rodzaj Dokumentu i Dane Stron",
+    docType: "Oficjalny Rodzaj Dokumentu", docNum: "Numer Dokumentu (#)", comp: "Nazwa Firmy / Wystawca",
+    phone: "Telefon / NIP / Dowód", client: "Klient / Kupujący i Adres", logo: "📷 Wgraj Logo Firmy (Opcjonalnie)",
+    sec2: "2️⃣ Opis, Towary, Wymiary lub Usługi", addLine: "➕ Dodaj Kolejną Pozycję",
+    sec3: "3️⃣ Podatki, Zaliczka, Warunki i Wysyłka PDF", tax: "Podatek / VAT ($)", dep: "Zaliczka / Wpłacono ($)",
+    notes: "Uwagi, Gwarancja lub Warunki Szczególne", attach: "📎 Załącz Zdjęcie lub Dokument na 2. Stronie",
+    attachChk: "Dołącz obraz na 2. stronie PDF", balLbl: "DO ZAPŁATY:", histTitle: "📋 Ostatnia Historia", histClear: "Wyczyść",
+    qty: "Ilość", price: "Cena Jednostkowa", itemLbl: "Pozycja #", descPh: "Szczegółowy opis (np. Pojazd/VIN, Nieruchomość, Usługi lub Materiały)...",
+    waPaid: "📲 Wyślij Oficjalny Plik PDF (1 Strona) przez WhatsApp", dlPaid: "📥 Pobierz / Zapisz PDF w Telefonie",
+    waLock: "🔒 Wygeneruj i Wyślij Oficjalny PDF ($1.99)", dlLock: "🔒 Pobierz Oficjalny PDF z Moim Logo ($1.99)",
+    notePaid: "✅ Tryb Bezpośredniego PDF Wektorowego Aktywny", noteLock: "🔒 Zapłać $1.99 przez Stripe, aby pobrać i wysłać oficjalny PDF",
+    dateLbl: "Data", accept: "AKCEPTUJĘ", decline: "ODRZUCAM", remBal: "POZOSTAŁO DO ZAPŁATY", paidAmt: "WPŁACONO / ZALICZKA",
+    types: {
+      quote: ["📄 Kosztorys / Wycena Oficjalna", "OFICJALNY KOSZTORYS", "WYC #", "WYSTAWCA / FIRMA:", "DLA KLIENTA:", "RAZEM KOSZTORYS", "AKCEPTACJA KLIENTA:", "Podpisując poniżej, klient akceptuje pozycje, kwoty oraz warunki określone w niniejszym kosztorysie.", "Podpis Klienta", "Podpis Upoważniony", true],
+      invoice: ["🧾 Faktura / Rachunek Oficjalny", "FAKTURA OFICJALNA", "FAK #", "SPRZEDAWCA / FIRMA:", "NABYWCA / KLIENT:", "RAZEM DO ZAPŁATY", "POTWIERDZENIE ODBIORU FAKTURY:", "Klient potwierdza odbiór opisanych towarów lub usług i zobowiązuje się do uregulowania wskazanej kwoty.", "Podpis Klienta", "Podpis Wystawcy", false],
+      billsale: ["🚗 Umowa Kupna-Sprzedaży (Bill of Sale)", "UMOWA KUPNA-SPRZEDAŻY", "UKS #", "SPRZEDAJĄCY:", "KUPUJĄCY:", "CAŁKOWITA CENA SPRZEDAŻY", "OŚWIADCZENIE I PRZENIESIENIE WŁASNOŚCI:", "Sprzedający oświadcza, że jest prawowitym właścicielem opisanego przedmiotu wolnego od wad prawnych i przenosi własność na Kupującego za uzgodnioną kwotę w stanie obecnym.", "Podpis Kupującego", "Podpis Sprzedającego", false],
+      contract: ["🤝 Umowa o Świadczenie Usług / Roboty", "UMOWA O USŁUGI", "UMO #", "WYKONAWCA:", "ZLECENIODAWCA / KLIENT:", "WARTOŚĆ UMOWY", "ZOBOWIĄZANIE UMOWNE STRON:", "Obie strony zgadzają się na wykonanie opisanych prac lub usług zgodnie z kwotami i warunkami określonymi w niniejszej umowie.", "Podpis Zleceniodawcy", "Podpis Wykonawcy", false],
+      lease: ["🏠 Umowa Najmu / Dzierżawy", "UMOWA NAJMU", "NAJ #", "WYNAJMUJĄCY:", "NAJEMCA:", "CZYNSZ / KWOTA NAJMU", "WARUNKI UMOWY NAJMU:", "Najemca odbiera przedmiot najmu w dobrym stanie i zobowiązuje się do terminowego opłacania czynszu oraz należytego użytkowania.", "Podpis Najemcy", "Podpis Wynajmującego", false],
+      waiver: ["🛡️ Protokół Odbioru i Zwolnienie z Odpowiedzialności", "PROTOKÓŁ ODBIORU", "ODB #", "WYKONAWCA / FIRMA:", "KLIENT / ODBIORCA:", "ROZLICZONA KWOTA", "POTWIERDZENIE WYKONANIA BEZ ZASTRZEŻEŃ:", "Klient potwierdza odbiór prac lub mienia bez zastrzeżeń i zrzeka się dalszych roszczeń z tytułu odbioru.", "Podpis Klienta", "Podpis Wykonawcy", false],
+      promissory: ["💵 Weksel / Ugoda Spłaty Zadłużenia", "UZNANIE DŁUGU / SPŁATA", "DLU #", "WIERZYCIEL:", "DŁUŻNIK:", "KWOTA ZADŁUŻENIA", "BEZWARUNKOWE ZOBOWIĄZANIE DO SPŁATY:", "Dłużnik uznaje dług i bezwarunkowo zobowiązuje się do spłaty Wierzycielowi wskazanej kwoty zgodnie z ustalonym harmonogramem.", "Podpis Dłużnika", "Podpis Wierzyciela", false],
+      delivery: ["📦 Dowód Dostawy / Wydanie Materiałów (WZ)", "DOWÓD DOSTAWY (WZ)", "WZ #", "WYDAŁ / DOSTAWCA:", "ODEBRAŁ / ODBIORCA:", "WARTOŚĆ TOWARU", "POTWIERDZENIE ODBIORU TOWARU:", "Odbiorca potwierdza sprawdzenie i otrzymanie wymienionych powyżej materiałów w dobrym stanie.", "Podpis Odbiorcy", "Podpis Wydającego", false],
+      workorder: ["🔧 Zlecenie Serwisowe / Robocze", "ZLECENIE PRACY", "ZLE #", "FIRMA / SERWISANT:", "KLIENT / LOKALIZACJA:", "RAZEM ZLECENIE", "AUTORYZACJA I ODBIÓR ZLECENIA:", "Upoważniam do wykonania opisanych prac oraz potwierdzam ich realizację.", "Podpis Klienta", "Podpis Serwisanta", true],
+      po: ["🛒 Zamówienie Zakupu (Purchase Order)", "ZAMÓWIENIE ZAKUPU (PO)", "ZAM #", "ZAMAWIAJĄCY:", "DOSTAWCA:", "WARTOŚĆ ZAMÓWIENIA", "AUTORYZACJA ZAMÓWIENIA:", "Upoważnia się do dostarczenia i zafakturowania wymienionych pozycji zgodnie z podanymi cenami i ilościami.", "Podpis Zamawiającego", "Dostawca", false],
+      receipt: ["✅ Oficjalne Pokwitowanie Wpłaty (KP)", "POKWITOWANIE WPŁATY", "KP #", "PRZYJĄŁ:", "WPŁACIŁ:", "KWOTA OPERACJI", "POTWIERDZENIE OTRZYMANIA WPŁATY:", "Niniejsze pokwitowanie stanowi oficjalny dowód otrzymania wpłaty lub zaliczki.", "Podpis Klienta", "Podpis Przyjmującego", false],
+      change: ["🔄 Aneks / Zlecenie Zmian (Change Order)", "ZLECENIE ZMIAN / ANEKS", "ANE #", "WYKONAWCA:", "KLIENT:", "WARTOŚĆ ZMIAN", "AKCEPTACJA PRAC DODATKOWYCH:", "Klient zatwierdza opisane prace dodatkowe i wyraża zgodę na doliczenie ich kosztu do umowy głównej.", "Podpis Klienta", "Podpis Wykonawcy", true]
+    }
+  },
+  pt: {
+    sub: "Orçamentos, Faturas e Contratos Oficiais PDF", h2: "📄 Criar Documento Oficial ou Contrato (PDF)", reset: "🔄 Limpar (0,00)",
+    sampleBtn: "👁️ Ver Exemplo do PDF Final", sec1: "1️⃣ Tipo de Documento e Dados das Partes",
+    docType: "Tipo de Documento Oficial", docNum: "Número do Documento (#)", comp: "Nome da sua Empresa / Emissor",
+    phone: "Telefone / CNPJ / CPF / ID", client: "Cliente / Comprador e Endereço", logo: "📷 Enviar Logotipo da Empresa (Opcional)",
+    sec2: "2️⃣ Descrição, Bens, Medidas ou Serviços", addLine: "➕ Adicionar Outra Linha / Item",
+    sec3: "3️⃣ Impostos, Sinal, Condições e Envio PDF", tax: "Impostos / Taxas ($)", dep: "Sinal / Valor Pago ($)",
+    notes: "Notas, Garantia ou Condições Especiais", attach: "📎 Anexar Foto, RG/CPF ou Doc na 2ª Página",
+    attachChk: "Incluir imagem na 2ª página do PDF", balLbl: "SALDO TOTAL:", histTitle: "📋 Histórico Recente", histClear: "Limpar",
+    qty: "Quantidade", price: "Preço Unitário", itemLbl: "Item #", descPh: "Descrição detalhada (ex. Veículo/Chassi, Imóvel, Serviços ou Materiais)...",
+    waPaid: "📲 Enviar Arquivo PDF Oficial (1 Página) via WhatsApp", dlPaid: "📥 Baixar / Salvar PDF no Celular",
+    waLock: "🔒 Gerar e Enviar PDF Oficial ($1.99)", dlLock: "🔒 Baixar PDF Oficial com Meu Logo ($1.99)",
+    notePaid: "✅ Modo PDF Vetorial Direto Ativo (1 página)", noteLock: "🔒 Pague $1.99 via Stripe para liberar e enviar seu PDF oficial",
+    dateLbl: "Data", accept: "ACEITO", decline: "NÃO ACEITO", remBal: "SALDO RESTANTE", paidAmt: "VALOR PAGO / SINAL",
+    types: {
+      quote: ["📄 Orçamento / Cotação Oficial", "ORÇAMENTO OFICIAL", "ORC #", "EMISSOR / EMPRESA:", "CLIENTE:", "TOTAL DO ORÇAMENTO", "APROVAÇÃO DO CLIENTE:", "Ao assinar abaixo, o cliente aprova os itens, valores e condições detalhados neste orçamento oficial.", "Assinatura do Cliente", "Assinatura Autorizada", true],
+      invoice: ["🧾 Fatura / Nota de Cobrança", "FATURA OFICIAL", "FAT #", "EMISSOR / EMPRESA:", "FATURADO PARA:", "TOTAL DA FATURA", "CONFIRMAÇÃO DE RECEBIMENTO:", "O cliente certifica ter recebido os bens ou serviços descritos e concorda com o pagamento do saldo indicado.", "Assinatura do Cliente", "Assinatura Autorizada", false],
+      billsale: ["🚗 Contrato de Compra e Venda", "CONTRATO DE COMPRA E VENDA", "CCV #", "VENDEDOR / CEDENTE:", "COMPRADOR / ADQUIRENTE:", "PREÇO TOTAL DE VENDA", "CLÁUSULA DE TRANSFERÊNCIA E VENDA:", "O Vendedor declara ser o legítimo proprietário do bem descrito livre de ônus e transfere a propriedade ao Comprador pelo valor acordado no estado em que se encontra.", "Assinatura do Comprador", "Assinatura do Vendedor", false],
+      contract: ["🤝 Contrato de Prestação de Serviços", "CONTRATO DE SERVIÇOS", "CNT #", "CONTRATADO / PRESTADOR:", "CONTRATANTE / CLIENTE:", "VALOR TOTAL DO CONTRATO", "ACORDO VINCULANTE DE SERVIÇOS:", "Ambas as partes concordam em executar os serviços detalhados acima sob os valores, prazos e condições estipulados neste contrato.", "Assinatura do Contratante", "Assinatura do Contratado", false],
+      lease: ["🏠 Contrato de Locação / Aluguel", "CONTRATO DE LOCAÇÃO", "LOC #", "LOCADOR / PROPRIETÁRIO:", "LOCATÁRIO / INQUILINO:", "VALOR TOTAL / ALUGUEL", "TERMOS E CONDIÇÕES DE LOCAÇÃO:", "O Locatário recebe o imóvel ou equipamento em bom estado e compromete-se ao pagamento pontual do aluguel e zelo pelo bem.", "Assinatura do Locatário", "Assinatura do Locador", false],
+      waiver: ["🛡️ Termo de Quitação e Entrega Final", "TERMO DE ENTREGA E QUITAÇÃO", "QUI #", "EMPRESA / PROFISSIONAL:", "CLIENTE / RECEBEDOR:", "VALOR QUITADO", "DECLARAÇÃO DE RECEBIMENTO E QUITAÇÃO:", "O cliente certifica que o serviço ou bem foi entregue com total satisfação, dando plena quitação ao emissor.", "Assinatura do Cliente", "Assinatura do Emissor", false],
+      promissory: ["💵 Nota Promissória / Confissão de Dívida", "NOTA PROMISSÓRIA", "NPR #", "CREDOR / BENEFICIÁRIO:", "DEVEDOR / EMITENTE:", "VALOR RECONHECIDO", "COMPROMISSO INCONDICIONAL DE PAGAMENTO:", "O Devedor reconhece a dívida e compromete-se incondicionalmente a pagar ao Credor a quantia indicada nos prazos acordados.", "Assinatura do Devedor", "Assinatura do Credor", false],
+      delivery: ["📦 Comprovante de Entrega / Romaneio", "COMPROVANTE DE ENTREGA", "ENT #", "EXPEDIDO POR:", "RECEBIDO POR:", "VALOR DA MERCADORIA", "CONFIRMAÇÃO DE ENTREGA:", "O recebedor confirma ter conferido e recebido em perfeito estado os materiais e quantidades listados acima.", "Recebido Por (Assinatura)", "Entregue Por", false],
+      workorder: ["🔧 Ordem de Serviço / Trabalho (OS)", "ORDEM DE SERVIÇO", "OS #", "EMPRESA / TÉCNICO:", "CLIENTE / LOCAL:", "TOTAL DA ORDEM DE SERVIÇO", "AUTORIZAÇÃO E EXECUÇÃO:", "Autorizo a execução dos serviços descritos e confirmo sua realização no local.", "Assinatura do Cliente", "Assinatura do Técnico", true],
+      po: ["🛒 Pedido de Compra (Purchase Order)", "PEDIDO DE COMPRA", "PC #", "COMPRADOR / EMPRESA:", "FORNECEDOR:", "TOTAL DO PEDIDO", "AUTORIZAÇÃO DE COMPRA:", "Fica autorizado o fornecimento e faturamento dos itens listados sob as quantidades e preços especificados.", "Comprador Autorizado", "Fornecedor", false],
+      receipt: ["✅ Recibo Oficial de Pagamento", "RECIBO DE PAGAMENTO", "REC #", "RECEBIDO POR:", "PAGO POR:", "VALOR TOTAL", "CONFIRMAÇÃO DE PAGAMENTO RECEBIDO:", "Emitimos o presente recibo oficial como comprovante dos pagamentos ou sinais detalhados acima.", "Assinatura do Cliente", "Recebido Por (Assinatura)", false],
+      change: ["🔄 Aditivo / Ordem de Alteração", "TERMO ADITIVO DE SERVIÇO", "ADI #", "CONTRATADO:", "CLIENTE:", "TOTAL DO ADITIVO", "APROVAÇÃO DE SERVIÇOS EXTRAS:", "O cliente autoriza as alterações ou serviços adicionais descritos e aprova somar seu custo ao acordo principal.", "Assinatura do Cliente", "Assinatura do Contratado", true]
+    }
+  }
+};
 
 localStorage.removeItem('mcp_owner_unlocked');
 const isReturningFromStripe = new URLSearchParams(window.location.search).get('paid') === 'true';
 let currentLang = localStorage.getItem('mcp_lang') || 'es';
+if (!I18N[currentLang]) currentLang = 'es';
 let currentCurr = localStorage.getItem('mcp_currency') || 'USD';
 let isPaidUser = isReturningFromStripe;
 let uploadedLogoData = '';
@@ -315,237 +478,67 @@ function installPWA() {
 function getCurrObj() { return CURRENCIES[currentCurr] || CURRENCIES.USD; }
 function formatUSD(num) { const c = getCurrObj(); return c.sym + (Number(num)||0).toLocaleString('en-US',{minimumFractionDigits:c.dec,maximumFractionDigits:c.dec}); }
 
-function getDocMeta(docType, isEs) {
-  const map = {
-    quote: {
-      badge: isEs ? 'ESTIMADO OFICIAL' : 'OFFICIAL ESTIMATE',
-      prefix: 'EST #',
-      filePrefix: isEs ? 'Estimado_' : 'Estimate_',
-      party1: isEs ? 'EMISOR / NEGOCIO:' : 'ISSUED BY / BUSINESS:',
-      party2: isEs ? 'PREPARADO PARA / CLIENTE:' : 'PREPARED FOR / CLIENT:',
-      totalLabel: isEs ? 'TOTAL ESTIMADO' : 'ESTIMATE TOTAL',
-      signTitle: isEs ? 'AUTORIZACIÓN Y APROBACIÓN DEL CLIENTE:' : 'CLIENT AUTHORIZATION & APPROVAL:',
-      showAcceptChecks: true,
-      legalClause: isEs
-        ? 'Al firmar debajo, el cliente aprueba los conceptos, montos y condiciones detallados en este estimado oficial.'
-        : 'By signing below, the client approves the items, amounts, and terms detailed in this official estimate.',
-      sig1: isEs ? 'Firma del Cliente' : 'Client Signature',
-      sig2: isEs ? 'Firma Autorizada' : 'Authorized Signature'
-    },
-    invoice: {
-      badge: isEs ? 'FACTURA OFICIAL (INVOICE)' : 'OFFICIAL INVOICE',
-      prefix: 'INV #',
-      filePrefix: isEs ? 'Factura_' : 'Invoice_',
-      party1: isEs ? 'EMISOR / NEGOCIO:' : 'ISSUED BY / BUSINESS:',
-      party2: isEs ? 'FACTURADO A / CLIENTE:' : 'BILL TO / CLIENT:',
-      totalLabel: isEs ? 'TOTAL FACTURADO' : 'INVOICE TOTAL',
-      signTitle: isEs ? 'CONFORMIDAD Y RECEPCIÓN DE FACTURA:' : 'INVOICE ACKNOWLEDGMENT:',
-      showAcceptChecks: false,
-      legalClause: isEs
-        ? 'El cliente certifica haber recibido a satisfacción los bienes o servicios descritos y se compromete al pago del balance indicado.'
-        : 'The client certifies receipt of the goods or services described and agrees to pay the stated balance.',
-      sig1: isEs ? 'Firma del Cliente' : 'Client Signature',
-      sig2: isEs ? 'Firma Autorizada' : 'Authorized Signature'
-    },
-    billsale: {
-      badge: isEs ? 'CONTRATO DE COMPRAVENTA' : 'BILL OF SALE CONTRACT',
-      prefix: 'BOS #',
-      filePrefix: isEs ? 'Compraventa_' : 'BillOfSale_',
-      party1: isEs ? 'VENDEDOR / CEDENTE (SELLER):' : 'SELLER / TRANSFEROR:',
-      party2: isEs ? 'COMPRADOR / ADQUIRIENTE (BUYER):' : 'BUYER / PURCHASER:',
-      totalLabel: isEs ? 'PRECIO TOTAL DE VENTA' : 'TOTAL SALE PRICE',
-      signTitle: isEs ? 'CLÁUSULA LEGAL DE TRASPASO Y COMPRAVENTA:' : 'LEGAL TRANSFER & BILL OF SALE CLAUSE:',
-      showAcceptChecks: false,
-      legalClause: isEs
-        ? 'El Vendedor declara ser el dueño legítimo del bien descrito arriba libre de gravámenes y transfiere todos sus derechos de propiedad al Comprador por el monto acordado. Salvo garantía escrita en Notas, el bien se entrega en su condición actual (As-Is) tras haber sido inspeccionado a satisfacción por el Comprador.'
-        : 'The Seller declares full legal ownership of the property described above free of liens and transfers all ownership rights to the Buyer for the agreed amount. Unless otherwise stated in Notes, the property is sold As-Is after inspection by the Buyer.',
-      sig1: isEs ? 'Firma del Comprador (Buyer)' : 'Buyer Signature',
-      sig2: isEs ? 'Firma del Vendedor (Seller)' : 'Seller Signature'
-    },
-    contract: {
-      badge: isEs ? 'CONTRATO DE SERVICIOS' : 'SERVICE AGREEMENT',
-      prefix: 'CNT #',
-      filePrefix: isEs ? 'Contrato_' : 'Contract_',
-      party1: isEs ? 'CONTRATISTA / PROVEEDOR:' : 'CONTRACTOR / PROVIDER:',
-      party2: isEs ? 'CLIENTE / CONTRATANTE:' : 'CLIENT / HIRING PARTY:',
-      totalLabel: isEs ? 'MONTO TOTAL DEL CONTRATO' : 'TOTAL CONTRACT AMOUNT',
-      signTitle: isEs ? 'ACUERDO VINCULANTE Y COMPROMISO DE LAS PARTES:' : 'BINDING SERVICE AGREEMENT & ACKNOWLEDGMENT:',
-      showAcceptChecks: false,
-      legalClause: isEs
-        ? 'Ambas partes acuerdan ejecutar los trabajos o servicios detallados arriba bajo los montos, plazos y condiciones estipulados en este contrato. Cualquier trabajo adicional no incluido requerirá una Orden de Cambio aprobada por escrito.'
-        : 'Both parties agree to execute the work or services detailed above under the amounts, timelines, and terms stipulated in this contract. Any extra work requires a written Change Order.',
-      sig1: isEs ? 'Firma del Cliente / Contratante' : 'Client Signature',
-      sig2: isEs ? 'Firma del Contratista' : 'Contractor Signature'
-    },
-    receipt: {
-      badge: isEs ? 'RECIBO OFICIAL DE PAGO' : 'OFFICIAL PAYMENT RECEIPT',
-      prefix: 'REC #',
-      filePrefix: isEs ? 'Recibo_' : 'Receipt_',
-      party1: isEs ? 'RECIBIDO POR / EMISOR:' : 'RECEIVED BY / BUSINESS:',
-      party2: isEs ? 'PAGADO POR / CLIENTE:' : 'PAID BY / CLIENT:',
-      totalLabel: isEs ? 'MONTO TOTAL DEL CONCEPTO' : 'TOTAL ITEM AMOUNT',
-      signTitle: isEs ? 'CONSTANCIA OFICIAL DE PAGO RECIBIDO:' : 'OFFICIAL PAYMENT CONFIRMATION:',
-      showAcceptChecks: false,
-      legalClause: isEs
-        ? 'Se expide el presente recibo oficial como constancia de los pagos o abonos detallados en este documento.'
-        : 'This official receipt is issued as proof of the payments or deposits detailed in this document.',
-      sig1: isEs ? 'Firma del Cliente' : 'Client Signature',
-      sig2: isEs ? 'Recibido Por (Firma)' : 'Received By (Signature)'
-    },
-    change: {
-      badge: isEs ? 'ORDEN DE CAMBIO OFICIAL' : 'OFFICIAL CHANGE ORDER',
-      prefix: 'CO #',
-      filePrefix: isEs ? 'OrdenCambio_' : 'ChangeOrder_',
-      party1: isEs ? 'CONTRATISTA / EMISOR:' : 'CONTRACTOR / ISSUED BY:',
-      party2: isEs ? 'APROBADO POR / CLIENTE:' : 'APPROVED BY / CLIENT:',
-      totalLabel: isEs ? 'TOTAL ORDEN DE CAMBIO' : 'CHANGE ORDER TOTAL',
-      signTitle: isEs ? 'AUTORIZACIÓN DE ORDEN DE CAMBIO (ADICIONALES):' : 'CHANGE ORDER AUTHORIZATION:',
-      showAcceptChecks: true,
-      legalClause: isEs
-        ? 'El cliente autoriza los trabajos, cambios o partidas adicionales descritos en esta Orden de Cambio y aprueba sumar su costo al acuerdo principal.'
-        : 'The client authorizes the additional work or modifications described in this Change Order and agrees to add its cost to the main agreement.',
-      sig1: isEs ? 'Firma del Cliente' : 'Client Signature',
-      sig2: isEs ? 'Firma del Contratista' : 'Contractor Signature'
-    }
+function getDocMeta(docType) {
+  const L = I18N[currentLang] || I18N.es;
+  const arr = L.types[docType] || L.types.quote;
+  return {
+    menuName: arr[0], badge: arr[1], prefix: arr[2], party1: arr[3], party2: arr[4],
+    totalLabel: arr[5], signTitle: arr[6], legalClause: arr[7], sig1: arr[8], sig2: arr[9],
+    showAcceptChecks: !!arr[10], filePrefix: arr[2].replace(/[^a-zA-Z]/g,'') + '_'
   };
-  return map[docType] || map.quote;
 }
 
-function updateDocTypeLabels() {
-  const docType = document.getElementById('qb-doctype')?.value || 'quote';
-  const isEs = currentLang === 'es';
-  const lblComp = document.getElementById('lbl-comp');
-  const lblPhone = document.getElementById('lbl-phone');
-  const lblClient = document.getElementById('lbl-client');
-  const inpComp = document.getElementById('qb-comp');
-  const inpClient = document.getElementById('qb-client');
-
-  if (docType === 'billsale') {
-    if (lblComp) lblComp.innerText = isEs ? 'Nombre del Vendedor / Dueño Actual (Seller)' : 'Seller / Current Owner Name';
-    if (lblPhone) lblPhone.innerText = isEs ? 'Teléfono / Licencia o ID del Vendedor' : 'Seller Phone / License or ID';
-    if (lblClient) lblClient.innerText = isEs ? 'Nombre del Comprador (Buyer), Dirección y Lic./ID' : 'Buyer Name, Address & License/ID';
-    if (inpComp) inpComp.placeholder = isEs ? 'Ej. Juan Pérez (Vendedor)' : 'Ex. John Smith (Seller)';
-    if (inpClient) inpClient.placeholder = isEs ? 'Ej. Comprador - Dirección, Teléfono y # Licencia' : 'Ex. Buyer Name - Address, Phone & ID #';
-  } else if (docType === 'contract') {
-    if (lblComp) lblComp.innerText = isEs ? 'Contratista / Proveedor del Servicio' : 'Contractor / Service Provider';
-    if (lblPhone) lblPhone.innerText = isEs ? 'Teléfono / Registro / Licencia del Contratista' : 'Contractor Phone / Registration / ID';
-    if (lblClient) lblClient.innerText = isEs ? 'Cliente / Contratante y Dirección del Proyecto' : 'Client Name & Project Address';
-  } else {
-    if (lblComp) lblComp.innerText = isEs ? 'Nombre de tu Negocio o Profesional' : 'Your Business or Professional Name';
-    if (lblPhone) lblPhone.innerText = isEs ? 'Tu Teléfono / Email / Licencia / ID' : 'Your Phone / Email / License / ID';
-    if (lblClient) lblClient.innerText = isEs ? 'Cliente y Dirección / Detalles de Contacto' : 'Client Name & Address / Contact Info';
-  }
+function changeLang(val) {
+  currentLang = I18N[val] ? val : 'es';
+  localStorage.setItem('mcp_lang', currentLang);
+  applyLanguageUI();
 }
 
-function saveHistoryItem(labelEs, labelEn, resultText) {
-  let hist = [];
-  try { hist = JSON.parse(localStorage.getItem('mcp_calc_history') || '[]'); } catch(e) {}
-  const time = new Date().toLocaleDateString([],{month:'2-digit',day:'2-digit'}) + ' ' + new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-  hist.unshift({es:labelEs, en:labelEn, res:resultText, time:time});
-  if (hist.length > 12) hist = hist.slice(0,12);
-  localStorage.setItem('mcp_calc_history', JSON.stringify(hist));
-  renderHistory();
+function changeCurrency(val) {
+  currentCurr = val;
+  localStorage.setItem('mcp_currency', val);
+  recalcMasterTotals();
 }
-
-function renderHistory() {
-  const list = document.getElementById('calcHistoryList');
-  if (!list) return;
-  let hist = [];
-  try { hist = JSON.parse(localStorage.getItem('mcp_calc_history') || '[]'); } catch(e) {}
-  if (hist.length === 0) {
-    list.innerHTML = '<li style="color:#94a3b8;">' + (currentLang==='es' ? 'Tus estimados, facturas y contratos generados aparecerán aquí.' : 'Your recently generated estimates, invoices, and contracts will appear here.') + '</li>';
-    return;
-  }
-  list.innerHTML = hist.map(item => '<li><span><strong>' + (currentLang==='es'?item.es:item.en) + '</strong> <small style="color:#94a3b8;">(' + item.time + ')</small></span><strong style="color:#0f172a;">' + item.res + '</strong></li>').join('');
-}
-
-function clearCalcHistory() { localStorage.removeItem('mcp_calc_history'); renderHistory(); }
-
-function clearLogoPicture() {
-  uploadedLogoData = '';
-  localStorage.removeItem('mcp_company_logo');
-  const inp = document.getElementById('qb-logo-input');
-  if (inp) inp.value = '';
-  const wrap = document.getElementById('logoIdentifiedBox');
-  if (wrap) wrap.style.display = 'none';
-}
-
-function resetBuilderToZero() {
-  customLineItems = [{desc:'', qty:'1', price:''}];
-  clearLogoPicture();
-  uploadedHwQuoteImg = '';
-  localStorage.removeItem('mcp_hw_quote_img');
-  const hwInp = document.getElementById('qb-hw-input');
-  if (hwInp) hwInp.value = '';
-  localStorage.removeItem('mcp_custom_lines'); localStorage.removeItem('mcp_checkout_state');
-  ['qb-tax','qb-dep'].forEach(id => { const el=document.getElementById(id); if(el) el.value='0'; });
-  ['qb-comp','qb-phone','qb-client','qb-notes'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
-  renderCustomLines(); recalcMasterTotals();
-}
-
-function syncLockVisualState() {
-  document.body.classList.toggle('locked-view', !isPaidUser);
-  const keyEl = document.getElementById('ownerKeyBtn');
-  if (keyEl) keyEl.innerText = isPaidUser ? '🔑 Modo Dueño: ON (Solo esta sesión)' : '🔒 Modo Cliente: ON';
-}
-
-function activateOwnerMode() {
-  isPaidUser = !isPaidUser; syncLockVisualState(); updatePayButtonState(); recalcMasterTotals();
-  alert(isPaidUser ? '✅ Modo Dueño Activado temporalmente para esta sesión.' : '🔒 Modo Cliente Activado ($1.99 en Stripe).');
-}
-
-function openDocPreviewModal(defaultType) {
-  const docType = defaultType || document.getElementById('qb-doctype')?.value || 'quote';
-  renderModalSheet(docType);
-  document.getElementById('docPreviewModal').style.display = 'flex';
-}
-function closeDocPreviewModal() { document.getElementById('docPreviewModal').style.display = 'none'; }
-
-function renderModalSheet(mode) {
-  const isEs = currentLang === 'es';
-  const meta = getDocMeta(mode, isEs);
-  document.getElementById('btnSampleQuote')?.classList.toggle('active', mode === 'quote');
-  document.getElementById('btnSampleInv')?.classList.toggle('active', mode === 'invoice');
-  document.getElementById('btnSampleSale')?.classList.toggle('active', mode === 'billsale');
-  document.getElementById('btnSampleCont')?.classList.toggle('active', mode === 'contract');
-
-  const paper = document.getElementById('modalPaperContent');
-  const unlockBtn = document.getElementById('modalUnlockBtn');
-  if (!paper) return;
-  unlockBtn.innerText = isPaidUser
-    ? (isEs ? '📲 Enviar Mi Archivo PDF Oficial por WhatsApp Ahora' : '📲 Send My Official PDF File via WhatsApp Now')
-    : (isEs ? '🔒 Generar y Enviar Mi Archivo PDF Oficial ($1.99)' : '🔒 Generate & Send My Official PDF File ($1.99)');
-
-  const isSale = mode === 'billsale';
-  const row1Desc = isSale
-    ? (isEs ? 'Vehículo / Equipo: Toyota Tacoma TRD 2022, Color Blanco, VIN #5TFCZ5AN0NX00000' : 'Vehicle / Equipment: 2022 Toyota Tacoma TRD, White, VIN #5TFCZ5AN0NX00000')
-    : (isEs ? 'Servicio Principal / Ejecución de Obra según alcance acordado' : 'Primary Service / Project Execution as agreed');
-  const row1Amt = isSale ? '$24,500.00' : '$1,850.00';
-  const row2Html = isSale ? '' : ('<tr><td><strong>2. ' + (isEs?'Equipos, Materiales e Insumos':'Equipment, Materials & Supplies') + '</strong> <small>(Cant: 5 × $200.00)</small></td><td>$1,000.00</td></tr>');
-  const totAmt = isSale ? '$24,500.00' : '$2,900.00';
-
-  paper.innerHTML =
-    '<div class="lux-sample-ribbon">' + (isEs ? '✨ VISTA PREVIA DEL PDF • Así de nítido se verá el archivo PDF de 1 página que enviarás por WhatsApp' : '✨ PDF PREVIEW • This is how the 1-page official PDF file you send via WhatsApp will look') + '</div>' +
-    '<div class="lux-header"><div class="lux-brand"><div class="lux-logo-box"><img src="1793842789444.jpg" alt="Logo" onerror="this.style.display=\'none\'"></div><div><div class="lux-comp-name">APEX BUSINESS SOLUTIONS LLC</div><div class="lux-comp-sub">' + meta.party1 + '<br>Tel / ID: (787) 555-0199</div></div></div><div class="lux-badge-box"><div class="lux-doc-title">' + meta.badge + '</div><div class="lux-doc-num">' + meta.prefix + '2026-0842</div><div class="lux-doc-date">' + (isEs?'Fecha: 05/11/2026':'Date: 11/05/2026') + '</div></div></div>' +
-    '<div class="lux-client-grid"><div><strong>' + meta.party2 + '</strong><span>Carlos M. Rodríguez</span><div style="color:#475569;margin-top:2px;">Tel / ID: (787) 555-8420</div></div><div><strong>' + (isEs?'DIRECCIÓN / DETALLE:':'ADDRESS / DETAIL:') + '</strong><span>San Juan, PR</span><div style="color:#475569;margin-top:2px;">' + (isSale?(isEs?'Traspaso de Propiedad':'Property Transfer'):(isEs?'Servicios Profesionales':'Professional Services')) + '</div></div></div>' +
-    '<table class="lux-table"><thead><tr><th>' + (isEs?'Descripción / Concepto':'Description / Item') + '</th><th>' + (isEs?'Monto (USD)':'Amount (USD)') + '</th></tr></thead><tbody>' +
-    '<tr><td><strong>1. ' + row1Desc + '</strong></td><td>' + row1Amt + '</td></tr>' +
-    row2Html +
-    '<tr class="lux-tot-row"><td>' + meta.totalLabel + ' (USD)</td><td>' + totAmt + '</td></tr></tbody></table>' +
-    '<div class="lux-sign-box"><div style="font-size:0.76rem;font-weight:900;text-transform:uppercase;color:#0f172a;">' + meta.signTitle + '</div>' +
-    (meta.showAcceptChecks ? '<div class="lux-checks"><span>☑️ ACEPTO</span><span>⬜ NO ACEPTO</span></div>' : '') +
-    '<div style="font-size:0.74rem;color:#334155;margin-top:4px;line-height:1.35;">' + meta.legalClause + '</div>' +
-    '<div class="lux-signs"><div class="lux-sign-line">' + meta.sig1 + '</div><div class="lux-sign-line">' + meta.sig2 + '</div><div class="lux-sign-line">' + (isEs?'Fecha':'Date') + '</div></div></div>';
-}
-
-function changeCurrency(val) { currentCurr = val; localStorage.setItem('mcp_currency',val); recalcMasterTotals(); }
-function toggleLang() { currentLang = currentLang==='es'?'en':'es'; localStorage.setItem('mcp_lang',currentLang); applyLanguageUI(); }
 
 function applyLanguageUI() {
+  const L = I18N[currentLang] || I18N.es;
   document.documentElement.lang = currentLang;
-  document.getElementById('langBtn').innerText = currentLang==='es'?'🇺🇸 EN':'🇪🇸 ES';
-  document.querySelectorAll('[data-es]').forEach(el => { el.innerText = el.getAttribute('data-'+currentLang); });
-  updateDocTypeLabels(); renderCustomLines(); updatePayButtonState(); syncLockVisualState(); recalcMasterTotals(); renderHistory();
+  document.getElementById('langSelect').value = currentLang;
+  document.getElementById('currSelect').value = currentCurr;
+
+  document.getElementById('ui-sub').innerText = L.sub;
+  document.getElementById('ui-h2').innerText = L.h2;
+  document.getElementById('ui-reset').innerText = L.reset;
+  document.getElementById('ui-sample-btn').innerText = L.sampleBtn;
+  document.getElementById('ui-sec1').innerText = L.sec1;
+  document.getElementById('ui-lbl-doctype').innerText = L.docType;
+  document.getElementById('ui-lbl-docnum').innerText = L.docNum;
+  document.getElementById('lbl-comp').innerText = L.comp;
+  document.getElementById('lbl-phone').innerText = L.phone;
+  document.getElementById('lbl-client').innerText = L.client;
+  document.getElementById('ui-lbl-logo').innerText = L.logo;
+  document.getElementById('ui-sec2').innerText = L.sec2;
+  document.getElementById('ui-add-line').innerText = L.addLine;
+  document.getElementById('ui-sec3').innerText = L.sec3;
+  document.getElementById('ui-lbl-tax').innerText = L.tax;
+  document.getElementById('ui-lbl-dep').innerText = L.dep;
+  document.getElementById('ui-lbl-notes').innerText = L.notes;
+  document.getElementById('ui-lbl-attach').innerText = L.attach;
+  document.getElementById('ui-lbl-attach-chk').innerText = L.attachChk;
+  document.getElementById('ui-bal-lbl').innerText = L.balLbl;
+  document.getElementById('ui-hist-title').innerText = L.histTitle;
+  document.getElementById('ui-hist-clear').innerText = L.histClear;
+
+  const sel = document.getElementById('qb-doctype');
+  const prevVal = sel.value || 'quote';
+  sel.innerHTML = Object.keys(L.types).map(k => '<option value="'+k+'">'+L.types[k][0]+'</option>').join('');
+  sel.value = prevVal;
+
+  renderCustomLines();
+  updatePayButtonState();
+  syncLockVisualState();
+  recalcMasterTotals();
+  renderHistory();
 }
 
 function addCustomLine(desc, qty, price) {
@@ -573,20 +566,16 @@ function syncCustomLinesFromDOM() {
 
 function renderCustomLines() {
   const wrap = document.getElementById('customLinesContainer'); if (!wrap) return;
-  const isEs = currentLang==='es';
-  const phD = isEs ? 'Escribe aquí la descripción libre (ej. Vehículo/Marca/Modelo/Serie o Servicios/Medidas)...' : 'Write open description here (e.g. Vehicle/Make/Model/VIN or Services/Measurements)...';
-  const lblQ = isEs ? 'Cantidad' : 'Quantity';
-  const lblP = isEs ? 'Precio Unitario ($)' : 'Unit Price ($)';
-  const lblItem = isEs ? 'Partida / Línea #' : 'Line Item #';
+  const L = I18N[currentLang] || I18N.es;
   wrap.innerHTML = customLineItems.map((item,idx) =>
     '<div class="line-item-card">' +
-      '<div class="line-item-top"><span>' + lblItem + (idx+1) + '</span>' +
+      '<div class="line-item-top"><span>' + L.itemLbl + (idx+1) + '</span>' +
       (customLineItems.length > 1 ? '<button type="button" class="cart-remove" onclick="removeCustomLine('+idx+')">✕</button>' : '') +
       '</div>' +
-      '<textarea class="cl-desc" placeholder="'+phD+'" oninput="recalcMasterTotals()">'+(item.desc||'')+'</textarea>' +
+      '<textarea class="cl-desc" placeholder="'+L.descPh+'" oninput="recalcMasterTotals()">'+(item.desc||'')+'</textarea>' +
       '<div class="line-item-bottom">' +
-        '<div><label>'+lblQ+'</label><input type="number" step="any" class="cl-qty" value="'+(item.qty||'1')+'" oninput="recalcMasterTotals()"></div>' +
-        '<div><label>'+lblP+'</label><input type="number" step="any" class="cl-price" placeholder="0.00" value="'+(item.price||'')+'" oninput="recalcMasterTotals()"></div>' +
+        '<div><label>'+L.qty+'</label><input type="number" step="any" class="cl-qty" value="'+(item.qty||'1')+'" oninput="recalcMasterTotals()"></div>' +
+        '<div><label>'+L.price+'</label><input type="number" step="any" class="cl-price" placeholder="0.00" value="'+(item.price||'')+'" oninput="recalcMasterTotals()"></div>' +
       '</div>' +
     '</div>'
   ).join('');
@@ -608,10 +597,26 @@ function handleHwQuoteUpload(input) {
   reader.onload = function(e) { uploadedHwQuoteImg = e.target.result; };
   reader.readAsDataURL(file);
 }
+function clearLogoPicture() {
+  uploadedLogoData = '';
+  localStorage.removeItem('mcp_company_logo');
+  const inp = document.getElementById('qb-logo-input'); if (inp) inp.value = '';
+  const wrap = document.getElementById('logoIdentifiedBox'); if (wrap) wrap.style.display = 'none';
+}
+
+function resetBuilderToZero() {
+  customLineItems = [{desc:'', qty:'1', price:''}];
+  clearLogoPicture();
+  uploadedHwQuoteImg = '';
+  localStorage.removeItem('mcp_hw_quote_img');
+  localStorage.removeItem('mcp_custom_lines'); localStorage.removeItem('mcp_checkout_state');
+  ['qb-tax','qb-dep'].forEach(id => { const el=document.getElementById(id); if(el) el.value='0'; });
+  ['qb-comp','qb-phone','qb-client','qb-notes'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
+  renderCustomLines(); recalcMasterTotals();
+}
 
 function recalcMasterTotals() {
   syncCustomLinesFromDOM();
-  const isEs = currentLang==='es';
   const tax = parseFloat(document.getElementById('qb-tax')?.value)||0;
   const dep = parseFloat(document.getElementById('qb-dep')?.value)||0;
   let grandTotal = 0;
@@ -623,33 +628,77 @@ function recalcMasterTotals() {
   grandTotal += tax;
   const balance = Math.max(0, grandTotal - dep);
   const sumLine = document.getElementById('contractorSummaryLine'), bigTot = document.getElementById('contractorBigTotal');
-  if (sumLine) sumLine.innerText = (isEs?'Subtotal + Tax: ':'Subtotal + Tax: ')+formatUSD(grandTotal)+(dep>0?((isEs?' | Menos Depósito/Abono: -':' | Less Deposit/Paid: -')+formatUSD(dep)):'');
+  if (sumLine) sumLine.innerText = 'Total: ' + formatUSD(grandTotal) + (dep>0 ? (' | -' + formatUSD(dep)) : '');
   if (bigTot) bigTot.innerText = formatUSD(balance);
 }
 
 function updatePayButtonState() {
+  const L = I18N[currentLang] || I18N.es;
   const btn = document.getElementById('finalActionBtn'), waBtn = document.getElementById('finalWaBtn'), note = document.getElementById('finalActionNote');
   if (!btn) return;
-  const isEs = currentLang==='es';
-  if (isPaidUser) {
-    waBtn.innerText = isEs ? '📲 Enviar Archivo PDF Oficial (1 Página) por WhatsApp' : '📲 Send Official 1-Page PDF File via WhatsApp';
-    btn.innerText = isEs ? '📥 Descargar / Guardar Archivo PDF en mi Teléfono' : '📥 Download / Save PDF File to Phone';
-    note.innerText = isEs ? '✅ Modo PDF Vectorial Directo Activo: Genera un archivo .PDF oficial de 1 página y lo adjunta directo a WhatsApp' : '✅ Direct Vector PDF Active: Generates a real 1-page .PDF file and attaches it to WhatsApp';
-  } else {
-    waBtn.innerText = isEs ? '🔒 Generar y Enviar Archivo PDF Oficial por WhatsApp ($1.99)' : '🔒 Generate & Send Official PDF File via WhatsApp ($1.99)';
-    btn.innerText = isEs ? '🔒 Descargar Archivo PDF Oficial con Mi Logo ($1.99)' : '🔒 Download Official PDF File with My Logo ($1.99)';
-    note.innerText = isEs ? '🔒 Paga $1.99 en Stripe para generar y enviar el archivo PDF oficial de 1 página' : '🔒 Pay $1.99 via Stripe to generate and send the official 1-page PDF file';
-  }
+  waBtn.innerText = isPaidUser ? L.waPaid : L.waLock;
+  btn.innerText = isPaidUser ? L.dlPaid : L.dlLock;
+  note.innerText = isPaidUser ? L.notePaid : L.noteLock;
 }
+
+function syncLockVisualState() {
+  const keyEl = document.getElementById('ownerKeyBtn');
+  if (keyEl) keyEl.innerText = isPaidUser ? '🔑 Modo Dueño: ON' : '🔒 Modo Cliente: ON';
+}
+
+function activateOwnerMode() {
+  isPaidUser = !isPaidUser; syncLockVisualState(); updatePayButtonState();
+}
+
+function openDocPreviewModal() {
+  const docType = document.getElementById('qb-doctype')?.value || 'quote';
+  renderModalSheet(docType);
+  document.getElementById('docPreviewModal').style.display = 'flex';
+}
+function closeDocPreviewModal() { document.getElementById('docPreviewModal').style.display = 'none'; }
+
+function renderModalSheet(mode) {
+  const L = I18N[currentLang] || I18N.es;
+  const meta = getDocMeta(mode);
+  const paper = document.getElementById('modalPaperContent');
+  if (!paper) return;
+  paper.innerHTML =
+    '<div class="lux-header"><div class="lux-brand"><div class="lux-logo-box"><img src="1793842789444.jpg" alt="Logo"></div><div><div style="font-weight:900;font-size:1.1rem;">APEX SOLUTIONS LLC</div><div style="font-size:0.75rem;color:#475569;">' + meta.party1 + ' (787) 555-0199</div></div></div><div class="lux-badge-box"><div style="font-weight:900;font-size:0.86rem;">' + meta.badge + '</div><div style="color:#b45309;font-weight:800;font-size:0.82rem;">' + meta.prefix + '2026-0842</div></div></div>' +
+    '<div style="background:#f8fafc;border:1px solid #cbd5e1;padding:0.55rem 0.75rem;border-radius:6px;font-size:0.8rem;"><strong>' + meta.party2 + '</strong> Carlos M. Rodríguez — San Juan</div>' +
+    '<table class="lux-table"><thead><tr><th>Description / Item</th><th>' + currentCurr + '</th></tr></thead><tbody>' +
+    '<tr><td><strong>1. Primary Item / Contract Scope / Property</strong></td><td>' + formatUSD(2450) + '</td></tr>' +
+    '<tr class="lux-tot-row"><td>' + meta.totalLabel + '</td><td>' + formatUSD(2450) + '</td></tr></tbody></table>' +
+    '<div class="lux-sign-box"><div style="font-size:0.76rem;font-weight:900;">' + meta.signTitle + '</div>' +
+    '<div style="font-size:0.74rem;color:#334155;margin-top:4px;line-height:1.35;">' + meta.legalClause + '</div>' +
+    '<div class="lux-signs"><div class="lux-sign-line">' + meta.sig1 + '</div><div class="lux-sign-line">' + meta.sig2 + '</div><div class="lux-sign-line">' + L.dateLbl + '</div></div></div>';
+}
+
+function saveHistoryItem(label, resultText) {
+  let hist = [];
+  try { hist = JSON.parse(localStorage.getItem('mcp_calc_history') || '[]'); } catch(e) {}
+  const time = new Date().toLocaleDateString([],{month:'2-digit',day:'2-digit'});
+  hist.unshift({label:label, res:resultText, time:time});
+  if (hist.length > 12) hist = hist.slice(0,12);
+  localStorage.setItem('mcp_calc_history', JSON.stringify(hist));
+  renderHistory();
+}
+
+function renderHistory() {
+  const list = document.getElementById('calcHistoryList'); if (!list) return;
+  let hist = [];
+  try { hist = JSON.parse(localStorage.getItem('mcp_calc_history') || '[]'); } catch(e) {}
+  if (hist.length === 0) { list.innerHTML = '<li style="color:#94a3b8;">---</li>'; return; }
+  list.innerHTML = hist.map(item => '<li><span><strong>' + (item.label||item.es||'') + '</strong> <small>(' + item.time + ')</small></span><strong>' + item.res + '</strong></li>').join('');
+}
+function clearCalcHistory() { localStorage.removeItem('mcp_calc_history'); renderHistory(); }
 
 function saveAllBuilderState() {
   syncCustomLinesFromDOM();
   const docType = document.getElementById('qb-doctype')?.value || 'quote';
-  const metaEs = getDocMeta(docType, true);
-  const metaEn = getDocMeta(docType, false);
-  const clientName = document.getElementById('qb-client')?.value.trim() || 'Cliente';
+  const meta = getDocMeta(docType);
+  const clientName = document.getElementById('qb-client')?.value.trim() || 'Client';
   const totalTxt = document.getElementById('contractorBigTotal')?.innerText || '$0.00';
-  if (totalTxt !== '$0.00') saveHistoryItem(metaEs.badge + ': ' + clientName, metaEn.badge + ': ' + clientName, totalTxt);
+  saveHistoryItem(meta.badge + ': ' + clientName, totalTxt);
   const inputs = {};
   document.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => {
     if (el.type==='checkbox') inputs[el.id] = el.checked;
@@ -665,28 +714,24 @@ async function buildPureVectorPDF() {
   syncCustomLinesFromDOM();
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'letter' });
-
-  const isEs = currentLang === 'es';
+  const L = I18N[currentLang] || I18N.es;
   const docType = document.getElementById('qb-doctype')?.value || 'quote';
-  const meta = getDocMeta(docType, isEs);
+  const meta = getDocMeta(docType);
   const docNum = document.getElementById('qb-docnum')?.value.trim() || '2026-0101';
   const comp = document.getElementById('qb-comp')?.value.trim() || 'Mr. Invoice Pro';
   const phone = document.getElementById('qb-phone')?.value.trim() || '';
-  const client = document.getElementById('qb-client')?.value.trim() || (isEs ? 'Parte Contratante / Cliente' : 'Client / Buyer');
+  const client = document.getElementById('qb-client')?.value.trim() || 'Client';
   const tax = parseFloat(document.getElementById('qb-tax')?.value) || 0;
   const dep = parseFloat(document.getElementById('qb-dep')?.value) || 0;
   const notes = document.getElementById('qb-notes')?.value.trim() || '';
-  const dateStr = new Date().toLocaleDateString(isEs ? 'es-PR' : 'en-US');
+  const dateStr = new Date().toLocaleDateString();
 
   doc.setFillColor(15, 23, 42);
   doc.rect(0, 0, 215.9, 6, 'F');
 
   let leftX = 14;
   if (uploadedLogoData) {
-    try {
-      doc.addImage(uploadedLogoData, 14, 12, 22, 22);
-      leftX = 40;
-    } catch (e) {}
+    try { doc.addImage(uploadedLogoData, 14, 12, 22, 22); leftX = 40; } catch (e) {}
   } else {
     doc.setFillColor(15, 23, 42);
     doc.roundedRect(14, 12, 20, 20, 3, 3, 'F');
@@ -703,25 +748,24 @@ async function buildPureVectorPDF() {
   doc.text(meta.party1, leftX, 15);
 
   doc.setTextColor(15, 23, 42);
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(13);
-  doc.text(comp.substring(0, 38), leftX, 21.5);
+  doc.setFontSize(12.5);
+  doc.text(comp.substring(0, 36), leftX, 21.5);
 
   if (phone) {
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(9.5);
+    doc.setFontSize(9);
     doc.setTextColor(71, 85, 105);
-    doc.text((isEs ? 'Tel / ID: ' : 'Phone / ID: ') + phone, leftX, 27.5);
+    doc.text(phone, leftX, 27.5);
   }
 
   doc.setFillColor(248, 250, 252);
   doc.setDrawColor(203, 213, 225);
-  doc.roundedRect(130, 11, 72, 22, 2, 2, 'FD');
+  doc.roundedRect(126, 11, 76, 22, 2, 2, 'FD');
   doc.setFillColor(234, 179, 8);
   doc.rect(200, 11, 2, 22, 'F');
 
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(9.5);
+  doc.setFontSize(8.8);
   doc.setTextColor(15, 23, 42);
   doc.text(meta.badge, 197, 17.5, { align: 'right' });
 
@@ -730,9 +774,9 @@ async function buildPureVectorPDF() {
   doc.text(meta.prefix + docNum, 197, 23.5, { align: 'right' });
 
   doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8.5);
+  doc.setFontSize(8.2);
   doc.setTextColor(100, 116, 139);
-  doc.text((isEs ? 'Fecha: ' : 'Date: ') + dateStr, 197, 29.5, { align: 'right' });
+  doc.text(L.dateLbl + ': ' + dateStr, 197, 29.5, { align: 'right' });
 
   doc.setDrawColor(15, 23, 42);
   doc.setLineWidth(0.7);
@@ -748,7 +792,7 @@ async function buildPureVectorPDF() {
   doc.setTextColor(100, 116, 139);
   doc.text(meta.party2, 18, 46.5);
 
-  doc.setFontSize(10.5);
+  doc.setFontSize(10);
   doc.setTextColor(15, 23, 42);
   doc.text(client.substring(0, 85), 18, 52.5);
 
@@ -756,39 +800,29 @@ async function buildPureVectorPDF() {
   doc.setFillColor(15, 23, 42);
   doc.rect(14, y, 188, 9, 'F');
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(9.5);
+  doc.setFontSize(9.2);
   doc.setTextColor(255, 255, 255);
-  doc.text(isEs ? 'Descripción / Concepto / Bien o Servicio' : 'Description / Item / Property or Service', 18, y + 6);
-  doc.text(isEs ? 'Monto (' + currentCurr + ')' : 'Amount (' + currentCurr + ')', 198, y + 6, { align: 'right' });
+  doc.text(L.sec2.replace('2️⃣ ',''), 18, y + 6);
+  doc.text(currentCurr, 198, y + 6, { align: 'right' });
   y += 9;
 
   let grandTotal = 0;
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(9.5);
-
   customLineItems.forEach((it, idx) => {
     const q = parseFloat(it.qty) || 1;
     const p = parseFloat(it.price) || 0;
     const lineTotal = q * p;
     if (lineTotal > 0 || it.desc.trim() !== '') {
       grandTotal += lineTotal;
-      const rawDesc = (idx + 1) + '. ' + (it.desc.trim() || (isEs ? 'Concepto' : 'Item')) + (q !== 1 ? ' (Cant: ' + q + ' x ' + formatUSD(p) + ')' : '');
+      const rawDesc = (idx + 1) + '. ' + (it.desc.trim() || '-') + (q !== 1 ? ' (' + q + ' x ' + formatUSD(p) + ')' : '');
       const splitDesc = doc.splitTextToSize(rawDesc, 136);
       const rowH = Math.max(9, splitDesc.length * 5 + 4);
-
-      if (y + rowH > 215) {
-        doc.addPage();
-        y = 20;
-      }
-
+      if (y + rowH > 215) { doc.addPage(); y = 20; }
       doc.setDrawColor(203, 213, 225);
       doc.rect(14, y, 146, rowH);
       doc.rect(160, y, 42, rowH);
-
       doc.setTextColor(15, 23, 42);
       doc.setFont('helvetica', 'normal');
       doc.text(splitDesc, 17, y + 6);
-
       doc.setFont('helvetica', 'bold');
       doc.text(formatUSD(lineTotal), 198, y + 6, { align: 'right' });
       y += rowH;
@@ -796,12 +830,10 @@ async function buildPureVectorPDF() {
   });
 
   if (tax > 0) {
-    doc.setDrawColor(203, 213, 225);
     doc.rect(14, y, 146, 8.5);
     doc.rect(160, y, 42, 8.5);
     doc.setFont('helvetica', 'normal');
-    doc.setTextColor(15, 23, 42);
-    doc.text(isEs ? 'Impuestos / Tax / Otros Cargos' : 'Taxes / Other Fees', 17, y + 5.8);
+    doc.text(L.tax, 17, y + 5.8);
     doc.setFont('helvetica', 'bold');
     doc.text(formatUSD(tax), 198, y + 5.8, { align: 'right' });
     grandTotal += tax;
@@ -809,12 +841,10 @@ async function buildPureVectorPDF() {
   }
 
   doc.setFillColor(254, 243, 199);
-  doc.setDrawColor(203, 213, 225);
   doc.rect(14, y, 146, 10, 'FD');
   doc.rect(160, y, 42, 10, 'FD');
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(10);
-  doc.setTextColor(15, 23, 42);
   doc.text(meta.totalLabel + ' (' + currentCurr + ')', 17, y + 6.8);
   doc.text(formatUSD(grandTotal), 198, y + 6.8, { align: 'right' });
   y += 10;
@@ -824,33 +854,27 @@ async function buildPureVectorPDF() {
     doc.setFillColor(255, 255, 255);
     doc.rect(14, y, 146, 8.5, 'FD');
     doc.rect(160, y, 42, 8.5, 'FD');
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(9.5);
     doc.setTextColor(6, 95, 70);
-    doc.text(isEs ? 'MONTO PAGADO / ABONO RECIBIDO' : 'AMOUNT PAID / DEPOSIT RECEIVED', 17, y + 5.8);
+    doc.text(L.paidAmt, 17, y + 5.8);
     doc.text(formatUSD(dep > 0 ? dep : grandTotal), 198, y + 5.8, { align: 'right' });
     y += 8.5;
 
     doc.setFillColor(220, 252, 231);
     doc.rect(14, y, 146, 10, 'FD');
     doc.rect(160, y, 42, 10, 'FD');
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(10.5);
-    doc.setTextColor(6, 95, 70);
-    doc.text(isEs ? 'BALANCE RESTANTE / PENDIENTE' : 'REMAINING BALANCE DUE', 17, y + 6.8);
+    doc.text(L.remBal, 17, y + 6.8);
     doc.text(formatUSD(dep > 0 ? balance : 0), 198, y + 6.8, { align: 'right' });
     y += 10;
   }
 
   if (notes) {
     y += 4;
-    const splitNotes = doc.splitTextToSize((isEs ? 'Condiciones Especiales / Notas / Garantía: ' : 'Special Conditions / Notes / Warranty: ') + notes, 180);
+    const splitNotes = doc.splitTextToSize(L.notes + ': ' + notes, 180);
     const notesH = splitNotes.length * 4.6 + 5;
     doc.setFillColor(248, 250, 252);
-    doc.setDrawColor(203, 213, 225);
     doc.roundedRect(14, y, 188, notesH, 1.5, 1.5, 'FD');
     doc.setFont('helvetica', 'bolditalic');
-    doc.setFontSize(8.8);
+    doc.setFontSize(8.5);
     doc.setTextColor(30, 41, 59);
     doc.text(splitNotes, 18, y + 5.2);
     y += notesH;
@@ -859,26 +883,21 @@ async function buildPureVectorPDF() {
   y += 6;
   const splitLegal = doc.splitTextToSize(meta.legalClause, 180);
   const boxH = Math.max(38, 24 + splitLegal.length * 4.2 + (meta.showAcceptChecks ? 6 : 0));
-
-  if (y + boxH > 268) {
-    doc.addPage();
-    y = 20;
-  }
+  if (y + boxH > 268) { doc.addPage(); y = 20; }
   doc.setDrawColor(15, 23, 42);
-  doc.setLineWidth(0.4);
   doc.roundedRect(14, y, 188, boxH, 2, 2);
 
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(8.8);
+  doc.setFontSize(8.5);
   doc.setTextColor(15, 23, 42);
   doc.text(meta.signTitle, 18, y + 6.5);
 
   let clauseStartY = y + 12;
   if (meta.showAcceptChecks) {
     doc.rect(18, y + 9, 4, 4);
-    doc.text(isEs ? 'ACEPTO Y AUTORIZO' : 'I ACCEPT & AUTHORIZE', 24, y + 12.5);
+    doc.text(L.accept, 24, y + 12.5);
     doc.rect(88, y + 9, 4, 4);
-    doc.text(isEs ? 'NO ACEPTO' : 'DECLINE', 94, y + 12.5);
+    doc.text(L.decline, 94, y + 12.5);
     clauseStartY = y + 18;
   }
 
@@ -888,27 +907,20 @@ async function buildPureVectorPDF() {
   doc.text(splitLegal, 18, clauseStartY);
 
   const sigY = y + boxH - 6.5;
-  doc.setDrawColor(15, 23, 42);
   doc.line(18, sigY, 82, sigY);
   doc.line(90, sigY, 154, sigY);
   doc.line(162, sigY, 198, sigY);
 
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(8);
-  doc.setTextColor(51, 65, 85);
   doc.text(meta.sig1, 18, sigY + 4);
   doc.text(meta.sig2, 90, sigY + 4);
-  doc.text(isEs ? 'Fecha' : 'Date', 162, sigY + 4);
+  doc.text(L.dateLbl, 162, sigY + 4);
 
   const attachCheck = document.getElementById('qb-hw-print-attach')?.checked;
   if (attachCheck && uploadedHwQuoteImg) {
     try {
       doc.addPage();
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(12);
-      doc.setTextColor(15, 23, 42);
-      doc.text(isEs ? 'Anexo / Identificación / Documento Adjunto' : 'Attached Identification / Document', 14, 18);
-      doc.addImage(uploadedHwQuoteImg, 14, 24, 185, 210);
+      doc.addImage(uploadedHwQuoteImg, 14, 20, 185, 210);
     } catch (e) {}
   }
 
@@ -919,20 +931,13 @@ async function buildPureVectorPDF() {
 }
 
 async function processOfficialPDF(actionMode) {
-  const waBtn = document.getElementById('finalWaBtn');
-  waBtn.innerText = currentLang === 'es' ? '⏳ Preparando PDF Oficial...' : '⏳ Preparing Official PDF...';
-
   try {
     const { doc, pdfBlob, fileName } = await buildPureVectorPDF();
     updatePayButtonState();
-
     if (actionMode === 'share' && navigator.canShare) {
       const pdfFile = new File([pdfBlob], fileName, { type: 'application/pdf' });
       if (navigator.canShare({ files: [pdfFile] })) {
-        await navigator.share({
-          files: [pdfFile],
-          title: fileName
-        });
+        await navigator.share({ files: [pdfFile], title: fileName });
         return;
       }
     }
@@ -956,28 +961,7 @@ function handleFinalDownloadClick() {
   processOfficialPDF('download');
 }
 
-function restoreIfReturningFromStripe() {
-  if (!isReturningFromStripe) {
-    localStorage.removeItem('mcp_custom_lines');
-    localStorage.removeItem('mcp_checkout_state');
-    localStorage.removeItem('mcp_company_logo');
-    localStorage.removeItem('mcp_hw_quote_img');
-    uploadedLogoData = '';
-    uploadedHwQuoteImg = '';
-    return;
-  }
-  try { const savedLines = JSON.parse(localStorage.getItem('mcp_custom_lines')||'[]'); if (Array.isArray(savedLines)&&savedLines.length>0) customLineItems = savedLines; } catch(e) {}
-  uploadedLogoData = localStorage.getItem('mcp_company_logo') || '';
-  uploadedHwQuoteImg = localStorage.getItem('mcp_hw_quote_img') || '';
-  try {
-    const st = JSON.parse(localStorage.getItem('mcp_checkout_state')||'null');
-    if (st && st.inputs) Object.keys(st.inputs).forEach(id => { const el = document.getElementById(id); if (!el) return; if (el.type==='checkbox') el.checked = !!st.inputs[id]; else el.value = st.inputs[id]; });
-  } catch(e) {}
-}
-
 window.addEventListener('DOMContentLoaded', function() {
-  restoreIfReturningFromStripe();
-  if (uploadedLogoData) showIdentifiedLogoPicture(uploadedLogoData);
   applyLanguageUI();
 });
 </script>
