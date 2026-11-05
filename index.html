@@ -112,6 +112,7 @@ textarea { resize:vertical; min-height:62px; line-height:1.4; }
 .contractor-numbers-bar strong { font-size:1.3rem; color:#6ee7b7; }
 .wa-master-btn { width:100%; background:#25D366; color:#052e16; border:2px solid #bbf7d0; padding:0.95rem; border-radius:8px; font-size:0.95rem; font-weight:900; cursor:pointer; margin-top:0.4rem; }
 .stripe-pay-btn { width:100%; background:#1e293b; color:#fde047; border:1.5px solid var(--accent); padding:0.9rem; border-radius:8px; font-size:0.92rem; font-weight:900; cursor:pointer; margin-top:0.55rem; }
+.pro-pass-btn { width:100%; background:linear-gradient(135deg,#f59e0b 0%,#d97706 100%); color:#090d16; border:2px solid #fef08a; padding:0.85rem; border-radius:8px; font-size:0.88rem; font-weight:900; cursor:pointer; margin-top:0.55rem; box-shadow:0 4px 12px rgba(245,158,11,0.3); }
 .stripe-note { text-align:center; font-size:0.74rem; color:#cbd5e1; margin-top:0.45rem; line-height:1.4; }
 
 .history-card { background:var(--card); padding:1.15rem; border-radius:12px; margin-top:1.15rem; border:1px solid #cbd5e1; }
@@ -142,6 +143,7 @@ textarea { resize:vertical; min-height:62px; line-height:1.4; }
 .lux-sign-box { border:1.5px solid #0f172a; border-radius:8px; padding:0.65rem 0.8rem; margin-top:0.6rem; }
 .lux-signs { display:grid; grid-template-columns:2fr 2fr 1fr; gap:0.85rem; margin-top:1.1rem; font-size:0.74rem; }
 .lux-sign-line { border-top:1.5px solid #0f172a; padding-top:0.25rem; font-weight:700; }
+.lux-viral-footer { text-align:center; font-size:0.7rem; color:#64748b; margin-top:0.85rem; padding-top:0.45rem; border-top:1px dashed #cbd5e1; font-weight:700; }
 footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
 </style>
 </head>
@@ -266,6 +268,7 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
 
       <button type="button" class="wa-master-btn" id="finalWaBtn" onclick="handleWhatsAppQuoteClick()"></button>
       <button type="button" class="stripe-pay-btn" id="finalActionBtn" onclick="handleFinalDownloadClick()"></button>
+      <button type="button" class="pro-pass-btn" id="proSubBtn" onclick="handleProPassClick()"></button>
       <div class="stripe-note" id="finalActionNote"></div>
     </div>
   </div>
@@ -300,7 +303,10 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
 </footer>
 
 <script>
-const STRIPE_URL = "https://buy.stripe.com/28E8wR0J9cqp8ei17Y7ok00";
+const STRIPE_SINGLE_URL = "https://buy.stripe.com/28E8wR0J9cqp8ei17Y7ok00";
+// Si creas un link de suscripción de $9.99/mes en Stripe, pégalo aquí abajo en STRIPE_PRO_PASS_URL:
+const STRIPE_PRO_PASS_URL = "https://buy.stripe.com/28E8wR0J9cqp8ei17Y7ok00";
+
 const CURRENCIES = { USD:{sym:'$',dec:2}, EUR:{sym:'€',dec:2}, PLN:{sym:'zł',dec:2}, BRL:{sym:'R$',dec:2}, DOP:{sym:'RD$',dec:2}, MXN:{sym:'$',dec:2}, COP:{sym:'$',dec:0} };
 
 const I18N = {
@@ -316,7 +322,9 @@ const I18N = {
     qty: "Cantidad", price: "Precio Unitario", itemLbl: "Partida #", descPh: "Descripción detallada (ej. Vehículo/VIN, Propiedad, Servicios o Materiales)...",
     waPaid: "📲 Enviar Archivo PDF Oficial (1 Página) por WhatsApp", dlPaid: "📥 Descargar / Guardar PDF en mi Teléfono",
     waLock: "🔒 Generar y Enviar Archivo PDF Oficial ($1.99)", dlLock: "🔒 Descargar Archivo PDF Oficial con Mi Logo ($1.99)",
-    notePaid: "✅ Modo PDF Vectorial Directo Activo (1 sola página)", noteLock: "🔒 Paga $1.99 en Stripe para desbloquear y enviar tu PDF oficial",
+    proPassBtn: "🔥 Pase Pro Ilimitado para Contratistas y Negocios ($9.99/mes)",
+    notePaid: "✅ Modo PDF Vectorial Directo Activo (1 sola página)", noteLock: "🔒 Paga $1.99 por documento o activa el Pase Pro Ilimitado",
+    pdfViralFooter: "Documento Oficial generado con Mr. Invoice Pro • Crea tus Estimados, Facturas y Contratos en: materialcalcpro.org",
     dateLbl: "Fecha", accept: "ACEPTO", decline: "NO ACEPTO", remBal: "BALANCE PENDIENTE", paidAmt: "MONTO ABONADO / PAGADO",
     types: {
       quote: ["📄 Estimado / Cotización Oficial", "ESTIMADO OFICIAL", "EST #", "EMISOR / NEGOCIO:", "CLIENTE:", "TOTAL ESTIMADO", "APROBACIÓN DEL CLIENTE:", "Al firmar debajo, el cliente aprueba los conceptos, montos y condiciones detallados en este estimado.", "Firma del Cliente", "Firma Autorizada", true],
@@ -345,7 +353,9 @@ const I18N = {
     qty: "Quantity", price: "Unit Price", itemLbl: "Item #", descPh: "Detailed description (e.g. Vehicle/VIN, Property, Services or Materials)...",
     waPaid: "📲 Send Official 1-Page PDF via WhatsApp", dlPaid: "📥 Download / Save PDF to Phone",
     waLock: "🔒 Generate & Send Official PDF ($1.99)", dlLock: "🔒 Download Official PDF with My Logo ($1.99)",
-    notePaid: "✅ Direct Vector 1-Page PDF Mode Active", noteLock: "🔒 Pay $1.99 via Stripe to unlock & send your official PDF",
+    proPassBtn: "🔥 Unlimited Pro Pass for Contractors & Pros ($9.99/mo)",
+    notePaid: "✅ Direct Vector 1-Page PDF Mode Active", noteLock: "🔒 Pay $1.99 per document or unlock the Unlimited Pro Pass",
+    pdfViralFooter: "Official Document generated with Mr. Invoice Pro • Create Estimates, Invoices & Contracts at: materialcalcpro.org",
     dateLbl: "Date", accept: "I ACCEPT", decline: "DECLINE", remBal: "REMAINING BALANCE", paidAmt: "AMOUNT PAID / DEPOSIT",
     types: {
       quote: ["📄 Official Estimate / Quote", "OFFICIAL ESTIMATE", "EST #", "ISSUED BY:", "PREPARED FOR:", "ESTIMATE TOTAL", "CLIENT APPROVAL:", "By signing below, the client approves the items, amounts, and terms detailed in this official estimate.", "Client Signature", "Authorized Signature", true],
@@ -374,7 +384,9 @@ const I18N = {
     qty: "Quantité", price: "Prix Unitaire", itemLbl: "Ligne #", descPh: "Description détaillée (ex. Véhicule/VIN, Bien, Services ou Matériaux)...",
     waPaid: "📲 Envoyer le PDF Officiel (1 Page) via WhatsApp", dlPaid: "📥 Télécharger / Enregistrer le PDF",
     waLock: "🔒 Générer et Envoyer le PDF Officiel (1,99 $)", dlLock: "🔒 Télécharger le PDF Officiel avec Logo (1,99 $)",
-    notePaid: "✅ Mode PDF Vectoriel Direct Actif (1 seule page)", noteLock: "🔒 Payez 1,99 $ via Stripe pour débloquer votre PDF officiel",
+    proPassBtn: "🔥 Pass Pro Illimité pour Entrepreneurs (9,99 $/mois)",
+    notePaid: "✅ Mode PDF Vectoriel Direct Actif (1 seule page)", noteLock: "🔒 Payez 1,99 $ par document ou activez le Pass Pro Illimité",
+    pdfViralFooter: "Document Officiel généré avec Mr. Invoice Pro • Créez vos Devis, Factures et Contrats sur : materialcalcpro.org",
     dateLbl: "Date", accept: "J'ACCEPTE", decline: "JE REFUSE", remBal: "SOLDE RESTANT", paidAmt: "MONTANT PAYÉ / ACOMPTE",
     types: {
       quote: ["📄 Devis Officiel", "DEVIS OFFICIEL", "DEV #", "ÉMETTEUR / ENTREPRISE :", "PRÉPARÉ POUR :", "TOTAL DU DEVIS", "APPROBATION DU CLIENT :", "En signant ci-dessous, le client accepte les articles, montants et conditions détaillés dans ce devis officiel.", "Signature du Client", "Signature Autorisée", true],
@@ -403,7 +415,9 @@ const I18N = {
     qty: "Ilość", price: "Cena Jednostkowa", itemLbl: "Pozycja #", descPh: "Szczegółowy opis (np. Pojazd/VIN, Nieruchomość, Usługi lub Materiały)...",
     waPaid: "📲 Wyślij Oficjalny Plik PDF (1 Strona) przez WhatsApp", dlPaid: "📥 Pobierz / Zapisz PDF w Telefonie",
     waLock: "🔒 Wygeneruj i Wyślij Oficjalny PDF ($1.99)", dlLock: "🔒 Pobierz Oficjalny PDF z Moim Logo ($1.99)",
-    notePaid: "✅ Tryb Bezpośredniego PDF Wektorowego Aktywny", noteLock: "🔒 Zapłać $1.99 przez Stripe, aby pobrać i wysłać oficjalny PDF",
+    proPassBtn: "🔥 Pakiet Pro Bez Limitu dla Firm i Wykonawców ($9.99/mies.)",
+    notePaid: "✅ Tryb Bezpośredniego PDF Wektorowego Aktywny", noteLock: "🔒 Zapłać $1.99 za dokument lub aktywuj Pakiet Pro Bez Limitu",
+    pdfViralFooter: "Oficjalny Dokument wygenerowany w Mr. Invoice Pro • Twórz Kosztorysy, Faktury i Umowy na: materialcalcpro.org",
     dateLbl: "Data", accept: "AKCEPTUJĘ", decline: "ODRZUCAM", remBal: "POZOSTAŁO DO ZAPŁATY", paidAmt: "WPŁACONO / ZALICZKA",
     types: {
       quote: ["📄 Kosztorys / Wycena Oficjalna", "OFICJALNY KOSZTORYS", "WYC #", "WYSTAWCA / FIRMA:", "DLA KLIENTA:", "RAZEM KOSZTORYS", "AKCEPTACJA KLIENTA:", "Podpisując poniżej, klient akceptuje pozycje, kwoty oraz warunki określone w niniejszym kosztorysie.", "Podpis Klienta", "Podpis Upoważniony", true],
@@ -411,7 +425,7 @@ const I18N = {
       billsale: ["🚗 Umowa Kupna-Sprzedaży (Bill of Sale)", "UMOWA KUPNA-SPRZEDAŻY", "UKS #", "SPRZEDAJĄCY:", "KUPUJĄCY:", "CAŁKOWITA CENA SPRZEDAŻY", "OŚWIADCZENIE I PRZENIESIENIE WŁASNOŚCI:", "Sprzedający oświadcza, że jest prawowitym właścicielem opisanego przedmiotu wolnego od wad prawnych i przenosi własność na Kupującego za uzgodnioną kwotę w stanie obecnym.", "Podpis Kupującego", "Podpis Sprzedającego", false],
       contract: ["🤝 Umowa o Świadczenie Usług / Roboty", "UMOWA O USŁUGI", "UMO #", "WYKONAWCA:", "ZLECENIODAWCA / KLIENT:", "WARTOŚĆ UMOWY", "ZOBOWIĄZANIE UMOWNE STRON:", "Obie strony zgadzają się na wykonanie opisanych prac lub usług zgodnie z kwotami i warunkami określonymi w niniejszej umowie.", "Podpis Zleceniodawcy", "Podpis Wykonawcy", false],
       lease: ["🏠 Umowa Najmu / Dzierżawy", "UMOWA NAJMU", "NAJ #", "WYNAJMUJĄCY:", "NAJEMCA:", "CZYNSZ / KWOTA NAJMU", "WARUNKI UMOWY NAJMU:", "Najemca odbiera przedmiot najmu w dobrym stanie i zobowiązuje się do terminowego opłacania czynszu oraz należytego użytkowania.", "Podpis Najemcy", "Podpis Wynajmującego", false],
-      waiver: ["🛡️ Protokół Odbioru i Zwolnienie z Odpowiedzialności", "PROTOKÓŁ ODBIORU", "ODB #", "WYKONAWCA / FIRMA:", "KLIENT / ODBIORCA:", "ROZLICZONA KWOTA", "POTWIERDZENIE WYKONANIA BEZ ZASTRZEŻEŃ:", "Klient potwierdza odbiór prac lub mienia bez zastrzeżeń i zrzeka się dalszych roszczeń z tytułu odbioru.", "Podpis Klienta", "Podpis Wykonawcy", false],
+      waiver: ["🛡️ Protokół Odbioru i Zwolnienie z Odpowiedzialności", "PROTOKÓŁ ODBIORU", "ODB #", "WYKONAWCA / FIRMA:", "KLIENT / ODBIORCA:", "ROZLICZONA KWOTA", "POTWIERDZENIE WYKONANIA BEZ ZASTRZEŻEŃ:", "Klient potwierdza odbiór prac lub mienia bez zastrrawdź i zrzeka się dalszych roszczeń z tytułu odbioru.", "Podpis Klienta", "Podpis Wykonawcy", false],
       promissory: ["💵 Weksel / Ugoda Spłaty Zadłużenia", "UZNANIE DŁUGU / SPŁATA", "DLU #", "WIERZYCIEL:", "DŁUŻNIK:", "KWOTA ZADŁUŻENIA", "BEZWARUNKOWE ZOBOWIĄZANIE DO SPŁATY:", "Dłużnik uznaje dług i bezwarunkowo zobowiązuje się do spłaty Wierzycielowi wskazanej kwoty zgodnie z ustalonym harmonogramem.", "Podpis Dłużnika", "Podpis Wierzyciela", false],
       delivery: ["📦 Dowód Dostawy / Wydanie Materiałów (WZ)", "DOWÓD DOSTAWY (WZ)", "WZ #", "WYDAŁ / DOSTAWCA:", "ODEBRAŁ / ODBIORCA:", "WARTOŚĆ TOWARU", "POTWIERDZENIE ODBIORU TOWARU:", "Odbiorca potwierdza sprawdzenie i otrzymanie wymienionych powyżej materiałów w dobrym stanie.", "Podpis Odbiorcy", "Podpis Wydającego", false],
       workorder: ["🔧 Zlecenie Serwisowe / Robocze", "ZLECENIE PRACY", "ZLE #", "FIRMA / SERWISANT:", "KLIENT / LOKALIZACJA:", "RAZEM ZLECENIE", "AUTORYZACJA I ODBIÓR ZLECENIA:", "Upoważniam do wykonania opisanych prac oraz potwierdzam ich realizację.", "Podpis Klienta", "Podpis Serwisanta", true],
@@ -432,7 +446,9 @@ const I18N = {
     qty: "Quantidade", price: "Preço Unitário", itemLbl: "Item #", descPh: "Descrição detalhada (ex. Veículo/Chassi, Imóvel, Serviços ou Materiais)...",
     waPaid: "📲 Enviar Arquivo PDF Oficial (1 Página) via WhatsApp", dlPaid: "📥 Baixar / Salvar PDF no Celular",
     waLock: "🔒 Gerar e Enviar PDF Oficial ($1.99)", dlLock: "🔒 Baixar PDF Oficial com Meu Logo ($1.99)",
-    notePaid: "✅ Modo PDF Vetorial Direto Ativo (1 página)", noteLock: "🔒 Pague $1.99 via Stripe para liberar e enviar seu PDF oficial",
+    proPassBtn: "🔥 Passe Pro Ilimitado para Profissionais ($9.99/mês)",
+    notePaid: "✅ Modo PDF Vetorial Direto Ativo (1 página)", noteLock: "🔒 Pague $1.99 por documento ou ative o Passe Pro Ilimitado",
+    pdfViralFooter: "Documento Oficial gerado com Mr. Invoice Pro • Crie Orçamentos, Faturas e Contratos em: materialcalcpro.org",
     dateLbl: "Data", accept: "ACEITO", decline: "NÃO ACEITO", remBal: "SALDO RESTANTE", paidAmt: "VALOR PAGO / SINAL",
     types: {
       quote: ["📄 Orçamento / Cotação Oficial", "ORÇAMENTO OFICIAL", "ORC #", "EMISSOR / EMPRESA:", "CLIENTE:", "TOTAL DO ORÇAMENTO", "APROVAÇÃO DO CLIENTE:", "Ao assinar abaixo, o cliente aprova os itens, valores e condições detalhados neste orçamento oficial.", "Assinatura do Cliente", "Assinatura Autorizada", true],
@@ -451,8 +467,13 @@ const I18N = {
   }
 };
 
-localStorage.removeItem('mcp_owner_unlocked');
-const isReturningFromStripe = new URLSearchParams(window.location.search).get('paid') === 'true';
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('pro') === 'true') {
+  localStorage.setItem('mcp_pro_pass_active', 'true');
+}
+const isProSubscriber = localStorage.getItem('mcp_pro_pass_active') === 'true';
+const isReturningFromStripe = urlParams.get('paid') === 'true' || isProSubscriber;
+
 let currentLang = localStorage.getItem('mcp_lang') || 'es';
 if (!I18N[currentLang]) currentLang = 'es';
 let currentCurr = localStorage.getItem('mcp_currency') || 'USD';
@@ -634,10 +655,14 @@ function recalcMasterTotals() {
 
 function updatePayButtonState() {
   const L = I18N[currentLang] || I18N.es;
-  const btn = document.getElementById('finalActionBtn'), waBtn = document.getElementById('finalWaBtn'), note = document.getElementById('finalActionNote');
+  const btn = document.getElementById('finalActionBtn'), waBtn = document.getElementById('finalWaBtn'), proBtn = document.getElementById('proSubBtn'), note = document.getElementById('finalActionNote');
   if (!btn) return;
   waBtn.innerText = isPaidUser ? L.waPaid : L.waLock;
   btn.innerText = isPaidUser ? L.dlPaid : L.dlLock;
+  if (proBtn) {
+    proBtn.innerText = L.proPassBtn;
+    proBtn.style.display = isPaidUser ? 'none' : 'block';
+  }
   note.innerText = isPaidUser ? L.notePaid : L.noteLock;
 }
 
@@ -670,7 +695,8 @@ function renderModalSheet(mode) {
     '<tr class="lux-tot-row"><td>' + meta.totalLabel + '</td><td>' + formatUSD(2450) + '</td></tr></tbody></table>' +
     '<div class="lux-sign-box"><div style="font-size:0.76rem;font-weight:900;">' + meta.signTitle + '</div>' +
     '<div style="font-size:0.74rem;color:#334155;margin-top:4px;line-height:1.35;">' + meta.legalClause + '</div>' +
-    '<div class="lux-signs"><div class="lux-sign-line">' + meta.sig1 + '</div><div class="lux-sign-line">' + meta.sig2 + '</div><div class="lux-sign-line">' + L.dateLbl + '</div></div></div>';
+    '<div class="lux-signs"><div class="lux-sign-line">' + meta.sig1 + '</div><div class="lux-sign-line">' + meta.sig2 + '</div><div class="lux-sign-line">' + L.dateLbl + '</div></div></div>' +
+    '<div class="lux-viral-footer">⚡ ' + L.pdfViralFooter + '</div>';
 }
 
 function saveHistoryItem(label, resultText) {
@@ -883,7 +909,7 @@ async function buildPureVectorPDF() {
   y += 6;
   const splitLegal = doc.splitTextToSize(meta.legalClause, 180);
   const boxH = Math.max(38, 24 + splitLegal.length * 4.2 + (meta.showAcceptChecks ? 6 : 0));
-  if (y + boxH > 268) { doc.addPage(); y = 20; }
+  if (y + boxH > 262) { doc.addPage(); y = 20; }
   doc.setDrawColor(15, 23, 42);
   doc.roundedRect(14, y, 188, boxH, 2, 2);
 
@@ -916,11 +942,24 @@ async function buildPureVectorPDF() {
   doc.text(meta.sig2, 90, sigY + 4);
   doc.text(L.dateLbl, 162, sigY + 4);
 
+  // Sello viral promocional al pie de la página 1 del PDF
+  doc.setDrawColor(203, 213, 225);
+  doc.setLineWidth(0.25);
+  doc.line(14, 268, 202, 268);
+  doc.setFont('helvetica', 'bolditalic');
+  doc.setFontSize(7.5);
+  doc.setTextColor(100, 116, 139);
+  doc.text(L.pdfViralFooter, 108, 272.5, { align: 'center' });
+
   const attachCheck = document.getElementById('qb-hw-print-attach')?.checked;
   if (attachCheck && uploadedHwQuoteImg) {
     try {
       doc.addPage();
       doc.addImage(uploadedHwQuoteImg, 14, 20, 185, 210);
+      doc.setFont('helvetica', 'bolditalic');
+      doc.setFontSize(7.5);
+      doc.setTextColor(100, 116, 139);
+      doc.text(L.pdfViralFooter, 108, 272.5, { align: 'center' });
     } catch (e) {}
   }
 
@@ -949,19 +988,37 @@ async function processOfficialPDF(actionMode) {
 
 function handleWhatsAppQuoteClick() {
   saveAllBuilderState();
-  if (!isPaidUser) { window.location.href = STRIPE_URL; return; }
+  if (!isPaidUser) { window.location.href = STRIPE_SINGLE_URL; return; }
   closeDocPreviewModal();
   processOfficialPDF('share');
 }
 
 function handleFinalDownloadClick() {
   saveAllBuilderState();
-  if (!isPaidUser) { window.location.href = STRIPE_URL; return; }
+  if (!isPaidUser) { window.location.href = STRIPE_SINGLE_URL; return; }
   closeDocPreviewModal();
   processOfficialPDF('download');
 }
 
+function handleProPassClick() {
+  saveAllBuilderState();
+  window.location.href = STRIPE_PRO_PASS_URL;
+}
+
+function restoreIfReturningFromStripe() {
+  if (!isReturningFromStripe) return;
+  try { const savedLines = JSON.parse(localStorage.getItem('mcp_custom_lines')||'[]'); if (Array.isArray(savedLines)&&savedLines.length>0) customLineItems = savedLines; } catch(e) {}
+  uploadedLogoData = localStorage.getItem('mcp_company_logo') || '';
+  uploadedHwQuoteImg = localStorage.getItem('mcp_hw_quote_img') || '';
+  try {
+    const st = JSON.parse(localStorage.getItem('mcp_checkout_state')||'null');
+    if (st && st.inputs) Object.keys(st.inputs).forEach(id => { const el = document.getElementById(id); if (!el) return; if (el.type==='checkbox') el.checked = !!st.inputs[id]; else el.value = st.inputs[id]; });
+  } catch(e) {}
+}
+
 window.addEventListener('DOMContentLoaded', function() {
+  restoreIfReturningFromStripe();
+  if (uploadedLogoData) showIdentifiedLogoPicture(uploadedLogoData);
   applyLanguageUI();
 });
 </script>
