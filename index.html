@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="QK9UkO8Wa6ApdBs0sG4Gk8ojj5vx9duiBlAG9b618-g" />
-<title>MaterialCalcPro.org | Generador Oficial de Estimados y Facturas PDF</title>
-<meta name="description" content="Generador profesional de estimados, cotizaciones y facturas (invoices) en archivo PDF oficial con tu logo y envío directo por WhatsApp.">
+<title>Mr. Invoice Pro | Generador Oficial de Estimados y Facturas PDF</title>
+<meta name="description" content="Mr. Invoice Pro: Generador profesional de estimados, cotizaciones y facturas (invoices) en archivo PDF oficial con tu logo y envío directo por WhatsApp.">
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#0f172a">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230f172a' stroke='%23facc15' stroke-width='4'/%3E%3Cpath d='M24 72V28h14l12 22 12-22h14v44H64V46L50 69 36 46v26H24z' fill='%23facc15'/%3E%3C/svg%3E">
@@ -28,9 +28,8 @@ header { background:#090d16; color:#fff; padding:1rem; border-bottom:3px solid v
 .top-bar { display:flex; justify-content:space-between; align-items:center; max-width:740px; margin:0 auto; gap:0.5rem; flex-wrap:wrap; }
 .brand-logo { display:flex; align-items:center; gap:0.75rem; color:#fff; }
 .brand-icon { width:52px; height:52px; background:radial-gradient(circle at center,#1e3a8a 0%,#090d16 100%); border:2px solid var(--accent); border-radius:12px; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(0,0,0,0.6),0 0 8px rgba(250,204,21,0.25); flex-shrink:0; overflow:hidden; }
-.logo-main { font-size:1.28rem; font-weight:900; letter-spacing:-0.5px; color:#fff; }
+.logo-main { font-size:1.32rem; font-weight:900; letter-spacing:-0.5px; color:#fff; }
 .logo-main span { color:var(--accent); }
-.logo-main small { font-size:0.82rem; color:#94a3b8; font-weight:700; }
 .logo-sub { font-size:0.65rem; text-transform:uppercase; letter-spacing:1.2px; color:#cbd5e1; font-weight:700; margin-top:2px; }
 .top-actions { display:flex; gap:0.4rem; align-items:center; flex-wrap:wrap; }
 .lang-btn, .curr-select, .install-top-btn { background:#1e293b; color:#fff; border:1px solid var(--accent); padding:0.4rem 0.65rem; border-radius:6px; font-weight:700; font-size:0.78rem; cursor:pointer; }
@@ -130,7 +129,7 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
     <div class="brand-logo">
       <div class="brand-icon"><svg width="40" height="40"><use href="#proEmblemLogo"/></svg></div>
       <div>
-        <div class="logo-main">Material<span>Calc</span>Pro<small>.org</small></div>
+        <div class="logo-main">Mr. <span>Invoice</span> Pro</div>
         <div class="logo-sub" data-es="Generador Oficial de Estimados y Facturas PDF" data-en="Official PDF Estimate & Invoice Builder">Generador Oficial de Estimados y Facturas PDF</div>
       </div>
     </div>
@@ -270,7 +269,7 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
 </div>
 
 <footer>
-  &copy; 2026 MaterialCalcPro.org | Official Estimate & Invoice PDF Suite
+  &copy; 2026 Mr. Invoice Pro | Official Estimate & Invoice PDF Suite
   <span onclick="activateOwnerMode()" style="cursor:pointer;opacity:0.65;margin-left:8px;padding:2px 6px;border:1px solid #475569;border-radius:4px;" id="ownerKeyBtn" title="Modo Dueño">🔒 Modo Cliente: ON</span>
 </footer>
 
@@ -386,10 +385,10 @@ function renderModalSheet(mode) {
     '<div class="lux-header"><div class="lux-brand"><div class="lux-logo-box"><svg width="42" height="42"><use href="#proEmblemLogo"/></svg></div><div><div class="lux-comp-name">APEX BUSINESS SOLUTIONS LLC</div><div class="lux-comp-sub">' + (isEs ? 'Servicios Profesionales y Comerciales • Reg. #89421<br>Tel: (787) 555-0199' : 'Professional & Commercial Services • Reg. #89421<br>Phone: (787) 555-0199') + '</div></div></div><div class="lux-badge-box"><div class="lux-doc-title">' + docBadgeTitle + '</div><div class="lux-doc-num">' + docNum + '</div><div class="lux-doc-date">' + (isEs?'Fecha: 04/11/2026 • Validez: 30 Días':'Date: 11/04/2026 • Valid: 30 Days') + '</div></div></div>' +
     '<div class="lux-client-grid"><div><strong>' + (isEs?'CLIENTE:':'CLIENT:') + '</strong><span>Carlos M. Rodríguez</span><div style="color:#475569;margin-top:2px;">Tel: (787) 555-8420</div></div><div><strong>' + (isEs?'DIRECCIÓN / DETALLE:':'ADDRESS / DETAIL:') + '</strong><span>San Juan, PR</span><div style="color:#475569;margin-top:2px;">' + (isEs?'Servicios Profesionales según acordado':'Professional Services as agreed') + '</div></div></div>' +
     '<table class="lux-table"><thead><tr><th>' + (isEs?'Descripción / Concepto':'Description / Item') + '</th><th>' + (isEs?'Monto (USD)':'Amount (USD)') + '</th></tr></thead><tbody>' +
-    '<tr><td><strong>1. ' + (isEs?'Instalación de Techo':'Roof Installation') + '</strong></td><td>$30,000.00</td></tr>' +
-    '<tr><td><strong>2. ' + (isEs?'Ventanas':'Windows') + '</strong> <small>(Cant: 5 × $200.00)</small></td><td>$1,000.00</td></tr>' +
+    '<tr><td><strong>1. ' + (isEs?'Servicio Principal y Ejecución':'Primary Service & Execution') + '</strong></td><td>$1,850.00</td></tr>' +
+    '<tr><td><strong>2. ' + (isEs?'Equipos e Insumos':'Equipment & Supplies') + '</strong> <small>(Cant: 5 × $200.00)</small></td><td>$1,000.00</td></tr>' +
     '<tr><td>' + (isEs?'Impuestos / Tax':'Taxes') + '</td><td>$50.00</td></tr>' +
-    '<tr class="lux-tot-row"><td>' + (isInv?'TOTAL FACTURADO (USD)':'TOTAL ESTIMADO (USD)') + '</td><td>$31,050.00</td></tr></tbody></table>' +
+    '<tr class="lux-tot-row"><td>' + (isInv?'TOTAL FACTURADO (USD)':'TOTAL ESTIMADO (USD)') + '</td><td>$2,900.00</td></tr></tbody></table>' +
     '<div class="lux-sign-box"><div style="font-size:0.76rem;font-weight:900;text-transform:uppercase;color:#0f172a;">' + (isInv?(isEs?'Conformidad y Recibo:':'Acknowledgment:'):(isEs?'Autorización del Cliente:':'Client Authorization:')) + '</div>' +
     (isInv?'':'<div class="lux-checks"><span>☑️ ACEPTO ESTE ESTIMADO</span><span>⬜ NO ACEPTO</span></div>') +
     '<div class="lux-signs"><div class="lux-sign-line">' + (isEs?'Firma del Cliente':'Client Signature') + '</div><div class="lux-sign-line">' + (isEs?'Firma Autorizada':'Authorized Signature') + '</div><div class="lux-sign-line">' + (isEs?'Fecha':'Date') + '</div></div></div>';
@@ -515,7 +514,6 @@ function saveAllBuilderState() {
   localStorage.setItem('mcp_checkout_state', JSON.stringify({lang:currentLang,curr:currentCurr,inputs:inputs}));
 }
 
-// Generador Vectorial Puro en jsPDF (100% inmune a pantallas en blanco)
 async function buildPureVectorPDF() {
   syncCustomLinesFromDOM();
   const { jsPDF } = window.jspdf;
@@ -524,7 +522,7 @@ async function buildPureVectorPDF() {
   const isEs = currentLang === 'es';
   const isInvoice = (document.getElementById('qb-doctype')?.value || 'quote') === 'invoice';
   const docNum = document.getElementById('qb-docnum')?.value.trim() || '2026-0101';
-  const comp = document.getElementById('qb-comp')?.value.trim() || 'MaterialCalcPro.org';
+  const comp = document.getElementById('qb-comp')?.value.trim() || 'Mr. Invoice Pro';
   const phone = document.getElementById('qb-phone')?.value.trim() || '';
   const client = document.getElementById('qb-client')?.value.trim() || (isEs ? 'Cliente General' : 'General Client');
   const tax = parseFloat(document.getElementById('qb-tax')?.value) || 0;
@@ -532,7 +530,6 @@ async function buildPureVectorPDF() {
   const notes = document.getElementById('qb-notes')?.value.trim() || '';
   const dateStr = new Date().toLocaleDateString(isEs ? 'es-PR' : 'en-US');
 
-  // Franja superior ejecutiva
   doc.setFillColor(15, 23, 42);
   doc.rect(0, 0, 215.9, 6, 'F');
 
@@ -552,7 +549,6 @@ async function buildPureVectorPDF() {
     leftX = 38;
   }
 
-  // Datos de la Empresa
   doc.setTextColor(15, 23, 42);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(14);
@@ -565,7 +561,6 @@ async function buildPureVectorPDF() {
     doc.text((isEs ? 'Tel / Reg: ' : 'Phone / ID: ') + phone, leftX, 25.5);
   }
 
-  // Recuadro derecho de Tipo de Documento
   doc.setFillColor(248, 250, 252);
   doc.setDrawColor(203, 213, 225);
   doc.roundedRect(136, 11, 66, 22, 2, 2, 'FD');
@@ -587,12 +582,10 @@ async function buildPureVectorPDF() {
   doc.setTextColor(100, 116, 139);
   doc.text((isEs ? 'Fecha: ' : 'Date: ') + dateStr, 197, 29.5, { align: 'right' });
 
-  // Línea divisoria del encabezado
   doc.setDrawColor(15, 23, 42);
   doc.setLineWidth(0.7);
   doc.line(14, 37, 202, 37);
 
-  // Caja de Cliente
   doc.setFillColor(248, 250, 252);
   doc.setDrawColor(203, 213, 225);
   doc.setLineWidth(0.3);
@@ -607,7 +600,6 @@ async function buildPureVectorPDF() {
   doc.setTextColor(15, 23, 42);
   doc.text(client.substring(0, 85), 18, 52.5);
 
-  // Encabezado de la Tabla de Conceptos
   let y = 62;
   doc.setFillColor(15, 23, 42);
   doc.rect(14, y, 188, 9, 'F');
@@ -618,7 +610,6 @@ async function buildPureVectorPDF() {
   doc.text(isEs ? 'Monto (' + currentCurr + ')' : 'Amount (' + currentCurr + ')', 198, y + 6, { align: 'right' });
   y += 9;
 
-  // Filas de Conceptos
   let grandTotal = 0;
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(9.5);
@@ -665,7 +656,6 @@ async function buildPureVectorPDF() {
     y += 8.5;
   }
 
-  // Fila Total
   doc.setFillColor(254, 243, 199);
   doc.setDrawColor(203, 213, 225);
   doc.rect(14, y, 146, 10, 'FD');
@@ -699,7 +689,6 @@ async function buildPureVectorPDF() {
     y += 10;
   }
 
-  // Notas / Garantía
   if (notes) {
     y += 5;
     const splitNotes = doc.splitTextToSize((isEs ? 'Notas / Garantía / Condiciones: ' : 'Notes / Warranty / Terms: ') + notes, 180);
@@ -714,7 +703,6 @@ async function buildPureVectorPDF() {
     y += notesH;
   }
 
-  // Caja de Autorización y Firmas
   y += 7;
   if (y + 38 > 268) {
     doc.addPage();
@@ -741,7 +729,6 @@ async function buildPureVectorPDF() {
   doc.setTextColor(71, 85, 105);
   doc.text(isEs ? 'Al firmar debajo, el cliente aprueba los conceptos, montos y condiciones detallados en este documento oficial.' : 'By signing below, the client approves the items, amounts, and terms detailed in this official document.', 18, y + 19.5);
 
-  // Líneas de firma
   const sigY = y + 30;
   doc.setDrawColor(15, 23, 42);
   doc.line(18, sigY, 82, sigY);
@@ -755,7 +742,6 @@ async function buildPureVectorPDF() {
   doc.text(isEs ? 'Firma Autorizada' : 'Authorized Signature', 90, sigY + 4);
   doc.text(isEs ? 'Fecha' : 'Date', 162, sigY + 4);
 
-  // Segunda página opcional si adjuntó foto
   const attachCheck = document.getElementById('qb-hw-print-attach')?.checked;
   if (attachCheck && uploadedHwQuoteImg) {
     try {
@@ -776,7 +762,6 @@ async function buildPureVectorPDF() {
 
 async function processOfficialPDF(actionMode) {
   const waBtn = document.getElementById('finalWaBtn');
-  const dlBtn = document.getElementById('finalActionBtn');
   waBtn.innerText = currentLang === 'es' ? '⏳ Preparando PDF Oficial...' : '⏳ Preparing Official PDF...';
 
   try {
