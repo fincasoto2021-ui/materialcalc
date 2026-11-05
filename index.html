@@ -1,1117 +1,204 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="google-site-verification" content="QK9UkO8Wa6ApdBs0sG4Gk8ojj5vx9duiBlAG9b618-g" />
-<title>Mr. Invoice Pro | Official PDF Suite</title>
-<meta name="description" content="Mr. Invoice Pro: Estimates, Invoices, Bills of Sale, Leases & Legal Contracts in PDF.">
-<link id="manifestLink" rel="manifest" href="/manifest.json?v=200">
-<meta name="theme-color" content="#0f172a">
-<link id="favIcon" rel="icon" type="image/png" href="/icon-192%20(1).png?v=200">
-<link id="appleIcon" rel="apple-touch-icon" href="/icon-512%20(1).png?v=200">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script>
-// Auto-generador de ícono cuadrado 100% negro sin bordes blancos desde 1793842789444.jpg
-(function fixSquareHeroIcon() {
-  const img = new Image();
-  img.crossOrigin = "anonymous";
-  img.src = "/1793842789444.jpg";
-  img.onload = function() {
-    try {
-      const makeSquare = (size) => {
-        const c = document.createElement('canvas');
-        c.width = size; c.height = size;
-        const ctx = c.getContext('2d');
-        ctx.fillStyle = "#000000";
-        ctx.fillRect(0, 0, size, size);
-        const s = Math.min(img.width, img.height);
-        const sx = (img.width - s) / 2;
-        const sy = (img.height - s) * 0.18;
-        ctx.drawImage(img, sx, sy, s, s, 0, 0, size, size);
-        return c.toDataURL('image/png');
-      };
-      const icon192 = makeSquare(192);
-      const icon512 = makeSquare(512);
-      document.getElementById('favIcon').href = icon192;
-      document.getElementById('appleIcon').href = icon512;
-      const dynManifest = {
-        id: window.location.origin + "/?v=square200",
-        name: "Mr. Invoice Pro",
-        short_name: "Mr. Invoice Pro",
-        start_url: window.location.origin + "/?v=square200",
-        scope: window.location.origin + "/",
-        display: "standalone",
-        background_color: "#000000",
-        theme_color: "#0f172a",
-        icons: [
-          { src: icon192, sizes: "192x192", type: "image/png", purpose: "any maskable" },
-          { src: icon512, sizes: "512x512", type: "image/png", purpose: "any maskable" }
-        ]
-      };
-      const blob = new Blob([JSON.stringify(dynManifest)], {type: 'application/json'});
-      document.getElementById('manifestLink').href = URL.createObjectURL(blob);
-    } catch(e) {}
-  };
-})();
-
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function() {
-    navigator.serviceWorker.register('/sw.js').then(function(reg) { reg.update(); }).catch(function() {});
-  });
-}
-</script>
-<script data-goatcounter="https://materialcalcpro.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-<style>
-:root { --primary:#0f172a; --accent:#facc15; --bg:#f1f5f9; --card:#ffffff; --text:#334155; }
-html, * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,-apple-system,sans-serif; }
-body { background:var(--bg); color:var(--text); padding-bottom:2.5rem; }
-header { background:#090d16; color:#fff; padding:1rem; border-bottom:3px solid var(--accent); }
-.top-bar { display:flex; justify-content:space-between; align-items:center; max-width:740px; margin:0 auto; gap:0.5rem; flex-wrap:wrap; }
-.brand-logo { display:flex; align-items:center; gap:0.75rem; color:#fff; }
-.brand-icon { width:56px; height:56px; background:#000; border:2px solid var(--accent); border-radius:14px; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(0,0,0,0.6); flex-shrink:0; overflow:hidden; }
-.brand-icon img { width:100%; height:100%; object-fit:cover; object-position:center 20%; }
-.logo-main { font-size:1.32rem; font-weight:900; letter-spacing:-0.5px; color:#fff; }
-.logo-main span { color:var(--accent); }
-.logo-sub { font-size:0.65rem; text-transform:uppercase; letter-spacing:1.1px; color:#cbd5e1; font-weight:700; margin-top:2px; }
-.top-actions { display:flex; gap:0.4rem; align-items:center; flex-wrap:wrap; }
-.lang-select, .curr-select, .install-top-btn { background:#1e293b; color:#fff; border:1px solid var(--accent); padding:0.4rem 0.6rem; border-radius:6px; font-weight:700; font-size:0.78rem; cursor:pointer; width:auto; }
-.curr-select { border-color:#4ade80; color:#bbf7d0; }
-.install-top-btn { background:var(--accent); color:#000; display:none; font-weight:900; }
-
-.container { max-width:740px; margin:1.1rem auto; padding:0 1rem; }
-.builder-card { background:#0f172a; color:#fff; padding:1.25rem; border-radius:12px; border:2px solid var(--accent); box-shadow:0 6px 18px rgba(0,0,0,0.12); }
-.mb-header { display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #334155; padding-bottom:0.75rem; margin-bottom:0.95rem; flex-wrap:wrap; gap:0.5rem; }
-.mb-header h2 { font-size:1.12rem; color:var(--accent); font-weight:900; }
-.reset-zero-btn { background:#334155; color:#f8fafc; border:1px solid #64748b; padding:0.35rem 0.7rem; border-radius:6px; font-size:0.76rem; font-weight:800; cursor:pointer; }
-.open-sample-btn { width:100%; background:linear-gradient(135deg,#fde047 0%,#eab308 100%); color:#0f172a; border:2px solid #fff; padding:0.85rem 1rem; border-radius:10px; font-size:0.9rem; font-weight:900; cursor:pointer; margin-bottom:1rem; display:flex; align-items:center; justify-content:center; gap:0.5rem; box-shadow:0 4px 14px rgba(250,204,21,0.35); }
-
-.mb-section { background:#1e293b; border:1px solid #334155; border-radius:10px; padding:0.95rem; margin-bottom:0.95rem; }
-.mb-sec-title { font-size:0.88rem; font-weight:800; color:#fde047; margin-bottom:0.65rem; }
-.price-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.65rem; }
-@media (max-width:520px) { .price-grid { grid-template-columns:1fr; } }
-
-label { display:block; font-size:0.76rem; font-weight:700; color:#cbd5e1; margin-bottom:0.22rem; }
-input, select, textarea { width:100%; padding:0.6rem 0.7rem; border:1px solid #475569; border-radius:6px; font-size:0.88rem; background:#0f172a; color:#fff; }
-textarea { resize:vertical; min-height:62px; line-height:1.4; }
-
-.line-item-card { background:#0f172a; border:1px solid #334155; border-radius:8px; padding:0.7rem; margin-bottom:0.6rem; }
-.line-item-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem; font-size:0.75rem; color:#fde047; font-weight:800; }
-.line-item-bottom { display:grid; grid-template-columns:1fr 1.4fr; gap:0.55rem; margin-top:0.45rem; align-items:end; }
-.add-line-btn { width:100%; background:#facc15; color:#000; border:none; padding:0.7rem; border-radius:8px; font-size:0.86rem; font-weight:900; cursor:pointer; margin-top:0.2rem; }
-.cart-remove { background:#ef4444; color:#fff; border:none; border-radius:5px; padding:0.25rem 0.55rem; font-size:0.74rem; font-weight:800; cursor:pointer; }
-
-.logo-upload-box { border:2px dashed var(--accent); border-radius:10px; padding:0.75rem; text-align:center; margin-top:0.65rem; background:#0f172a; }
-.logo-pic-badge { display:inline-block; background:var(--accent); color:#000; font-weight:900; font-size:0.72rem; padding:0.18rem 0.55rem; border-radius:5px; margin-bottom:0.35rem; text-transform:uppercase; }
-.logo-upload-box input[type="file"] { font-size:0.78rem; color:#cbd5e1; border:none; padding:0.2rem; background:transparent; }
-.logo-id-wrap { display:none; align-items:center; justify-content:space-between; gap:0.6rem; margin-top:0.45rem; background:#1e293b; padding:0.4rem 0.65rem; border-radius:8px; border:1px solid #10b981; }
-.logo-mini-thumb { width:42px; height:42px; object-fit:contain; background:#fff; border-radius:6px; padding:2px; border:1px solid #fde047; }
-.logo-status-msg { font-size:0.75rem; color:#4ade80; font-weight:800; text-align:left; flex:1; }
-
-.contractor-numbers-bar { background:#064e3b; border:1.5px solid #10b981; border-radius:8px; padding:0.8rem 0.95rem; margin:0.85rem 0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; }
-.contractor-numbers-bar strong { font-size:1.3rem; color:#6ee7b7; }
-.wa-master-btn { width:100%; background:#25D366; color:#052e16; border:2px solid #bbf7d0; padding:0.95rem; border-radius:8px; font-size:0.95rem; font-weight:900; cursor:pointer; margin-top:0.4rem; box-shadow:0 4px 12px rgba(37,211,102,0.25); }
-.stripe-pay-btn { width:100%; background:#1e293b; color:#fde047; border:1.5px solid var(--accent); padding:0.9rem; border-radius:8px; font-size:0.92rem; font-weight:900; cursor:pointer; margin-top:0.55rem; display:none; }
-.pro-pass-btn { width:100%; background:linear-gradient(135deg,#f59e0b 0%,#d97706 100%); color:#090d16; border:2px solid #fef08a; padding:0.85rem; border-radius:8px; font-size:0.88rem; font-weight:900; cursor:pointer; margin-top:0.55rem; box-shadow:0 4px 12px rgba(245,158,11,0.3); }
-.stripe-note { text-align:center; font-size:0.74rem; color:#cbd5e1; margin-top:0.45rem; line-height:1.4; }
-
-.history-card { background:var(--card); padding:1.15rem; border-radius:12px; margin-top:1.15rem; border:1px solid #cbd5e1; }
-.history-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; }
-.history-header h3 { font-size:0.96rem; color:var(--primary); font-weight:900; }
-.clear-btn { background:transparent; border:1px solid #ef4444; color:#ef4444; padding:0.24rem 0.6rem; border-radius:6px; font-size:0.74rem; font-weight:700; cursor:pointer; }
-.hist-search-input { width:100%; margin-bottom:0.75rem; background:#f8fafc; color:#0f172a; border:1px solid #cbd5e1; padding:0.55rem 0.7rem; border-radius:6px; font-size:0.84rem; }
-.history-list { list-style:none; font-size:0.82rem; color:#475569; }
-.history-list li { padding:0.6rem 0; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center; gap:0.5rem; flex-wrap:wrap; }
-.hist-btn-group { display:flex; gap:0.35rem; align-items:center; }
-.hist-open-btn { background:#0f172a; color:#fde047; border:none; padding:0.35rem 0.65rem; border-radius:6px; font-size:0.75rem; font-weight:800; cursor:pointer; }
-.hist-pdf-btn { background:#10b981; color:#fff; border:none; padding:0.35rem 0.65rem; border-radius:6px; font-size:0.75rem; font-weight:800; cursor:pointer; }
-
-.doc-modal-overlay { position:fixed; inset:0; background:rgba(9,13,22,0.88); display:none; justify-content:center; align-items:flex-start; padding:1rem 0.65rem; z-index:9999; overflow-y:auto; }
-.doc-modal-container { width:100%; max-width:720px; margin:0 auto 2rem; }
-.doc-modal-topbar { background:#1e293b; border:2px solid var(--accent); border-radius:10px; padding:0.7rem 0.85rem; margin-bottom:0.75rem; color:#fff; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; }
-.sample-switch-group { display:flex; gap:0.35rem; flex-wrap:wrap; }
-.sample-type-btn { background:#0f172a; color:#cbd5e1; border:1px solid #475569; padding:0.35rem 0.55rem; border-radius:6px; font-size:0.72rem; font-weight:800; cursor:pointer; }
-.sample-type-btn.active { background:var(--accent); color:#000; border-color:#fff; }
-.close-modal-x { background:#ef4444; color:#fff; border:none; padding:0.38rem 0.75rem; border-radius:6px; font-weight:900; font-size:0.8rem; cursor:pointer; }
-.luxury-paper-sheet { background:#fff; color:#0f172a; border-radius:10px; padding:1.35rem; border-top:6px solid #0f172a; }
-.lux-header { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2.5px solid #0f172a; padding-bottom:0.8rem; margin-bottom:0.85rem; gap:0.8rem; flex-wrap:wrap; }
-.lux-brand { display:flex; align-items:center; gap:0.75rem; }
-.lux-logo-box { width:60px; height:60px; background:#000; border:2px solid #eab308; border-radius:12px; overflow:hidden; flex-shrink:0; }
-.lux-logo-box img { width:100%; height:100%; object-fit:cover; object-position:center 20%; }
-.lux-badge-box { background:#f8fafc; border:1.5px solid #cbd5e1; border-right:4px solid #eab308; padding:0.5rem 0.8rem; border-radius:8px; text-align:right; }
-.lux-table { width:100%; border-collapse:collapse; font-size:0.82rem; margin:0.75rem 0; }
-.lux-table th { background:#0f172a; color:#fff; padding:0.45rem 0.65rem; text-align:left; }
-.lux-table td { border:1px solid #cbd5e1; padding:0.5rem 0.65rem; }
-.lux-table td:last-child, .lux-table th:last-child { text-align:right; font-weight:700; }
-.lux-tot-row { background:#fef3c7; font-weight:900; }
-.lux-sign-box { border:1.5px solid #0f172a; border-radius:8px; padding:0.65rem 0.8rem; margin-top:0.6rem; }
-.lux-signs { display:grid; grid-template-columns:2fr 2fr 1fr; gap:0.85rem; margin-top:1.1rem; font-size:0.74rem; }
-.lux-sign-line { border-top:1.5px solid #0f172a; padding-top:0.25rem; font-weight:700; }
-.lux-viral-footer { text-align:center; font-size:0.7rem; color:#64748b; margin-top:0.85rem; padding-top:0.45rem; border-top:1px dashed #cbd5e1; font-weight:700; }
-footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
-</style>
-</head>
-<body>
-<header>
-  <div class="top-bar">
-    <div class="brand-logo">
-      <div class="brand-icon">
-        <img src="1793842789444.jpg" alt="Mr. Invoice Pro">
-      </div>
-      <div>
-        <div class="logo-main">Mr. <span>Invoice</span> Pro</div>
-        <div class="logo-sub" id="ui-sub">Estimados, Facturas y Contratos PDF</div>
-      </div>
-    </div>
-    <div class="top-actions">
-      <button class="install-top-btn" id="installPwaBtn" onclick="installPWA()">📲 App</button>
-      <select class="curr-select" id="currSelect" onchange="changeCurrency(this.value)">
-        <option value="USD">💵 USD ($)</option>
-        <option value="EUR">🇪🇺 EUR (€)</option>
-        <option value="PLN">🇵🇱 PLN (zł)</option>
-        <option value="BRL">🇧🇷 BRL (R$)</option>
-        <option value="DOP">🇩🇴 DOP (RD$)</option>
-        <option value="MXN">🇲🇽 MXN ($)</option>
-        <option value="COP">🇨🇴 COP ($)</option>
-      </select>
-      <select class="lang-select" id="langSelect" onchange="changeLang(this.value)">
-        <option value="es">🇪🇸 ES</option>
-        <option value="en">🇺🇸 EN</option>
-        <option value="fr">🇫🇷 FR</option>
-        <option value="pl">🇵🇱 PL</option>
-        <option value="pt">🇧🇷 PT</option>
-      </select>
-    </div>
-  </div>
-</header>
-
-<div class="container">
-  <div class="builder-card">
-    <div class="mb-header">
-      <h2 id="ui-h2">📄 Crear Documento Oficial o Contrato (PDF)</h2>
-      <button type="button" class="reset-zero-btn" id="ui-reset" onclick="resetBuilderToZero()">🔄 Limpiar ($0.00)</button>
-    </div>
-
-    <button type="button" class="open-sample-btn" id="ui-sample-btn" onclick="openDocPreviewModal()">👁️ Ver Ejemplo de Cómo Queda el PDF Final</button>
-
-    <div class="mb-section">
-      <div class="mb-sec-title" id="ui-sec1">1️⃣ Tipo de Documento y Datos de las Partes</div>
-      <div class="price-grid">
-        <div>
-          <label id="ui-lbl-doctype">Tipo de Documento Oficial</label>
-          <select id="qb-doctype" onchange="recalcMasterTotals()"></select>
-        </div>
-        <div>
-          <label id="ui-lbl-docnum">Número de Documento (#)</label>
-          <input type="text" id="qb-docnum" value="2026-0101" oninput="recalcMasterTotals()">
-        </div>
-      </div>
-      <div class="price-grid" style="margin-top:0.6rem;">
-        <div>
-          <label id="lbl-comp">Nombre de tu Negocio / Emisor</label>
-          <input type="text" id="qb-comp" placeholder="ASD Building Solutions LLC" oninput="recalcMasterTotals()">
-        </div>
-        <div>
-          <label id="lbl-phone">Teléfono / Licencia / ID</label>
-          <input type="text" id="qb-phone" placeholder="(787) 000-0000" oninput="recalcMasterTotals()">
-        </div>
-      </div>
-      <div style="margin-top:0.6rem;">
-        <label id="lbl-client">Cliente / Comprador y Dirección</label>
-        <input type="text" id="qb-client" placeholder="Nombre - Dirección - Teléfono" oninput="recalcMasterTotals()">
-      </div>
-      <div class="logo-upload-box">
-        <div class="logo-pic-badge">🖼️ LOGO PICTURE</div>
-        <label style="color:#fde047;font-size:0.8rem;" id="ui-lbl-logo">📷 Sube aquí el Logo de tu Negocio (Opcional)</label>
-        <input type="file" id="qb-logo-input" accept="image/*" onchange="handleLogoUpload(this)">
-        <div id="logoIdentifiedBox" class="logo-id-wrap">
-          <img id="logoMiniThumb" class="logo-mini-thumb" alt="Logo">
-          <div class="logo-status-msg">✅ Logo OK</div>
-          <button type="button" class="cart-remove" onclick="clearLogoPicture()">✕</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="mb-section">
-      <div class="mb-sec-title" id="ui-sec2">2️⃣ Descripción, Bienes, Medidas o Servicios</div>
-      <div id="customLinesContainer"></div>
-      <button type="button" class="add-line-btn" id="ui-add-line" onclick="addCustomLine('','1','')">➕ Añadir Otra Línea / Concepto</button>
-    </div>
-
-    <div class="mb-section">
-      <div class="mb-sec-title" id="ui-sec3">3️⃣ Impuestos, Depósito, Condiciones y Envío PDF</div>
-      <div class="price-grid">
-        <div>
-          <label id="ui-lbl-tax">Impuestos / Tax ($)</label>
-          <input type="number" step="any" id="qb-tax" value="0" oninput="recalcMasterTotals()">
-        </div>
-        <div>
-          <label id="ui-lbl-dep">Depósito / Abono Pagado ($)</label>
-          <input type="number" step="any" id="qb-dep" value="0" oninput="recalcMasterTotals()">
-        </div>
-      </div>
-      <div style="margin-top:0.6rem;">
-        <label id="ui-lbl-notes">Notas, Garantía o Condiciones Especiales</label>
-        <textarea id="qb-notes" oninput="recalcMasterTotals()"></textarea>
-      </div>
-      <div class="logo-upload-box" style="border-color:#64748b;">
-        <label id="ui-lbl-attach">📎 Adjuntar Foto, ID o Documento en 2da Página (Opcional)</label>
-        <input type="file" id="qb-hw-input" accept="image/*" onchange="handleHwQuoteUpload(this)">
-        <div style="margin-top:0.3rem;font-size:0.74rem;">
-          <label style="display:inline;color:#cbd5e1;cursor:pointer;"><input type="checkbox" id="qb-hw-print-attach" style="width:auto;margin-right:0.3rem;"><span id="ui-lbl-attach-chk">Incluir imagen en 2da página del PDF</span></label>
-        </div>
-      </div>
-
-      <div class="contractor-numbers-bar">
-        <div>
-          <div style="font-size:0.74rem;color:#a7f3d0;font-weight:700;" id="ui-bal-lbl">BALANCE TOTAL:</div>
-          <div id="contractorSummaryLine" style="font-size:0.82rem;color:#fff;">Total: $0.00</div>
-        </div>
-        <strong id="contractorBigTotal">$0.00</strong>
-      </div>
-
-      <button type="button" class="wa-master-btn" id="finalWaBtn" onclick="handleWhatsAppQuoteClick()"></button>
-      <button type="button" class="stripe-pay-btn" id="finalActionBtn" onclick="handleFinalDownloadClick()"></button>
-      <button type="button" class="pro-pass-btn" id="proSubBtn" onclick="handleProPassClick()"></button>
-      <div class="stripe-note" id="finalActionNote"></div>
-    </div>
-  </div>
-
-  <div class="history-card">
-    <div class="history-header">
-      <h3 id="ui-hist-title">📋 Récord de Documentos Pagados</h3>
-      <button type="button" class="clear-btn" id="ui-hist-clear" onclick="clearCalcHistory()">Borrar</button>
-    </div>
-    <input type="text" id="histSearchInput" class="hist-search-input" placeholder="🔍 Buscar cliente, # de factura o fecha..." oninput="renderHistory()">
-    <ul class="history-list" id="calcHistoryList"></ul>
-  </div>
-</div>
-
-<div class="doc-modal-overlay" id="docPreviewModal">
-  <div class="doc-modal-container">
-    <div class="doc-modal-topbar">
-      <div class="sample-switch-group">
-        <button type="button" class="sample-type-btn active" onclick="renderModalSheet('quote')">📄 Quote</button>
-        <button type="button" class="sample-type-btn" onclick="renderModalSheet('invoice')">🧾 Invoice</button>
-        <button type="button" class="sample-type-btn" onclick="renderModalSheet('billsale')">🚗 Bill of Sale</button>
-        <button type="button" class="sample-type-btn" onclick="renderModalSheet('lease')">🏠 Lease</button>
-      </div>
-      <button type="button" class="close-modal-x" onclick="closeDocPreviewModal()">✕</button>
-    </div>
-    <div class="luxury-paper-sheet" id="modalPaperContent"></div>
-  </div>
-</div>
-
-<footer>
-  &copy; 2026 Mr. Invoice Pro | Official PDF Suite
-  <span onclick="activateOwnerMode()" style="cursor:pointer;opacity:0.65;margin-left:8px;padding:2px 6px;border:1px solid #475569;border-radius:4px;" id="ownerKeyBtn">🔒 Modo Cliente: ON</span>
-</footer>
-
-<script>
-const STRIPE_SINGLE_URL = "https://buy.stripe.com/28E8wR0J9cqp8ei17Y7ok00";
-const STRIPE_PRO_PASS_URL = "https://buy.stripe.com/eVq28t77xbml8eidUK7ok01";
-
-const CURRENCIES = { USD:{sym:'$',dec:2}, EUR:{sym:'€',dec:2}, PLN:{sym:'zł',dec:2}, BRL:{sym:'R$',dec:2}, DOP:{sym:'RD$',dec:2}, MXN:{sym:'$',dec:2}, COP:{sym:'$',dec:0} };
-
-const I18N = {
-  es: {
-    sub: "Estimados, Facturas y Contratos PDF", h2: "📄 Crear Documento Oficial o Contrato (PDF)", reset: "🔄 Limpiar ($0.00)",
-    sampleBtn: "👁️ Ver Ejemplo de Cómo Queda el PDF Final", sec1: "1️⃣ Tipo de Documento y Datos de las Partes",
-    docType: "Tipo de Documento Oficial", docNum: "Número de Documento (#)", comp: "Nombre de tu Negocio / Emisor",
-    phone: "Teléfono / Licencia / ID", client: "Cliente / Comprador y Dirección", logo: "📷 Sube aquí el Logo de tu Negocio (Opcional)",
-    sec2: "2️⃣ Descripción, Bienes, Medidas o Servicios", addLine: "➕ Añadir Otra Línea / Concepto",
-    sec3: "3️⃣ Impuestos, Depósito, Condiciones y Envío PDF", tax: "Impuestos / Tax ($)", dep: "Depósito / Abono Pagado ($)",
-    notes: "Notas, Garantía o Condiciones Especiales", attach: "📎 Adjuntar Foto, ID o Documento en 2da Página",
-    attachChk: "Incluir imagen en 2da página del PDF", balLbl: "BALANCE TOTAL:", histTitle: "📋 Récord de Documentos Pagados", histClear: "Borrar",
-    histSearch: "🔍 Buscar por cliente, # de documento o fecha...", openBtn: "📂 Abrir", pdfBtn: "📥 PDF",
-    qty: "Cantidad", price: "Precio Unitario", itemLbl: "Partida #", descPh: "Descripción detallada (ej. Vehículo/VIN, Propiedad, Servicios o Materiales)...",
-    waPaid: "📲 Enviar Archivo PDF Oficial (1 Página) por WhatsApp", dlPaid: "📥 Descargar / Guardar PDF en mi Teléfono",
-    waLock: "🔒 Desbloquear, Descargar y Enviar PDF Oficial ($1.99)",
-    proPassBtn: "🔥 Pase Pro Ilimitado para Contratistas y Negocios ($9.99/mes)",
-    notePaid: "✅ Acceso Activo: Puedes enviar tu PDF por WhatsApp o guardarlo en tu teléfono", noteLock: "🔒 Un solo pago de $1.99 incluye descarga con tu logo, envío por WhatsApp y guardado en tu récord",
-    pdfViralFooter: "Documento Oficial generado con Mr. Invoice Pro • Crea tus Estimados, Facturas y Contratos en: materialcalcpro.org",
-    dateLbl: "Fecha", accept: "ACEPTO", decline: "NO ACEPTO", remBal: "BALANCE PENDIENTE", paidAmt: "MONTO ABONADO / PAGADO",
-    types: {
-      quote: ["📄 Estimado / Cotización Oficial", "ESTIMADO OFICIAL", "EST #", "EMISOR / NEGOCIO:", "CLIENTE:", "TOTAL ESTIMADO", "APROBACIÓN DEL CLIENTE:", "Al firmar debajo, el cliente aprueba los conceptos, montos y condiciones detallados en este estimado.", "Firma del Cliente", "Firma Autorizada", true],
-      invoice: ["🧾 Factura / Invoice Oficial", "FACTURA OFICIAL", "INV #", "EMISOR / NEGOCIO:", "FACTURADO A:", "TOTAL FACTURADO", "CONFORMIDAD DE FACTURA:", "El cliente certifica haber recibido a satisfacción los bienes o servicios descritos y acepta el balance indicado.", "Firma del Cliente", "Firma Autorizada", false],
-      billsale: ["🚗 Contrato de Compraventa (Bill of Sale)", "CONTRATO DE COMPRAVENTA", "BOS #", "VENDEDOR (SELLER):", "COMPRADOR (BUYER):", "PRECIO TOTAL DE VENTA", "CLÁUSULA DE TRASPASO Y COMPRAVENTA:", "El Vendedor declara ser el dueño legítimo del bien descrito libre de gravámenes y transfiere la propiedad al Comprador por el monto acordado en su condición actual (As-Is).", "Firma del Comprador", "Firma del Vendedor", false],
-      contract: ["🤝 Contrato de Servicios / Obra", "CONTRATO DE SERVICIOS", "CNT #", "CONTRATISTA / PROVEEDOR:", "CLIENTE / CONTRATANTE:", "MONTO TOTAL DEL CONTRATO", "ACUERDO VINCULANTE DE SERVICIOS:", "Ambas partes acuerdan ejecutar los trabajos o servicios detallados bajo los montos y condiciones estipulados en este contrato.", "Firma del Cliente", "Firma del Contratista", false],
-      lease: ["🏠 Contrato de Alquiler / Renta (Lease)", "CONTRATO DE ALQUILER", "LSE #", "ARRENDADOR / PROPIETARIO:", "INQUILINO / ARRENDATARIO:", "MONTO TOTAL / RENTA", "CLÁUSULA DE ARRENDAMIENTO:", "El Arrendatario recibe la propiedad o equipo en buen estado y se compromete al pago puntual de la renta y al cuidado del bien arrendado.", "Firma del Inquilino", "Firma del Propietario", false],
-      waiver: ["🛡️ Relevo de Responsabilidad y Entrega", "RELEVO Y ENTREGA FINAL", "WAV #", "EMPRESA / PROFESIONAL:", "CLIENTE / RECEPTOR:", "MONTO LIQUIDADO", "CERTIFICACIÓN DE ENTREGA Y RELEVO:", "El cliente certifica que el trabajo o bien fue entregado a total satisfacción, relevando al emisor de reclamaciones posteriores.", "Firma del Cliente", "Firma del Emisor", false],
-      promissory: ["💵 Pagaré / Acuerdo de Plan de Pago", "PAGARÉ OFICIAL DE DEUDA", "PRM #", "ACREEDOR / BENEFICIARIO:", "DEUDOR / OBLIGADO:", "MONTO RECONOCIDO", "COMPROMISO INCONDICIONAL DE PAGO:", "El Deudor reconoce deber y se compromete incondicionalmente a pagar al Acreedor la suma indicada en los plazos acordados.", "Firma del Deudor", "Firma del Acreedor", false],
-      delivery: ["📦 Conduce de Entrega / Recibo Materiales", "CONDUCE DE ENTREGA", "DEL #", "DESPACHADO POR:", "RECIBIDO POR:", "VALOR DE MERCANCÍA", "CONFIRMACIÓN DE RECEPCIÓN CONFORME:", "El receptor confirma haber verificado y recibido en buen estado las cantidades y materiales detallados arriba.", "Recibido Conforme (Firma)", "Entregado Por", false],
-      workorder: ["🔧 Orden de Trabajo / Servicio", "ORDEN DE TRABAJO", "WO #", "EMPRESA / TÉCNICO:", "CLIENTE / UBICACIÓN:", "TOTAL ORDEN DE TRABAJO", "AUTORIZACIÓN Y CIERRE DE ORDEN:", "Autorizo la ejecución de las tareas descritas y certifico su cumplimiento en campo.", "Firma del Cliente", "Firma del Técnico", true],
-      po: ["🛒 Orden de Compra (Purchase Order)", "ORDEN DE COMPRA (PO)", "PO #", "COMPRADOR / EMPRESA:", "SUPLIDOR / VENDEDOR:", "TOTAL ORDEN DE COMPRA", "AUTORIZACIÓN DE COMPRA:", "Se autoriza el despacho y facturación de los artículos listados bajo los precios y cantidades especificados.", "Compra Autorizada Por", "Suplidor / Vendedor", false],
-      receipt: ["✅ Recibo de Pago / Abono Oficial", "RECIBO OFICIAL DE PAGO", "REC #", "RECIBIDO POR:", "PAGADO POR:", "MONTO DEL CONCEPTO", "CONSTANCIA DE PAGO RECIBIDO:", "Se expide el presente recibo oficial como comprobante de los pagos o abonos detallados.", "Firma del Cliente", "Recibido Por (Firma)", false],
-      change: ["🔄 Orden de Cambio (Change Order)", "ORDEN DE CAMBIO OFICIAL", "CO #", "CONTRATISTA:", "CLIENTE:", "TOTAL ORDEN DE CAMBIO", "APROBACIÓN DE ADICIONALES:", "El cliente autoriza los cambios o trabajos adicionales descritos y aprueba sumar su costo al acuerdo principal.", "Firma del Cliente", "Firma del Contratista", true]
-    }
-  },
-  en: {
-    sub: "Official PDF Estimates, Invoices & Contracts", h2: "📄 Create Official Document or Contract (PDF)", reset: "🔄 Clear ($0.00)",
-    sampleBtn: "👁️ View Sample of Final PDF Format", sec1: "1️⃣ Document Type & Party Details",
-    docType: "Official Document Type", docNum: "Document Number (#)", comp: "Your Business / Issuer Name",
-    phone: "Phone / License / ID", client: "Client / Buyer Name & Address", logo: "📷 Upload Business Logo (Optional)",
-    sec2: "2️⃣ Description, Goods, Measurements or Services", addLine: "➕ Add Another Line Item",
-    sec3: "3️⃣ Taxes, Deposit, Terms & Send PDF", tax: "Taxes / Fees ($)", dep: "Deposit / Amount Paid ($)",
-    notes: "Notes, Warranty or Special Terms", attach: "📎 Attach Photo, ID or Doc on 2nd Page",
-    attachChk: "Include image on 2nd page of PDF", balLbl: "TOTAL BALANCE:", histTitle: "📋 Paid Documents Record", histClear: "Clear",
-    histSearch: "🔍 Search by client, doc # or date...", openBtn: "📂 Open", pdfBtn: "📥 PDF",
-    qty: "Quantity", price: "Unit Price", itemLbl: "Item #", descPh: "Detailed description (e.g. Vehicle/VIN, Property, Services or Materials)...",
-    waPaid: "📲 Send Official 1-Page PDF via WhatsApp", dlPaid: "📥 Download / Save PDF to Phone",
-    waLock: "🔒 Unlock, Download & Send Official PDF ($1.99)",
-    proPassBtn: "🔥 Unlimited Pro Pass for Contractors & Pros ($9.99/mo)",
-    notePaid: "✅ Access Active: Send your PDF via WhatsApp or save it to your phone", noteLock: "🔒 A single $1.99 payment includes logo download, WhatsApp sharing & record storage",
-    pdfViralFooter: "Official Document generated with Mr. Invoice Pro • Create Estimates, Invoices & Contracts at: materialcalcpro.org",
-    dateLbl: "Date", accept: "I ACCEPT", decline: "DECLINE", remBal: "REMAINING BALANCE", paidAmt: "AMOUNT PAID / DEPOSIT",
-    types: {
-      quote: ["📄 Official Estimate / Quote", "OFFICIAL ESTIMATE", "EST #", "ISSUED BY:", "PREPARED FOR:", "ESTIMATE TOTAL", "CLIENT APPROVAL:", "By signing below, the client approves the items, amounts, and terms detailed in this official estimate.", "Client Signature", "Authorized Signature", true],
-      invoice: ["🧾 Official Invoice", "OFFICIAL INVOICE", "INV #", "ISSUED BY:", "BILL TO:", "INVOICE TOTAL", "INVOICE ACKNOWLEDGMENT:", "The client certifies receipt of the goods or services described and agrees to pay the stated balance.", "Client Signature", "Authorized Signature", false],
-      billsale: ["🚗 Bill of Sale Contract", "BILL OF SALE CONTRACT", "BOS #", "SELLER / TRANSFEROR:", "BUYER / PURCHASER:", "TOTAL SALE PRICE", "LEGAL TRANSFER & BILL OF SALE CLAUSE:", "The Seller declares full legal ownership of the item described free of liens and transfers all ownership rights to the Buyer As-Is for the agreed price.", "Buyer Signature", "Seller Signature", false],
-      contract: ["🤝 Service / Work Contract", "SERVICE AGREEMENT", "CNT #", "CONTRACTOR / PROVIDER:", "CLIENT / HIRING PARTY:", "TOTAL CONTRACT AMOUNT", "BINDING SERVICE AGREEMENT:", "Both parties agree to execute the work or services detailed above under the amounts and terms stipulated in this contract.", "Client Signature", "Contractor Signature", false],
-      lease: ["🏠 Lease / Rental Agreement", "LEASE AGREEMENT", "LSE #", "LANDLORD / LESSOR:", "TENANT / LESSEE:", "TOTAL RENT / LEASE", "LEASE TERMS & CONDITIONS:", "The Tenant receives the property or equipment in good condition and agrees to timely rental payments and proper care.", "Tenant Signature", "Landlord Signature", false],
-      waiver: ["🛡️ Liability Waiver & Final Release", "RELEASE & WAIVER", "WAV #", "PROVIDER / COMPANY:", "CLIENT / RECIPIENT:", "SETTLED AMOUNT", "FINAL RELEASE & SATISFACTION:", "The client certifies that the work or property was delivered to full satisfaction and releases the provider from further claims.", "Client Signature", "Provider Signature", false],
-      promissory: ["💵 Promissory Note / Payment Plan", "PROMISSORY NOTE", "PRM #", "LENDER / CREDITOR:", "BORROWER / DEBTOR:", "PRINCIPAL AMOUNT", "UNCONDITIONAL PROMISE TO PAY:", "The Borrower acknowledges the debt and unconditionally promises to pay the Creditor the stated sum according to the agreed schedule.", "Borrower Signature", "Creditor Signature", false],
-      delivery: ["📦 Delivery Ticket / Material Receipt", "DELIVERY TICKET", "DEL #", "DELIVERED BY:", "RECEIVED BY:", "MERCHANDISE VALUE", "DELIVERY CONFIRMATION:", "The recipient confirms having inspected and received the items and quantities listed above in good order.", "Received By (Signature)", "Delivered By", false],
-      workorder: ["🔧 Work / Service Order", "WORK ORDER", "WO #", "COMPANY / TECH:", "CLIENT / LOCATION:", "WORK ORDER TOTAL", "WORK ORDER AUTHORIZATION:", "I authorize the execution of the tasks described and certify completion on site.", "Client Signature", "Technician Signature", true],
-      po: ["🛒 Purchase Order (PO)", "PURCHASE ORDER", "PO #", "BUYER / COMPANY:", "VENDOR / SUPPLIER:", "PURCHASE ORDER TOTAL", "PURCHASE AUTHORIZATION:", "Supply and billing of the listed items are authorized under the specified quantities and prices.", "Authorized Buyer", "Vendor Representative", false],
-      receipt: ["✅ Official Payment Receipt", "PAYMENT RECEIPT", "REC #", "RECEIVED BY:", "PAID BY:", "TOTAL ITEM AMOUNT", "OFFICIAL PAYMENT CONFIRMATION:", "This official receipt is issued as proof of the payments or deposits detailed above.", "Client Signature", "Received By", false],
-      change: ["🔄 Official Change Order", "CHANGE ORDER", "CO #", "CONTRACTOR:", "CLIENT:", "CHANGE ORDER TOTAL", "CHANGE ORDER APPROVAL:", "The client authorizes the additional work or modifications described and agrees to add its cost to the main contract.", "Client Signature", "Contractor Signature", true]
-    }
-  },
-  fr: {
-    sub: "Devis, Factures et Contrats Officiels PDF", h2: "📄 Créer un Document ou Contrat Officiel (PDF)", reset: "🔄 Effacer (0,00)",
-    sampleBtn: "👁️ Voir un Exemple du PDF Final", sec1: "1️⃣ Type de Document et Coordonnées des Parties",
-    docType: "Type de Document Officiel", docNum: "Numéro du Document (#)", comp: "Nom de votre Entreprise / Émetteur",
-    phone: "Téléphone / Licence / ID", client: "Client / Acheteur et Adresse", logo: "📷 Télécharger le Logo de l'Entreprise (Optionnel)",
-    sec2: "2️⃣ Description, Biens, Mesures ou Services", addLine: "➕ Ajouter une Ligne / Article",
-    sec3: "3️⃣ Taxes, Acompte, Conditions et Envoi PDF", tax: "Taxes / TVA ($)", dep: "Acompte / Montant Payé ($)",
-    notes: "Notes, Garantie ou Conditions Particulières", attach: "📎 Joindre Photo ou Pièce d'Identité (2e Page)",
-    attachChk: "Inclure l'image sur la 2e page du PDF", balLbl: "SOLDE TOTAL :", histTitle: "📋 Historique des Documents Payés", histClear: "Effacer",
-    histSearch: "🔍 Rechercher par client, n° ou date...", openBtn: "📂 Ouvrir", pdfBtn: "📥 PDF",
-    qty: "Quantité", price: "Prix Unitaire", itemLbl: "Ligne #", descPh: "Description détaillée (ex. Véhicule/VIN, Bien, Services ou Matériaux)...",
-    waPaid: "📲 Envoyer le PDF Officiel (1 Page) via WhatsApp", dlPaid: "📥 Télécharger / Enregistrer le PDF",
-    waLock: "🔒 Débloquer, Télécharger et Envoyer le PDF Officiel (1,99 $)",
-    proPassBtn: "🔥 Pass Pro Illimité pour Entrepreneurs (9,99 $/mois)",
-    notePaid: "✅ Accès Actif : Envoyez votre PDF via WhatsApp ou enregistrez-le", noteLock: "🔒 Un seul paiement de 1,99 $ inclut le téléchargement avec logo et l'envoi WhatsApp",
-    pdfViralFooter: "Document Officiel généré avec Mr. Invoice Pro • Créez vos Devis, Factures et Contrats sur : materialcalcpro.org",
-    dateLbl: "Date", accept: "J'ACCEPTE", decline: "JE REFUSE", remBal: "SOLDE RESTANT", paidAmt: "MONTANT PAYÉ / ACOMPTE",
-    types: {
-      quote: ["📄 Devis Officiel", "DEVIS OFFICIEL", "DEV #", "ÉMETTEUR / ENTREPRISE :", "PRÉPARÉ POUR :", "TOTAL DU DEVIS", "APPROBATION DU CLIENT :", "En signant ci-dessous, le client accepte les articles, montants et conditions détaillés dans ce devis officiel.", "Signature du Client", "Signature Autorisée", true],
-      invoice: ["🧾 Facture Officielle", "FACTURE OFFICIELLE", "FAC #", "ÉMETTEUR / ENTREPRISE :", "FACTURÉ À :", "TOTAL FACTURÉ", "VALIDATION DE FACTURE :", "Le client certifie avoir reçu les biens ou services décrits et s'engage à régler le solde indiqué.", "Signature du Client", "Signature Autorisée", false],
-      billsale: ["🚗 Contrat de Vente (Acte de Cession)", "CONTRAT DE VENTE", "VEN #", "VENDEUR / CÉDANT :", "ACHETEUR / ACQUÉREUR :", "PRIX TOTAL DE VENTE", "CLAUSE LÉGALE DE CESSION ET VENTE :", "Le Vendeur déclare être le propriétaire légitime du bien décrit libre de tout gage et en transfère la propriété à l'Acheteur en l'état au prix convenu.", "Signature de l'Acheteur", "Signature du Vendeur", false],
-      contract: ["🤝 Contrat de Prestation de Services", "CONTRAT DE SERVICES", "CNT #", "PRESTATAIRE / ENTREPRENEUR :", "CLIENT / COMMANDITAIRE :", "MONTANT DU CONTRAT", "ACCORD CONTRACTUEL DES PARTIES :", "Les deux parties conviennent d'exécuter les travaux ou services détaillés selon les montants et conditions stipulés.", "Signature du Client", "Signature du Prestataire", false],
-      lease: ["🏠 Contrat de Location / Bail", "CONTRAT DE LOCATION", "LOC #", "BAILLEUR / PROPIÉTAIRE :", "LOCATAIRE / PRENEUR :", "LOYER / MONTANT TOTAL", "CONDITIONS DE LOCATION :", "Le Locataire reçoit le bien ou l'équipement en bon état et s'engage à payer le loyer convenu et à en prendre soin.", "Signature du Locataire", "Signature du Bailleur", false],
-      waiver: ["🛡️ Décharge de Responsabilité et Réception", "DÉCHARGE ET RÉCEPTION", "DEC #", "ENTREPRISE / ÉMETTEUR :", "CLIENT / BÉNÉFICIAIRE :", "MONTANT RÉGLÉ", "ATTESTATION DE BONNE FIN ET DÉCHARGE :", "Le client certifie que le travail ou le bien a été livré à son entière satisfaction et décharge l'émetteur de toute réclamation ultérieure.", "Signature du Client", "Signature de l'Émetteur", false],
-      promissory: ["💵 Reconnaissance de Dette / Échéancier", "RECONNAISSANCE DE DETTE", "DET #", "CRÉANCIER / BÉNÉFICIAIRE :", "DÉBITEUR / SOUSCRIPTEUR :", "MONTANT RECONNU", "ENGAGEMENT INCONDITIONNEL DE PAIEMENT :", "Le Débiteur reconnaît devoir et s'engage inconditionnellement à payer au Créancier la somme indiquée selon les échéances convenues.", "Signature du Débiteur", "Signature du Créancier", false],
-      delivery: ["📦 Bon de Livraison / Réception", "BON DE LIVRAISON", "BL #", "EXPÉDIÉ PAR :", "REÇU PAR :", "VALEUR TOTALE", "CONFIRMATION DE RÉCEPTION :", "Le destinataire confirme avoir vérifié et reçu en bon état les marchandises et quantités détaillées ci-dessus.", "Reçu Conforme (Signature)", "Livré Par", false],
-      workorder: ["🔧 Ordre de Travail / Intervention", "ORDRE DE TRAVAIL", "OT #", "ENTREPRISE / TECHNICIEN :", "CLIENT / SITE :", "TOTAL INTERVENTION", "AUTORISATION D'INTERVENTION :", "J'autorise l'exécution des travaux décrits et certifie leur réalisation.", "Signature du Client", "Signature du Technicien", true],
-      po: ["🛒 Bon de Commande (PO)", "BON DE COMMANDE", "BC #", "ACHETEUR / SOCIÉTÉ :", "FOURNISSEUR :", "TOTAL DE LA COMMANDE", "AUTORISATION DE COMMANDE :", "La livraison et la facturation des articles listés sont autorisées aux quantités et prix spécifiés.", "Acheteur Autorisé", "Fournisseur", false],
-      receipt: ["✅ Reçu Officiel de Paiement", "REÇU DE PAIEMENT", "REC #", "REÇU PAR :", "PAYÉ PAR :", "MONTANT TOTAL", "ATTESTATION DE PAIEMENT REÇU :", "Ce reçu officiel est délivré comme preuve des paiements ou acomptes détaillés ci-dessus.", "Signature du Client", "Reçu Par (Signature)", false],
-      change: ["🔄 Avenant / Ordre de Modification", "AVENANT AU CONTRAT", "AVN #", "ENTREPRENEUR :", "CLIENT :", "TOTAL DE L'AVENANT", "APPROBATION DE L'AVENANT :", "Le client autorise les travaux supplémentaires décrits et accepte d'ajouter leur coût au contrat principal.", "Signature du Client", "Signature de l'Entrepreneur", true]
-    }
-  },
-  pl: {
-    sub: "Kosztorysy, Faktury i Umowy w PDF", h2: "📄 Utwórz Oficjalny Dokument lub Umowę (PDF)", reset: "🔄 Wyczyść (0.00)",
-    sampleBtn: "👁️ Zobacz Przykład Gotowego Pliku PDF", sec1: "1️⃣ Rodzaj Dokumentu i Dane Stron",
-    docType: "Oficjalny Rodzaj Dokumentu", docNum: "Numer Dokumentu (#)", comp: "Nazwa Firmy / Wystawca",
-    phone: "Telefon / NIP / Dowód", client: "Klient / Kupujący i Adres", logo: "📷 Wgraj Logo Firmy (Opcjonalnie)",
-    sec2: "2️⃣ Opis, Towary, Wymiary lub Usługi", addLine: "➕ Dodaj Kolejną Pozycję",
-    sec3: "3️⃣ Podatki, Zaliczka, Warunki i Wysyłka PDF", tax: "Podatek / VAT ($)", dep: "Zaliczka / Wpłacono ($)",
-    notes: "Uwagi, Gwarancja lub Warunki Szczególne", attach: "📎 Załącz Zdjęcie lub Dokument na 2. Stronie",
-    attachChk: "Dołącz obraz na 2. stronie PDF", balLbl: "DO ZAPŁATY:", histTitle: "📋 Rejestr Opłaconych Dokumentów", histClear: "Wyczyść",
-    histSearch: "🔍 Szukaj klienta, nr dokumentu lub daty...", openBtn: "📂 Otwórz", pdfBtn: "📥 PDF",
-    qty: "Ilość", price: "Cena Jednostkowa", itemLbl: "Pozycja #", descPh: "Szczegółowy opis (np. Pojazd/VIN, Nieruchomość, Usługi lub Materiały)...",
-    waPaid: "📲 Wyślij Oficjalny Plik PDF (1 Strona) przez WhatsApp", dlPaid: "📥 Pobierz / Zapisz PDF w Telefonie",
-    waLock: "🔒 Odblokuj, Pobierz i Wyślij Oficjalny PDF ($1.99)",
-    proPassBtn: "🔥 Pakiet Pro Bez Limitu dla Firm i Wykonawców ($9.99/mies.)",
-    notePaid: "✅ Dostęp Aktywny: Wyślij PDF przez WhatsApp lub zapisz w telefonie", noteLock: "🔒 Jedna opłata $1.99 obejmuje pobranie z logo oraz wysyłkę przez WhatsApp",
-    pdfViralFooter: "Oficjalny Dokument wygenerowany w Mr. Invoice Pro • Twórz Kosztorysy, Faktury i Umowy na: materialcalcpro.org",
-    dateLbl: "Data", accept: "AKCEPTUJĘ", decline: "ODRZUCAM", remBal: "POZOSTAŁO DO ZAPŁATY", paidAmt: "WPŁACONO / ZALICZKA",
-    types: {
-      quote: ["📄 Kosztorys / Wycena Oficjalna", "OFICJALNY KOSZTORYS", "WYC #", "WYSTAWCA / FIRMA:", "DLA KLIENTA:", "RAZEM KOSZTORYS", "AKCEPTACJA KLIENTA:", "Podpisując poniżej, klient akceptuje pozycje, kwoty oraz warunki określone w niniejszym kosztorysie.", "Podpis Klienta", "Podpis Upoważniony", true],
-      invoice: ["🧾 Faktura / Rachunek Oficjalny", "FAKTURA OFICJALNA", "FAK #", "SPRZEDAWCA / FIRMA:", "NABYWCA / KLIENT:", "RAZEM DO ZAPŁATY", "POTWIERDZENIE ODBIORU FAKTURY:", "Klient potwierdza odbiór opisanych towarów lub usług i zobowiązuje się do uregulowania wskazanej kwoty.", "Podpis Klienta", "Podpis Wystawcy", false],
-      billsale: ["🚗 Umowa Kupna-Sprzedaży (Bill of Sale)", "UMOWA KUPNA-SPRZEDAŻY", "UKS #", "SPRZEDAJĄCY:", "KUPUJĄCY:", "CAŁKOWITA CENA SPRZEDAŻY", "OŚWIADCZENIE I PRZENIESIENIE WŁASNOŚCI:", "Sprzedający oświadcza, że jest prawowitym właścicielem opisanego przedmiotu wolnego od wad prawnych i przenosi własność na Kupującego za uzgodnioną kwotę w stanie obecnym.", "Podpis Kupującego", "Podpis Sprzedającego", false],
-      contract: ["🤝 Umowa o Świadczenie Usług / Roboty", "UMOWA O USŁUGI", "UMO #", "WYKONAWCA:", "ZLECENIODAWCA / KLIENT:", "WARTOŚĆ UMOWY", "ZOBOWIĄZANIE UMOWNE STRON:", "Obie strony zgadzają się na wykonanie opisanych prac lub usług zgodnie z kwotami i warunkami określonymi w niniejszej umowie.", "Podpis Zleceniodawcy", "Podpis Wykonawcy", false],
-      lease: ["🏠 Umowa Najmu / Dzierżawy", "UMOWA NAJMU", "NAJ #", "WYNAJMUJĄCY:", "NAJEMCA:", "CZYNSZ / KWOTA NAJMU", "WARUNKI UMOWY NAJMU:", "Najemca odbiera przedmiot najmu w dobrym stanie i zobowiązuje się do terminowego opłacania czynszu oraz należytego użytkowania.", "Podpis Najemcy", "Podpis Wynajmującego", false],
-      waiver: ["🛡️ Protokół Odbioru i Zwolnienie z Odpowiedzialności", "PROTOKÓŁ ODBIORU", "ODB #", "WYKONAWCA / FIRMA:", "KLIENT / ODBIORCA:", "ROZLICZONA KWOTA", "POTWIERDZENIE WYKONANIA BEZ ZASTRZEŻEŃ:", "Klient potwierdza odbiór prac lub mienia bez zastrzeżeń i zrzeka się dalszych roszczeń z tytułu odbioru.", "Podpis Klienta", "Podpis Wykonawcy", false],
-      promissory: ["💵 Weksel / Ugoda Spłaty Zadłużenia", "UZNANIE DŁUGU / SPŁATA", "DLU #", "WIERZYCIEL:", "DŁUŻNIK:", "KWOTA ZADŁUŻENIA", "BEZWARUNKOWE ZOBOWIĄZANIE DO SPŁATY:", "Dłużnik uznaje dług i bezwarunkowo zobowiązuje się do spłaty Wierzycielowi wskazanej kwoty zgodnie z ustalonym harmonogramem.", "Podpis Dłużnika", "Podpis Wierzyciela", false],
-      delivery: ["📦 Dowód Dostawy / Wydanie Materiałów (WZ)", "DOWÓD DOSTAWY (WZ)", "WZ #", "WYDAŁ / DOSTAWCA:", "ODEBRAŁ / ODBIORCA:", "WARTOŚĆ TOWARU", "POTWIERDZENIE ODBIORU TOWARU:", "Odbiorca potwierdza sprawdzenie i otrzymanie wymienionych powyżej materiałów w dobrym stanie.", "Podpis Odbiorcy", "Podpis Wydającego", false],
-      workorder: ["🔧 Zlecenie Serwisowe / Robocze", "ZLECENIE PRACY", "ZLE #", "FIRMA / SERWISANT:", "KLIENT / LOKALIZACJA:", "RAZEM ZLECENIE", "AUTORYZACJA I ODBIÓR ZLECENIA:", "Upoważniam do wykonania opisanych prac oraz potwierdzam ich realizację.", "Podpis Klienta", "Podpis Serwisanta", true],
-      po: ["🛒 Zamówienie Zakupu (Purchase Order)", "ZAMÓWIENIE ZAKUPU (PO)", "ZAM #", "ZAMAWIAJĄCY:", "DOSTAWCA:", "WARTOŚĆ ZAMÓWIENIA", "AUTORYZACJA ZAMÓWIENIA:", "Upoważnia się do dostarczenia i zafakturowania wymienionych pozycji zgodnie z podanymi cenami i ilościami.", "Podpis Zamawiającego", "Dostawca", false],
-      receipt: ["✅ Oficjalne Pokwitowanie Wpłaty (KP)", "POKWITOWANIE WPŁATY", "KP #", "PRZYJĄŁ:", "WPŁACIŁ:", "KWOTA OPERACJI", "POTWIERDZENIE OTRZYMANIA WPŁATY:", "Niniejsze pokwitowanie stanowi oficjalny dowód otrzymania wpłaty lub zaliczki.", "Podpis Klienta", "Podpis Przyjmującego", false],
-      change: ["🔄 Aneks / Zlecenie Zmian (Change Order)", "ZLECENIE ZMIAN / ANEKS", "ANE #", "WYKONAWCA:", "KLIENT:", "WARTOŚĆ ZMIAN", "AKCEPTACJA PRAC DODATKOWYCH:", "Klient zatwierdza opisane prace dodatkowe i wyraża zgodę na doliczenie ich kosztu do umowy głównej.", "Podpis Klienta", "Podpis Wykonawcy", true]
-    }
-  },
-  pt: {
-    sub: "Orçamentos, Faturas e Contratos Oficiais PDF", h2: "📄 Criar Documento Oficial ou Contrato (PDF)", reset: "🔄 Limpar (0,00)",
-    sampleBtn: "👁️ Ver Exemplo do PDF Final", sec1: "1️⃣ Tipo de Documento e Dados das Partes",
-    docType: "Tipo de Documento Oficial", docNum: "Número do Documento (#)", comp: "Nome da sua Empresa / Emissor",
-    phone: "Telefone / CNPJ / CPF / ID", client: "Cliente / Comprador e Endereço", logo: "📷 Enviar Logotipo da Empresa (Opcional)",
-    sec2: "2️⃣ Descrição, Bens, Medidas ou Serviços", addLine: "➕ Adicionar Outra Linha / Item",
-    sec3: "3️⃣ Impostos, Sinal, Condições e Envio PDF", tax: "Impostos / Taxas ($)", dep: "Sinal / Valor Pago ($)",
-    notes: "Notas, Garantia ou Condições Especiais", attach: "📎 Anexar Foto, RG/CPF ou Doc na 2ª Página",
-    attachChk: "Incluir imagem na 2ª página do PDF", balLbl: "SALDO TOTAL:", histTitle: "📋 Registro de Documentos Pagos", histClear: "Limpar",
-    histSearch: "🔍 Buscar por cliente, nº ou data...", openBtn: "📂 Abrir", pdfBtn: "📥 PDF",
-    qty: "Quantidade", price: "Preço Unitário", itemLbl: "Item #", descPh: "Descrição detalhada (ex. Veículo/Chassi, Imóvel, Serviços ou Materiais)...",
-    waPaid: "📲 Enviar Arquivo PDF Oficial (1 Página) via WhatsApp", dlPaid: "📥 Baixar / Salvar PDF no Celular",
-    waLock: "🔒 Desbloquear, Baixar e Enviar PDF Oficial ($1.99)",
-    proPassBtn: "🔥 Passe Pro Ilimitado para Profissionais ($9.99/mês)",
-    notePaid: "✅ Acesso Ativo: Envie seu PDF por WhatsApp ou salve no celular", noteLock: "🔒 Um único pagamento de $1.99 inclui download com seu logo e envio por WhatsApp",
-    pdfViralFooter: "Documento Oficial gerado com Mr. Invoice Pro • Crie Orçamentos, Faturas e Contratos em: materialcalcpro.org",
-    dateLbl: "Data", accept: "ACEITO", decline: "NÃO ACEITO", remBal: "SALDO RESTANTE", paidAmt: "VALOR PAGO / SINAL",
-    types: {
-      quote: ["📄 Orçamento / Cotação Oficial", "ORÇAMENTO OFICIAL", "ORC #", "EMISSOR / EMPRESA:", "CLIENTE:", "TOTAL DO ORÇAMENTO", "APROVAÇÃO DO CLIENTE:", "Ao assinar abaixo, o cliente aprova os itens, valores e condições detalhados neste orçamento oficial.", "Assinatura do Cliente", "Assinatura Autorizada", true],
-      invoice: ["🧾 Fatura / Nota de Cobrança", "FATURA OFICIAL", "FAT #", "EMISSOR / EMPRESA:", "FATURADO PARA:", "TOTAL DA FATURA", "CONFIRMAÇÃO DE RECEBIMENTO:", "O cliente certifica ter recebido os bens ou serviços descritos e concorda com o pagamento do saldo indicado.", "Assinatura do Cliente", "Assinatura Autorizada", false],
-      billsale: ["🚗 Contrato de Compra e Venda", "CONTRATO DE COMPRA E VENDA", "CCV #", "VENDEDOR / CEDENTE:", "COMPRADOR / ADQUIRENTE:", "PREÇO TOTAL DE VENDA", "CLÁUSULA DE TRANSFERÊNCIA E VENDA:", "O Vendedor declara ser o legítimo proprietário do bem descrito livre de ônus e transfere a propriedade ao Comprador pelo valor acordado no estado em que se encontra.", "Assinatura do Comprador", "Assinatura do Vendedor", false],
-      contract: ["🤝 Contrato de Prestação de Serviços", "CONTRATO DE SERVIÇOS", "CNT #", "CONTRATADO / PRESTADOR:", "CONTRATANTE / CLIENTE:", "VALOR TOTAL DO CONTRATO", "ACORDO VINCULANTE DE SERVIÇOS:", "Ambas as partes concordam em executar os serviços detalhados acima sob os valores, prazos e condições estipulados neste contrato.", "Assinatura do Contratante", "Assinatura do Contratado", false],
-      lease: ["🏠 Contrato de Locação / Aluguel", "CONTRATO DE LOCAÇÃO", "LOC #", "LOCADOR / PROPRIETÁRIO:", "LOCATÁRIO / INQUILINO:", "VALOR TOTAL / ALUGUEL", "TERMOS E CONDIÇÕES DE LOCAÇÃO:", "O Locatário recebe o imóvel ou equipamento em bom estado e compromete-se ao pagamento pontual do aluguel e zelo pelo bem.", "Assinatura do Locatário", "Assinatura do Locador", false],
-      waiver: ["🛡️ Termo de Quitação e Entrega Final", "TERMO DE ENTREGA E QUITAÇÃO", "QUI #", "EMPRESA / PROFISSIONAL:", "CLIENTE / RECEBEDOR:", "VALOR QUITADO", "DECLARAÇÃO DE RECEBIMENTO E QUITAÇÃO:", "O cliente certifica que o serviço ou bem foi entregue com total satisfação, dando plena quitação ao emissor.", "Assinatura do Cliente", "Assinatura do Emissor", false],
-      promissory: ["💵 Nota Promissória / Confissão de Dívida", "NOTA PROMISSÓRIA", "NPR #", "CREDOR / BENEFICIÁRIO:", "DEVEDOR / EMITENTE:", "VALOR RECONHECIDO", "COMPROMISSO INCONDICIONAL DE PAGAMENTO:", "O Devedor reconhece a dívida e compromete-se incondicionalmente a pagar ao Credor a quantia indicada nos prazos acordados.", "Assinatura do Devedor", "Assinatura do Credor", false],
-      delivery: ["📦 Comprovante de Entrega / Romaneio", "COMPROVANTE DE ENTREGA", "ENT #", "EXPEDIDO POR:", "RECEBIDO POR:", "VALOR DA MERCADORIA", "CONFIRMAÇÃO DE ENTREGA:", "O recebedor confirma ter conferido e recebido em perfeito estado os materiais e quantidades listados acima.", "Recebido Por (Assinatura)", "Entregue Por", false],
-      workorder: ["🔧 Ordem de Serviço / Trabalho (OS)", "ORDEM DE SERVIÇO", "OS #", "EMPRESA / TÉCNICO:", "CLIENTE / LOCAL:", "TOTAL DA ORDEM DE SERVIÇO", "AUTORIZAÇÃO E EXECUÇÃO:", "Autorizo a execução dos serviços descritos e confirmo sua realização no local.", "Assinatura do Cliente", "Assinatura do Técnico", true],
-      po: ["🛒 Pedido de Compra (Purchase Order)", "PEDIDO DE COMPRA", "PC #", "COMPRADOR / EMPRESA:", "FORNECEDOR:", "TOTAL DO PEDIDO", "AUTORIZAÇÃO DE COMPRA:", "Fica autorizado o fornecimento e faturamento dos itens listados sob as quantidades e preços especificados.", "Comprador Autorizado", "Fornecedor", false],
-      receipt: ["✅ Recibo Oficial de Pagamento", "RECIBO DE PAGAMENTO", "REC #", "RECEBIDO POR:", "PAGO POR:", "VALOR TOTAL", "CONFIRMAÇÃO DE PAGAMENTO RECEBIDO:", "Emitimos o presente recibo oficial como comprovante dos pagamentos ou sinais detalhados acima.", "Assinatura do Cliente", "Recebido Por (Assinatura)", false],
-      change: ["🔄 Aditivo / Ordem de Alteração", "TERMO ADITIVO DE SERVIÇO", "ADI #", "CONTRATADO:", "CLIENTE:", "TOTAL DO ADITIVO", "APROVAÇÃO DE SERVIÇOS EXTRAS:", "O cliente autoriza as alterações ou serviços adicionais descritos e aprova somar seu custo ao acordo principal.", "Assinatura do Cliente", "Assinatura do Contratado", true]
-    }
-  }
-};
-
-const urlParams = new URLSearchParams(window.location.search);
-if (urlParams.get('pro') === 'true') {
-  localStorage.setItem('mcp_pro_pass_active', 'true');
-}
-const isProSubscriber = localStorage.getItem('mcp_pro_pass_active') === 'true';
-const isReturningFromStripe = urlParams.get('paid') === 'true' || isProSubscriber;
-
-let currentLang = localStorage.getItem('mcp_lang') || 'es';
-if (!I18N[currentLang]) currentLang = 'es';
-let currentCurr = localStorage.getItem('mcp_currency') || 'USD';
-let isPaidUser = isReturningFromStripe;
-let uploadedLogoData = '';
-let uploadedHwQuoteImg = '';
-let customLineItems = [{desc:'', qty:'1', price:''}];
-let deferredPrompt = null;
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  const btn = document.getElementById('installPwaBtn');
-  if (btn) btn.style.display = 'inline-block';
-});
-
-function installPWA() {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
-}
-
-function getCurrObj() { return CURRENCIES[currentCurr] || CURRENCIES.USD; }
-function formatUSD(num) { const c = getCurrObj(); return c.sym + (Number(num)||0).toLocaleString('en-US',{minimumFractionDigits:c.dec,maximumFractionDigits:c.dec}); }
-
-function getDocMeta(docType) {
-  const L = I18N[currentLang] || I18N.es;
-  const arr = L.types[docType] || L.types.quote;
-  return {
-    menuName: arr[0], badge: arr[1], prefix: arr[2], party1: arr[3], party2: arr[4],
-    totalLabel: arr[5], signTitle: arr[6], legalClause: arr[7], sig1: arr[8], sig2: arr[9],
-    showAcceptChecks: !!arr[10], filePrefix: arr[2].replace(/[^a-zA-Z]/g,'') + '_'
-  };
-}
-
-function changeLang(val) {
-  currentLang = I18N[val] ? val : 'es';
-  localStorage.setItem('mcp_lang', currentLang);
-  applyLanguageUI();
-}
-
-function changeCurrency(val) {
-  currentCurr = val;
-  localStorage.setItem('mcp_currency', val);
-  recalcMasterTotals();
-}
-
-function applyLanguageUI() {
-  const L = I18N[currentLang] || I18N.es;
-  document.documentElement.lang = currentLang;
-  document.getElementById('langSelect').value = currentLang;
-  document.getElementById('currSelect').value = currentCurr;
-
-  document.getElementById('ui-sub').innerText = L.sub;
-  document.getElementById('ui-h2').innerText = L.h2;
-  document.getElementById('ui-reset').innerText = L.reset;
-  document.getElementById('ui-sample-btn').innerText = L.sampleBtn;
-  document.getElementById('ui-sec1').innerText = L.sec1;
-  document.getElementById('ui-lbl-doctype').innerText = L.docType;
-  document.getElementById('ui-lbl-docnum').innerText = L.docNum;
-  document.getElementById('lbl-comp').innerText = L.comp;
-  document.getElementById('lbl-phone').innerText = L.phone;
-  document.getElementById('lbl-client').innerText = L.client;
-  document.getElementById('ui-lbl-logo').innerText = L.logo;
-  document.getElementById('ui-sec2').innerText = L.sec2;
-  document.getElementById('ui-add-line').innerText = L.addLine;
-  document.getElementById('ui-sec3').innerText = L.sec3;
-  document.getElementById('ui-lbl-tax').innerText = L.tax;
-  document.getElementById('ui-lbl-dep').innerText = L.dep;
-  document.getElementById('ui-lbl-notes').innerText = L.notes;
-  document.getElementById('ui-lbl-attach').innerText = L.attach;
-  document.getElementById('ui-lbl-attach-chk').innerText = L.attachChk;
-  document.getElementById('ui-bal-lbl').innerText = L.balLbl;
-  document.getElementById('ui-hist-title').innerText = L.histTitle;
-  document.getElementById('ui-hist-clear').innerText = L.histClear;
-  const searchInp = document.getElementById('histSearchInput');
-  if (searchInp) searchInp.placeholder = L.histSearch;
-
-  const sel = document.getElementById('qb-doctype');
-  const prevVal = sel.value || 'quote';
-  sel.innerHTML = Object.keys(L.types).map(k => '<option value="'+k+'">'+L.types[k][0]+'</option>').join('');
-  sel.value = prevVal;
-
-  renderCustomLines();
-  updatePayButtonState();
-  syncLockVisualState();
-  recalcMasterTotals();
-  renderHistory();
-}
-
-function addCustomLine(desc, qty, price) {
-  syncCustomLinesFromDOM();
-  customLineItems.push({desc:desc||'', qty:qty||'1', price:price||''});
-  renderCustomLines(); recalcMasterTotals();
-}
-
-function removeCustomLine(idx) {
-  syncCustomLinesFromDOM();
-  customLineItems.splice(idx,1);
-  if (customLineItems.length===0) customLineItems.push({desc:'', qty:'1', price:''});
-  renderCustomLines(); recalcMasterTotals();
-}
-
-function syncCustomLinesFromDOM() {
-  const rows = document.querySelectorAll('.line-item-card');
-  if (rows.length===0) return;
-  customLineItems = Array.from(rows).map(r => ({
-    desc: r.querySelector('.cl-desc')?.value || '',
-    qty: r.querySelector('.cl-qty')?.value || '1',
-    price: r.querySelector('.cl-price')?.value || ''
-  }));
-}
-
-function renderCustomLines() {
-  const wrap = document.getElementById('customLinesContainer'); if (!wrap) return;
-  const L = I18N[currentLang] || I18N.es;
-  wrap.innerHTML = customLineItems.map((item,idx) =>
-    '<div class="line-item-card">' +
-      '<div class="line-item-top"><span>' + L.itemLbl + (idx+1) + '</span>' +
-      (customLineItems.length > 1 ? '<button type="button" class="cart-remove" onclick="removeCustomLine('+idx+')">✕</button>' : '') +
-      '</div>' +
-      '<textarea class="cl-desc" placeholder="'+L.descPh+'" oninput="recalcMasterTotals()">'+(item.desc||'')+'</textarea>' +
-      '<div class="line-item-bottom">' +
-        '<div><label>'+L.qty+'</label><input type="number" step="any" class="cl-qty" value="'+(item.qty||'1')+'" oninput="recalcMasterTotals()"></div>' +
-        '<div><label>'+L.price+'</label><input type="number" step="any" class="cl-price" placeholder="0.00" value="'+(item.price||'')+'" oninput="recalcMasterTotals()"></div>' +
-      '</div>' +
-    '</div>'
-  ).join('');
-}
-
-function showIdentifiedLogoPicture(dataUrl) {
-  const wrap = document.getElementById('logoIdentifiedBox'), thumb = document.getElementById('logoMiniThumb');
-  if (wrap && thumb && dataUrl) { thumb.src = dataUrl; wrap.style.display = 'flex'; }
-}
-function handleLogoUpload(input) {
-  const file = input.files && input.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) { uploadedLogoData = e.target.result; showIdentifiedLogoPicture(uploadedLogoData); };
-  reader.readAsDataURL(file);
-}
-function handleHwQuoteUpload(input) {
-  const file = input.files && input.files[0]; if (!file) return;
-  const reader = new FileReader();
-  reader.onload = function(e) { uploadedHwQuoteImg = e.target.result; };
-  reader.readAsDataURL(file);
-}
-function clearLogoPicture() {
-  uploadedLogoData = '';
-  localStorage.removeItem('mcp_company_logo');
-  const inp = document.getElementById('qb-logo-input'); if (inp) inp.value = '';
-  const wrap = document.getElementById('logoIdentifiedBox'); if (wrap) wrap.style.display = 'none';
-}
-
-function resetBuilderToZero() {
-  customLineItems = [{desc:'', qty:'1', price:''}];
-  clearLogoPicture();
-  uploadedHwQuoteImg = '';
-  localStorage.removeItem('mcp_hw_quote_img');
-  localStorage.removeItem('mcp_custom_lines'); localStorage.removeItem('mcp_checkout_state');
-  ['qb-tax','qb-dep'].forEach(id => { const el=document.getElementById(id); if(el) el.value='0'; });
-  ['qb-comp','qb-phone','qb-client','qb-notes'].forEach(id => { const el=document.getElementById(id); if(el) el.value=''; });
-  renderCustomLines(); recalcMasterTotals();
-}
-
-function recalcMasterTotals() {
-  syncCustomLinesFromDOM();
-  const tax = parseFloat(document.getElementById('qb-tax')?.value)||0;
-  const dep = parseFloat(document.getElementById('qb-dep')?.value)||0;
-  let grandTotal = 0;
-  customLineItems.forEach(it => {
-    const q = parseFloat(it.qty) || 1;
-    const p = parseFloat(it.price) || 0;
-    if (p > 0) grandTotal += (q * p);
-  });
-  grandTotal += tax;
-  const balance = Math.max(0, grandTotal - dep);
-  const sumLine = document.getElementById('contractorSummaryLine'), bigTot = document.getElementById('contractorBigTotal');
-  if (sumLine) sumLine.innerText = 'Total: ' + formatUSD(grandTotal) + (dep>0 ? (' | -' + formatUSD(dep)) : '');
-  if (bigTot) bigTot.innerText = formatUSD(balance);
-}
-
-function updatePayButtonState() {
-  const L = I18N[currentLang] || I18N.es;
-  const btn = document.getElementById('finalActionBtn'), waBtn = document.getElementById('finalWaBtn'), proBtn = document.getElementById('proSubBtn'), note = document.getElementById('finalActionNote');
-  if (!btn) return;
-  waBtn.innerText = isPaidUser ? L.waPaid : L.waLock;
-  btn.innerText = L.dlPaid;
-  btn.style.display = isPaidUser ? 'block' : 'none';
-  if (proBtn) {
-    proBtn.innerText = L.proPassBtn;
-    proBtn.style.display = isPaidUser ? 'none' : 'block';
-  }
-  note.innerText = isPaidUser ? L.notePaid : L.noteLock;
-}
-
-function syncLockVisualState() {
-  const keyEl = document.getElementById('ownerKeyBtn');
-  if (keyEl) keyEl.innerText = isPaidUser ? '🔑 Modo Dueño: ON' : '🔒 Modo Cliente: ON';
-}
-
-function activateOwnerMode() {
-  isPaidUser = !isPaidUser; syncLockVisualState(); updatePayButtonState();
-}
-
-function openDocPreviewModal() {
-  const docType = document.getElementById('qb-doctype')?.value || 'quote';
-  renderModalSheet(docType);
-  document.getElementById('docPreviewModal').style.display = 'flex';
-}
-function closeDocPreviewModal() { document.getElementById('docPreviewModal').style.display = 'none'; }
-
 function renderModalSheet(mode) {
   const L = I18N[currentLang] || I18N.es;
   const meta = getDocMeta(mode);
   const paper = document.getElementById('modalPaperContent');
   if (!paper) return;
-  paper.innerHTML =
-    '<div class="lux-header"><div class="lux-brand"><div class="lux-logo-box"><img src="1793842789444.jpg" alt="Logo"></div><div><div style="font-weight:900;font-size:1.1rem;">APEX SOLUTIONS LLC</div><div style="font-size:0.75rem;color:#475569;">' + meta.party1 + ' (787) 555-0199</div></div></div><div class="lux-badge-box"><div style="font-weight:900;font-size:0.86rem;">' + meta.badge + '</div><div style="color:#b45309;font-weight:800;font-size:0.82rem;">' + meta.prefix + '2026-0842</div></div></div>' +
-    '<div style="background:#f8fafc;border:1px solid #cbd5e1;padding:0.55rem 0.75rem;border-radius:6px;font-size:0.8rem;"><strong>' + meta.party2 + '</strong> Carlos M. Rodríguez — San Juan</div>' +
-    '<table class="lux-table"><thead><tr><th>Description / Item</th><th>' + currentCurr + '</th></tr></thead><tbody>' +
-    '<tr><td><strong>1. Primary Item / Contract Scope / Property</strong></td><td>' + formatUSD(2450) + '</td></tr>' +
-    '<tr class="lux-tot-row"><td>' + meta.totalLabel + '</td><td>' + formatUSD(2450) + '</td></tr></tbody></table>' +
-    '<div class="lux-sign-box"><div style="font-size:0.76rem;font-weight:900;">' + meta.signTitle + '</div>' +
-    '<div style="font-size:0.74rem;color:#334155;margin-top:4px;line-height:1.35;">' + meta.legalClause + '</div>' +
-    '<div class="lux-signs"><div class="lux-sign-line">' + meta.sig1 + '</div><div class="lux-sign-line">' + meta.sig2 + '</div><div class="lux-sign-line">' + L.dateLbl + '</div></div></div>' +
-    '<div class="lux-viral-footer">⚡ ' + L.pdfViralFooter + '</div>';
-}
 
-// Guarda en el récord ÚNICAMENTE cuando el documento ha sido pagado ($1.99 o Pase Pro)
-function savePaidDocumentToRecord() {
-  if (!isPaidUser) return;
-  syncCustomLinesFromDOM();
-  const docType = document.getElementById('qb-doctype')?.value || 'quote';
-  const meta = getDocMeta(docType);
-  const docNum = document.getElementById('qb-docnum')?.value.trim() || '2026-0101';
-  const clientName = document.getElementById('qb-client')?.value.trim() || 'Client';
-  const totalTxt = document.getElementById('contractorBigTotal')?.innerText || '$0.00';
-  const time = new Date().toLocaleDateString([], {month:'2-digit', day:'2-digit', year:'numeric'});
-
-  const inputs = {};
-  document.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => {
-    if (el.id === 'histSearchInput') return;
-    if (el.type === 'checkbox') inputs[el.id] = el.checked;
-    else if (el.type !== 'file') inputs[el.id] = el.value;
+  // Resaltar el botón activo en la barra superior del modal
+  document.querySelectorAll('.sample-type-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('onclick')?.includes("'" + mode + "'"));
   });
 
-  const recordEntry = {
-    id: Date.now(),
-    docNum: docNum,
-    client: clientName,
-    label: meta.badge + ' (' + meta.prefix + docNum + '): ' + clientName,
-    res: totalTxt,
-    time: time,
-    lang: currentLang,
-    curr: currentCurr,
-    inputs: inputs,
-    lines: JSON.parse(JSON.stringify(customLineItems))
+  // Ejemplos súper completos y llenos de información real según el tipo de documento
+  const samplesES = {
+    quote: {
+      comp: "APEX CONSTRUCTION & REMODELING LLC",
+      phone: "Lic. #10492-PR • Tel: (787) 555-0199 • info@apexbuildpr.com",
+      docNum: "2026-0842",
+      date: "05/11/2026",
+      client: "Carlos M. Rodríguez — Urb. Los Paseos #412, San Juan, PR 00926 • Tel: (787) 400-8821",
+      rows: [
+        ["1. Demolición y Preparación de Superficie (850 sq.ft.)", "Remoción de losas existentes, nivelación de piso con mortero autonivelante (self-leveling) y disposición final de escombros en contenedor.", 1850],
+        ["2. Suministro e Instalación de Porcelanato Rectificado 24\"x48\"", "Instalación con pega modificada con polímeros (ProFlex), niveladores de precisión y lechada epóxica antimanchas color Gris Plata.", 4200],
+        ["3. Remodelación de Baño Master (Plomería y Enchape Completo)", "Reemplazo de válvula de ducha en bronce, impermeabilización con membrana líquida RedGard, nicho empotrado e instalación de cristal templado 3/8\".", 2950],
+        ["4. Sistema de Iluminación LED Empotrada y Acabados de Pintura", "Instalación de 12 focos LED 4\" (3000K), aplicación de 2 manos de primer sellador y pintura acrílica lavable Sherwin-Williams en paredes y techos.", 1450]
+      ],
+      tax: 731.50,
+      dep: 5000.00,
+      notes: "GARANTÍA Y CONDICIONES: Incluye 3 años de garantía escrita en mano de obra de instalación. Tiempo estimado de ejecución: 10 a 12 días laborables. Materiales cotizados sujetos a disponibilidad en almacén. Cotización válida por 30 días."
+    },
+    invoice: {
+      comp: "MASTER COOLING & ELECTRICAL SERVICES LLC",
+      phone: "Cert. Técnico #8831 • Tel: (787) 555-0420 • cobros@mastercooling.com",
+      docNum: "2026-1194",
+      date: "05/11/2026",
+      client: "Restaurante El Bohío Criollo — Ave. Roosevelt #1204, Hato Rey, PR • RNC/ID: 66-0921841",
+      rows: [
+        ["1. Suministro e Instalación Unidad Inverter 36,000 BTU (3 Toneladas)", "Unidad comercial SEER2 20 de alta eficiencia, condensador anticorrosivo Gold Fin y consola interior con control Wi-Fi integrado.", 2850],
+        ["2. Tubería de Cobre Refrigerante, Aislamiento Térmico y Drenaje", "35 pies de línea de cobre 3/8\" y 3/4\" aislada con Armaflex UV, presurización con nitrógeno seco y vacío profundo a 350 micrones.", 680],
+        ["3. Línea Eléctrica Dedicada 220V y Protector de Voltaje Comercial", "Instalación de breaker doble de 30A en panel principal, cablería THHN #10 en tubería EMT, desconectivo exterior NEMA 3R y supresor de picos.", 540],
+        ["4. Mantenimiento Preventivo y Limpieza Química (2 Unidades Existentes)", "Lavado a presión con espuma desincrustante en serpentines, limpieza de bandeja de condensación y calibración de presiones R-410A.", 320]
+      ],
+      tax: 307.30,
+      dep: 3000.00,
+      notes: "CERTIFICACIÓN DE ENTREGA: Equipos entregados operando al 100% con parámetros verificados en campo. Garantía de 5 años en compresor y 1 año en piezas y mano de obra. Favor emitir pago del balance pendiente vía ATH Móvil Negocios, Transferencia o Cheque."
+    },
+    billsale: {
+      comp: "ALBERTO RODRÍGUEZ MONTERO (VENDEDOR / PROPIETARIO)",
+      phone: "Licencia / ID: PR-5829104 • Tel: (787) 555-0912 • Adjuntas, PR",
+      docNum: "2026-0318",
+      date: "05/11/2026",
+      client: "Jorge L. Santiago Vega (COMPRADOR) — ID: PR-9920184 • Urb. Valle Real #88, Ponce, PR • Tel: (787) 612-3300",
+      rows: [
+        ["1. Descripción Oficial del Vehículo / Bien Objeto de Venta", "Marca: TOYOTA | Modelo: 4RUNNER LIMITED | Año: 2023 | Color: Blanco Perla (Pearl White) | Puertas: 4 | Transmisión: Automática 4x4.", 38500],
+        ["2. Número de Serie (VIN), Millaje y Registro Oficial", "VIN: JTEBU5JR8P5928410 | Millaje Actual Certificado: 24,180 millas | Tablilla: JKL-492 | Título libre de gravámenes bancarios, multas o embargos.", 0],
+        ["3. Equipo Adicional y Accesorios Incluidos en la Transacción", "Aros 20\" todo terreno, gomas All-Terrain al 90% de vida útil, tintes cerámicos, viseras de lluvia, alfombras WeatherTech y 2 llaves inteligentes originales.", 1200]
+      ],
+      tax: 0,
+      dep: 39700.00,
+      notes: "DECLARACIÓN LEGAL DE COMPRAVENTA (AS-IS): El Comprador certifica haber inspeccionado y probado el vehículo a su entera satisfacción, aceptándolo en su condición física y mecánica actual ('Tal Cual / As-Is') sin garantías expresas ni implícitas. El Vendedor entrega título original firmado para traspaso inmediato."
+    },
+    lease: {
+      comp: "INVERSIONES & PROPIEDADES DEL SUR LLC (ARRENDADOR)",
+      phone: "Tel: (787) 555-0770 • administracion@propiedadesdelsur.com",
+      docNum: "2026-0509",
+      date: "05/11/2026",
+      client: "Dra. Valeria Morales Cruz (INQUILINA) — ID: PR-4410928 • Tel: (787) 390-1122 • Correo: vmorales@email.com",
+      rows: [
+        ["1. Propiedad Arrendada y Uso Autorizado", "Residencia de 3 habitaciones, 2 baños, marquesina doble y terraza en Bo. Guilarte, Carr. 525 Km 4.2, Adjuntas, PR. Uso exclusivamente residencial.", 1250],
+        ["2. Depósito de Garantía y Fianza Reembolsable (Security Deposit)", "Equivalente a un (1) mes de renta para responder por daños a la propiedad o balances pendientes al finalizar el término del contrato.", 1250],
+        ["3. Inventario de Enseres y Equipos Incluidos en Buen Estado", "Estufa tope de cristal, nevera acero inoxidable, calentador de línea, 3 aires acondicionados Inverter, cisterna de 600 galones con bomba y portón eléctrico.", 0]
+      ],
+      tax: 0,
+      dep: 2500.00,
+      notes: "TÉRMINOS DEL ARRENDAMIENTO: Vigencia de doce (12) meses comenzando el 1 de diciembre de 2026. Pago mensual de $1,250.00 vence los días 1 al 5 de cada mes (cargo por demora de $50.00 luego del día 5). Prohibido subarrendar o realizar modificaciones estructurales sin autorización escrita."
+    }
   };
 
-  let hist = [];
-  try { hist = JSON.parse(localStorage.getItem('mcp_calc_history') || '[]'); } catch(e) {}
-  const existingIdx = hist.findIndex(h => h.docNum === docNum && h.client === clientName);
-  if (existingIdx >= 0) hist.splice(existingIdx, 1);
-
-  hist.unshift(recordEntry);
-  if (hist.length > 50) hist = hist.slice(0, 50);
-  localStorage.setItem('mcp_calc_history', JSON.stringify(hist));
-  renderHistory();
-}
-
-function loadInvoiceFromRecord(id, autoDownloadPDF) {
-  let hist = [];
-  try { hist = JSON.parse(localStorage.getItem('mcp_calc_history') || '[]'); } catch(e) {}
-  const item = hist.find(h => h.id === id);
-  if (!item) return;
-
-  if (item.curr) currentCurr = item.curr;
-  if (item.lines && Array.isArray(item.lines)) customLineItems = JSON.parse(JSON.stringify(item.lines));
-  if (item.inputs) {
-    Object.keys(item.inputs).forEach(k => {
-      const el = document.getElementById(k);
-      if (!el) return;
-      if (el.type === 'checkbox') el.checked = !!item.inputs[k];
-      else el.value = item.inputs[k];
-    });
-  }
-  isPaidUser = true;
-  applyLanguageUI();
-  if (autoDownloadPDF) {
-    processOfficialPDF('download');
-  } else {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-}
-
-function renderHistory() {
-  const list = document.getElementById('calcHistoryList'); if (!list) return;
-  const L = I18N[currentLang] || I18N.es;
-  const query = (document.getElementById('histSearchInput')?.value || '').toLowerCase().trim();
-  let hist = [];
-  try { hist = JSON.parse(localStorage.getItem('mcp_calc_history') || '[]'); } catch(e) {}
-
-  if (query) {
-    hist = hist.filter(item =>
-      (item.label || '').toLowerCase().includes(query) ||
-      (item.client || '').toLowerCase().includes(query) ||
-      (item.docNum || '').toLowerCase().includes(query) ||
-      (item.time || '').toLowerCase().includes(query)
-    );
-  }
-
-  if (hist.length === 0) { list.innerHTML = '<li style="color:#94a3b8;">---</li>'; return; }
-  list.innerHTML = hist.map(item =>
-    '<li>' +
-      '<div><strong>' + (item.label || item.es || '') + '</strong> <small>(' + item.time + ')</small><br><span style="color:#0f172a;font-weight:800;">' + item.res + '</span></div>' +
-      (item.inputs ?
-        '<div class="hist-btn-group">' +
-          '<button type="button" class="hist-open-btn" onclick="loadInvoiceFromRecord(' + item.id + ', false)">' + L.openBtn + '</button>' +
-          '<button type="button" class="hist-pdf-btn" onclick="loadInvoiceFromRecord(' + item.id + ', true)">' + L.pdfBtn + '</button>' +
-        '</div>' : '') +
-    '</li>'
-  ).join('');
-}
-
-function clearCalcHistory() { localStorage.removeItem('mcp_calc_history'); renderHistory(); }
-
-function saveAllBuilderState() {
-  syncCustomLinesFromDOM();
-  // Solo guarda en el récord de documentos si ya pagó
-  if (isPaidUser) savePaidDocumentToRecord();
-  const inputs = {};
-  document.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => {
-    if (el.id === 'histSearchInput') return;
-    if (el.type==='checkbox') inputs[el.id] = el.checked;
-    else if (el.type!=='file') inputs[el.id] = el.value;
-  });
-  localStorage.setItem('mcp_custom_lines', JSON.stringify(customLineItems));
-  if (uploadedLogoData) { try { localStorage.setItem('mcp_company_logo', uploadedLogoData); } catch(e) {} }
-  if (uploadedHwQuoteImg) { try { localStorage.setItem('mcp_hw_quote_img', uploadedHwQuoteImg); } catch(e) {} }
-  localStorage.setItem('mcp_checkout_state', JSON.stringify({lang:currentLang,curr:currentCurr,inputs:inputs}));
-}
-
-async function buildPureVectorPDF() {
-  syncCustomLinesFromDOM();
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'letter' });
-  const L = I18N[currentLang] || I18N.es;
-  const docType = document.getElementById('qb-doctype')?.value || 'quote';
-  const meta = getDocMeta(docType);
-  const docNum = document.getElementById('qb-docnum')?.value.trim() || '2026-0101';
-  const comp = document.getElementById('qb-comp')?.value.trim() || 'Mr. Invoice Pro';
-  const phone = document.getElementById('qb-phone')?.value.trim() || '';
-  const client = document.getElementById('qb-client')?.value.trim() || 'Client';
-  const tax = parseFloat(document.getElementById('qb-tax')?.value) || 0;
-  const dep = parseFloat(document.getElementById('qb-dep')?.value) || 0;
-  const notes = document.getElementById('qb-notes')?.value.trim() || '';
-  const dateStr = new Date().toLocaleDateString();
-
-  doc.setFillColor(15, 23, 42);
-  doc.rect(0, 0, 215.9, 6, 'F');
-
-  let leftX = 14;
-  if (uploadedLogoData) {
-    try { doc.addImage(uploadedLogoData, 14, 12, 22, 22); leftX = 40; } catch (e) {}
-  } else {
-    doc.setFillColor(15, 23, 42);
-    doc.roundedRect(14, 12, 20, 20, 3, 3, 'F');
-    doc.setTextColor(250, 204, 21);
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(18);
-    doc.text('M', 24, 25, { align: 'center' });
-    leftX = 38;
-  }
-
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(7.5);
-  doc.setTextColor(100, 116, 139);
-  doc.text(meta.party1, leftX, 15);
-
-  doc.setTextColor(15, 23, 42);
-  doc.setFontSize(12.5);
-  doc.text(comp.substring(0, 36), leftX, 21.5);
-
-  if (phone) {
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(9);
-    doc.setTextColor(71, 85, 105);
-    doc.text(phone, leftX, 27.5);
-  }
-
-  doc.setFillColor(248, 250, 252);
-  doc.setDrawColor(203, 213, 225);
-  doc.roundedRect(126, 11, 76, 22, 2, 2, 'FD');
-  doc.setFillColor(234, 179, 8);
-  doc.rect(200, 11, 2, 22, 'F');
-
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(8.8);
-  doc.setTextColor(15, 23, 42);
-  doc.text(meta.badge, 197, 17.5, { align: 'right' });
-
-  doc.setFontSize(9.5);
-  doc.setTextColor(180, 83, 9);
-  doc.text(meta.prefix + docNum, 197, 23.5, { align: 'right' });
-
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8.2);
-  doc.setTextColor(100, 116, 139);
-  doc.text(L.dateLbl + ': ' + dateStr, 197, 29.5, { align: 'right' });
-
-  doc.setDrawColor(15, 23, 42);
-  doc.setLineWidth(0.7);
-  doc.line(14, 37, 202, 37);
-
-  doc.setFillColor(248, 250, 252);
-  doc.setDrawColor(203, 213, 225);
-  doc.setLineWidth(0.3);
-  doc.roundedRect(14, 41, 188, 15, 2, 2, 'FD');
-
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(8);
-  doc.setTextColor(100, 116, 139);
-  doc.text(meta.party2, 18, 46.5);
-
-  doc.setFontSize(10);
-  doc.setTextColor(15, 23, 42);
-  doc.text(client.substring(0, 85), 18, 52.5);
-
-  let y = 62;
-  doc.setFillColor(15, 23, 42);
-  doc.rect(14, y, 188, 9, 'F');
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(9.2);
-  doc.setTextColor(255, 255, 255);
-  doc.text(L.sec2.replace('2️⃣ ',''), 18, y + 6);
-  doc.text(currentCurr, 198, y + 6, { align: 'right' });
-  y += 9;
-
-  let grandTotal = 0;
-  customLineItems.forEach((it, idx) => {
-    const q = parseFloat(it.qty) || 1;
-    const p = parseFloat(it.price) || 0;
-    const lineTotal = q * p;
-    if (lineTotal > 0 || it.desc.trim() !== '') {
-      grandTotal += lineTotal;
-      const rawDesc = (idx + 1) + '. ' + (it.desc.trim() || '-') + (q !== 1 ? ' (' + q + ' x ' + formatUSD(p) + ')' : '');
-      const splitDesc = doc.splitTextToSize(rawDesc, 136);
-      const rowH = Math.max(9, splitDesc.length * 5 + 4);
-      if (y + rowH > 215) { doc.addPage(); y = 20; }
-      doc.setDrawColor(203, 213, 225);
-      doc.rect(14, y, 146, rowH);
-      doc.rect(160, y, 42, rowH);
-      doc.setTextColor(15, 23, 42);
-      doc.setFont('helvetica', 'normal');
-      doc.text(splitDesc, 17, y + 6);
-      doc.setFont('helvetica', 'bold');
-      doc.text(formatUSD(lineTotal), 198, y + 6, { align: 'right' });
-      y += rowH;
+  const samplesEN = {
+    quote: {
+      comp: "APEX CONSTRUCTION & REMODELING LLC",
+      phone: "Lic. #10492 • Phone: (787) 555-0199 • info@apexbuild.com",
+      docNum: "2026-0842",
+      date: "11/05/2026",
+      client: "Carlos M. Rodríguez — 412 Los Paseos Blvd, San Juan, PR 00926 • Phone: (787) 400-8821",
+      rows: [
+        ["1. Demolition & Subfloor Preparation (850 sq.ft.)", "Removal of existing tile, concrete slab grinding, self-leveling compound application, and debris disposal in roll-off container.", 1850],
+        ["2. 24\"x48\" Rectified Porcelain Tile Supply & Installation", "Full-spread installation using polymer-modified mortar, precision lippage leveling system, and stain-proof Silver Gray epoxy grout.", 4200],
+        ["3. Master Bathroom Remodel (Plumbing & Custom Shower)", "New brass rough-in shower valve, RedGard liquid waterproofing membrane, recessed niche, and 3/8\" frameless tempered glass enclosure.", 2950],
+        ["4. Recessed LED Lighting & Interior Paint Finish", "Installation of 12x 4\" LED recessed lights (3000K), 2 coats of sealer primer, and washable Sherwin-Williams acrylic finish on walls and ceilings.", 1450]
+      ],
+      tax: 731.50,
+      dep: 5000.00,
+      notes: "WARRANTY & TERMS: Includes a 3-year written workmanship warranty. Estimated completion time: 10–12 business days. 50% deposit required upon approval to schedule crew and order materials. Estimate valid for 30 days."
+    },
+    invoice: {
+      comp: "MASTER COOLING & ELECTRICAL SERVICES LLC",
+      phone: "Cert. Tech #8831 • Phone: (787) 555-0420 • billing@mastercooling.com",
+      docNum: "2026-1194",
+      date: "11/05/2026",
+      client: "El Bohío Criollo Restaurant — 1204 Roosevelt Ave, San Juan • Tax ID: 66-0921841",
+      rows: [
+        ["1. 36,000 BTU (3-Ton) Commercial Inverter Mini-Split System", "High-efficiency SEER2 20 unit with Gold Fin anti-corrosion condenser coil and Wi-Fi smart controller.", 2850],
+        ["2. Refrigerant Copper Line Set, Thermal Insulation & Drain", "35 ft of 3/8\" & 3/4\" copper lines with UV Armaflex insulation, dry nitrogen pressure test, and deep vacuum to 350 microns.", 680],
+        ["3. Dedicated 220V Electrical Circuit & Surge Protection", "30A double-pole breaker, #10 THHN wiring in EMT conduit, NEMA 3R exterior disconnect box, and commercial voltage surge protector.", 540],
+        ["4. Preventive Maintenance & Coil Cleaning (2 Existing Units)", "High-pressure chemical coil wash, condensate pan sanitization, amp draw test, and R-410A refrigerant pressure calibration.", 320]
+      ],
+      tax: 307.30,
+      dep: 3000.00,
+      notes: "COMPLETION & PAYMENT TERMS: All equipment tested and operating at 100% factory specifications. 5-year compressor warranty and 1-year parts/labor warranty included. Remaining balance due upon receipt via Bank Transfer, Card, or Check."
+    },
+    billsale: {
+      comp: "ALBERTO RODRÍGUEZ MONTERO (SELLER / OWNER)",
+      phone: "Driver Lic / ID: PR-5829104 • Phone: (787) 555-0912 • Adjuntas, PR",
+      docNum: "2026-0318",
+      date: "11/05/2026",
+      client: "Jorge L. Santiago Vega (BUYER) — ID: PR-9920184 • 88 Valle Real Est., Ponce, PR • Phone: (787) 612-3300",
+      rows: [
+        ["1. Official Vehicle / Property Description", "Make: TOYOTA | Model: 4RUNNER LIMITED | Year: 2023 | Color: Pearl White | Body: 4-Door SUV | Drivetrain: 4WD Automatic.", 38500],
+        ["2. VIN, Certified Odometer Reading & Title Status", "VIN: JTEBU5JR8P5928410 | Exact Mileage: 24,180 miles | Plate: JKL-492 | Clean Title free of any liens, loans, or encumbrances.", 0],
+        ["3. Included Accessories & Upgrades", "20\" off-road wheels, All-Terrain tires (90% tread), ceramic window tint, rain visors, WeatherTech floor liners, and 2 original smart key fobs.", 1200]
+      ],
+      tax: 0,
+      dep: 39700.00,
+      notes: "AS-IS LEGAL DISCLOSURE: The Buyer acknowledges having inspected and test-driven the vehicle to full satisfaction and accepts the property 'AS-IS, WHERE-IS' without any express or implied warranties. Seller delivers signed original title upon full payment."
+    },
+    lease: {
+      comp: "SOUTHERN PROPERTIES & INVESTMENTS LLC (LANDLORD)",
+      phone: "Phone: (787) 555-0770 • leasing@southernproperties.com",
+      docNum: "2026-0509",
+      date: "11/05/2026",
+      client: "Dr. Valeria Morales Cruz (TENANT) — ID: PR-4410928 • Phone: (787) 390-1122 • Email: vmorales@email.com",
+      rows: [
+        ["1. Leased Premises & Permitted Use", "3-Bedroom, 2-Bathroom single-family residence with double carport and terrace at Carr. 525 Km 4.2, Adjuntas, PR. Strictly residential use.", 1250],
+        ["2. Refundable Security Deposit", "Equivalent to one (1) month's rent held in escrow to cover potential property damages or unpaid utilities at lease termination.", 1250],
+        ["3. Included Appliances & Equipment Inventory", "Glass-top stove, stainless steel refrigerator, tankless water heater, 3x Inverter A/C units, 600-gal water cistern with pump, and electric gate.", 0]
+      ],
+      tax: 0,
+      dep: 2500.00,
+      notes: "LEASE TERMS & CONDITIONS: 12-month fixed term starting December 1, 2026. Monthly rent of $1,250.00 is due between the 1st and 5th of each month ($50.00 late fee applies after the 5th). No subleasing or structural alterations without written consent."
     }
-  });
+  };
 
-  if (tax > 0) {
-    doc.rect(14, y, 146, 8.5);
-    doc.rect(160, y, 42, 8.5);
-    doc.setFont('helvetica', 'normal');
-    doc.text(L.tax, 17, y + 5.8);
-    doc.setFont('helvetica', 'bold');
-    doc.text(formatUSD(tax), 198, y + 5.8, { align: 'right' });
-    grandTotal += tax;
-    y += 8.5;
-  }
+  const bank = currentLang === 'en' ? samplesEN : samplesES;
+  const data = bank[mode] || bank.quote;
 
-  doc.setFillColor(254, 243, 199);
-  doc.rect(14, y, 146, 10, 'FD');
-  doc.rect(160, y, 42, 10, 'FD');
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(10);
-  doc.text(meta.totalLabel + ' (' + currentCurr + ')', 17, y + 6.8);
-  doc.text(formatUSD(grandTotal), 198, y + 6.8, { align: 'right' });
-  y += 10;
+  let subtotal = 0;
+  const rowsHtml = data.rows.map(r => {
+    subtotal += r[2];
+    return '<tr>' +
+      '<td><div style="font-weight:800;color:#0f172a;margin-bottom:2px;">' + r[0] + '</div><div style="font-size:0.74rem;color:#475569;line-height:1.35;">' + r[1] + '</div></td>' +
+      '<td style="vertical-align:top;white-space:nowrap;">' + formatUSD(r[2]) + '</td>' +
+    '</tr>';
+  }).join('');
 
-  const balance = Math.max(0, grandTotal - dep);
-  if (dep > 0 || docType === 'receipt') {
-    doc.setFillColor(255, 255, 255);
-    doc.rect(14, y, 146, 8.5, 'FD');
-    doc.rect(160, y, 42, 8.5, 'FD');
-    doc.setTextColor(6, 95, 70);
-    doc.text(L.paidAmt, 17, y + 5.8);
-    doc.text(formatUSD(dep > 0 ? dep : grandTotal), 198, y + 5.8, { align: 'right' });
-    y += 8.5;
+  const grandTotal = subtotal + (data.tax || 0);
+  const remBalance = Math.max(0, grandTotal - (data.dep || 0));
 
-    doc.setFillColor(220, 252, 231);
-    doc.rect(14, y, 146, 10, 'FD');
-    doc.rect(160, y, 42, 10, 'FD');
-    doc.text(L.remBal, 17, y + 6.8);
-    doc.text(formatUSD(dep > 0 ? balance : 0), 198, y + 6.8, { align: 'right' });
-    y += 10;
-  }
-
-  if (notes) {
-    y += 4;
-    const splitNotes = doc.splitTextToSize(L.notes + ': ' + notes, 180);
-    const notesH = splitNotes.length * 4.6 + 5;
-    doc.setFillColor(248, 250, 252);
-    doc.roundedRect(14, y, 188, notesH, 1.5, 1.5, 'FD');
-    doc.setFont('helvetica', 'bolditalic');
-    doc.setFontSize(8.5);
-    doc.setTextColor(30, 41, 59);
-    doc.text(splitNotes, 18, y + 5.2);
-    y += notesH;
-  }
-
-  y += 6;
-  const splitLegal = doc.splitTextToSize(meta.legalClause, 180);
-  const boxH = Math.max(38, 24 + splitLegal.length * 4.2 + (meta.showAcceptChecks ? 6 : 0));
-  if (y + boxH > 262) { doc.addPage(); y = 20; }
-  doc.setDrawColor(15, 23, 42);
-  doc.roundedRect(14, y, 188, boxH, 2, 2);
-
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(8.5);
-  doc.setTextColor(15, 23, 42);
-  doc.text(meta.signTitle, 18, y + 6.5);
-
-  let clauseStartY = y + 12;
-  if (meta.showAcceptChecks) {
-    doc.rect(18, y + 9, 4, 4);
-    doc.text(L.accept, 24, y + 12.5);
-    doc.rect(88, y + 9, 4, 4);
-    doc.text(L.decline, 94, y + 12.5);
-    clauseStartY = y + 18;
-  }
-
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8);
-  doc.setTextColor(51, 65, 85);
-  doc.text(splitLegal, 18, clauseStartY);
-
-  const sigY = y + boxH - 6.5;
-  doc.line(18, sigY, 82, sigY);
-  doc.line(90, sigY, 154, sigY);
-  doc.line(162, sigY, 198, sigY);
-
-  doc.setFont('helvetica', 'bold');
-  doc.text(meta.sig1, 18, sigY + 4);
-  doc.text(meta.sig2, 90, sigY + 4);
-  doc.text(L.dateLbl, 162, sigY + 4);
-
-  // Sello viral promocional al pie de la página 1 del PDF
-  doc.setDrawColor(203, 213, 225);
-  doc.setLineWidth(0.25);
-  doc.line(14, 268, 202, 268);
-  doc.setFont('helvetica', 'bolditalic');
-  doc.setFontSize(7.5);
-  doc.setTextColor(100, 116, 139);
-  doc.text(L.pdfViralFooter, 108, 272.5, { align: 'center' });
-
-  const attachCheck = document.getElementById('qb-hw-print-attach')?.checked;
-  if (attachCheck && uploadedHwQuoteImg) {
-    try {
-      doc.addPage();
-      doc.addImage(uploadedHwQuoteImg, 14, 20, 185, 210);
-      doc.setFont('helvetica', 'bolditalic');
-      doc.setFontSize(7.5);
-      doc.setTextColor(100, 116, 139);
-      doc.text(L.pdfViralFooter, 108, 272.5, { align: 'center' });
-    } catch (e) {}
-  }
-
-  const cleanNum = docNum.replace(/[^a-zA-Z0-9_-]/g, '');
-  const fileName = meta.filePrefix + cleanNum + '.pdf';
-  const pdfBlob = doc.output('blob');
-  return { doc, pdfBlob, fileName };
+  paper.innerHTML =
+    '<div class="lux-header">' +
+      '<div class="lux-brand">' +
+        '<div class="lux-logo-box"><img src="1793842789444.jpg" alt="Logo"></div>' +
+        '<div>' +
+          '<div style="font-size:0.7rem;font-weight:800;color:#64748b;text-transform:uppercase;">' + meta.party1 + '</div>' +
+          '<div style="font-weight:900;font-size:1.05rem;color:#0f172a;">' + data.comp + '</div>' +
+          '<div style="font-size:0.74rem;color:#475569;">' + data.phone + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="lux-badge-box">' +
+        '<div style="font-weight:900;font-size:0.86rem;color:#0f172a;">' + meta.badge + '</div>' +
+        '<div style="color:#b45309;font-weight:900;font-size:0.86rem;margin:2px 0;">' + meta.prefix + data.docNum + '</div>' +
+        '<div style="font-size:0.73rem;color:#64748b;font-weight:700;">' + L.dateLbl + ': ' + data.date + '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div style="background:#f8fafc;border:1px solid #cbd5e1;padding:0.55rem 0.75rem;border-radius:6px;font-size:0.8rem;margin-bottom:0.65rem;">' +
+      '<div style="font-size:0.7rem;font-weight:800;color:#64748b;">' + meta.party2 + '</div>' +
+      '<div style="font-weight:800;color:#0f172a;margin-top:2px;">' + data.client + '</div>' +
+    '</div>' +
+    '<table class="lux-table">' +
+      '<thead><tr><th>' + L.sec2.replace('2️⃣ ','') + '</th><th>' + currentCurr + '</th></tr></thead>' +
+      '<tbody>' +
+        rowsHtml +
+        (data.tax > 0 ? '<tr><td style="text-align:right;font-weight:700;color:#475569;">' + L.tax + '</td><td>' + formatUSD(data.tax) + '</td></tr>' : '') +
+        '<tr class="lux-tot-row"><td>' + meta.totalLabel + ' (' + currentCurr + ')</td><td>' + formatUSD(grandTotal) + '</td></tr>' +
+        (data.dep > 0 ? '<tr><td style="color:#065f46;font-weight:800;">' + L.paidAmt + '</td><td style="color:#065f46;">-' + formatUSD(data.dep) + '</td></tr>' : '') +
+        (data.dep > 0 ? '<tr style="background:#dcfce7;font-weight:900;"><td style="color:#065f46;">' + L.remBal + '</td><td style="color:#065f46;font-size:0.92rem;">' + formatUSD(remBalance) + '</td></tr>' : '') +
+      '</tbody>' +
+    '</table>' +
+    '<div style="background:#f8fafc;border:1px solid #cbd5e1;border-left:4px solid #0f172a;padding:0.55rem 0.75rem;border-radius:6px;font-size:0.75rem;color:#1e293b;line-height:1.4;margin-top:0.6rem;">' +
+      '<strong>' + L.notes + ':</strong> ' + data.notes +
+    '</div>' +
+    '<div class="lux-sign-box">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.4rem;">' +
+        '<div style="font-size:0.78rem;font-weight:900;color:#0f172a;">' + meta.signTitle + '</div>' +
+        (meta.showAcceptChecks ? '<div style="font-size:0.74rem;font-weight:800;color:#0f172a;">☑ ' + L.accept + ' &nbsp;&nbsp; ☐ ' + L.decline + '</div>' : '') +
+      '</div>' +
+      '<div style="font-size:0.74rem;color:#334155;margin-top:5px;line-height:1.38;">' + meta.legalClause + '</div>' +
+      '<div class="lux-signs">' +
+        '<div class="lux-sign-line">✍️ ' + meta.sig1 + '</div>' +
+        '<div class="lux-sign-line">✍️ ' + meta.sig2 + '</div>' +
+        '<div class="lux-sign-line">📅 ' + L.dateLbl + ': ' + data.date + '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="lux-viral-footer">⚡ ' + L.pdfViralFooter + '</div>';
 }
-
-async function processOfficialPDF(actionMode) {
-  try {
-    const { doc, pdfBlob, fileName } = await buildPureVectorPDF();
-    updatePayButtonState();
-    if (actionMode === 'share' && navigator.canShare) {
-      const pdfFile = new File([pdfBlob], fileName, { type: 'application/pdf' });
-      if (navigator.canShare({ files: [pdfFile] })) {
-        await navigator.share({ files: [pdfFile], title: fileName });
-        return;
-      }
-    }
-    doc.save(fileName);
-  } catch (err) {
-    updatePayButtonState();
-  }
-}
-
-function handleWhatsAppQuoteClick() {
-  saveAllBuilderState();
-  if (!isPaidUser) { window.location.href = STRIPE_SINGLE_URL; return; }
-  closeDocPreviewModal();
-  processOfficialPDF('share');
-}
-
-function handleFinalDownloadClick() {
-  saveAllBuilderState();
-  if (!isPaidUser) { window.location.href = STRIPE_SINGLE_URL; return; }
-  closeDocPreviewModal();
-  processOfficialPDF('download');
-}
-
-function handleProPassClick() {
-  saveAllBuilderState();
-  window.location.href = STRIPE_PRO_PASS_URL;
-}
-
-function restoreIfReturningFromStripe() {
-  if (!isReturningFromStripe) return;
-  try { const savedLines = JSON.parse(localStorage.getItem('mcp_custom_lines')||'[]'); if (Array.isArray(savedLines)&&savedLines.length>0) customLineItems = savedLines; } catch(e) {}
-  uploadedLogoData = localStorage.getItem('mcp_company_logo') || '';
-  uploadedHwQuoteImg = localStorage.getItem('mcp_hw_quote_img') || '';
-  try {
-    const st = JSON.parse(localStorage.getItem('mcp_checkout_state')||'null');
-    if (st && st.inputs) Object.keys(st.inputs).forEach(id => { const el = document.getElementById(id); if (!el) return; if (el.type==='checkbox') el.checked = !!st.inputs[id]; else el.value = st.inputs[id]; });
-  } catch(e) {}
-  // Guarda automáticamente la factura en el récord al regresar con el pago confirmado de Stripe
-  setTimeout(savePaidDocumentToRecord, 250);
-}
-
-window.addEventListener('DOMContentLoaded', function() {
-  restoreIfReturningFromStripe();
-  if (uploadedLogoData) showIdentifiedLogoPicture(uploadedLogoData);
-  applyLanguageUI();
-});
-</script>
-</body>
-</html>
