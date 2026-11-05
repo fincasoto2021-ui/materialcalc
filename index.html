@@ -119,8 +119,12 @@ textarea { resize:vertical; min-height:62px; line-height:1.4; }
 .history-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem; }
 .history-header h3 { font-size:0.96rem; color:var(--primary); font-weight:900; }
 .clear-btn { background:transparent; border:1px solid #ef4444; color:#ef4444; padding:0.24rem 0.6rem; border-radius:6px; font-size:0.74rem; font-weight:700; cursor:pointer; }
+.hist-search-input { width:100%; margin-bottom:0.75rem; background:#f8fafc; color:#0f172a; border:1px solid #cbd5e1; padding:0.55rem 0.7rem; border-radius:6px; font-size:0.84rem; }
 .history-list { list-style:none; font-size:0.82rem; color:#475569; }
-.history-list li { padding:0.5rem 0; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center; gap:0.5rem; flex-wrap:wrap; }
+.history-list li { padding:0.6rem 0; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center; gap:0.5rem; flex-wrap:wrap; }
+.hist-btn-group { display:flex; gap:0.35rem; align-items:center; }
+.hist-open-btn { background:#0f172a; color:#fde047; border:none; padding:0.35rem 0.65rem; border-radius:6px; font-size:0.75rem; font-weight:800; cursor:pointer; }
+.hist-pdf-btn { background:#10b981; color:#fff; border:none; padding:0.35rem 0.65rem; border-radius:6px; font-size:0.75rem; font-weight:800; cursor:pointer; }
 
 .doc-modal-overlay { position:fixed; inset:0; background:rgba(9,13,22,0.88); display:none; justify-content:center; align-items:flex-start; padding:1rem 0.65rem; z-index:9999; overflow-y:auto; }
 .doc-modal-container { width:100%; max-width:720px; margin:0 auto 2rem; }
@@ -275,9 +279,10 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
 
   <div class="history-card">
     <div class="history-header">
-      <h3 id="ui-hist-title">📋 Historial Reciente</h3>
+      <h3 id="ui-hist-title">📋 Récord de Documentos Pagados</h3>
       <button type="button" class="clear-btn" id="ui-hist-clear" onclick="clearCalcHistory()">Borrar</button>
     </div>
+    <input type="text" id="histSearchInput" class="hist-search-input" placeholder="🔍 Buscar cliente, # de factura o fecha..." oninput="renderHistory()">
     <ul class="history-list" id="calcHistoryList"></ul>
   </div>
 </div>
@@ -317,12 +322,13 @@ const I18N = {
     sec2: "2️⃣ Descripción, Bienes, Medidas o Servicios", addLine: "➕ Añadir Otra Línea / Concepto",
     sec3: "3️⃣ Impuestos, Depósito, Condiciones y Envío PDF", tax: "Impuestos / Tax ($)", dep: "Depósito / Abono Pagado ($)",
     notes: "Notas, Garantía o Condiciones Especiales", attach: "📎 Adjuntar Foto, ID o Documento en 2da Página",
-    attachChk: "Incluir imagen en 2da página del PDF", balLbl: "BALANCE TOTAL:", histTitle: "📋 Historial Reciente", histClear: "Borrar",
+    attachChk: "Incluir imagen en 2da página del PDF", balLbl: "BALANCE TOTAL:", histTitle: "📋 Récord de Documentos Pagados", histClear: "Borrar",
+    histSearch: "🔍 Buscar por cliente, # de documento o fecha...", openBtn: "📂 Abrir", pdfBtn: "📥 PDF",
     qty: "Cantidad", price: "Precio Unitario", itemLbl: "Partida #", descPh: "Descripción detallada (ej. Vehículo/VIN, Propiedad, Servicios o Materiales)...",
     waPaid: "📲 Enviar Archivo PDF Oficial (1 Página) por WhatsApp", dlPaid: "📥 Descargar / Guardar PDF en mi Teléfono",
     waLock: "🔒 Desbloquear, Descargar y Enviar PDF Oficial ($1.99)",
     proPassBtn: "🔥 Pase Pro Ilimitado para Contratistas y Negocios ($9.99/mes)",
-    notePaid: "✅ Acceso Activo: Puedes enviar tu PDF por WhatsApp o guardarlo en tu teléfono", noteLock: "🔒 Un solo pago de $1.99 incluye descarga con tu logo y envío por WhatsApp (o usa el Pase Pro Ilimitado)",
+    notePaid: "✅ Acceso Activo: Puedes enviar tu PDF por WhatsApp o guardarlo en tu teléfono", noteLock: "🔒 Un solo pago de $1.99 incluye descarga con tu logo, envío por WhatsApp y guardado en tu récord",
     pdfViralFooter: "Documento Oficial generado con Mr. Invoice Pro • Crea tus Estimados, Facturas y Contratos en: materialcalcpro.org",
     dateLbl: "Fecha", accept: "ACEPTO", decline: "NO ACEPTO", remBal: "BALANCE PENDIENTE", paidAmt: "MONTO ABONADO / PAGADO",
     types: {
@@ -348,12 +354,13 @@ const I18N = {
     sec2: "2️⃣ Description, Goods, Measurements or Services", addLine: "➕ Add Another Line Item",
     sec3: "3️⃣ Taxes, Deposit, Terms & Send PDF", tax: "Taxes / Fees ($)", dep: "Deposit / Amount Paid ($)",
     notes: "Notes, Warranty or Special Terms", attach: "📎 Attach Photo, ID or Doc on 2nd Page",
-    attachChk: "Include image on 2nd page of PDF", balLbl: "TOTAL BALANCE:", histTitle: "📋 Recent History", histClear: "Clear",
+    attachChk: "Include image on 2nd page of PDF", balLbl: "TOTAL BALANCE:", histTitle: "📋 Paid Documents Record", histClear: "Clear",
+    histSearch: "🔍 Search by client, doc # or date...", openBtn: "📂 Open", pdfBtn: "📥 PDF",
     qty: "Quantity", price: "Unit Price", itemLbl: "Item #", descPh: "Detailed description (e.g. Vehicle/VIN, Property, Services or Materials)...",
     waPaid: "📲 Send Official 1-Page PDF via WhatsApp", dlPaid: "📥 Download / Save PDF to Phone",
     waLock: "🔒 Unlock, Download & Send Official PDF ($1.99)",
     proPassBtn: "🔥 Unlimited Pro Pass for Contractors & Pros ($9.99/mo)",
-    notePaid: "✅ Access Active: Send your PDF via WhatsApp or save it to your phone", noteLock: "🔒 A single $1.99 payment includes logo download & WhatsApp sharing (or get the Unlimited Pro Pass)",
+    notePaid: "✅ Access Active: Send your PDF via WhatsApp or save it to your phone", noteLock: "🔒 A single $1.99 payment includes logo download, WhatsApp sharing & record storage",
     pdfViralFooter: "Official Document generated with Mr. Invoice Pro • Create Estimates, Invoices & Contracts at: materialcalcpro.org",
     dateLbl: "Date", accept: "I ACCEPT", decline: "DECLINE", remBal: "REMAINING BALANCE", paidAmt: "AMOUNT PAID / DEPOSIT",
     types: {
@@ -379,7 +386,8 @@ const I18N = {
     sec2: "2️⃣ Description, Biens, Mesures ou Services", addLine: "➕ Ajouter une Ligne / Article",
     sec3: "3️⃣ Taxes, Acompte, Conditions et Envoi PDF", tax: "Taxes / TVA ($)", dep: "Acompte / Montant Payé ($)",
     notes: "Notes, Garantie ou Conditions Particulières", attach: "📎 Joindre Photo ou Pièce d'Identité (2e Page)",
-    attachChk: "Inclure l'image sur la 2e page du PDF", balLbl: "SOLDE TOTAL :", histTitle: "📋 Historique Récent", histClear: "Effacer",
+    attachChk: "Inclure l'image sur la 2e page du PDF", balLbl: "SOLDE TOTAL :", histTitle: "📋 Historique des Documents Payés", histClear: "Effacer",
+    histSearch: "🔍 Rechercher par client, n° ou date...", openBtn: "📂 Ouvrir", pdfBtn: "📥 PDF",
     qty: "Quantité", price: "Prix Unitaire", itemLbl: "Ligne #", descPh: "Description détaillée (ex. Véhicule/VIN, Bien, Services ou Matériaux)...",
     waPaid: "📲 Envoyer le PDF Officiel (1 Page) via WhatsApp", dlPaid: "📥 Télécharger / Enregistrer le PDF",
     waLock: "🔒 Débloquer, Télécharger et Envoyer le PDF Officiel (1,99 $)",
@@ -392,7 +400,7 @@ const I18N = {
       invoice: ["🧾 Facture Officielle", "FACTURE OFFICIELLE", "FAC #", "ÉMETTEUR / ENTREPRISE :", "FACTURÉ À :", "TOTAL FACTURÉ", "VALIDATION DE FACTURE :", "Le client certifie avoir reçu les biens ou services décrits et s'engage à régler le solde indiqué.", "Signature du Client", "Signature Autorisée", false],
       billsale: ["🚗 Contrat de Vente (Acte de Cession)", "CONTRAT DE VENTE", "VEN #", "VENDEUR / CÉDANT :", "ACHETEUR / ACQUÉREUR :", "PRIX TOTAL DE VENTE", "CLAUSE LÉGALE DE CESSION ET VENTE :", "Le Vendeur déclare être le propriétaire légitime du bien décrit libre de tout gage et en transfère la propriété à l'Acheteur en l'état au prix convenu.", "Signature de l'Acheteur", "Signature du Vendeur", false],
       contract: ["🤝 Contrat de Prestation de Services", "CONTRAT DE SERVICES", "CNT #", "PRESTATAIRE / ENTREPRENEUR :", "CLIENT / COMMANDITAIRE :", "MONTANT DU CONTRAT", "ACCORD CONTRACTUEL DES PARTIES :", "Les deux parties conviennent d'exécuter les travaux ou services détaillés selon les montants et conditions stipulés.", "Signature du Client", "Signature du Prestataire", false],
-      lease: ["🏠 Contrat de Location / Bail", "CONTRAT DE LOCATION", "LOC #", "BAILLEUR / PROPRIÉTAIRE :", "LOCATAIRE / PRENEUR :", "LOYER / MONTANT TOTAL", "CONDITIONS DE LOCATION :", "Le Locataire reçoit le bien ou l'équipement en bon état et s'engage à payer le loyer convenu et à en prendre soin.", "Signature du Locataire", "Signature du Bailleur", false],
+      lease: ["🏠 Contrat de Location / Bail", "CONTRAT DE LOCATION", "LOC #", "BAILLEUR / PROPIÉTAIRE :", "LOCATAIRE / PRENEUR :", "LOYER / MONTANT TOTAL", "CONDITIONS DE LOCATION :", "Le Locataire reçoit le bien ou l'équipement en bon état et s'engage à payer le loyer convenu et à en prendre soin.", "Signature du Locataire", "Signature du Bailleur", false],
       waiver: ["🛡️ Décharge de Responsabilité et Réception", "DÉCHARGE ET RÉCEPTION", "DEC #", "ENTREPRISE / ÉMETTEUR :", "CLIENT / BÉNÉFICIAIRE :", "MONTANT RÉGLÉ", "ATTESTATION DE BONNE FIN ET DÉCHARGE :", "Le client certifie que le travail ou le bien a été livré à son entière satisfaction et décharge l'émetteur de toute réclamation ultérieure.", "Signature du Client", "Signature de l'Émetteur", false],
       promissory: ["💵 Reconnaissance de Dette / Échéancier", "RECONNAISSANCE DE DETTE", "DET #", "CRÉANCIER / BÉNÉFICIAIRE :", "DÉBITEUR / SOUSCRIPTEUR :", "MONTANT RECONNU", "ENGAGEMENT INCONDITIONNEL DE PAIEMENT :", "Le Débiteur reconnaît devoir et s'engage inconditionnellement à payer au Créancier la somme indiquée selon les échéances convenues.", "Signature du Débiteur", "Signature du Créancier", false],
       delivery: ["📦 Bon de Livraison / Réception", "BON DE LIVRAISON", "BL #", "EXPÉDIÉ PAR :", "REÇU PAR :", "VALEUR TOTALE", "CONFIRMATION DE RÉCEPTION :", "Le destinataire confirme avoir vérifié et reçu en bon état les marchandises et quantités détaillées ci-dessus.", "Reçu Conforme (Signature)", "Livré Par", false],
@@ -410,7 +418,8 @@ const I18N = {
     sec2: "2️⃣ Opis, Towary, Wymiary lub Usługi", addLine: "➕ Dodaj Kolejną Pozycję",
     sec3: "3️⃣ Podatki, Zaliczka, Warunki i Wysyłka PDF", tax: "Podatek / VAT ($)", dep: "Zaliczka / Wpłacono ($)",
     notes: "Uwagi, Gwarancja lub Warunki Szczególne", attach: "📎 Załącz Zdjęcie lub Dokument na 2. Stronie",
-    attachChk: "Dołącz obraz na 2. stronie PDF", balLbl: "DO ZAPŁATY:", histTitle: "📋 Ostatnia Historia", histClear: "Wyczyść",
+    attachChk: "Dołącz obraz na 2. stronie PDF", balLbl: "DO ZAPŁATY:", histTitle: "📋 Rejestr Opłaconych Dokumentów", histClear: "Wyczyść",
+    histSearch: "🔍 Szukaj klienta, nr dokumentu lub daty...", openBtn: "📂 Otwórz", pdfBtn: "📥 PDF",
     qty: "Ilość", price: "Cena Jednostkowa", itemLbl: "Pozycja #", descPh: "Szczegółowy opis (np. Pojazd/VIN, Nieruchomość, Usługi lub Materiały)...",
     waPaid: "📲 Wyślij Oficjalny Plik PDF (1 Strona) przez WhatsApp", dlPaid: "📥 Pobierz / Zapisz PDF w Telefonie",
     waLock: "🔒 Odblokuj, Pobierz i Wyślij Oficjalny PDF ($1.99)",
@@ -441,7 +450,8 @@ const I18N = {
     sec2: "2️⃣ Descrição, Bens, Medidas ou Serviços", addLine: "➕ Adicionar Outra Linha / Item",
     sec3: "3️⃣ Impostos, Sinal, Condições e Envio PDF", tax: "Impostos / Taxas ($)", dep: "Sinal / Valor Pago ($)",
     notes: "Notas, Garantia ou Condições Especiais", attach: "📎 Anexar Foto, RG/CPF ou Doc na 2ª Página",
-    attachChk: "Incluir imagem na 2ª página do PDF", balLbl: "SALDO TOTAL:", histTitle: "📋 Histórico Recente", histClear: "Limpar",
+    attachChk: "Incluir imagem na 2ª página do PDF", balLbl: "SALDO TOTAL:", histTitle: "📋 Registro de Documentos Pagos", histClear: "Limpar",
+    histSearch: "🔍 Buscar por cliente, nº ou data...", openBtn: "📂 Abrir", pdfBtn: "📥 PDF",
     qty: "Quantidade", price: "Preço Unitário", itemLbl: "Item #", descPh: "Descrição detalhada (ex. Veículo/Chassi, Imóvel, Serviços ou Materiais)...",
     waPaid: "📲 Enviar Arquivo PDF Oficial (1 Página) via WhatsApp", dlPaid: "📥 Baixar / Salvar PDF no Celular",
     waLock: "🔒 Desbloquear, Baixar e Enviar PDF Oficial ($1.99)",
@@ -548,6 +558,8 @@ function applyLanguageUI() {
   document.getElementById('ui-bal-lbl').innerText = L.balLbl;
   document.getElementById('ui-hist-title').innerText = L.histTitle;
   document.getElementById('ui-hist-clear').innerText = L.histClear;
+  const searchInp = document.getElementById('histSearchInput');
+  if (searchInp) searchInp.placeholder = L.histSearch;
 
   const sel = document.getElementById('qb-doctype');
   const prevVal = sel.value || 'quote';
@@ -658,7 +670,6 @@ function updatePayButtonState() {
   if (!btn) return;
   waBtn.innerText = isPaidUser ? L.waPaid : L.waLock;
   btn.innerText = L.dlPaid;
-  // Solo mostramos el botón secundario de Guardar cuando ya pagó (en modo bloqueado hay un solo botón de $1.99)
   btn.style.display = isPaidUser ? 'block' : 'none';
   if (proBtn) {
     proBtn.innerText = L.proPassBtn;
@@ -700,34 +711,111 @@ function renderModalSheet(mode) {
     '<div class="lux-viral-footer">⚡ ' + L.pdfViralFooter + '</div>';
 }
 
-function saveHistoryItem(label, resultText) {
+// Guarda en el récord ÚNICAMENTE cuando el documento ha sido pagado ($1.99 o Pase Pro)
+function savePaidDocumentToRecord() {
+  if (!isPaidUser) return;
+  syncCustomLinesFromDOM();
+  const docType = document.getElementById('qb-doctype')?.value || 'quote';
+  const meta = getDocMeta(docType);
+  const docNum = document.getElementById('qb-docnum')?.value.trim() || '2026-0101';
+  const clientName = document.getElementById('qb-client')?.value.trim() || 'Client';
+  const totalTxt = document.getElementById('contractorBigTotal')?.innerText || '$0.00';
+  const time = new Date().toLocaleDateString([], {month:'2-digit', day:'2-digit', year:'numeric'});
+
+  const inputs = {};
+  document.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => {
+    if (el.id === 'histSearchInput') return;
+    if (el.type === 'checkbox') inputs[el.id] = el.checked;
+    else if (el.type !== 'file') inputs[el.id] = el.value;
+  });
+
+  const recordEntry = {
+    id: Date.now(),
+    docNum: docNum,
+    client: clientName,
+    label: meta.badge + ' (' + meta.prefix + docNum + '): ' + clientName,
+    res: totalTxt,
+    time: time,
+    lang: currentLang,
+    curr: currentCurr,
+    inputs: inputs,
+    lines: JSON.parse(JSON.stringify(customLineItems))
+  };
+
   let hist = [];
   try { hist = JSON.parse(localStorage.getItem('mcp_calc_history') || '[]'); } catch(e) {}
-  const time = new Date().toLocaleDateString([],{month:'2-digit',day:'2-digit'});
-  hist.unshift({label:label, res:resultText, time:time});
-  if (hist.length > 12) hist = hist.slice(0,12);
+  const existingIdx = hist.findIndex(h => h.docNum === docNum && h.client === clientName);
+  if (existingIdx >= 0) hist.splice(existingIdx, 1);
+
+  hist.unshift(recordEntry);
+  if (hist.length > 50) hist = hist.slice(0, 50);
   localStorage.setItem('mcp_calc_history', JSON.stringify(hist));
   renderHistory();
 }
 
-function renderHistory() {
-  const list = document.getElementById('calcHistoryList'); if (!list) return;
+function loadInvoiceFromRecord(id, autoDownloadPDF) {
   let hist = [];
   try { hist = JSON.parse(localStorage.getItem('mcp_calc_history') || '[]'); } catch(e) {}
-  if (hist.length === 0) { list.innerHTML = '<li style="color:#94a3b8;">---</li>'; return; }
-  list.innerHTML = hist.map(item => '<li><span><strong>' + (item.label||item.es||'') + '</strong> <small>(' + item.time + ')</small></span><strong>' + item.res + '</strong></li>').join('');
+  const item = hist.find(h => h.id === id);
+  if (!item) return;
+
+  if (item.curr) currentCurr = item.curr;
+  if (item.lines && Array.isArray(item.lines)) customLineItems = JSON.parse(JSON.stringify(item.lines));
+  if (item.inputs) {
+    Object.keys(item.inputs).forEach(k => {
+      const el = document.getElementById(k);
+      if (!el) return;
+      if (el.type === 'checkbox') el.checked = !!item.inputs[k];
+      else el.value = item.inputs[k];
+    });
+  }
+  isPaidUser = true;
+  applyLanguageUI();
+  if (autoDownloadPDF) {
+    processOfficialPDF('download');
+  } else {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 }
+
+function renderHistory() {
+  const list = document.getElementById('calcHistoryList'); if (!list) return;
+  const L = I18N[currentLang] || I18N.es;
+  const query = (document.getElementById('histSearchInput')?.value || '').toLowerCase().trim();
+  let hist = [];
+  try { hist = JSON.parse(localStorage.getItem('mcp_calc_history') || '[]'); } catch(e) {}
+
+  if (query) {
+    hist = hist.filter(item =>
+      (item.label || '').toLowerCase().includes(query) ||
+      (item.client || '').toLowerCase().includes(query) ||
+      (item.docNum || '').toLowerCase().includes(query) ||
+      (item.time || '').toLowerCase().includes(query)
+    );
+  }
+
+  if (hist.length === 0) { list.innerHTML = '<li style="color:#94a3b8;">---</li>'; return; }
+  list.innerHTML = hist.map(item =>
+    '<li>' +
+      '<div><strong>' + (item.label || item.es || '') + '</strong> <small>(' + item.time + ')</small><br><span style="color:#0f172a;font-weight:800;">' + item.res + '</span></div>' +
+      (item.inputs ?
+        '<div class="hist-btn-group">' +
+          '<button type="button" class="hist-open-btn" onclick="loadInvoiceFromRecord(' + item.id + ', false)">' + L.openBtn + '</button>' +
+          '<button type="button" class="hist-pdf-btn" onclick="loadInvoiceFromRecord(' + item.id + ', true)">' + L.pdfBtn + '</button>' +
+        '</div>' : '') +
+    '</li>'
+  ).join('');
+}
+
 function clearCalcHistory() { localStorage.removeItem('mcp_calc_history'); renderHistory(); }
 
 function saveAllBuilderState() {
   syncCustomLinesFromDOM();
-  const docType = document.getElementById('qb-doctype')?.value || 'quote';
-  const meta = getDocMeta(docType);
-  const clientName = document.getElementById('qb-client')?.value.trim() || 'Client';
-  const totalTxt = document.getElementById('contractorBigTotal')?.innerText || '$0.00';
-  saveHistoryItem(meta.badge + ': ' + clientName, totalTxt);
+  // Solo guarda en el récord de documentos si ya pagó
+  if (isPaidUser) savePaidDocumentToRecord();
   const inputs = {};
   document.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => {
+    if (el.id === 'histSearchInput') return;
     if (el.type==='checkbox') inputs[el.id] = el.checked;
     else if (el.type!=='file') inputs[el.id] = el.value;
   });
@@ -1015,6 +1103,8 @@ function restoreIfReturningFromStripe() {
     const st = JSON.parse(localStorage.getItem('mcp_checkout_state')||'null');
     if (st && st.inputs) Object.keys(st.inputs).forEach(id => { const el = document.getElementById(id); if (!el) return; if (el.type==='checkbox') el.checked = !!st.inputs[id]; else el.value = st.inputs[id]; });
   } catch(e) {}
+  // Guarda automáticamente la factura en el récord al regresar con el pago confirmado de Stripe
+  setTimeout(savePaidDocumentToRecord, 250);
 }
 
 window.addEventListener('DOMContentLoaded', function() {
