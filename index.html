@@ -4,11 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="QK9UkO8Wa6ApdBs0sG4Gk8ojj5vx9duiBlAG9b618-g" />
-<title>MaterialCalcPro.org | Generador Oficial de Estimados y Facturas</title>
-<meta name="description" content="Generador profesional y rápido de estimados, cotizaciones y facturas (invoices) en PDF con tu propio logo y envío directo por WhatsApp.">
+<title>MaterialCalcPro.org | Generador Oficial de Estimados y Facturas PDF</title>
+<meta name="description" content="Generador profesional de estimados, cotizaciones y facturas (invoices) en archivo PDF real con tu logo y envío directo por WhatsApp.">
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#0f172a">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230f172a' stroke='%23facc15' stroke-width='4'/%3E%3Cpath d='M24 72V28h14l12 22 12-22h14v44H64V46L50 69 36 46v26H24z' fill='%23facc15'/%3E%3C/svg%3E">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
@@ -68,7 +69,7 @@ textarea { resize:vertical; min-height:62px; line-height:1.4; }
 .contractor-numbers-bar { background:#064e3b; border:1.5px solid #10b981; border-radius:8px; padding:0.8rem 0.95rem; margin:0.85rem 0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; }
 .contractor-numbers-bar strong { font-size:1.3rem; color:#6ee7b7; }
 .stripe-pay-btn { width:100%; background:var(--green-pay); color:#fff; border:none; padding:0.95rem; border-radius:8px; font-size:0.95rem; font-weight:900; cursor:pointer; box-shadow:0 4px 10px rgba(16,185,129,0.25); margin-top:0.4rem; }
-.wa-master-btn { width:100%; background:#1e293b; color:#4ade80; border:1.5px solid #25D366; padding:0.88rem; border-radius:8px; font-size:0.92rem; font-weight:800; cursor:pointer; margin-top:0.5rem; }
+.wa-master-btn { width:100%; background:#25D366; color:#052e16; border:2px solid #bbf7d0; padding:0.92rem; border-radius:8px; font-size:0.95rem; font-weight:900; cursor:pointer; margin-top:0.55rem; box-shadow:0 4px 12px rgba(37,211,102,0.3); }
 .stripe-note { text-align:center; font-size:0.74rem; color:#cbd5e1; margin-top:0.45rem; }
 
 .history-card { background:var(--card); padding:1.15rem; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.05); margin-top:1.15rem; border:1px solid #cbd5e1; }
@@ -114,32 +115,36 @@ textarea { resize:vertical; min-height:62px; line-height:1.4; }
 .lux-signs { display:grid; grid-template-columns:2fr 2fr 1fr; gap:0.85rem; margin-top:1.15rem; font-size:0.74rem; }
 .lux-sign-line { border-top:1.5px solid #0f172a; padding-top:0.25rem; font-weight:700; color:#334155; }
 
-#printMasterDocument { display:none; }
+/* Hoja Oficial para Generar el PDF */
+#pdfRenderWrapper { position:fixed; left:-9999px; top:0; width:780px; background:#ffffff; z-index:-1; }
+#printMasterDocument { background:#ffffff; color:#0f172a; padding:28px 32px; width:100%; font-size:13px; border-top:8px solid #0f172a; }
+.print-top { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2.5px solid #0f172a; padding-bottom:14px; margin-bottom:16px; gap:16px; }
+.print-brand-wrap { display:flex; align-items:center; gap:14px; }
+.print-default-badge { width:58px; height:58px; background:#0f172a; border-radius:12px; display:flex; align-items:center; justify-content:center; border:2.5px solid #facc15; flex-shrink:0; }
+.print-logo { max-height:70px; max-width:180px; object-fit:contain; }
+.print-doc-badge { text-align:right; background:#f8fafc; padding:10px 14px; border-radius:8px; border:1.5px solid #cbd5e1; border-right:5px solid #eab308; min-width:190px; }
+.print-client-box { background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:10px 14px; margin-bottom:16px; }
+.print-cost-table { width:100%; border-collapse:collapse; margin-top:8px; font-size:13px; }
+.print-cost-table th, .print-cost-table td { border:1px solid #cbd5e1; padding:9px 12px; text-align:left; vertical-align:top; }
+.print-cost-table th { background:#0f172a; color:#ffffff; font-weight:800; }
+.print-cost-table td:last-child, .print-cost-table th:last-child { text-align:right; width:140px; font-weight:700; }
+.print-total-row { font-size:14.5px; font-weight:900; background:#fef3c7; }
+.print-balance-row { font-size:15.5px; font-weight:900; background:#dcfce7; color:#065f46; }
+.print-notes-box { margin-top:14px; background:#f8fafc; border-left:4px solid #0f172a; padding:8px 12px; font-size:12.5px; color:#1e293b; white-space:pre-wrap; }
+.print-sign-box { margin-top:18px; border:1.5px solid #0f172a; border-radius:8px; padding:12px 16px; page-break-inside:avoid; }
+.accept-options { display:flex; gap:24px; font-weight:800; font-size:13px; margin:8px 0 12px; }
+.check-box-sq { display:inline-block; width:14px; height:14px; border:2px solid #0f172a; margin-right:6px; vertical-align:middle; }
+.sign-grid { display:grid; grid-template-columns:2fr 2fr 1fr; gap:18px; margin-top:28px; font-size:12px; }
+.sign-line { border-top:1.5px solid #0f172a; padding-top:5px; font-weight:700; color:#334155; }
+.print-hw-attachment { margin-top:20px; page-break-before:always; text-align:center; padding-top:10px; }
+.print-hw-attachment img { max-width:95%; max-height:750px; border:1px solid #cbd5e1; margin-top:10px; }
+
 @media print {
-  @page { size:letter; margin:0.4in; }
-  header, .container > *:not(#printMasterDocument), .doc-modal-overlay, footer { display:none !important; }
-  body { background:#fff; color:#000; padding:0; font-size:12px; }
-  .container { max-width:100%; margin:0; padding:0; }
-  #printMasterDocument { display:block !important; }
-  body.locked-view #printMasterDocument { display:none !important; }
-  .print-top { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:2.5px solid #0f172a; padding-bottom:0.6rem; margin-bottom:0.75rem; gap:1rem; }
-  .print-brand-wrap { display:flex; align-items:center; gap:0.75rem; }
-  .print-default-badge { width:54px; height:54px; background:#0f172a !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; border-radius:10px; display:flex; align-items:center; justify-content:center; border:2px solid #facc15; }
-  .print-logo { max-height:64px; max-width:170px; object-fit:contain; }
-  .print-doc-badge { text-align:right; background:#f1f5f9 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; padding:0.45rem 0.75rem; border-radius:6px; border:1px solid #cbd5e1; }
-  .print-cost-table { width:100%; border-collapse:collapse; margin-top:0.5rem; font-size:0.85rem; page-break-inside:avoid; }
-  .print-cost-table th, .print-cost-table td { border:1px solid #cbd5e1; padding:0.45rem 0.65rem; text-align:left; vertical-align:top; }
-  .print-cost-table th { background:#0f172a !important; color:#fff !important; font-weight:800; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-  .print-cost-table td:last-child, .print-cost-table th:last-child { text-align:right; width:130px; font-weight:700; }
-  .print-total-row { font-size:0.95rem; font-weight:800; background:#fef3c7 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-  .print-balance-row { font-size:1.02rem; font-weight:900; background:#dcfce7 !important; color:#065f46 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
-  .print-sign-box { margin-top:0.75rem; border:1.5px solid #0f172a; border-radius:7px; padding:0.65rem 0.8rem; page-break-inside:avoid; }
-  .accept-options { display:flex; gap:1.8rem; font-weight:800; font-size:0.84rem; margin:0.35rem 0 0.65rem; }
-  .check-box-sq { display:inline-block; width:13px; height:13px; border:2px solid #0f172a; margin-right:0.3rem; vertical-align:middle; }
-  .sign-grid { display:grid; grid-template-columns:2fr 2fr 1fr; gap:1rem; margin-top:1.25rem; font-size:0.75rem; }
-  .sign-line { border-top:1px solid #0f172a; padding-top:0.22rem; font-weight:700; color:#334155; }
-  .print-hw-attachment { margin-top:0.8rem; page-break-before:always; text-align:center; }
-  .print-hw-attachment img { max-width:95%; max-height:8.5in; border:1px solid #cbd5e1; margin-top:0.4rem; }
+  @page { size:letter; margin:0.35in; }
+  header, .container > *:not(#pdfRenderWrapper), .doc-modal-overlay, footer { display:none !important; }
+  body { background:#fff; color:#000; padding:0; }
+  #pdfRenderWrapper { position:static !important; width:100% !important; z-index:1 !important; }
+  body.locked-view #pdfRenderWrapper { display:none !important; }
 }
 footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
 </style>
@@ -158,7 +163,7 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
       <div class="brand-icon"><svg width="40" height="40"><use href="#proEmblemLogo"/></svg></div>
       <div>
         <div class="logo-main">Material<span>Calc</span>Pro<small>.org</small></div>
-        <div class="logo-sub" data-es="Generador Oficial de Estimados y Facturas" data-en="Official Estimate & Invoice Builder">Generador Oficial de Estimados y Facturas</div>
+        <div class="logo-sub" data-es="Generador Oficial de Estimados y Facturas PDF" data-en="Official PDF Estimate & Invoice Builder">Generador Oficial de Estimados y Facturas PDF</div>
       </div>
     </div>
     <div class="top-actions">
@@ -180,11 +185,11 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
 <div class="container">
   <div class="builder-card">
     <div class="mb-header">
-      <h2 data-es="📄 Crear Estimado o Factura Oficial (Invoice)" data-en="📄 Create Official Estimate or Invoice">📄 Crear Estimado o Factura Oficial (Invoice)</h2>
+      <h2 data-es="📄 Crear Estimado o Factura Oficial (PDF)" data-en="📄 Create Official Estimate or Invoice (PDF)">📄 Crear Estimado o Factura Oficial (PDF)</h2>
       <button type="button" class="reset-zero-btn" onclick="resetBuilderToZero()" data-es="🔄 Limpiar Todo ($0.00)" data-en="🔄 Clear All ($0.00)">🔄 Limpiar Todo ($0.00)</button>
     </div>
 
-    <button type="button" class="open-sample-btn" onclick="openDocPreviewModal('quote')" data-es="👁️ Ver Ejemplo de Cómo Queda el Documento Final" data-en="👁️ View Sample of Final Document Format">👁️ Ver Ejemplo de Cómo Queda el Documento Final</button>
+    <button type="button" class="open-sample-btn" onclick="openDocPreviewModal('quote')" data-es="👁️ Ver Ejemplo de Cómo Queda el PDF Final" data-en="👁️ View Sample of Final PDF Format">👁️ Ver Ejemplo de Cómo Queda el PDF Final</button>
 
     <div class="mb-section">
       <div class="mb-sec-title"><span data-es="1️⃣ Tipo de Documento, Tu Negocio y Datos del Cliente" data-en="1️⃣ Document Type, Your Business & Client Info">1️⃣ Tipo de Documento, Tu Negocio y Datos del Cliente</span></div>
@@ -204,7 +209,7 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
       <div class="price-grid" style="margin-top:0.6rem;">
         <div>
           <label data-es="Nombre de tu Negocio o Profesional" data-en="Your Business or Professional Name">Nombre de tu Negocio o Profesional</label>
-          <input type="text" id="qb-comp" placeholder="Ej. Servicios Profesionales LLC" oninput="recalcMasterTotals()">
+          <input type="text" id="qb-comp" placeholder="Ej. ASD Building Solutions LLC" oninput="recalcMasterTotals()">
         </div>
         <div>
           <label data-es="Tu Teléfono / Email / Registro" data-en="Your Phone / Email / ID">Tu Teléfono / Email / Registro</label>
@@ -213,7 +218,7 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
       </div>
       <div style="margin-top:0.6rem;">
         <label data-es="Cliente y Dirección / Detalles de Contacto" data-en="Client Name & Address / Contact Info">Cliente y Dirección / Detalles de Contacto</label>
-        <input type="text" id="qb-client" placeholder="Ej. Cliente o Empresa - Ciudad" oninput="recalcMasterTotals()">
+        <input type="text" id="qb-client" placeholder="Ej. Nombre del Cliente - Dirección o Teléfono" oninput="recalcMasterTotals()">
       </div>
       <div class="logo-upload-box">
         <div class="logo-pic-badge">🖼️ LOGO PICTURE</div>
@@ -221,7 +226,7 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
         <input type="file" id="qb-logo-input" accept="image/*" onchange="handleLogoUpload(this)">
         <div id="logoIdentifiedBox" class="logo-id-wrap">
           <img id="logoMiniThumb" class="logo-mini-thumb" alt="Logo Picture">
-          <div id="logoLoadedMsg" class="logo-status-msg" data-es="✅ Logo listo para tu documento" data-en="✅ Logo ready for your document">✅ Logo listo para tu documento</div>
+          <div id="logoLoadedMsg" class="logo-status-msg" data-es="✅ Logo listo para tu PDF" data-en="✅ Logo ready for your PDF">✅ Logo listo para tu PDF</div>
           <button type="button" class="cart-remove" onclick="clearLogoPicture()" data-es="✕ Quitar" data-en="✕ Remove">✕ Quitar</button>
         </div>
       </div>
@@ -236,7 +241,7 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
     </div>
 
     <div class="mb-section">
-      <div class="mb-sec-title"><span data-es="3️⃣ Impuestos, Depósito, Notas y Envío" data-en="3️⃣ Taxes, Deposit, Notes & Send">3️⃣ Impuestos, Depósito, Notas y Envío</span></div>
+      <div class="mb-sec-title"><span data-es="3️⃣ Impuestos, Depósito, Notas y Envío en PDF" data-en="3️⃣ Taxes, Deposit, Notes & Send PDF">3️⃣ Impuestos, Depósito, Notas y Envío en PDF</span></div>
       <div class="price-grid">
         <div>
           <label data-es="Impuestos / Tax / Otros ($)" data-en="Taxes / Other Fees ($)">Impuestos / Tax / Otros ($)</label>
@@ -248,8 +253,8 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
         </div>
       </div>
       <div style="margin-top:0.6rem;">
-        <label data-es="Notas, Condiciones o Métodos de Pago (Opcional)" data-en="Notes, Terms or Payment Methods (Optional)">Notas, Condiciones o Métodos de Pago (Opcional)</label>
-        <textarea id="qb-notes" placeholder="Ej. Válido por 30 días. Métodos de pago: Transferencia, Efectivo o Tarjeta." oninput="recalcMasterTotals()"></textarea>
+        <label data-es="Notas, Garantía o Condiciones de Pago (Opcional)" data-en="Notes, Warranty or Payment Terms (Optional)">Notas, Garantía o Condiciones de Pago (Opcional)</label>
+        <textarea id="qb-notes" placeholder="Ej. 5 años de garantía. 50% de depósito para iniciar." oninput="recalcMasterTotals()"></textarea>
       </div>
       <div class="logo-upload-box" style="border-color:#64748b;">
         <label data-es="📎 Adjuntar Foto o Documento como 2da Página (Opcional)" data-en="📎 Attach Photo or Document as 2nd Page (Optional)">📎 Adjuntar Foto o Documento como 2da Página (Opcional)</label>
@@ -267,8 +272,8 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
         <strong id="contractorBigTotal">$0.00</strong>
       </div>
 
-      <button type="button" class="stripe-pay-btn" id="finalActionBtn" onclick="handleFinalDownloadClick()"></button>
       <button type="button" class="wa-master-btn" id="finalWaBtn" onclick="handleWhatsAppQuoteClick()"></button>
+      <button type="button" class="stripe-pay-btn" id="finalActionBtn" onclick="handleFinalDownloadClick()"></button>
       <div class="stripe-note" id="finalActionNote"></div>
     </div>
   </div>
@@ -281,44 +286,54 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
     <ul class="history-list" id="calcHistoryList"></ul>
   </div>
 
-  <div id="printMasterDocument">
-    <div class="print-top">
-      <div class="print-brand-wrap">
-        <img id="pLogoImg" class="print-logo" alt="Logo" style="display:none;">
-        <div id="pDefaultBadge" class="print-default-badge"><svg width="36" height="36"><use href="#proEmblemLogo"/></svg></div>
-        <div>
-          <h2 id="pCompanyTitle" style="font-size:1.28rem;color:#0f172a;font-weight:900;">Empresa / Profesional</h2>
-          <p id="pCompanyPhone" style="font-size:0.84rem;color:#334155;font-weight:700;"></p>
-          <p id="pClientLine" style="font-size:0.88rem;color:#0f172a;margin-top:0.2rem;font-weight:800;"></p>
+  <div id="pdfRenderWrapper">
+    <div id="printMasterDocument">
+      <div class="print-top">
+        <div class="print-brand-wrap">
+          <img id="pLogoImg" class="print-logo" alt="Logo" style="display:none;">
+          <div id="pDefaultBadge" class="print-default-badge"><svg width="38" height="38"><use href="#proEmblemLogo"/></svg></div>
+          <div>
+            <h2 id="pCompanyTitle" style="font-size:1.35rem;color:#0f172a;font-weight:900;">Empresa / Profesional</h2>
+            <p id="pCompanyPhone" style="font-size:0.86rem;color:#334155;font-weight:700;margin-top:2px;"></p>
+          </div>
+        </div>
+        <div class="print-doc-badge">
+          <div id="pDocTypeBadge" style="font-size:0.95rem;font-weight:900;color:#0f172a;text-transform:uppercase;">ESTIMADO OFICIAL</div>
+          <div id="pDocNumLine" style="font-size:0.85rem;font-weight:800;color:#b45309;margin-top:2px;">#EST-2026-0101</div>
+          <div id="pDateLine" style="font-size:0.78rem;color:#475569;margin-top:2px;font-weight:600;"></div>
         </div>
       </div>
-      <div class="print-doc-badge">
-        <div id="pDocTypeBadge" style="font-size:0.92rem;font-weight:900;color:#0f172a;text-transform:uppercase;">ESTIMADO OFICIAL</div>
-        <div id="pDocNumLine" style="font-size:0.8rem;font-weight:700;color:#b45309;">#EST-2026-0101</div>
-        <div id="pDateLine" style="font-size:0.76rem;color:#475569;margin-top:2px;"></div>
+
+      <div class="print-client-box" id="pClientBox">
+        <div style="font-size:0.72rem;font-weight:800;color:#64748b;text-transform:uppercase;" id="pClientLabel">PREPARADO PARA / CLIENTE:</div>
+        <div id="pClientLine" style="font-size:0.95rem;color:#0f172a;font-weight:800;margin-top:2px;">Cliente General</div>
       </div>
-    </div>
-    <table class="print-cost-table">
-      <thead><tr><th id="thConcept">Descripción / Concepto</th><th id="thAmount">Monto</th></tr></thead>
-      <tbody id="pCostTableBody"></tbody>
-    </table>
-    <p id="pNotesLine" style="margin-top:0.55rem;font-size:0.83rem;color:#1e293b;white-space:pre-wrap;display:none;"></p>
-    <div class="print-sign-box">
-      <div id="pAuthHeader" style="font-size:0.82rem;font-weight:900;color:#0f172a;text-transform:uppercase;">Autorización y Conformidad:</div>
-      <div class="accept-options" id="pAcceptChecks">
-        <span><span class="check-box-sq"></span> <span id="lblAcceptYes">ACEPTO ESTE ESTIMADO</span></span>
-        <span><span class="check-box-sq"></span> <span id="lblAcceptNo">NO ACEPTO</span></span>
+
+      <table class="print-cost-table">
+        <thead><tr><th id="thConcept">Descripción / Concepto</th><th id="thAmount">Monto</th></tr></thead>
+        <tbody id="pCostTableBody"></tbody>
+      </table>
+
+      <div id="pNotesLine" class="print-notes-box" style="display:none;"></div>
+
+      <div class="print-sign-box">
+        <div id="pAuthHeader" style="font-size:0.82rem;font-weight:900;color:#0f172a;text-transform:uppercase;">Autorización y Conformidad:</div>
+        <div class="accept-options" id="pAcceptChecks">
+          <span><span class="check-box-sq"></span> <span id="lblAcceptYes">ACEPTO ESTE ESTIMADO</span></span>
+          <span><span class="check-box-sq"></span> <span id="lblAcceptNo">NO ACEPTO</span></span>
+        </div>
+        <p id="pLegalText" style="font-size:0.75rem;color:#475569;line-height:1.4;">Al firmar debajo, el cliente confirma y aprueba los conceptos, montos y condiciones detallados en este documento oficial.</p>
+        <div class="sign-grid">
+          <div class="sign-line" id="sigClientLbl">Firma del Cliente</div>
+          <div class="sign-line" id="sigContractorLbl">Firma Autorizada</div>
+          <div class="sign-line" id="sigDateLbl">Fecha</div>
+        </div>
       </div>
-      <p id="pLegalText" style="font-size:0.73rem;color:#475569;line-height:1.35;">Al firmar debajo, el cliente confirma y aprueba los conceptos, montos y condiciones detallados en este documento.</p>
-      <div class="sign-grid">
-        <div class="sign-line" id="sigClientLbl">Firma del Cliente</div>
-        <div class="sign-line" id="sigContractorLbl">Firma Autorizada</div>
-        <div class="sign-line" id="sigDateLbl">Fecha</div>
+
+      <div id="pHardwareAttachmentPage" class="print-hw-attachment" style="display:none;">
+        <h3 id="pHwAttachTitle" style="font-size:1rem;color:#0f172a;">Documento / Imagen Adjunta</h3>
+        <img id="pHwAttachImg" alt="Adjunto">
       </div>
-    </div>
-    <div id="pHardwareAttachmentPage" class="print-hw-attachment" style="display:none;">
-      <h3 id="pHwAttachTitle" style="font-size:1rem;color:#0f172a;">Documento / Imagen Adjunta</h3>
-      <img id="pHwAttachImg" alt="Adjunto">
     </div>
   </div>
 </div>
@@ -333,12 +348,12 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
       <button type="button" class="close-modal-x" onclick="closeDocPreviewModal()">✕ Cerrar</button>
     </div>
     <div class="luxury-paper-sheet" id="modalPaperContent"></div>
-    <div style="margin-top:0.85rem;"><button type="button" class="stripe-pay-btn" id="modalUnlockBtn" onclick="handleFinalDownloadClick()"></button></div>
+    <div style="margin-top:0.85rem;"><button type="button" class="wa-master-btn" id="modalUnlockBtn" onclick="handleWhatsAppQuoteClick()"></button></div>
   </div>
 </div>
 
 <footer>
-  &copy; 2026 MaterialCalcPro.org | Official Estimate & Invoice Suite
+  &copy; 2026 MaterialCalcPro.org | Official Estimate & Invoice PDF Suite
   <span onclick="activateOwnerMode()" style="cursor:pointer;opacity:0.65;margin-left:8px;padding:2px 6px;border:1px solid #475569;border-radius:4px;" id="ownerKeyBtn" title="Modo Dueño">🔒 Modo Cliente: ON</span>
 </footer>
 
@@ -445,20 +460,19 @@ function renderModalSheet(mode) {
   const unlockBtn = document.getElementById('modalUnlockBtn');
   if (!paper) return;
   unlockBtn.innerText = isPaidUser
-    ? (isEs ? '🖨️ Generar y Descargar Mi PDF Oficial Ahora' : '🖨️ Generate & Download My Official PDF Now')
-    : (isEs ? '🔒 Generar Mi Documento Oficial con Mi Logo y Mis Números ($1.99)' : '🔒 Generate My Official Document with My Logo & Numbers ($1.99)');
+    ? (isEs ? '📲 Enviar Mi Documento PDF Oficial por WhatsApp Ahora' : '📲 Send My Official PDF Document via WhatsApp Now')
+    : (isEs ? '🔒 Generar y Enviar Mi PDF Oficial con Mi Logo ($1.99)' : '🔒 Generate & Send My Official PDF with My Logo ($1.99)');
   const docBadgeTitle = isInv ? (isEs?'FACTURA OFICIAL (INVOICE)':'OFFICIAL INVOICE') : (isEs?'ESTIMADO OFICIAL':'OFFICIAL ESTIMATE');
   const docNum = isInv ? 'INV #2026-0842' : 'EST #2026-0842';
   paper.innerHTML =
-    '<div class="lux-sample-ribbon">' + (isEs ? '✨ VISTA PREVIA DE EJEMPLO • Tu PDF saldrá con TU LOGO y TUS CONCEPTOS al generarlo' : '✨ SAMPLE PREVIEW • Your PDF will be generated with YOUR LOGO & YOUR ITEMS') + '</div>' +
+    '<div class="lux-sample-ribbon">' + (isEs ? '✨ VISTA PREVIA DEL PDF • Así de profesional se verá el archivo PDF que enviarás por WhatsApp' : '✨ PDF PREVIEW • This is how the official PDF file you send via WhatsApp will look') + '</div>' +
     '<div class="lux-header"><div class="lux-brand"><div class="lux-logo-box"><svg width="42" height="42"><use href="#proEmblemLogo"/></svg></div><div><div class="lux-comp-name">APEX BUSINESS SOLUTIONS LLC</div><div class="lux-comp-sub">' + (isEs ? 'Servicios Profesionales y Comerciales • Reg. #89421<br>Tel: (787) 555-0199' : 'Professional & Commercial Services • Reg. #89421<br>Phone: (787) 555-0199') + '</div></div></div><div class="lux-badge-box"><div class="lux-doc-title">' + docBadgeTitle + '</div><div class="lux-doc-num">' + docNum + '</div><div class="lux-doc-date">' + (isEs?'Fecha: 04/11/2026 • Validez: 30 Días':'Date: 11/04/2026 • Valid: 30 Days') + '</div></div></div>' +
     '<div class="lux-client-grid"><div><strong>' + (isEs?'CLIENTE:':'CLIENT:') + '</strong><span>Carlos M. Rodríguez</span><div style="color:#475569;margin-top:2px;">Tel: (787) 555-8420</div></div><div><strong>' + (isEs?'DIRECCIÓN / DETALLE:':'ADDRESS / DETAIL:') + '</strong><span>San Juan, PR</span><div style="color:#475569;margin-top:2px;">' + (isEs?'Servicios Profesionales según acordado':'Professional Services as agreed') + '</div></div></div>' +
     '<table class="lux-table"><thead><tr><th>' + (isEs?'Descripción / Concepto':'Description / Item') + '</th><th>' + (isEs?'Monto (USD)':'Amount (USD)') + '</th></tr></thead><tbody>' +
-    '<tr><td><strong>1. ' + (isEs?'Servicio Principal y Ejecución':'Primary Service & Execution') + '</strong><br><span style="color:#475569;font-size:0.78rem;">' + (isEs?'Desarrollo completo según las medidas y especificaciones acordadas con el cliente.':'Full execution according to specifications agreed with the client.') + '</span></td><td>$1,850.00</td></tr>' +
-    '<tr><td><strong>2. ' + (isEs?'Equipos, Materiales e Insumos':'Equipment, Materials & Supplies') + '</strong><br><span style="color:#475569;font-size:0.78rem;">' + (isEs?'Suministro completo e instalación en el área de trabajo.':'Complete supply and setup at the workspace.') + '</span></td><td>$950.00</td></tr>' +
-    '<tr class="lux-tot-row"><td>' + (isInv?'TOTAL FACTURADO':'TOTAL ESTIMADO') + '</td><td>$2,800.00</td></tr>' +
-    '<tr><td>' + (isEs?'Menos Depósito / Abono Recibido':'Less Deposit Paid') + '</td><td>-$1,400.00</td></tr>' +
-    '<tr class="lux-bal-row"><td>' + (isEs?'BALANCE PENDIENTE':'BALANCE DUE') + '</td><td>$1,400.00</td></tr></tbody></table>' +
+    '<tr><td><strong>1. ' + (isEs?'Instalación de ventanas':'Window Installation') + '</strong> <small>(Cant: 16 × $500.00)</small></td><td>$8,000.00</td></tr>' +
+    '<tr><td><strong>2. ' + (isEs?'Instalación de puertas':'Door Installation') + '</strong></td><td>$2,000.00</td></tr>' +
+    '<tr><td>' + (isEs?'Impuestos / Tax':'Taxes') + '</td><td>$500.00</td></tr>' +
+    '<tr class="lux-tot-row"><td>' + (isInv?'TOTAL FACTURADO (USD)':'TOTAL ESTIMADO (USD)') + '</td><td>$10,500.00</td></tr></tbody></table>' +
     '<div class="lux-sign-box"><div style="font-size:0.76rem;font-weight:900;text-transform:uppercase;color:#0f172a;">' + (isInv?(isEs?'Conformidad y Recibo:':'Acknowledgment:'):(isEs?'Autorización del Cliente:':'Client Authorization:')) + '</div>' +
     (isInv?'':'<div class="lux-checks"><span>☑️ ACEPTO ESTE ESTIMADO</span><span>⬜ NO ACEPTO</span></div>') +
     '<div class="lux-signs"><div class="lux-sign-line">' + (isEs?'Firma del Cliente':'Client Signature') + '</div><div class="lux-sign-line">' + (isEs?'Firma Autorizada':'Authorized Signature') + '</div><div class="lux-sign-line">' + (isEs?'Fecha':'Date') + '</div></div></div>';
@@ -558,13 +572,13 @@ function updatePayButtonState() {
   if (!btn) return;
   const isEs = currentLang==='es';
   if (isPaidUser) {
-    btn.innerText = isEs ? '🖨️ Descargar / Imprimir Mi Estimado o Factura PDF Ahora' : '🖨️ Download / Print Official Estimate or Invoice PDF Now';
-    waBtn.innerText = isEs ? '📲 Enviar Mi Estimado / Factura Oficial por WhatsApp' : '📲 Send Official Estimate / Invoice via WhatsApp';
-    note.innerText = isEs ? '✅ Documento Oficial Desbloqueado • Toca el botón verde para guardar o imprimir tu PDF' : '✅ Official Document Unlocked • Click green button to save or print your PDF';
+    waBtn.innerText = isEs ? '📲 Enviar Documento PDF Oficial por WhatsApp / Compartir' : '📲 Send Official PDF Document via WhatsApp / Share';
+    btn.innerText = isEs ? '📥 Descargar / Guardar Archivo PDF en mi Teléfono' : '📥 Download / Save PDF File to Phone';
+    note.innerText = isEs ? '✅ Modo PDF Oficial Activo • Se generará un archivo .PDF real listo para enviar por WhatsApp' : '✅ Official PDF Mode Active • Generates a real .PDF file ready to share on WhatsApp';
   } else {
-    btn.innerText = isEs ? '🔒 Generar Mi Documento Oficial en PDF con Mi Logo ($1.99)' : '🔒 Generate My Official PDF Document with My Logo ($1.99)';
-    waBtn.innerText = isEs ? '🔒 Desbloquear y Enviar por WhatsApp ($1.99)' : '🔒 Unlock & Send via WhatsApp ($1.99)';
-    note.innerText = isEs ? '🔒 Paga $1.99 en Stripe para generar y descargar tu PDF Oficial sin marcas de ejemplo' : '🔒 Pay $1.99 via Stripe to generate and download your Official PDF';
+    waBtn.innerText = isEs ? '🔒 Generar y Enviar Archivo PDF Oficial por WhatsApp ($1.99)' : '🔒 Generate & Send Official PDF File via WhatsApp ($1.99)';
+    btn.innerText = isEs ? '🔒 Descargar Archivo PDF Oficial con Mi Logo ($1.99)' : '🔒 Download Official PDF File with My Logo ($1.99)';
+    note.innerText = isEs ? '🔒 Paga $1.99 en Stripe para desbloquear y enviar el documento como archivo PDF oficial' : '🔒 Pay $1.99 via Stripe to unlock and send the document as an official PDF file';
   }
 }
 
@@ -572,7 +586,7 @@ function saveAllBuilderState() {
   syncCustomLinesFromDOM();
   const clientName = document.getElementById('qb-client')?.value.trim() || 'Cliente';
   const totalTxt = document.getElementById('contractorBigTotal')?.innerText || '$0.00';
-  if (totalTxt !== '$0.00') saveHistoryItem('Documento: '+clientName, 'Document: '+clientName, totalTxt);
+  if (totalTxt !== '$0.00') saveHistoryItem('Documento PDF: '+clientName, 'PDF Document: '+clientName, totalTxt);
   const inputs = {};
   document.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => {
     if (el.type==='checkbox') inputs[el.id] = el.checked;
@@ -584,22 +598,24 @@ function saveAllBuilderState() {
   localStorage.setItem('mcp_checkout_state', JSON.stringify({lang:currentLang,curr:currentCurr,inputs:inputs}));
 }
 
-function handleFinalDownloadClick() { saveAllBuilderState(); if (!isPaidUser) { window.location.href = STRIPE_URL; return; } closeDocPreviewModal(); printMasterDocument(); }
-function handleWhatsAppQuoteClick() { saveAllBuilderState(); if (!isPaidUser) { window.location.href = STRIPE_URL; return; } sendUnlockedMasterWhatsApp(); }
-
-function printMasterDocument() {
-  if (!isPaidUser) { window.location.href = STRIPE_URL; return; }
+function populateMasterSheetDOM() {
   syncCustomLinesFromDOM();
   const isEs = currentLang==='es', isInvoice = (document.getElementById('qb-doctype')?.value||'quote')==='invoice';
-  const docNum = document.getElementById('qb-docnum')?.value.trim()||'2026-0101', comp = document.getElementById('qb-comp')?.value.trim()||'MaterialCalcPro.org', phone = document.getElementById('qb-phone')?.value.trim()||'', client = document.getElementById('qb-client')?.value.trim()||'';
-  const tax = parseFloat(document.getElementById('qb-tax')?.value)||0, dep = parseFloat(document.getElementById('qb-dep')?.value)||0, notes = document.getElementById('qb-notes')?.value.trim()||'';
+  const docNum = document.getElementById('qb-docnum')?.value.trim()||'2026-0101';
+  const comp = document.getElementById('qb-comp')?.value.trim()||(isEs?'Servicios Profesionales':'Professional Services');
+  const phone = document.getElementById('qb-phone')?.value.trim()||'';
+  const client = document.getElementById('qb-client')?.value.trim()||(isEs?'Cliente':'Client');
+  const tax = parseFloat(document.getElementById('qb-tax')?.value)||0;
+  const dep = parseFloat(document.getElementById('qb-dep')?.value)||0;
+  const notes = document.getElementById('qb-notes')?.value.trim()||'';
 
   document.getElementById('pCompanyTitle').innerText = comp;
   document.getElementById('pCompanyPhone').innerText = phone;
-  document.getElementById('pClientLine').innerText = client ? ((isEs?'Cliente: ':'Client: ')+client) : '';
+  document.getElementById('pClientLabel').innerText = isEs ? 'PREPARADO PARA / CLIENTE:' : 'PREPARED FOR / CLIENT:';
+  document.getElementById('pClientLine').innerText = client;
   document.getElementById('pDocTypeBadge').innerText = isInvoice ? (isEs?'FACTURA OFICIAL (INVOICE)':'OFFICIAL INVOICE') : (isEs?'ESTIMADO OFICIAL':'OFFICIAL ESTIMATE');
   document.getElementById('pDocNumLine').innerText = (isInvoice?'INV #':'EST #')+docNum;
-  document.getElementById('pDateLine').innerText = new Date().toLocaleDateString(isEs?'es-PR':'en-US');
+  document.getElementById('pDateLine').innerText = (isEs?'Fecha: ':'Date: ') + new Date().toLocaleDateString(isEs?'es-PR':'en-US');
 
   const logoImg = document.getElementById('pLogoImg'), defBadge = document.getElementById('pDefaultBadge');
   if (uploadedLogoData) { logoImg.src = uploadedLogoData; logoImg.style.display = 'block'; defBadge.style.display = 'none'; }
@@ -628,42 +644,69 @@ function printMasterDocument() {
   document.getElementById('pCostTableBody').innerHTML = tbody;
 
   const notesEl = document.getElementById('pNotesLine');
-  if (notes) { notesEl.innerText = (isEs?'Notas y Condiciones:\n':'Notes & Terms:\n')+notes; notesEl.style.display = 'block'; } else notesEl.style.display = 'none';
+  if (notes) { notesEl.innerText = (isEs?'Notas / Condiciones / Garantía:\n':'Notes / Terms / Warranty:\n')+notes; notesEl.style.display = 'block'; } else notesEl.style.display = 'none';
   document.getElementById('pAcceptChecks').style.display = isInvoice ? 'none' : 'flex';
 
   const attachCheck = document.getElementById('qb-hw-print-attach')?.checked, attachPage = document.getElementById('pHardwareAttachmentPage');
   if (attachCheck && uploadedHwQuoteImg) { document.getElementById('pHwAttachImg').src = uploadedHwQuoteImg; attachPage.style.display = 'block'; } else attachPage.style.display = 'none';
-  window.print();
+
+  const cleanNum = docNum.replace(/[^a-zA-Z0-9_-]/g, '');
+  return (isInvoice ? 'Factura_' : 'Estimado_') + cleanNum + '.pdf';
 }
 
-function sendUnlockedMasterWhatsApp() {
-  syncCustomLinesFromDOM();
-  const isEs = currentLang==='es', isInvoice = (document.getElementById('qb-doctype')?.value||'quote')==='invoice';
-  const docNum = document.getElementById('qb-docnum')?.value.trim()||'2026-0101', comp = document.getElementById('qb-comp')?.value.trim()||'MaterialCalcPro.org', phone = document.getElementById('qb-phone')?.value.trim()||'', client = document.getElementById('qb-client')?.value.trim()||'';
-  const tax = parseFloat(document.getElementById('qb-tax')?.value)||0, dep = parseFloat(document.getElementById('qb-dep')?.value)||0, notes = document.getElementById('qb-notes')?.value.trim()||'';
+async function generateAndProcessPDF(mode) {
+  const fileName = populateMasterSheetDOM();
+  const element = document.getElementById('printMasterDocument');
+  const waBtn = document.getElementById('finalWaBtn');
+  const dlBtn = document.getElementById('finalActionBtn');
+  const origWaText = waBtn.innerText;
+  const origDlText = dlBtn.innerText;
 
-  let lines = [], grandTotal = 0;
-  lines.push(isInvoice ? ('🧾 *FACTURA OFICIAL #'+docNum+'*') : ('📄 *ESTIMADO OFICIAL #'+docNum+'*'));
-  lines.push('🏢 *'+comp+'*'+(phone?' ('+phone+')':''));
-  if (client) lines.push('👤 '+client);
-  lines.push('────────────────');
-  customLineItems.forEach((it, idx) => {
-    const q = parseFloat(it.qty) || 1;
-    const p = parseFloat(it.price) || 0;
-    const lineTotal = q * p;
-    if (lineTotal > 0 || it.desc.trim() !== '') {
-      grandTotal += lineTotal;
-      lines.push('*'+(idx+1)+'.* '+(it.desc.trim()||'Concepto')+(q!==1?' ('+q+' × '+formatUSD(p)+')':'')+': *'+formatUSD(lineTotal)+'*');
+  waBtn.innerText = currentLang==='es' ? '⏳ Creando archivo PDF Oficial...' : '⏳ Creating Official PDF File...';
+  dlBtn.innerText = currentLang==='es' ? '⏳ Procesando PDF...' : '⏳ Processing PDF...';
+
+  const opt = {
+    margin: [10, 10, 10, 10],
+    filename: fileName,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+    jsPDF: { unit: 'mm', format: 'letter', orientation: 'portrait' }
+  };
+
+  try {
+    if (mode === 'share' && navigator.canShare) {
+      const pdfBlob = await html2pdf().set(opt).from(element).output('blob');
+      const pdfFile = new File([pdfBlob], fileName, { type: 'application/pdf' });
+      if (navigator.canShare({ files: [pdfFile] })) {
+        await navigator.share({
+          files: [pdfFile],
+          title: fileName
+        });
+        updatePayButtonState();
+        return;
+      }
     }
-  });
-  if (tax > 0) { grandTotal += tax; lines.push('• Impuestos / Tax: *'+formatUSD(tax)+'*'); }
-  const balance = Math.max(0, grandTotal - dep);
-  lines.push('────────────────');
-  lines.push('💰 *TOTAL ('+currentCurr+'): '+formatUSD(grandTotal)+'*');
-  if (dep > 0) { lines.push('➖ Depósito: -'+formatUSD(dep)); lines.push('✅ *BALANCE PENDIENTE: '+formatUSD(balance)+'*'); }
-  if (notes) lines.push('📌 '+notes);
-  if (!isInvoice) { lines.push('────────────────'); lines.push(isEs ? '✅ *Para aprobar este estimado, responda "ACEPTO" a este mensaje o devuelva el PDF firmado.*' : '✅ *To approve this estimate, reply "ACCEPT" to this message or return the signed PDF.*'); }
-  window.open('https://wa.me/?text='+encodeURIComponent(lines.join('\n')), '_blank');
+    await html2pdf().set(opt).from(element).save();
+  } catch (err) {
+    if (err && err.name !== 'AbortError') {
+      window.print();
+    }
+  }
+  updatePayButtonState();
+}
+
+function handleWhatsAppQuoteClick() {
+  saveAllBuilderState();
+  if (!isPaidUser) { window.location.href = STRIPE_URL; return; }
+  closeDocPreviewModal();
+  generateAndProcessPDF('share');
+}
+
+function handleFinalDownloadClick() {
+  saveAllBuilderState();
+  if (!isPaidUser) { window.location.href = STRIPE_URL; return; }
+  closeDocPreviewModal();
+  generateAndProcessPDF('download');
 }
 
 function restoreIfReturningFromStripe() {
