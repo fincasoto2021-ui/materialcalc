@@ -1,29 +1,19 @@
-/* Service Worker MaterialCalcPro */
-const CACHE_NAME = 'mcp-clean-2026';
+const CACHE_NAME = 'mrinvoice-pro-v5';
 
-self.addEventListener('install', function(event) {
+self.addEventListener('install', (e) => {
   self.skipWaiting();
 });
 
-self.addEventListener('activate', function(event) {
-  event.waitUntil(
-    caches.keys().then(function(names) {
-      return Promise.all(
-        names.map(function(name) {
-          return caches.delete(name);
-        })
-      );
-    }).then(function() {
-      return self.clients.claim();
-    })
+self.addEventListener('activate', (e) => {
+  e.waitUntil(
+    caches.keys().then((keys) => Promise.all(
+      keys.map((k) => caches.delete(k))
+    )).then(() => self.clients.claim())
   );
 });
 
-self.addEventListener('fetch', function(event) {
-  if (event.request.method !== 'GET') return;
-  event.respondWith(
-    fetch(event.request).catch(function() {
-      return caches.match(event.request);
-    })
+self.addEventListener('fetch', (e) => {
+  e.respondWith(
+    fetch(e.request).catch(() => caches.match(e.request))
   );
 });
