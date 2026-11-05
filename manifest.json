@@ -1,2 +1,25 @@
+{
   "name": "Mr. Invoice Pro: Estimados y Facturas PDF",
   "short_name": "Mr. Invoice Pro",
+  "description": "Generador Oficial de Estimados y Facturas en PDF",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/1793842789444.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/1793842789444.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}
