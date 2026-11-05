@@ -110,8 +110,8 @@ textarea { resize:vertical; min-height:62px; line-height:1.4; }
 
 .contractor-numbers-bar { background:#064e3b; border:1.5px solid #10b981; border-radius:8px; padding:0.8rem 0.95rem; margin:0.85rem 0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; }
 .contractor-numbers-bar strong { font-size:1.3rem; color:#6ee7b7; }
-.wa-master-btn { width:100%; background:#25D366; color:#052e16; border:2px solid #bbf7d0; padding:0.95rem; border-radius:8px; font-size:0.95rem; font-weight:900; cursor:pointer; margin-top:0.4rem; }
-.stripe-pay-btn { width:100%; background:#1e293b; color:#fde047; border:1.5px solid var(--accent); padding:0.9rem; border-radius:8px; font-size:0.92rem; font-weight:900; cursor:pointer; margin-top:0.55rem; }
+.wa-master-btn { width:100%; background:#25D366; color:#052e16; border:2px solid #bbf7d0; padding:0.95rem; border-radius:8px; font-size:0.95rem; font-weight:900; cursor:pointer; margin-top:0.4rem; box-shadow:0 4px 12px rgba(37,211,102,0.25); }
+.stripe-pay-btn { width:100%; background:#1e293b; color:#fde047; border:1.5px solid var(--accent); padding:0.9rem; border-radius:8px; font-size:0.92rem; font-weight:900; cursor:pointer; margin-top:0.55rem; display:none; }
 .pro-pass-btn { width:100%; background:linear-gradient(135deg,#f59e0b 0%,#d97706 100%); color:#090d16; border:2px solid #fef08a; padding:0.85rem; border-radius:8px; font-size:0.88rem; font-weight:900; cursor:pointer; margin-top:0.55rem; box-shadow:0 4px 12px rgba(245,158,11,0.3); }
 .stripe-note { text-align:center; font-size:0.74rem; color:#cbd5e1; margin-top:0.45rem; line-height:1.4; }
 
@@ -320,9 +320,9 @@ const I18N = {
     attachChk: "Incluir imagen en 2da página del PDF", balLbl: "BALANCE TOTAL:", histTitle: "📋 Historial Reciente", histClear: "Borrar",
     qty: "Cantidad", price: "Precio Unitario", itemLbl: "Partida #", descPh: "Descripción detallada (ej. Vehículo/VIN, Propiedad, Servicios o Materiales)...",
     waPaid: "📲 Enviar Archivo PDF Oficial (1 Página) por WhatsApp", dlPaid: "📥 Descargar / Guardar PDF en mi Teléfono",
-    waLock: "🔒 Generar y Enviar Archivo PDF Oficial ($1.99)", dlLock: "🔒 Descargar Archivo PDF Oficial con Mi Logo ($1.99)",
+    waLock: "🔒 Desbloquear, Descargar y Enviar PDF Oficial ($1.99)",
     proPassBtn: "🔥 Pase Pro Ilimitado para Contratistas y Negocios ($9.99/mes)",
-    notePaid: "✅ Modo PDF Vectorial Directo Activo (1 sola página)", noteLock: "🔒 Paga $1.99 por documento o activa el Pase Pro Ilimitado ($9.99/mes)",
+    notePaid: "✅ Acceso Activo: Puedes enviar tu PDF por WhatsApp o guardarlo en tu teléfono", noteLock: "🔒 Un solo pago de $1.99 incluye descarga con tu logo y envío por WhatsApp (o usa el Pase Pro Ilimitado)",
     pdfViralFooter: "Documento Oficial generado con Mr. Invoice Pro • Crea tus Estimados, Facturas y Contratos en: materialcalcpro.org",
     dateLbl: "Fecha", accept: "ACEPTO", decline: "NO ACEPTO", remBal: "BALANCE PENDIENTE", paidAmt: "MONTO ABONADO / PAGADO",
     types: {
@@ -351,9 +351,9 @@ const I18N = {
     attachChk: "Include image on 2nd page of PDF", balLbl: "TOTAL BALANCE:", histTitle: "📋 Recent History", histClear: "Clear",
     qty: "Quantity", price: "Unit Price", itemLbl: "Item #", descPh: "Detailed description (e.g. Vehicle/VIN, Property, Services or Materials)...",
     waPaid: "📲 Send Official 1-Page PDF via WhatsApp", dlPaid: "📥 Download / Save PDF to Phone",
-    waLock: "🔒 Generate & Send Official PDF ($1.99)", dlLock: "🔒 Download Official PDF with My Logo ($1.99)",
+    waLock: "🔒 Unlock, Download & Send Official PDF ($1.99)",
     proPassBtn: "🔥 Unlimited Pro Pass for Contractors & Pros ($9.99/mo)",
-    notePaid: "✅ Direct Vector 1-Page PDF Mode Active", noteLock: "🔒 Pay $1.99 per document or unlock the Unlimited Pro Pass ($9.99/mo)",
+    notePaid: "✅ Access Active: Send your PDF via WhatsApp or save it to your phone", noteLock: "🔒 A single $1.99 payment includes logo download & WhatsApp sharing (or get the Unlimited Pro Pass)",
     pdfViralFooter: "Official Document generated with Mr. Invoice Pro • Create Estimates, Invoices & Contracts at: materialcalcpro.org",
     dateLbl: "Date", accept: "I ACCEPT", decline: "DECLINE", remBal: "REMAINING BALANCE", paidAmt: "AMOUNT PAID / DEPOSIT",
     types: {
@@ -382,9 +382,9 @@ const I18N = {
     attachChk: "Inclure l'image sur la 2e page du PDF", balLbl: "SOLDE TOTAL :", histTitle: "📋 Historique Récent", histClear: "Effacer",
     qty: "Quantité", price: "Prix Unitaire", itemLbl: "Ligne #", descPh: "Description détaillée (ex. Véhicule/VIN, Bien, Services ou Matériaux)...",
     waPaid: "📲 Envoyer le PDF Officiel (1 Page) via WhatsApp", dlPaid: "📥 Télécharger / Enregistrer le PDF",
-    waLock: "🔒 Générer et Envoyer le PDF Officiel (1,99 $)", dlLock: "🔒 Télécharger le PDF Officiel avec Logo (1,99 $)",
+    waLock: "🔒 Débloquer, Télécharger et Envoyer le PDF Officiel (1,99 $)",
     proPassBtn: "🔥 Pass Pro Illimité pour Entrepreneurs (9,99 $/mois)",
-    notePaid: "✅ Mode PDF Vectoriel Direct Actif (1 seule page)", noteLock: "🔒 Payez 1,99 $ par document ou activez le Pass Pro Illimité (9,99 $/mois)",
+    notePaid: "✅ Accès Actif : Envoyez votre PDF via WhatsApp ou enregistrez-le", noteLock: "🔒 Un seul paiement de 1,99 $ inclut le téléchargement avec logo et l'envoi WhatsApp",
     pdfViralFooter: "Document Officiel généré avec Mr. Invoice Pro • Créez vos Devis, Factures et Contrats sur : materialcalcpro.org",
     dateLbl: "Date", accept: "J'ACCEPTE", decline: "JE REFUSE", remBal: "SOLDE RESTANT", paidAmt: "MONTANT PAYÉ / ACOMPTE",
     types: {
@@ -413,9 +413,9 @@ const I18N = {
     attachChk: "Dołącz obraz na 2. stronie PDF", balLbl: "DO ZAPŁATY:", histTitle: "📋 Ostatnia Historia", histClear: "Wyczyść",
     qty: "Ilość", price: "Cena Jednostkowa", itemLbl: "Pozycja #", descPh: "Szczegółowy opis (np. Pojazd/VIN, Nieruchomość, Usługi lub Materiały)...",
     waPaid: "📲 Wyślij Oficjalny Plik PDF (1 Strona) przez WhatsApp", dlPaid: "📥 Pobierz / Zapisz PDF w Telefonie",
-    waLock: "🔒 Wygeneruj i Wyślij Oficjalny PDF ($1.99)", dlLock: "🔒 Pobierz Oficjalny PDF z Moim Logo ($1.99)",
+    waLock: "🔒 Odblokuj, Pobierz i Wyślij Oficjalny PDF ($1.99)",
     proPassBtn: "🔥 Pakiet Pro Bez Limitu dla Firm i Wykonawców ($9.99/mies.)",
-    notePaid: "✅ Tryb Bezpośredniego PDF Wektorowego Aktywny", noteLock: "🔒 Zapłać $1.99 za dokument lub aktywuj Pakiet Pro Bez Limitu ($9.99/mies.)",
+    notePaid: "✅ Dostęp Aktywny: Wyślij PDF przez WhatsApp lub zapisz w telefonie", noteLock: "🔒 Jedna opłata $1.99 obejmuje pobranie z logo oraz wysyłkę przez WhatsApp",
     pdfViralFooter: "Oficjalny Dokument wygenerowany w Mr. Invoice Pro • Twórz Kosztorysy, Faktury i Umowy na: materialcalcpro.org",
     dateLbl: "Data", accept: "AKCEPTUJĘ", decline: "ODRZUCAM", remBal: "POZOSTAŁO DO ZAPŁATY", paidAmt: "WPŁACONO / ZALICZKA",
     types: {
@@ -444,9 +444,9 @@ const I18N = {
     attachChk: "Incluir imagem na 2ª página do PDF", balLbl: "SALDO TOTAL:", histTitle: "📋 Histórico Recente", histClear: "Limpar",
     qty: "Quantidade", price: "Preço Unitário", itemLbl: "Item #", descPh: "Descrição detalhada (ex. Veículo/Chassi, Imóvel, Serviços ou Materiais)...",
     waPaid: "📲 Enviar Arquivo PDF Oficial (1 Página) via WhatsApp", dlPaid: "📥 Baixar / Salvar PDF no Celular",
-    waLock: "🔒 Gerar e Enviar PDF Oficial ($1.99)", dlLock: "🔒 Baixar PDF Oficial com Meu Logo ($1.99)",
+    waLock: "🔒 Desbloquear, Baixar e Enviar PDF Oficial ($1.99)",
     proPassBtn: "🔥 Passe Pro Ilimitado para Profissionais ($9.99/mês)",
-    notePaid: "✅ Modo PDF Vetorial Direto Ativo (1 página)", noteLock: "🔒 Pague $1.99 por documento ou ative o Passe Pro Ilimitado ($9.99/mês)",
+    notePaid: "✅ Acesso Ativo: Envie seu PDF por WhatsApp ou salve no celular", noteLock: "🔒 Um único pagamento de $1.99 inclui download com seu logo e envio por WhatsApp",
     pdfViralFooter: "Documento Oficial gerado com Mr. Invoice Pro • Crie Orçamentos, Faturas e Contratos em: materialcalcpro.org",
     dateLbl: "Data", accept: "ACEITO", decline: "NÃO ACEITO", remBal: "SALDO RESTANTE", paidAmt: "VALOR PAGO / SINAL",
     types: {
@@ -657,7 +657,9 @@ function updatePayButtonState() {
   const btn = document.getElementById('finalActionBtn'), waBtn = document.getElementById('finalWaBtn'), proBtn = document.getElementById('proSubBtn'), note = document.getElementById('finalActionNote');
   if (!btn) return;
   waBtn.innerText = isPaidUser ? L.waPaid : L.waLock;
-  btn.innerText = isPaidUser ? L.dlPaid : L.dlLock;
+  btn.innerText = L.dlPaid;
+  // Solo mostramos el botón secundario de Guardar cuando ya pagó (en modo bloqueado hay un solo botón de $1.99)
+  btn.style.display = isPaidUser ? 'block' : 'none';
   if (proBtn) {
     proBtn.innerText = L.proPassBtn;
     proBtn.style.display = isPaidUser ? 'none' : 'block';
