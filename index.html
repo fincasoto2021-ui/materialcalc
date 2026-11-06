@@ -6,10 +6,10 @@
 <meta name="google-site-verification" content="QK9UkO8Wa6ApdBs0sG4Gk8ojj5vx9duiBlAG9b618-g" />
 <title>Mr. Invoice Pro | Official PDF Suite</title>
 <meta name="description" content="Mr. Invoice Pro: Estimates, Invoices, Bills of Sale, Leases & Legal Contracts in PDF.">
-<link id="manifestLink" rel="manifest" href="/manifest.json?v=200">
+<link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#0f172a">
-<link id="favIcon" rel="icon" type="image/png" href="/icon-192%20(1).png?v=200">
-<link id="appleIcon" rel="apple-touch-icon" href="/icon-512%20(1).png?v=200">
+<link rel="icon" type="image/png" href="/icon-192.png">
+<link rel="apple-touch-icon" href="/icon-512.png">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 if ('serviceWorker' in navigator) {
@@ -315,7 +315,7 @@ const I18N = {
       lease: ["🏠 Contrato de Alquiler / Renta (Lease)", "CONTRATO DE ALQUILER", "LSE #", "ARRENDADOR / PROPIETARIO:", "INQUILINO / ARRENDATARIO:", "MONTO TOTAL / RENTA", "CLÁUSULA DE ARRENDAMIENTO:", "El Arrendatario recibe la propiedad o equipo en buen estado y se compromete al pago puntual de la renta y al cuidado del bien arrendado.", "Firma del Inquilino", "Firma del Propietario", false],
       waiver: ["🛡️ Relevo de Responsabilidad y Entrega", "RELEVO Y ENTREGA FINAL", "WAV #", "EMPRESA / PROFESIONAL:", "CLIENTE / RECEPTOR:", "MONTO LIQUIDADO", "CERTIFICACIÓN DE ENTREGA Y RELEVO:", "El cliente certifica que el trabajo o bien fue entregado a total satisfacción, relevando al emisor de reclamaciones posteriores.", "Firma del Cliente", "Firma del Emisor", false],
       promissory: ["💵 Pagaré / Acuerdo de Plan de Pago", "PAGARÉ OFICIAL DE DEUDA", "PRM #", "ACREEDOR / BENEFICIARIO:", "DEUDOR / OBLIGADO:", "MONTO RECONOCIDO", "COMPROMISO INCONDICIONAL DE PAGO:", "El Deudor reconoce deber y se compromete incondicionalmente a pagar al Acreedor la suma indicada en los plazos acordados.", "Firma del Deudor", "Firma del Acreedor", false],
-      delivery: ["📦 Conduce de Entrega / Recibo Materiales", "CONDUCE DE ENTREGA", "DEL #", "DESPACHADO POR:", "RECIBIDO POR:", "VALOR DE MERCANCÍA", "CONFIRMACIÓN DE RECEPCIÓN CONFORME:", "El receptor confirma haber verificado y recibido en buen estado las cantidades y materiales detallados arriba.", "Recibido Conforme (Firma)", "Entregado Por", false],
+      delivery: ["📦 Conduce de Entrega / Recibo Materiales", "CONDUCE DE ENTREGA", "DEL #", "DESPACHADO POR:", "RECIBIDO POR:", "VALOR DE MERCANCÍA", "CONFIRMACIÓN DE RECECPCIÓN CONFORME:", "El receptor confirma haber verificado y recibido en buen estado las cantidades y materiales detallados arriba.", "Recibido Conforme (Firma)", "Entregado Por", false],
       workorder: ["🔧 Orden de Trabajo / Servicio", "ORDEN DE TRABAJO", "WO #", "EMPRESA / TÉCNICO:", "CLIENTE / UBICACIÓN:", "TOTAL ORDEN DE TRABAJO", "AUTORIZACIÓN Y CIERRE DE ORDEN:", "Autorizo la ejecución de las tareas descritas y certifico su cumplimiento en campo.", "Firma del Cliente", "Firma del Técnico", true],
       po: ["🛒 Orden de Compra (Purchase Order)", "ORDEN DE COMPRA (PO)", "PO #", "COMPRADOR / EMPRESA:", "SUPLIDOR / VENDEDOR:", "TOTAL ORDEN DE COMPRA", "AUTORIZACIÓN DE COMPRA:", "Se autoriza el despacho y facturación de los artículos listados bajo los precios y cantidades especificados.", "Compra Autorizada Por", "Suplidor / Vendedor", false],
       receipt: ["✅ Recibo de Pago / Abono Oficial", "RECIBO OFICIAL DE PAGO", "REC #", "RECIBIDO POR:", "PAGADO POR:", "MONTO DEL CONCEPTO", "CONSTANCIA DE PAGO RECIBIDO:", "Se expide el presente recibo oficial como comprobante de los pagos o abonos detallados.", "Firma del Cliente", "Recibido Por (Firma)", false],
