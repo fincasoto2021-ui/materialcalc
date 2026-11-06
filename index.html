@@ -8,16 +8,16 @@
 <meta name="description" content="Generador profesional de cotizaciones, estimados, facturas y contratos legales en PDF.">
 <meta property="og:title" content="Mr. Invoice Pro | Official PDF Suite">
 <meta property="og:description" content="Generador profesional de cotizaciones, estimados, facturas y contratos legales en PDF.">
-<meta property="og:image" content="https://mrinvoicepro.com/1793842789444.jpg?v=10">
-<meta property="og:image:secure_url" content="https://mrinvoicepro.com/1793842789444.jpg?v=10">
+<meta property="og:image" content="https://mrinvoicepro.com/1793842789444.jpg?v=11">
+<meta property="og:image:secure_url" content="https://mrinvoicepro.com/1793842789444.jpg?v=11">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="512">
 <meta property="og:image:height" content="512">
 <meta property="og:type" content="website">
-<link rel="manifest" href="/manifest.json?v=10">
+<link rel="manifest" href="/manifest.json?v=11">
 <meta name="theme-color" content="#0f172a">
-<link rel="icon" type="image/jpeg" href="/1793842789444.jpg?v=10">
-<link rel="apple-touch-icon" href="/1793842789444.jpg?v=10">
+<link rel="icon" type="image/jpeg" href="/1793842789444.jpg?v=11">
+<link rel="apple-touch-icon" href="/1793842789444.jpg?v=11">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 if ('serviceWorker' in navigator) {
@@ -175,7 +175,7 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
         </div>
         <div>
           <label id="ui-lbl-docnum">Número de Documento (#)</label>
-          <input type="text" id="qb-docnum" value="2026-0101" oninput="recalcMasterTotals()">
+          <input type="text" id="qb-docnum" value="2026-0101" oninput="checkSecretOwnerCode(this.value); recalcMasterTotals()">
         </div>
       </div>
       <div class="price-grid" style="margin-top:0.6rem;">
@@ -288,13 +288,13 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
 
 <footer>
   &copy; 2026 Mr. Invoice Pro | mrinvoicepro.com
-  <span onclick="activateOwnerMode()" style="cursor:pointer;opacity:0.45;margin-left:8px;padding:2px 6px;border:1px solid #475569;border-radius:4px;" id="ownerKeyBtn">🔒 Admin</span>
+  <span onclick="deactivateOwnerMode()" style="display:none;cursor:pointer;color:#10b981;font-weight:800;margin-left:8px;padding:2px 6px;border:1px solid #10b981;border-radius:4px;" id="ownerKeyBtn">🔑 Salir de Modo Dueño</span>
 </footer>
 
 <script>
 const STRIPE_SINGLE_URL = "https://buy.stripe.com/28E8wR0J9cqp8ei17Y7ok00";
 const STRIPE_PRO_PASS_URL = "https://buy.stripe.com/eVq28t77xbml8eidUK7ok01";
-const OWNER_PIN = "712";
+const OWNER_HASH = "e3303706239891678f582909804556280271128426468389226681492574077c";
 
 const CURRENCIES = { USD:{sym:'$',dec:2}, EUR:{sym:'€',dec:2}, PLN:{sym:'zł',dec:2}, BRL:{sym:'R$',dec:2}, DOP:{sym:'RD$',dec:2}, MXN:{sym:'$',dec:2}, COP:{sym:'$',dec:0} };
 
@@ -370,7 +370,8 @@ if (urlParams.get('pro') === 'true') {
   localStorage.setItem('mcp_pro_pass_active', 'true');
 }
 const isProSubscriber = localStorage.getItem('mcp_pro_pass_active') === 'true';
-const isReturningFromStripe = urlParams.get('paid') === 'true' || isProSubscriber;
+const isOwnerDevice = localStorage.getItem('mcp_owner_device_unlocked') === 'true';
+const isReturningFromStripe = urlParams.get('paid') === 'true' || isProSubscriber || isOwnerDevice;
 
 let currentLang = localStorage.getItem('mcp_lang') || 'es';
 if (!I18N[currentLang]) currentLang = 'es';
@@ -398,6 +399,32 @@ function installPWA() {
   } else {
     alert("📲 Para instalar Mr. Invoice Pro en tu teléfono:\n\n1. Toca los 3 puntitos (⋮) en la esquina superior derecha de tu navegador.\n2. Selecciona 'Instalar aplicación' o 'Añadir a pantalla de inicio'.");
   }
+}
+
+async function checkSecretOwnerCode(val) {
+  if (!val || val.length < 6) return;
+  try {
+    const clean = val.trim().toUpperCase();
+    const msgBuffer = new TextEncoder().encode(clean);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+    const hashHex = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+    if (hashHex === OWNER_HASH) {
+      isPaidUser = true;
+      localStorage.setItem('mcp_owner_device_unlocked', 'true');
+      const docInput = document.getElementById('qb-docnum');
+      if (docInput) docInput.value = '2026-0101';
+      syncLockVisualState();
+      updatePayButtonState();
+    }
+  } catch (e) {}
+}
+
+function deactivateOwnerMode() {
+  isPaidUser = false;
+  localStorage.removeItem('mcp_owner_device_unlocked');
+  localStorage.removeItem('mcp_pro_pass_active');
+  syncLockVisualState();
+  updatePayButtonState();
 }
 
 function getCurrObj() { return CURRENCIES[currentCurr] || CURRENCIES.USD; }
@@ -583,22 +610,11 @@ function updatePayButtonState() {
 
 function syncLockVisualState() {
   const keyEl = document.getElementById('ownerKeyBtn');
-  if (keyEl) keyEl.innerText = isPaidUser ? '🔑 Modo Dueño: ON' : '🔒 Admin';
-}
-
-function activateOwnerMode() {
-  if (isPaidUser) {
-    isPaidUser = false;
-    localStorage.removeItem('mcp_pro_pass_active');
-    syncLockVisualState();
-    updatePayButtonState();
-    return;
-  }
-  const pin = prompt("🔑 Ingresa el PIN de Dueño:");
-  if (pin === OWNER_PIN) {
-    isPaidUser = true;
-    syncLockVisualState();
-    updatePayButtonState();
+  if (!keyEl) return;
+  if (localStorage.getItem('mcp_owner_device_unlocked') === 'true') {
+    keyEl.style.display = 'inline-block';
+  } else {
+    keyEl.style.display = 'none';
   }
 }
 
