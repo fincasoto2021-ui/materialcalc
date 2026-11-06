@@ -8,35 +8,51 @@
 <meta name="description" content="Mr. Invoice Pro: Estimates, Invoices, Bills of Sale, Leases & Legal Contracts in PDF.">
 <link id="manifestLink" rel="manifest" href="/manifest.json?v=200">
 <meta name="theme-color" content="#0f172a">
-<link id="favIcon" rel="icon" type="image/png" href="/icon-192%20(1).png?v=200">
-<link id="appleIcon" rel="apple-touch-icon" href="/icon-512%20(1).png?v=200">
+<link id="favIcon" rel="icon" type="image/png" href="/1793842789444.jpg">
+<link id="appleIcon" rel="apple-touch-icon" href="/1793842789444.jpg">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-// Mantiene intacto el manifest.json original de GitHub para que Android siempre deje instalar la App
-(function fixFullBleedAppIcon() {
+// Fórmula exacta que activa el botón amarillo 📲 App usando 1793842789444.jpg
+(function fixSquareHeroIcon() {
   const img = new Image();
   img.crossOrigin = "anonymous";
   img.src = "/1793842789444.jpg";
   img.onload = function() {
     try {
-      const makeFullSquare = (size) => {
+      const makeSquare = (size) => {
         const c = document.createElement('canvas');
         c.width = size; c.height = size;
         const ctx = c.getContext('2d');
         ctx.fillStyle = "#000000";
         ctx.fillRect(0, 0, size, size);
-        const scale = (size * 0.86) / Math.max(img.width, img.height);
+        const scale = (size * 0.88) / Math.max(img.width, img.height);
         const drawW = img.width * scale;
         const drawH = img.height * scale;
         const dx = (size - drawW) / 2;
-        const dy = (size - drawH) / 2 + (size * 0.04);
+        const dy = (size - drawH) / 2 + (size * 0.03);
         ctx.drawImage(img, dx, dy, drawW, drawH);
         return c.toDataURL('image/png');
       };
-      const icon192 = makeFullSquare(192);
-      const icon512 = makeFullSquare(512);
+      const icon192 = makeSquare(192);
+      const icon512 = makeSquare(512);
       document.getElementById('favIcon').href = icon192;
       document.getElementById('appleIcon').href = icon512;
+      const dynManifest = {
+        id: window.location.origin + "/?v=restore999",
+        name: "Mr. Invoice Pro",
+        short_name: "Mr. Invoice Pro",
+        start_url: window.location.origin + "/?v=restore999",
+        scope: window.location.origin + "/",
+        display: "standalone",
+        background_color: "#000000",
+        theme_color: "#0f172a",
+        icons: [
+          { src: icon192, sizes: "192x192", type: "image/png", purpose: "any" },
+          { src: icon512, sizes: "512x512", type: "image/png", purpose: "any" }
+        ]
+      };
+      const blob = new Blob([JSON.stringify(dynManifest)], {type: 'application/json'});
+      document.getElementById('manifestLink').href = URL.createObjectURL(blob);
     } catch(e) {}
   };
 })();
