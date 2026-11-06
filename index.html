@@ -6,13 +6,13 @@
 <meta name="google-site-verification" content="QK9UkO8Wa6ApdBs0sG4Gk8ojj5vx9duiBlAG9b618-g" />
 <title>Mr. Invoice Pro | Official PDF Suite</title>
 <meta name="description" content="Mr. Invoice Pro: Estimates, Invoices, Bills of Sale, Leases & Legal Contracts in PDF.">
-<link id="manifestLink" rel="manifest" href="/manifest.json?v=500">
-<meta name="theme-color" content="#000000">
-<link id="favIcon" rel="icon" type="image/png" href="/icon-192-black.png?v=500">
-<link id="appleIcon" rel="apple-touch-icon" href="/icon-512-black.png?v=500">
+<link id="manifestLink" rel="manifest" href="/manifest.json?v=200">
+<meta name="theme-color" content="#0f172a">
+<link id="favIcon" rel="icon" type="image/png" href="/icon-192%20(1).png?v=200">
+<link id="appleIcon" rel="apple-touch-icon" href="/icon-512%20(1).png?v=200">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-// Genera el ícono negro cuadrado y si entras con ?geticon=true te descarga los 2 PNG listos para GitHub
+// Mantiene intacto el manifest.json original de GitHub para que Android siempre deje instalar la App
 (function fixFullBleedAppIcon() {
   const img = new Image();
   img.crossOrigin = "anonymous";
@@ -33,21 +33,10 @@
         ctx.drawImage(img, dx, dy, drawW, drawH);
         return c.toDataURL('image/png');
       };
-
       const icon192 = makeFullSquare(192);
       const icon512 = makeFullSquare(512);
       document.getElementById('favIcon').href = icon192;
       document.getElementById('appleIcon').href = icon512;
-
-      if (window.location.search.includes('geticon=true')) {
-        const dl = (dataUrl, name) => {
-          const a = document.createElement('a');
-          a.href = dataUrl; a.download = name;
-          document.body.appendChild(a); a.click(); a.remove();
-        };
-        dl(icon192, 'icon-192-black.png');
-        setTimeout(() => dl(icon512, 'icon-512-black.png'), 600);
-      }
     } catch(e) {}
   };
 })();
