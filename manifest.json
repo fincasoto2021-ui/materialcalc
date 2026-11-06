@@ -1,37 +1,25 @@
 {
-  "id": "/?v=500",
+  "id": "/",
   "name": "Mr. Invoice Pro",
   "short_name": "Mr. Invoice Pro",
   "description": "Mr. Invoice Pro: Estimates, Invoices, Bills of Sale, Leases & Legal Contracts in PDF.",
-  "start_url": "/?v=500",
+  "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#000000",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
   "icons": [
     {
-      "src": "/icon-192-black.png",
+      "src": "/icon-192 (1).png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
-      "src": "/icon-192-black.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "/icon-512-black.png",
+      "src": "/icon-512 (1).png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icon-512-black.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
   ]
 }
