@@ -4,20 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="QK9UkO8Wa6ApdBs0sG4Gk8ojj5vx9duiBlAG9b618-g" />
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mr. Invoice Pro">
 <title>Mr. Invoice Pro | Official PDF Suite</title>
 <meta name="description" content="Generador profesional de cotizaciones, estimados, facturas y contratos legales en PDF.">
 <meta property="og:title" content="Mr. Invoice Pro | Official PDF Suite">
 <meta property="og:description" content="Generador profesional de cotizaciones, estimados, facturas y contratos legales en PDF.">
-<meta property="og:image" content="https://mrinvoicepro.com/1793842789444.jpg?v=11">
-<meta property="og:image:secure_url" content="https://mrinvoicepro.com/1793842789444.jpg?v=11">
+<meta property="og:image" content="https://mrinvoicepro.com/1793842789444.jpg?v=12">
+<meta property="og:image:secure_url" content="https://mrinvoicepro.com/1793842789444.jpg?v=12">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="512">
 <meta property="og:image:height" content="512">
 <meta property="og:type" content="website">
-<link rel="manifest" href="/manifest.json?v=11">
+<link rel="manifest" href="/manifest.json?v=12">
 <meta name="theme-color" content="#0f172a">
-<link rel="icon" type="image/jpeg" href="/1793842789444.jpg?v=11">
-<link rel="apple-touch-icon" href="/1793842789444.jpg?v=11">
+<link rel="icon" type="image/jpeg" href="/1793842789444.jpg?v=12">
+<link rel="apple-touch-icon" href="/1793842789444.jpg?v=12">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 if ('serviceWorker' in navigator) {
@@ -43,6 +46,21 @@ header { background:#090d16; color:#fff; padding:1rem; border-bottom:3px solid v
 .lang-select, .curr-select, .install-top-btn { background:#1e293b; color:#fff; border:1px solid var(--accent); padding:0.42rem 0.65rem; border-radius:6px; font-weight:700; font-size:0.78rem; cursor:pointer; width:auto; }
 .curr-select { border-color:#4ade80; color:#bbf7d0; }
 .install-top-btn { background:var(--accent); color:#000; display:inline-flex; align-items:center; gap:0.25rem; font-weight:900; border:2px solid #fff; box-shadow:0 2px 8px rgba(250,204,21,0.4); }
+
+/* Regla automática que esconde el botón cuando la app ya está instalada */
+@media all and (display-mode: standalone), all and (display-mode: fullscreen), all and (display-mode: minimal-ui) {
+  #installPwaBtn { display: none !important; }
+}
+
+.ios-install-sheet { position:fixed; inset:0; background:rgba(9,13,22,0.82); backdrop-filter:blur(4px); display:none; justify-content:center; align-items:flex-end; z-index:10000; padding:1rem; }
+.ios-sheet-card { width:100%; max-width:420px; background:#0f172a; color:#fff; border:2px solid var(--accent); border-radius:18px; padding:1.25rem; box-shadow:0 12px 32px rgba(0,0,0,0.65); margin-bottom:0.5rem; animation:slideUpSheet 0.22s ease-out; }
+@keyframes slideUpSheet { from { transform:translateY(40px); opacity:0; } to { transform:translateY(0); opacity:1; } }
+.ios-sheet-head { display:flex; align-items:center; justify-content:space-between; gap:0.75rem; border-bottom:1px solid #334155; padding-bottom:0.8rem; margin-bottom:0.9rem; }
+.ios-sheet-brand { display:flex; align-items:center; gap:0.7rem; }
+.ios-sheet-brand img { width:48px; height:48px; border-radius:12px; border:2px solid var(--accent); background:#000; object-fit:contain; }
+.ios-step-row { display:flex; align-items:center; gap:0.65rem; background:#1e293b; border:1px solid #334155; padding:0.7rem 0.85rem; border-radius:10px; margin-bottom:0.6rem; font-size:0.84rem; line-height:1.35; }
+.ios-step-num { background:var(--accent); color:#000; font-weight:900; width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:0.78rem; }
+.ios-done-btn { width:100%; background:var(--accent); color:#000; border:none; padding:0.8rem; border-radius:10px; font-weight:900; font-size:0.9rem; cursor:pointer; margin-top:0.35rem; }
 
 .container { max-width:740px; margin:1.1rem auto; padding:0 1rem; }
 .builder-card { background:#0f172a; color:#fff; padding:1.25rem; border-radius:12px; border:2px solid var(--accent); box-shadow:0 6px 18px rgba(0,0,0,0.12); }
@@ -150,6 +168,30 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
     </div>
   </div>
 </header>
+
+<div class="ios-install-sheet" id="iosInstallSheet" onclick="if(event.target===this)closeIosInstallSheet()">
+  <div class="ios-sheet-card">
+    <div class="ios-sheet-head">
+      <div class="ios-sheet-brand">
+        <img src="1793842789444.jpg" alt="Mr. Invoice Pro">
+        <div>
+          <div style="font-weight:900;font-size:1rem;color:#fff;">Instalar Mr. Invoice Pro</div>
+          <div style="font-size:0.74rem;color:#fde047;font-weight:700;">App Oficial para iPhone / iPad</div>
+        </div>
+      </div>
+      <button type="button" class="close-modal-x" onclick="closeIosInstallSheet()">✕</button>
+    </div>
+    <div class="ios-step-row">
+      <div class="ios-step-num">1</div>
+      <div>Toca los <strong>3 puntitos (•••)</strong> o el botón <strong>Compartir (⬆️)</strong> en la barra inferior de tu iPhone.</div>
+    </div>
+    <div class="ios-step-row">
+      <div class="ios-step-num">2</div>
+      <div>Selecciona <strong>"Agregar a inicio"</strong> (Add to Home Screen) y toca <strong>Agregar</strong> arriba a la derecha.</div>
+    </div>
+    <button type="button" class="ios-done-btn" onclick="markAppInstalledAndHide()">✅ Listo, ya la agregué a mi inicio</button>
+  </div>
+</div>
 
 <div class="container">
   <div class="builder-card">
@@ -382,23 +424,78 @@ let uploadedHwQuoteImg = '';
 let customLineItems = [{desc:'', qty:'1', price:''}];
 let deferredPrompt = null;
 
+function isAppAlreadyInstalled() {
+  if (window.matchMedia('(display-mode: standalone)').matches) return true;
+  if (window.matchMedia('(display-mode: fullscreen)').matches) return true;
+  if (window.navigator.standalone === true) return true;
+  if (document.referrer.includes('android-app://')) return true;
+  if (localStorage.getItem('mcp_pwa_installed') === 'true') return true;
+  return false;
+}
+
+function syncInstallButtonVisibility() {
+  const btn = document.getElementById('installPwaBtn');
+  if (!btn) return;
+  if (isAppAlreadyInstalled()) {
+    btn.style.display = 'none';
+  } else {
+    btn.style.display = 'inline-flex';
+  }
+}
+
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
+  syncInstallButtonVisibility();
 });
+
+window.addEventListener('appinstalled', () => {
+  localStorage.setItem('mcp_pwa_installed', 'true');
+  deferredPrompt = null;
+  syncInstallButtonVisibility();
+});
+
+if (navigator.getInstalledRelatedApps) {
+  navigator.getInstalledRelatedApps().then(apps => {
+    if (apps && apps.length > 0) {
+      localStorage.setItem('mcp_pwa_installed', 'true');
+      syncInstallButtonVisibility();
+    }
+  }).catch(() => {});
+}
+
+function closeIosInstallSheet() {
+  const sheet = document.getElementById('iosInstallSheet');
+  if (sheet) sheet.style.display = 'none';
+}
+
+function markAppInstalledAndHide() {
+  localStorage.setItem('mcp_pwa_installed', 'true');
+  closeIosInstallSheet();
+  syncInstallButtonVisibility();
+}
 
 function installPWA() {
   if (deferredPrompt) {
     deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+    deferredPrompt.userChoice.then((choice) => {
+      if (choice.outcome === 'accepted') {
+        localStorage.setItem('mcp_pwa_installed', 'true');
+        syncInstallButtonVisibility();
+      }
+      deferredPrompt = null;
+    });
     return;
   }
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-  if (isIOS) {
-    alert("📲 Para instalar Mr. Invoice Pro en tu iPhone:\n\n1. Toca el botón 'Compartir' (el cuadrito con la flecha hacia arriba ⬆️ abajo en Safari).\n2. Desliza y selecciona 'Agregar a inicio' (Add to Home Screen).");
-  } else {
-    alert("📲 Para instalar Mr. Invoice Pro en tu teléfono:\n\n1. Toca los 3 puntitos (⋮) en la esquina superior derecha de tu navegador.\n2. Selecciona 'Instalar aplicación' o 'Añadir a pantalla de inicio'.");
+  const isAndroid = /Android/i.test(navigator.userAgent);
+  if (isAndroid) {
+    localStorage.setItem('mcp_pwa_installed', 'true');
+    setTimeout(syncInstallButtonVisibility, 1500);
+    window.location.href = '/Mr.%20Invoice%20Pro.apk';
+    return;
   }
+  const sheet = document.getElementById('iosInstallSheet');
+  if (sheet) sheet.style.display = 'flex';
 }
 
 async function checkSecretOwnerCode(val) {
@@ -491,6 +588,7 @@ function applyLanguageUI() {
   renderCustomLines();
   updatePayButtonState();
   syncLockVisualState();
+  syncInstallButtonVisibility();
   recalcMasterTotals();
   renderHistory();
 }
@@ -1179,6 +1277,7 @@ window.addEventListener('DOMContentLoaded', function() {
   restoreIfReturningFromStripe();
   if (uploadedLogoData) showIdentifiedLogoPicture(uploadedLogoData);
   applyLanguageUI();
+  syncInstallButtonVisibility();
 });
 </script>
 </body>
