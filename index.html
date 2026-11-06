@@ -8,16 +8,16 @@
 <meta name="description" content="Generador profesional de cotizaciones, estimados, facturas y contratos legales en PDF.">
 <meta property="og:title" content="Mr. Invoice Pro | Official PDF Suite">
 <meta property="og:description" content="Generador profesional de cotizaciones, estimados, facturas y contratos legales en PDF.">
-<meta property="og:image" content="https://mrinvoicepro.com/1793842789444.jpg?v=9">
-<meta property="og:image:secure_url" content="https://mrinvoicepro.com/1793842789444.jpg?v=9">
+<meta property="og:image" content="https://mrinvoicepro.com/1793842789444.jpg?v=10">
+<meta property="og:image:secure_url" content="https://mrinvoicepro.com/1793842789444.jpg?v=10">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="512">
 <meta property="og:image:height" content="512">
 <meta property="og:type" content="website">
-<link rel="manifest" href="/manifest.json?v=9">
+<link rel="manifest" href="/manifest.json?v=10">
 <meta name="theme-color" content="#0f172a">
-<link rel="icon" type="image/jpeg" href="/1793842789444.jpg?v=9">
-<link rel="apple-touch-icon" href="/1793842789444.jpg?v=9">
+<link rel="icon" type="image/jpeg" href="/1793842789444.jpg?v=10">
+<link rel="apple-touch-icon" href="/1793842789444.jpg?v=10">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 if ('serviceWorker' in navigator) {
@@ -40,9 +40,9 @@ header { background:#090d16; color:#fff; padding:1rem; border-bottom:3px solid v
 .logo-main span { color:var(--accent); }
 .logo-sub { font-size:0.65rem; text-transform:uppercase; letter-spacing:1.1px; color:#cbd5e1; font-weight:700; margin-top:2px; }
 .top-actions { display:flex; gap:0.4rem; align-items:center; flex-wrap:wrap; }
-.lang-select, .curr-select, .install-top-btn { background:#1e293b; color:#fff; border:1px solid var(--accent); padding:0.4rem 0.6rem; border-radius:6px; font-weight:700; font-size:0.78rem; cursor:pointer; width:auto; }
+.lang-select, .curr-select, .install-top-btn { background:#1e293b; color:#fff; border:1px solid var(--accent); padding:0.42rem 0.65rem; border-radius:6px; font-weight:700; font-size:0.78rem; cursor:pointer; width:auto; }
 .curr-select { border-color:#4ade80; color:#bbf7d0; }
-.install-top-btn { background:var(--accent); color:#000; display:none; font-weight:900; }
+.install-top-btn { background:var(--accent); color:#000; display:inline-flex; align-items:center; gap:0.25rem; font-weight:900; border:2px solid #fff; box-shadow:0 2px 8px rgba(250,204,21,0.4); }
 
 .container { max-width:740px; margin:1.1rem auto; padding:0 1rem; }
 .builder-card { background:#0f172a; color:#fff; padding:1.25rem; border-radius:12px; border:2px solid var(--accent); box-shadow:0 6px 18px rgba(0,0,0,0.12); }
@@ -130,7 +130,7 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
       </div>
     </div>
     <div class="top-actions">
-      <button class="install-top-btn" id="installPwaBtn" onclick="installPWA()">📲 App</button>
+      <button type="button" class="install-top-btn" id="installPwaBtn" onclick="installPWA()">📲 Instalar App</button>
       <select class="curr-select" id="currSelect" onchange="changeCurrency(this.value)">
         <option value="USD">💵 USD ($)</option>
         <option value="EUR">🇪🇺 EUR (€)</option>
@@ -288,12 +288,13 @@ footer { text-align:center; font-size:0.8rem; color:#64748b; margin-top:2rem; }
 
 <footer>
   &copy; 2026 Mr. Invoice Pro | mrinvoicepro.com
-  <span onclick="activateOwnerMode()" style="cursor:pointer;opacity:0.65;margin-left:8px;padding:2px 6px;border:1px solid #475569;border-radius:4px;" id="ownerKeyBtn">🔒 Modo Cliente: ON</span>
+  <span onclick="activateOwnerMode()" style="cursor:pointer;opacity:0.45;margin-left:8px;padding:2px 6px;border:1px solid #475569;border-radius:4px;" id="ownerKeyBtn">🔒 Admin</span>
 </footer>
 
 <script>
 const STRIPE_SINGLE_URL = "https://buy.stripe.com/28E8wR0J9cqp8ei17Y7ok00";
 const STRIPE_PRO_PASS_URL = "https://buy.stripe.com/eVq28t77xbml8eidUK7ok01";
+const OWNER_PIN = "712";
 
 const CURRENCIES = { USD:{sym:'$',dec:2}, EUR:{sym:'€',dec:2}, PLN:{sym:'zł',dec:2}, BRL:{sym:'R$',dec:2}, DOP:{sym:'RD$',dec:2}, MXN:{sym:'$',dec:2}, COP:{sym:'$',dec:0} };
 
@@ -383,14 +384,20 @@ let deferredPrompt = null;
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
-  const btn = document.getElementById('installPwaBtn');
-  if (btn) btn.style.display = 'inline-block';
 });
 
 function installPWA() {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
+    return;
+  }
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  if (isIOS) {
+    alert("📲 Para instalar Mr. Invoice Pro en tu iPhone:\n\n1. Toca el botón 'Compartir' (el cuadrito con la flecha hacia arriba ⬆️ abajo en Safari).\n2. Desliza y selecciona 'Agregar a inicio' (Add to Home Screen).");
+  } else {
+    alert("📲 Para instalar Mr. Invoice Pro en tu teléfono:\n\n1. Toca los 3 puntitos (⋮) en la esquina superior derecha de tu navegador.\n2. Selecciona 'Instalar aplicación' o 'Añadir a pantalla de inicio'.");
+  }
 }
 
 function getCurrObj() { return CURRENCIES[currentCurr] || CURRENCIES.USD; }
@@ -576,11 +583,23 @@ function updatePayButtonState() {
 
 function syncLockVisualState() {
   const keyEl = document.getElementById('ownerKeyBtn');
-  if (keyEl) keyEl.innerText = isPaidUser ? '🔑 Modo Dueño: ON' : '🔒 Modo Cliente: ON';
+  if (keyEl) keyEl.innerText = isPaidUser ? '🔑 Modo Dueño: ON' : '🔒 Admin';
 }
 
 function activateOwnerMode() {
-  isPaidUser = !isPaidUser; syncLockVisualState(); updatePayButtonState();
+  if (isPaidUser) {
+    isPaidUser = false;
+    localStorage.removeItem('mcp_pro_pass_active');
+    syncLockVisualState();
+    updatePayButtonState();
+    return;
+  }
+  const pin = prompt("🔑 Ingresa el PIN de Dueño:");
+  if (pin === OWNER_PIN) {
+    isPaidUser = true;
+    syncLockVisualState();
+    updatePayButtonState();
+  }
 }
 
 function openDocPreviewModal() {
