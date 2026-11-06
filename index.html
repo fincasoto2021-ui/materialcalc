@@ -6,12 +6,13 @@
 <meta name="google-site-verification" content="QK9UkO8Wa6ApdBs0sG4Gk8ojj5vx9duiBlAG9b618-g" />
 <title>Mr. Invoice Pro | Official PDF Suite</title>
 <meta name="description" content="Mr. Invoice Pro: Estimates, Invoices, Bills of Sale, Leases & Legal Contracts in PDF.">
+<link id="manifestLink" rel="manifest" href="/manifest.json?v=500">
 <meta name="theme-color" content="#000000">
-<link id="favIcon" rel="icon" type="image/png" href="/1793842789444.jpg">
-<link id="appleIcon" rel="apple-touch-icon" href="/1793842789444.jpg">
+<link id="favIcon" rel="icon" type="image/png" href="/icon-192-black.png?v=500">
+<link id="appleIcon" rel="apple-touch-icon" href="/icon-512-black.png?v=500">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
-// Ajusta 1793842789444.jpg en un cuadrado 100% negro con el personaje completo y centrado
+// Genera el ícono negro cuadrado y si entras con ?geticon=true te descarga los 2 PNG listos para GitHub
 (function fixFullBleedAppIcon() {
   const img = new Image();
   img.crossOrigin = "anonymous";
@@ -22,12 +23,8 @@
         const c = document.createElement('canvas');
         c.width = size; c.height = size;
         const ctx = c.getContext('2d');
-        
-        // 1. Pintamos todo el cuadro 100% negro de esquina a esquina
         ctx.fillStyle = "#000000";
         ctx.fillRect(0, 0, size, size);
-
-        // 2. Ajustamos el personaje para que se vea completo y con aire arriba (sin zoom exagerado)
         const scale = (size * 0.86) / Math.max(img.width, img.height);
         const drawW = img.width * scale;
         const drawH = img.height * scale;
@@ -39,37 +36,18 @@
 
       const icon192 = makeFullSquare(192);
       const icon512 = makeFullSquare(512);
-      window._generatedIcon192 = icon192;
-      window._generatedIcon512 = icon512;
-
       document.getElementById('favIcon').href = icon192;
       document.getElementById('appleIcon').href = icon512;
 
-      const dynManifest = {
-        id: window.location.origin + "/?v=black400",
-        name: "Mr. Invoice Pro",
-        short_name: "Mr. Invoice Pro",
-        start_url: window.location.origin + "/?v=black400",
-        scope: window.location.origin + "/",
-        display: "standalone",
-        background_color: "#000000",
-        theme_color: "#000000",
-        icons: [
-          { src: icon192, sizes: "192x192", type: "image/png", purpose: "any" },
-          { src: icon192, sizes: "192x192", type: "image/png", purpose: "maskable" },
-          { src: icon512, sizes: "512x512", type: "image/png", purpose: "any" },
-          { src: icon512, sizes: "512x512", type: "image/png", purpose: "maskable" }
-        ]
-      };
-      const blob = new Blob([JSON.stringify(dynManifest)], {type: 'application/json'});
-      let link = document.getElementById('manifestLink');
-      if (!link) {
-        link = document.createElement('link');
-        link.id = 'manifestLink';
-        link.rel = 'manifest';
-        document.head.appendChild(link);
+      if (window.location.search.includes('geticon=true')) {
+        const dl = (dataUrl, name) => {
+          const a = document.createElement('a');
+          a.href = dataUrl; a.download = name;
+          document.body.appendChild(a); a.click(); a.remove();
+        };
+        dl(icon192, 'icon-192-black.png');
+        setTimeout(() => dl(icon512, 'icon-512-black.png'), 600);
       }
-      link.href = URL.createObjectURL(blob);
     } catch(e) {}
   };
 })();
