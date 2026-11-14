@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="google-site-verification" content="QK9UkO8Wa6ApdBs0sG4Gk8ojj5vx9duiBlAG9b618-g" />
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -11,16 +11,16 @@
 <meta name="description" content="Generador profesional de cotizaciones, estimados, facturas y contratos legales en PDF.">
 <meta property="og:title" content="Mr. Invoice Pro | Official PDF Suite">
 <meta property="og:description" content="Generador profesional de cotizaciones, estimados, facturas y contratos legales en PDF.">
-<meta property="og:image" content="https://mrinvoicepro.com/1793842789444.jpg?v=12">
-<meta property="og:image:secure_url" content="https://mrinvoicepro.com/1793842789444.jpg?v=12">
+<meta property="og:image" content="https://mrinvoicepro.com/1793842789444.jpg?v=13">
+<meta property="og:image:secure_url" content="https://mrinvoicepro.com/1793842789444.jpg?v=13">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="512">
 <meta property="og:image:height" content="512">
 <meta property="og:type" content="website">
-<link rel="manifest" href="/manifest.json?v=12">
+<link rel="manifest" href="/manifest.json?v=13">
 <meta name="theme-color" content="#ffffff">
-<link rel="icon" type="image/jpeg" href="/1793842789444.jpg?v=12">
-<link rel="apple-touch-icon" href="/1793842789444.jpg?v=12">
+<link rel="icon" type="image/jpeg" href="/1793842789444.jpg?v=13">
+<link rel="apple-touch-icon" href="/1793842789444.jpg?v=13">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 if ('serviceWorker' in navigator) {
@@ -60,7 +60,7 @@ body {
   background-color: var(--bg-white);
   color: var(--text-dark);
   min-height: 100vh;
-  padding-bottom: 2.8rem;
+  padding-bottom: max(2.8rem, env(safe-area-inset-bottom));
 }
 
 /* ICONOS VECTORIALES ESTILO ARGON */
@@ -102,6 +102,8 @@ header {
   -webkit-backdrop-filter: blur(12px);
   color: var(--text-dark);
   padding: 0.75rem 1rem;
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
   border-bottom: 1px solid var(--line-mid);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
@@ -256,7 +258,13 @@ header {
 }
 
 /* CONTENEDOR Y TARJETA PRINCIPAL BLANCA ESTILO ARGON */
-.container { max-width: 740px; margin: 1.2rem auto; padding: 0 1rem; }
+.container {
+  max-width: 740px;
+  margin: 1.2rem auto;
+  padding: 0 1rem;
+  padding-left: max(1rem, env(safe-area-inset-left));
+  padding-right: max(1rem, env(safe-area-inset-right));
+}
 .builder-card {
   background: var(--surface-card);
   color: var(--text-dark);
@@ -708,6 +716,8 @@ textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
   justify-content: center;
   align-items: flex-start;
   padding: 1rem 0.65rem;
+  padding-left: max(0.65rem, env(safe-area-inset-left));
+  padding-right: max(0.65rem, env(safe-area-inset-right));
   z-index: 9999;
   overflow-y: auto;
 }
@@ -787,6 +797,28 @@ textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
 .lux-viral-footer { text-align: center; font-size: 0.7rem; color: #64748b; margin-top: 0.85rem; padding-top: 0.45rem; border-top: 1px dashed #cbd5e1; font-weight: 700; }
 
 footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margin-top: 2rem; letter-spacing: 0.2px; }
+
+/* ADAPTACIÓN AUTOMÁTICA AL VIRAR EL TELÉFONO EN HORIZONTAL (LANDSCAPE) */
+@media screen and (orientation: landscape) and (max-height: 600px) {
+  header { padding-top: 0.42rem; padding-bottom: 0.42rem; }
+  .brand-icon { width: 38px; height: 38px; border-radius: 9px; }
+  .logo-main { font-size: 1.08rem; }
+  .logo-sub { font-size: 0.58rem; }
+  .top-bar, .container { max-width: 980px; }
+  .container { margin: 0.65rem auto; }
+  .builder-card { padding: 0.95rem; }
+  .mb-section { padding: 0.85rem; margin-bottom: 0.75rem; }
+  .price-grid { grid-template-columns: 1fr 1fr; }
+  .line-item-bottom { grid-template-columns: 1fr 1.6fr; }
+  .ios-install-sheet { align-items: center; }
+  .ios-sheet-card { max-height: 88vh; overflow-y: auto; margin-bottom: 0; }
+  .doc-modal-container { max-width: 880px; }
+}
+
+@media screen and (orientation: landscape) and (min-width: 840px) {
+  .top-bar, .container { max-width: 1080px; }
+  .doc-modal-container { max-width: 920px; }
+}
 </style>
 </head>
 <body>
@@ -1238,7 +1270,7 @@ const I18N = {
       waiver: ["Protokół Odbioru i Zwolnienie z Roszczeń", "PROTOKÓŁ ODBIORU KOŃCOWEGO", "ODB #", "WYKONAWCA / FIRMA:", "KLIENT / ODBIORCA:", "ROZLICZONA KWOTA", "POTWIERDZENIE WYKONANIA:", "Klient potwierdza, że prace lub mienie zostały wydane bez zastrzeżeń i zrzeka się dalszych roszczeń z tego tytułu.", "Podpis Klienta", "Podpis Wykonawcy", false],
       promissory: ["Weksel / Ugoda Spłaty Zadłużenia", "UZNANIE DŁUGU / WEKSEL", "WEK #", "WIERZYCIEL:", "DŁUŻNIK:", "KWOTA ZOBOWIĄZANIA", "BEZWARUNKOWE ZOBOWIĄZANIE DO SPŁATY:", "Dłużnik uznaje dług i bezwarunkowo zobowiązuje się zapłacić Wierzycielowi wskazaną kwotę zgodnie z ustalonym harmonogramem.", "Podpis Dłużnika", "Podpis Wierzyciela", false],
       delivery: ["Dokument Wydania Zewnętrznego (WZ)", "DOKUMENT DOSTAWY WZ", "WZ #", "WYDAŁ:", "ODEBRAŁ:", "WARTOŚĆ TOWARU", "POTWIERDZENIE DOSTAWY:", "Odbiorca potwierdza sprawdzenie i odbiór wymienionych powyżej materiałów w dobrym stanie.", "Odebrał (Podpis)", "Dostarczył", false],
-      workorder: ["Zlecenie Serwisowe / Robocze", "ZLECENIE SERWISOWE", "ZL #", "FIRMA / SERWISANT:", "KLIENT / LOKALIZacja:", "SUMA ZLECENIA", "AUTORYZACJA ZLECENIA:", "Upoważniam do wykonania opisanych prac i potwierdzam ich realizację na miejscu.", "Podpis Klienta", "Podpis Technika", true],
+      workorder: ["Zlecenie Serwisowe / Robocze", "ZLECENIE SERWISOWE", "ZL #", "FIRMA / SERWISANT:", "KLIENT / LOKALIZACJA:", "SUMA ZLECENIA", "AUTORYZACJA ZLECENIA:", "Upoważniam do wykonania opisanych prac i potwierdzam ich realizację na miejscu.", "Podpis Klienta", "Podpis Technika", true],
       po: ["Zamówienie Zakupu (PO)", "ZAMÓWIENIE ZAKUPU", "PO #", "ZAMAWIAJĄCY:", "DOSTAWCA:", "WARTOŚĆ ZAMÓWIENIA", "AUTORYZACJA ZAMÓWIENIA:", "Upoważnia się do dostawy i zafakturowania wymienionych pozycji zgodnie z podanymi ilościami i cenami.", "Osoba Zamawiająca", "Przedstawiciel Dostawcy", false],
       receipt: ["Oficjalne Pokwitowanie Wpłaty", "POKWITOWANIE WPŁATY", "POK #", "PRZYJĄŁ WPŁATĘ:", "WPŁACAJĄCY:", "KWOTA OPERACJI", "POTWIERDZENIE OTRZYMANIA WPŁATY:", "Niniejsze oficjalne pokwitowanie stanowi dowód uiszczenia opisanych powyżej wpłat lub zaliczek.", "Podpis Wpłacającego", "Przyjął (Podpis)", false],
       change: ["Zlecenie Zmiany / Prace Dodatkowe", "ZLECENIE ZMIANY (ANEKS)", "ZM #", "WYKONAWCA:", "KLIENT:", "WARTOŚĆ PRAC DODATKOWYCH", "AKCEPTACJA PRAC DODATKOWYCH:", "Klient autoryzuje opisane prace dodatkowe lub zmiany i wyraża zgodę na doliczenie ich kosztu do umowy głównej.", "Podpis Klienta", "Podpis Wykonawcy", true]
@@ -1397,7 +1429,6 @@ const SAMPLES_I18N = {
   }
 };
 
-// Detección limpia de retorno real desde Stripe (sin confundirlo con recargas normales de Dueño o Pro)
 const urlParams = new URLSearchParams(window.location.search);
 const justPaidSingle = urlParams.get('paid') === 'true';
 const justPaidPro = urlParams.get('pro') === 'true';
@@ -1669,7 +1700,6 @@ function renderCustomLines() {
   ).join('');
 }
 
-// Compresión de imágenes mediante Canvas para no romper localStorage (~5MB) y preservar nitidez
 function compressImageFile(file, maxDim, quality, keepTransparency) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -2235,7 +2265,6 @@ async function buildPureVectorPDF() {
     y += 10;
   }
 
-  // Salto de página verificado antes de dibujar el bloque de Notas
   if (notes) {
     doc.setFont('helvetica', 'bolditalic');
     doc.setFontSize(8.5);
@@ -2301,7 +2330,6 @@ async function buildPureVectorPDF() {
 
   drawPdfPageFooter(doc, L.pdfViralFooter);
 
-  // Página 2 de adjunto con proporción exacta (sin estirar fotos horizontales o verticales)
   const attachCheck = document.getElementById('qb-hw-print-attach')?.checked;
   if (attachCheck && uploadedHwQuoteImg) {
     try {
@@ -2401,11 +2429,9 @@ function handleProPassClick() {
 }
 
 function restoreStateOnLoad() {
-  // Mantiene el logo del usuario listo entre sesiones sin pisar formularios nuevos
   uploadedLogoData = localStorage.getItem('mcp_company_logo') || '';
   if (uploadedLogoData) showIdentifiedLogoPicture(uploadedLogoData);
 
-  // Solo restaura todo el borrador y guarda en historial cuando acaba de regresar desde Stripe Checkout
   if (!isReturningFromStripeCheckout) return;
 
   try {
