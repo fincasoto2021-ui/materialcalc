@@ -109,80 +109,73 @@ header {
   padding-right: max(1rem, env(safe-area-inset-right));
 }
 .header-inner { max-width: 760px; margin: 0 auto; }
-.top-bar { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; }
-.brand-logo { display: flex; align-items: center; gap: 0.55rem; min-width: 0; }
-.brand-icon { width: 50px; height: 50px; background: transparent; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.top-bar { display: flex; justify-content: space-between; align-items: center; gap: 0.55rem; }
+.brand-logo { display: flex; align-items: center; gap: 0.5rem; min-width: 0; flex: 1; }
+.brand-icon { width: 46px; height: 46px; background: transparent; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .brand-icon img { width: 100%; height: 100%; object-fit: contain; }
-.logo-main { font-size: 1.22rem; font-weight: 900; letter-spacing: -0.02em; color: var(--text-dark); line-height: 1.1; }
+.logo-main { font-size: 1.18rem; font-weight: 900; letter-spacing: -0.02em; color: var(--text-dark); line-height: 1.1; white-space: nowrap; }
 .logo-main span { color: var(--accent); }
-.logo-sub { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-muted); font-weight: 800; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.logo-sub { font-size: 0.58rem; text-transform: uppercase; letter-spacing: 1.1px; color: var(--text-muted); font-weight: 800; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-/* BOTÓN SUITE EN LA ESQUINA SUPERIOR DERECHA */
-.suite-trigger-btn {
-  background: linear-gradient(145deg, #1e293b 0%, #090d16 100%);
-  color: #ffffff;
-  border: 1px solid rgba(251, 191, 36, 0.45);
-  padding: 0.48rem 0.82rem;
-  border-radius: 12px;
-  font-size: 0.76rem;
-  font-weight: 800;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.42rem;
-  flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(9, 13, 22, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  transition: transform 0.14s ease, box-shadow 0.15s ease;
-}
-.suite-trigger-btn:active { transform: scale(0.96); }
-.suite-count-pill {
-  background: rgba(251, 191, 36, 0.18);
-  color: var(--accent-bright);
-  border: 1px solid rgba(251, 191, 36, 0.35);
-  padding: 1px 6px;
-  border-radius: 999px;
-  font-size: 0.66rem;
-  font-weight: 900;
-  font-variant-numeric: tabular-nums;
-}
-
-/* SUB-BARRA EJECUTIVA SIMÉTRICA */
-.sub-control-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.45rem;
-  margin-top: 0.52rem;
-  padding-top: 0.48rem;
-  border-top: 1px solid var(--line-fine);
-  flex-wrap: wrap;
-}
+/* BOTÓN ÚNICO PÍLDORA CLARA EN LA ESQUINA SUPERIOR DERECHA */
 .active-doc-chip {
-  background: var(--surface-subtle);
+  background: var(--surface-pill);
   border: 1px solid var(--line-mid);
   color: var(--text-dark);
-  padding: 0.34rem 0.68rem;
+  padding: 0.4rem 0.68rem;
   border-radius: 999px;
-  font-size: 0.73rem;
+  font-size: 0.74rem;
   font-weight: 800;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 0.38rem;
-  max-width: 100%;
-  transition: background 0.15s ease;
+  max-width: 48%;
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  transition: background 0.15s ease, transform 0.12s ease;
 }
-.active-doc-chip:hover { background: var(--surface-pill); }
+.active-doc-chip:hover { background: #e2e8f0; }
+.active-doc-chip:active { transform: scale(0.97); }
 .chip-code {
   background: var(--obsidian);
   color: var(--accent-bright);
   font-size: 0.62rem;
   font-weight: 900;
-  padding: 1px 6px;
+  padding: 2px 6px;
   border-radius: 999px;
   letter-spacing: 0.5px;
+  flex-shrink: 0;
 }
-.top-actions { display: flex; gap: 0.38rem; align-items: center; margin-left: auto; }
+.chip-label-top {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* SUB-BARRA CON TEXTO LIMPIO DEL DOCUMENTO ABIERTO */
+.sub-control-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  padding-top: 0.48rem;
+  border-top: 1px solid var(--line-fine);
+  flex-wrap: wrap;
+}
+.open-doc-plain-title {
+  font-size: 0.86rem;
+  font-weight: 800;
+  color: var(--text-dark);
+  letter-spacing: -0.01em;
+  min-width: 0;
+  flex: 1 1 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.top-actions { display: flex; gap: 0.38rem; align-items: center; margin-left: auto; flex-shrink: 0; }
 
 .lang-select, .curr-select, .install-top-btn {
   background: var(--surface-pill);
@@ -631,62 +624,92 @@ textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
 .logo-mini-thumb { width: 40px; height: 40px; object-fit: contain; background: #fff; border-radius: 7px; padding: 2px; border: 1px solid var(--line-mid); }
 .logo-status-msg { font-size: 0.75rem; color: var(--emerald); font-weight: 800; text-align: left; flex: 1; display: flex; align-items: center; gap: 0.35rem; }
 
-/* BÓVEDA DE TITANIO PARA EL BALANCE TOTAL */
+/* BALANCE TOTAL LIMPIO SIN CUADRO NEGRO */
 .contractor-numbers-bar {
-  background:
-    radial-gradient(circle at 14% 18%, rgba(251, 191, 36, 0.12) 0%, transparent 45%),
-    linear-gradient(145deg, #1e293b 0%, #0b0f19 60%, #05070c 100%);
-  border: 1.5px solid rgba(226, 232, 240, 0.25);
-  border-radius: 16px;
-  padding: 1rem 1.15rem;
-  margin: 0.95rem 0;
+  background: transparent;
+  border: none;
+  border-top: 1px solid var(--line-mid);
+  border-bottom: 1px solid var(--line-fine);
+  border-radius: 0;
+  padding: 0.9rem 0.15rem;
+  margin: 0.95rem 0 0.75rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 0.6rem;
-  box-shadow: 0 12px 28px rgba(9, 13, 22, 0.2);
+  box-shadow: none;
 }
 .contractor-numbers-bar strong {
-  font-size: 1.55rem;
+  font-size: 1.6rem;
   font-weight: 900;
-  color: var(--emerald-bright);
+  color: var(--emerald);
   letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
 }
 
-/* BOTONES DE ACCIÓN Y STRIPE */
+/* ENLACES DE ACCIÓN Y STRIPE LIMPIOS SIN BORDES NI CAJAS */
 .wa-master-btn, .email-master-btn, .stripe-pay-btn, .pro-pass-btn {
   width: 100%;
-  padding: 0.94rem 1rem;
-  border-radius: 13px;
-  font-size: 0.88rem;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0.52rem 0.35rem;
+  font-size: 0.92rem;
   font-weight: 800;
-  letter-spacing: 0.15px;
+  letter-spacing: -0.01em;
+  line-height: 1.38;
   cursor: pointer;
-  transition: transform 0.12s ease, box-shadow 0.15s ease;
+  transition: opacity 0.15s ease, transform 0.12s ease;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.42rem;
 }
-.wa-master-btn .ico-stroke, .email-master-btn .ico-stroke, .stripe-pay-btn .ico-stroke, .pro-pass-btn .ico-stroke { margin-right: 0.45rem; vertical-align: -4px; }
+.wa-master-btn .ico-stroke, .email-master-btn .ico-stroke, .stripe-pay-btn .ico-stroke, .pro-pass-btn .ico-stroke { margin-right: 0; flex-shrink: 0; }
+.wa-master-btn:hover, .email-master-btn:hover, .stripe-pay-btn:hover, .pro-pass-btn:hover { opacity: 0.78; }
 .wa-master-btn:active, .email-master-btn:active, .stripe-pay-btn:active, .pro-pass-btn:active { transform: scale(0.985); }
 
 .wa-master-btn {
-  background: linear-gradient(180deg, #10b981 0%, #059669 100%);
-  color: #ffffff;
-  border: 1px solid #047857;
-  margin-top: 0.4rem;
-  box-shadow: 0 6px 18px rgba(5, 150, 105, 0.26);
+  color: var(--emerald);
+  margin-top: 0.25rem;
 }
-.email-master-btn { background: #2563eb; color: #ffffff; border: 1px solid #1d4ed8; margin-top: 0.55rem; display: none; }
-.stripe-pay-btn { background: var(--surface-pill); color: var(--text-dark); border: 1px solid var(--line-mid); margin-top: 0.55rem; display: none; }
+.wa-master-btn span {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+.email-master-btn {
+  color: #2563eb;
+  margin-top: 0.3rem;
+  display: none;
+}
+.email-master-btn span {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.stripe-pay-btn {
+  color: var(--text-dark);
+  margin-top: 0.3rem;
+  display: none;
+}
+.stripe-pay-btn span {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .pro-pass-btn {
-  background: linear-gradient(135deg, #1e293b 0%, #090d16 100%);
-  color: #ffffff;
-  border: 1.5px solid var(--accent-bright);
-  margin-top: 0.6rem;
-  box-shadow: 0 8px 20px rgba(9, 13, 22, 0.16);
+  color: var(--text-dark);
+  margin-top: 0.35rem;
 }
-.stripe-note { text-align: center; font-size: 0.73rem; color: var(--text-muted); margin-top: 0.6rem; line-height: 1.45; display: flex; align-items: center; justify-content: center; gap: 0.35rem; }
+.pro-pass-btn span {
+  text-decoration: underline;
+  text-decoration-color: rgba(217, 119, 6, 0.55);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+}
+.stripe-note { text-align: center; font-size: 0.73rem; color: var(--text-muted); margin-top: 0.55rem; line-height: 1.45; display: flex; align-items: center; justify-content: center; gap: 0.35rem; }
 
 /* HISTORIAL */
 .history-card { background: var(--surface-card); padding: 1.2rem; border-radius: 20px; margin-top: 1.15rem; border: 1px solid var(--line-mid); box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04); }
@@ -804,12 +827,12 @@ textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
 }
 .preview-unlock-bar {
   margin-top: 0.75rem;
-  background: #0b0f19;
-  border: 1px solid rgba(251, 191, 36, 0.45);
+  background: #ffffff;
+  border: 1px solid var(--line-mid);
   border-radius: 14px;
-  padding: 0.75rem;
+  padding: 0.65rem 0.85rem;
   text-align: center;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
 }
 
 .lux-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1.5px solid #0f172a; padding-bottom: 0.8rem; margin-bottom: 0.85rem; gap: 0.8rem; flex-wrap: wrap; }
@@ -895,20 +918,15 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
         </div>
       </div>
 
-      <button type="button" class="suite-trigger-btn" onclick="openSuiteDrawer()">
-        <svg class="ico-stroke-sm ico-gold-bright"><use href="#ico-grid"></use></svg>
-        <span id="ui-suite-btn">Plantillas</span>
-        <span class="suite-count-pill">12</span>
-        <svg class="ico-stroke-sm" style="width:13px;height:13px;opacity:0.8;"><use href="#ico-chev"></use></svg>
+      <button type="button" class="active-doc-chip" onclick="openSuiteDrawer()">
+        <span class="chip-code" id="headerActiveCode">EST</span>
+        <span class="chip-label-top" id="headerActiveDocName">Estimado / Cotización</span>
+        <svg class="ico-stroke-sm" style="width:13px;height:13px;color:#64748b;flex-shrink:0;"><use href="#ico-chev"></use></svg>
       </button>
     </div>
 
     <div class="sub-control-bar">
-      <button type="button" class="active-doc-chip" onclick="openSuiteDrawer()">
-        <span class="chip-code" id="headerActiveCode">EST</span>
-        <span id="headerActiveDocName" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:175px;">Estimado / Cotización</span>
-        <svg class="ico-stroke-sm" style="width:13px;height:13px;color:#64748b;"><use href="#ico-chev"></use></svg>
-      </button>
+      <div class="open-doc-plain-title" id="subBarOpenDocTitle">Estimado / Cotización Oficial</div>
 
       <div class="top-actions">
         <button type="button" class="install-top-btn" id="installPwaBtn" onclick="installPWA()">
@@ -996,7 +1014,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
     <input type="hidden" id="qb-doctype" value="quote">
 
     <div class="mb-header">
-      <h2 id="ui-h2" onclick="openSuiteDrawer()" style="cursor:pointer;">
+      <h2 id="ui-h2">
         <svg class="ico-stroke ico-gold"><use href="#ico-doc"></use></svg>
         <span>Estimado / Cotización Oficial</span>
       </h2>
@@ -1092,13 +1110,13 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
 
       <div class="contractor-numbers-bar">
         <div>
-          <div style="font-size:0.66rem;color:#94a3b8;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;" id="ui-bal-lbl">BALANCE TOTAL:</div>
-          <div id="contractorSummaryLine" style="font-size:0.81rem;color:#e2e8f0;margin-top:3px;font-variant-numeric:tabular-nums;">Total: $0.00</div>
+          <div style="font-size:0.72rem;color:#64748b;font-weight:800;letter-spacing:1px;text-transform:uppercase;" id="ui-bal-lbl">BALANCE TOTAL:</div>
+          <div id="contractorSummaryLine" style="font-size:0.82rem;color:#334155;font-weight:700;margin-top:2px;font-variant-numeric:tabular-nums;">Total: $0.00</div>
         </div>
         <strong id="contractorBigTotal">$0.00</strong>
       </div>
 
-      <button type="button" class="wa-master-btn" id="finalWaBtn" onclick="handleWhatsAppQuoteClick()">Desbloquear, Descargar y Enviar PDF por WhatsApp / Email ($1.99)</button>
+      <button type="button" class="wa-master-btn" id="finalWaBtn" onclick="handleWhatsAppQuoteClick()">Desbloquear PDF Oficial Sin Marca de Agua ($1.99)</button>
       <button type="button" class="email-master-btn" id="finalEmailBtn" onclick="handleEmailQuoteClick()">Enviar Archivo PDF Oficial por Email</button>
       <button type="button" class="stripe-pay-btn" id="finalActionBtn" onclick="handleFinalDownloadClick()">Descargar / Guardar PDF en mi Teléfono</button>
       <button type="button" class="pro-pass-btn" id="proSubBtn" onclick="handleProPassClick()">Pase Pro Ilimitado para Contratistas y Negocios ($9.99/mes)</button>
@@ -1444,7 +1462,7 @@ const I18N = {
       contract: ["Contrato de Prestação de Serviços / Obra", "CONTRATO DE SERVIÇOS", "CNT #", "CONTRATADO / PRESTADOR:", "CLIENTE / CONTRATANTE:", "VALOR TOTAL DO CONTRATO", "ACORDO VINCULATIVO DE SERVIÇOS:", "Ambas as partes concordam em executar os trabalhos ou serviços detalhados sob os valores e condições estipulados neste contrato.", "Assinatura do Contratante", "Assinatura do Contratado", false],
       lease: ["Contrato de Locação / Aluguel", "CONTRATO DE LOCAÇÃO", "LOC #", "LOCADOR / PROPRIETÁRIO:", "LOCATÁRIO / INQUILINO:", "VALOR TOTAL / ALUGUEL", "CLÁUSULA DE LOCAÇÃO:", "O Locatário recebe o imóvel ou equipamento em bom estado e compromete-se ao pagamento pontual do aluguel e zelo pelo bem.", "Assinatura do Locatário", "Assinatura do Locador", false],
       waiver: ["Termo de Quitação e Entrega Final", "TERMO DE ENTREGA E QUITAÇÃO", "QUI #", "EMPRESA / PROFISSIONAL:", "CLIENTE / RECEBEDOR:", "VALOR QUITADO", "CERTIFICAÇÃO DE ENTREGA E QUITAÇÃO:", "O cliente certifica que o serviço ou bem foi entregue com total satisfação, dando plena quitação ao emissor.", "Assinatura do Cliente", "Assinatura do Emissor", false],
-      promissory: ["Nota Promissória / Confissão de Dívida", "CONFISSÃO DE DÍVIDA", "NPR #", "CREDOR:", "DEVEDOR:", "VALOR RECONHECIDO", "COMPROMISSO INCONDICIONAL DE PAGAMENTO:", "O Devedor reconhece a dívida e compromete-se incondicionalmente a pagar ao Credor a quantia indicada nos prazos acordados.", "Assinatura do Devedor", "Assinatura do Credor", false],
+      promissory: ["Nota Promissória / Confissão de Dívida", "CONFISSÃO DE DÍVIDA", "NPR #", "CREDOR:", "DEVEDOR:", "VALOR RECONHECIDO", "COMPROMISSO INCONDICIONAL DE PAGAMENTO:", "O Devedor reconhece a dívida e compromete-se inconditionnellement a pagar ao Credor a quantia indicada nos prazos acordados.", "Assinatura do Devedor", "Assinatura do Credor", false],
       delivery: ["Comprovante de Entrega / Romaneio", "COMPROVANTE DE ENTREGA", "ENT #", "EXPEDIDO POR:", "RECEBIDO POR:", "VALOR DA MERCADORIA", "CONFIRMAÇÃO DE RECEBIMENTO:", "O recebedor confirma ter conferido e recebido em bom estado os itens e quantidades detalhados acima.", "Recebido por (Assinatura)", "Entregue por", false],
       workorder: ["Ordem de Serviço (OS)", "ORDEM DE SERVIÇO", "OS #", "EMPRESA / TÉCNICO:", "CLIENTE / LOCAL:", "TOTAL DA ORDEM DE SERVIÇO", "AUTORIZAÇÃO DE SERVIÇO:", "Autorizo a execução das tarefas descritas e certifico sua conclusão no local.", "Assinatura do Cliente", "Assinatura do Técnico", true],
       po: ["Pedido de Compra (PO)", "PEDIDO DE COMPRA", "PC #", "COMPRADOR / EMPRESA:", "FORNECIMENTO:", "TOTAL DO PEDIDO", "AUTORIZAÇÃO DE COMPRA:", "Autoriza-se o fornecimento e faturamento dos itens listados nas quantidades e preços especificados.", "Comprador Autorizado", "Fornecedor", false],
@@ -1453,7 +1471,6 @@ const I18N = {
     }
   }
 };
-
 const SAMPLES_I18N = {
   es: {
     quote: {
@@ -1947,7 +1964,6 @@ function selectDocTypeFromSuite(docKey) {
 
   if (docKey !== prevKey) {
     docHistoryStack.push(docKey);
-    // Convierte el paso del menú recién cerrado en el paso de la nueva plantilla
     try { window.history.replaceState({ mcpDocStep: docKey }, ''); } catch (e) {}
   } else if (window.history.state && window.history.state.mcpModal) {
     suppressPopHandler = true;
@@ -1986,14 +2002,15 @@ function syncActiveDocTypeUI() {
 
   const codeEl = document.getElementById('headerActiveCode');
   const nameEl = document.getElementById('headerActiveDocName');
+  const plainSubTitle = document.getElementById('subBarOpenDocTitle');
   if (codeEl) codeEl.innerText = codeClean;
   if (nameEl) nameEl.innerText = meta.menuName;
+  if (plainSubTitle) plainSubTitle.innerText = meta.menuName;
 
   const h2El = document.getElementById('ui-h2');
   if (h2El) {
     h2El.innerHTML = svgIco('ico-doc', 'ico-stroke ico-gold') +
-      '<span>' + escapeHtml(meta.menuName) + '</span>' +
-      '<svg class="ico-stroke-sm" style="width:14px;height:14px;color:#94a3b8;"><use href="#ico-chev"></use></svg>';
+      '<span>' + escapeHtml(meta.menuName) + '</span>';
   }
 
   const compLbl = document.getElementById('lbl-comp');
@@ -2118,7 +2135,7 @@ function applyLanguageUI() {
   document.getElementById('currSelect').value = currentCurr;
 
   const mapTxt = {
-    'ui-suite-btn': L.suiteBtn, 'ui-suite-title': L.suiteTitle, 'ui-back-hint': L.backHint,
+    'ui-suite-title': L.suiteTitle, 'ui-back-hint': L.backHint,
     'ui-live-tab': L.liveTab, 'ui-install-btn': L.installBtn, 'ui-ios-sub': L.iosSub,
     'ui-ios-done': L.iosDone, 'ui-att-ok': L.attOk, 'ui-sub': L.sub, 'ui-lbl-docnum': L.docNum,
     'lbl-phone': L.phone, 'ui-lbl-tax': L.tax, 'ui-lbl-dep': L.dep, 'ui-lbl-notes': L.notes,
@@ -2324,13 +2341,13 @@ function updatePayButtonState() {
   waBtn.innerHTML = svgIco(isPaidUser ? 'ico-share' : 'ico-lock', 'ico-stroke') + '<span>' + escapeHtml(isPaidUser ? L.waPaid : L.waLock) + '</span>';
   if (emBtn) {
     emBtn.innerHTML = svgIco('ico-mail', 'ico-stroke') + '<span>' + escapeHtml(L.emailPaid) + '</span>';
-    emBtn.style.display = isPaidUser ? 'block' : 'none';
+    emBtn.style.display = isPaidUser ? 'flex' : 'none';
   }
   btn.innerHTML = svgIco('ico-download', 'ico-stroke') + '<span>' + escapeHtml(L.dlPaid) + '</span>';
-  btn.style.display = isPaidUser ? 'block' : 'none';
+  btn.style.display = isPaidUser ? 'flex' : 'none';
   if (proBtn) {
-    proBtn.innerHTML = svgIco('ico-crown', 'ico-stroke ico-gold-bright') + '<span>' + escapeHtml(L.proPassBtn) + '</span>';
-    proBtn.style.display = isPaidUser ? 'none' : 'block';
+    proBtn.innerHTML = svgIco('ico-crown', 'ico-stroke ico-gold') + '<span>' + escapeHtml(L.proPassBtn) + '</span>';
+    proBtn.style.display = isPaidUser ? 'none' : 'flex';
   }
   note.innerHTML = svgIco(isPaidUser ? 'ico-shield' : 'ico-lock', isPaidUser ? 'ico-stroke-sm ico-emerald' : 'ico-stroke-sm') + '<span>' + escapeHtml(isPaidUser ? L.notePaid : L.noteLock) + '</span>';
 }
