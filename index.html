@@ -11,16 +11,16 @@
 <meta name="description" content="Generador profesional de cotizaciones, estimados, facturas y contratos legales en PDF.">
 <meta property="og:title" content="Mr. Invoice Pro | Official PDF Suite">
 <meta property="og:description" content="Generador profesional de cotizaciones, estimados, facturas y contratos legales en PDF.">
-<meta property="og:image" content="https://mrinvoicepro.com/1793842789444.jpg?v=15">
-<meta property="og:image:secure_url" content="https://mrinvoicepro.com/1793842789444.jpg?v=15">
+<meta property="og:image" content="https://mrinvoicepro.com/1793842789444.jpg?v=16">
+<meta property="og:image:secure_url" content="https://mrinvoicepro.com/1793842789444.jpg?v=16">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="512">
 <meta property="og:image:height" content="512">
 <meta property="og:type" content="website">
-<link rel="manifest" href="/manifest.json?v=15">
+<link rel="manifest" href="/manifest.json?v=16">
 <meta name="theme-color" content="#ffffff">
-<link rel="icon" type="image/jpeg" href="/1793842789444.jpg?v=15">
-<link rel="apple-touch-icon" href="/1793842789444.jpg?v=15">
+<link rel="icon" type="image/jpeg" href="/1793842789444.jpg?v=16">
+<link rel="apple-touch-icon" href="/1793842789444.jpg?v=16">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 if ('serviceWorker' in navigator) {
@@ -84,6 +84,15 @@ body {
 .ico-gold { color: var(--accent); }
 .ico-gold-bright { color: var(--accent-bright); }
 .ico-emerald { color: var(--emerald); }
+
+/* INDICADORES TÁCTILES DE DESLIZAMIENTO (SIN BOTONES X) */
+.sheet-grab-pill {
+  width: 40px;
+  height: 4px;
+  border-radius: 999px;
+  background: #cbd5e1;
+  margin: 0 auto 0.55rem;
+}
 
 /* HEADER EJECUTIVO DE CRISTAL ESMERILADO */
 header {
@@ -194,11 +203,11 @@ header {
   #installPwaBtn { display: none !important; }
 }
 
-/* DRAWER DE LA SUITE DE 12 DOCUMENTOS */
+/* DRAWER DE LA SUITE DE 12 DOCUMENTOS (SIN BOTÓN X) */
 .suite-drawer-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(9, 13, 22, 0.6);
+  background: rgba(9, 13, 22, 0.62);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   display: none;
@@ -206,24 +215,28 @@ header {
   z-index: 9998;
 }
 .suite-drawer-panel {
-  width: 100%;
-  max-width: 430px;
+  width: 90%;
+  max-width: 410px;
   height: 100%;
   background: #ffffff;
   display: flex;
   flex-direction: column;
-  box-shadow: -12px 0 40px rgba(0, 0, 0, 0.25);
+  box-shadow: -12px 0 40px rgba(0, 0, 0, 0.28);
   animation: slideInRight 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 @keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
 .suite-drawer-head {
-  padding: 1rem 1.15rem;
+  padding: 1.05rem 1.15rem 0.95rem;
+  padding-top: max(1.05rem, env(safe-area-inset-top));
   background: var(--obsidian);
   color: #ffffff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   border-bottom: 2px solid var(--accent);
+}
+.suite-back-hint {
+  font-size: 0.68rem;
+  color: #94a3b8;
+  margin-top: 4px;
+  font-weight: 600;
 }
 .suite-drawer-body { padding: 1rem; overflow-y: auto; flex: 1; background: #f8fafc; }
 .suite-cat-label {
@@ -276,7 +289,69 @@ header {
 .suite-item-code { font-size: 0.65rem; font-weight: 900; color: var(--text-muted); background: var(--surface-pill); padding: 2px 7px; border-radius: 6px; flex-shrink: 0; }
 .suite-item-btn.active .suite-item-code { background: var(--emerald); color: #ffffff; }
 
-/* MODAL INSTALACIÓN IOS */
+/* MODAL DE CONFIRMACIÓN SÍ / NO EJECUTIVO */
+.confirm-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(9, 13, 22, 0.66);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 10005;
+  padding: 1.2rem;
+}
+.confirm-modal-card {
+  width: 100%;
+  max-width: 360px;
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid var(--line-mid);
+  padding: 1.35rem 1.25rem 1.2rem;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.32);
+  text-align: center;
+  animation: popInSoft 0.16s ease-out;
+}
+@keyframes popInSoft { from { transform: scale(0.94); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.confirm-icon-ring {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #fef2f2;
+  border: 1px solid #fecdd3;
+  color: #e11d48;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 0.75rem;
+}
+.confirm-title { font-size: 1rem; font-weight: 900; color: var(--text-dark); margin-bottom: 0.4rem; }
+.confirm-msg { font-size: 0.82rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 1.1rem; }
+.confirm-btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+.confirm-btn-no {
+  background: var(--surface-pill);
+  color: var(--text-dark);
+  border: 1px solid var(--line-mid);
+  padding: 0.78rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+.confirm-btn-yes {
+  background: #e11d48;
+  color: #ffffff;
+  border: 1px solid #be123c;
+  padding: 0.78rem;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(225, 29, 72, 0.25);
+}
+
+/* MODAL INSTALACIÓN IOS (SIN BOTÓN X) */
 .ios-install-sheet {
   position: fixed;
   inset: 0;
@@ -295,10 +370,10 @@ header {
   background: #ffffff;
   border: 1px solid var(--line-mid);
   border-radius: 20px;
-  padding: 1.25rem;
+  padding: 0.85rem 1.25rem 1.25rem;
   box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
 }
-.ios-sheet-head { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; border-bottom: 1px solid var(--surface-pill); padding-bottom: 0.85rem; margin-bottom: 0.9rem; }
+.ios-sheet-head { display: flex; align-items: center; gap: 0.75rem; border-bottom: 1px solid var(--surface-pill); padding-bottom: 0.85rem; margin-bottom: 0.9rem; }
 .ios-sheet-brand { display: flex; align-items: center; gap: 0.7rem; }
 .ios-sheet-brand img { width: 48px; height: 48px; object-fit: contain; }
 .ios-step-row { display: flex; align-items: center; gap: 0.7rem; background: var(--surface-subtle); border: 1px solid var(--line-fine); padding: 0.75rem 0.85rem; border-radius: 12px; margin-bottom: 0.6rem; font-size: 0.83rem; line-height: 1.4; color: var(--text-mid); }
@@ -626,7 +701,7 @@ textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
 .hist-open-btn { background: var(--surface-pill); color: var(--text-dark); border: 1px solid var(--line-mid); padding: 0.36rem 0.68rem; border-radius: 8px; font-size: 0.74rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 0.3rem; }
 .hist-pdf-btn { background: #ecfdf5; color: var(--emerald); border: 1px solid #a7f3d0; padding: 0.36rem 0.68rem; border-radius: 8px; font-size: 0.74rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 0.3rem; }
 
-/* MODAL DE VISTA PREVIA CON BLINDAJE ANTI-SCREENSHOT */
+/* MODAL DE VISTA PREVIA CON BLINDAJE ANTI-SCREENSHOT (SIN BOTÓN X) */
 .doc-modal-overlay {
   position: fixed;
   inset: 0;
@@ -636,7 +711,8 @@ textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
   display: none;
   justify-content: center;
   align-items: flex-start;
-  padding: 0.9rem 0.65rem;
+  padding: 0.85rem 0.65rem;
+  padding-top: max(0.85rem, env(safe-area-inset-top));
   padding-left: max(0.65rem, env(safe-area-inset-left));
   padding-right: max(0.65rem, env(safe-area-inset-right));
   z-index: 9999;
@@ -649,33 +725,40 @@ textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
 .doc-modal-topbar {
   background: #ffffff;
   border: 1px solid var(--line-mid);
-  border-radius: 14px;
-  padding: 0.6rem 0.78rem;
+  border-radius: 16px;
+  padding: 0.55rem 0.65rem 0.6rem;
   margin-bottom: 0.75rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.45rem;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
-.sample-switch-group { display: flex; gap: 0.35rem; flex-wrap: wrap; align-items: center; }
+.sample-switch-group {
+  display: grid;
+  grid-template-columns: 1fr 1.25fr;
+  gap: 0.4rem;
+  align-items: center;
+}
 .sample-type-btn {
   background: var(--surface-pill);
   color: var(--text-mid);
   border: 1px solid var(--line-mid);
-  padding: 0.36rem 0.65rem;
-  border-radius: 999px;
-  font-size: 0.72rem;
+  padding: 0.48rem 0.7rem;
+  border-radius: 11px;
+  font-size: 0.75rem;
   font-weight: 800;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
+  justify-content: center;
+  gap: 0.35rem;
+  min-width: 0;
+  transition: all 0.15s ease;
+}
+.sample-type-btn span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .sample-type-btn.live-tab { border-color: #a7f3d0; background: #ecfdf5; color: #065f46; }
 .sample-type-btn.active { background: var(--obsidian); color: #ffffff; border-color: var(--obsidian); }
-.close-modal-x { background: #e2e8f0; color: var(--text-dark); border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
 /* HOJA DE PAPEL EJECUTIVA + CAPAS DE MARCA DE AGUA */
 .luxury-paper-sheet {
@@ -853,25 +936,37 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
   </div>
 </header>
 
-<!-- PANEL EJECUTIVO DE LA SUITE DE 12 DOCUMENTOS -->
-<div class="suite-drawer-overlay" id="suiteDrawerOverlay" onclick="if(event.target===this)closeSuiteDrawer()">
-  <div class="suite-drawer-panel">
+<!-- PANEL EJECUTIVO DE LA SUITE DE 12 DOCUMENTOS (SIN BOTÓN X - CIERRA CON ATRÁS O DESLIZAR) -->
+<div class="suite-drawer-overlay" id="suiteDrawerOverlay" onclick="if(event.target===this)dismissModalCleanly()">
+  <div class="suite-drawer-panel" id="suiteDrawerPanel">
     <div class="suite-drawer-head">
-      <div>
-        <div style="font-size:0.65rem;color:#fbbf24;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;">MR. INVOICE PRO</div>
-        <div style="font-size:1rem;font-weight:900;margin-top:2px;" id="ui-suite-title">Suite Oficial de Documentos</div>
-      </div>
-      <button type="button" class="close-modal-x" onclick="closeSuiteDrawer()">
-        <svg class="ico-stroke-sm"><use href="#ico-x"></use></svg>
-      </button>
+      <div style="font-size:0.65rem;color:#fbbf24;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;">MR. INVOICE PRO</div>
+      <div style="font-size:1.02rem;font-weight:900;margin-top:2px;" id="ui-suite-title">Suite Oficial de Documentos</div>
+      <div class="suite-back-hint" id="ui-back-hint">Toca una plantilla o usa el botón Atrás para volver</div>
     </div>
     <div class="suite-drawer-body" id="suiteDrawerBody"></div>
   </div>
 </div>
 
-<!-- MODAL INSTALACIÓN IOS -->
-<div class="ios-install-sheet" id="iosInstallSheet" onclick="if(event.target===this)closeIosInstallSheet()">
-  <div class="ios-sheet-card">
+<!-- MODAL EJECUTIVO DE CONFIRMACIÓN SÍ / NO -->
+<div class="confirm-modal-overlay" id="confirmModalOverlay" onclick="if(event.target===this)dismissModalCleanly()">
+  <div class="confirm-modal-card">
+    <div class="confirm-icon-ring">
+      <svg class="ico-stroke"><use href="#ico-trash"></use></svg>
+    </div>
+    <div class="confirm-title" id="cfmTitle">¿Limpiar todo a $0.00?</div>
+    <div class="confirm-msg" id="cfmMsg">Se borrarán los textos, montos y el logo actual de este borrador.</div>
+    <div class="confirm-btn-row">
+      <button type="button" class="confirm-btn-no" id="cfmBtnNo" onclick="dismissModalCleanly()">No</button>
+      <button type="button" class="confirm-btn-yes" id="cfmBtnYes" onclick="executePendingConfirmAction()">Sí, borrar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL INSTALACIÓN IOS (SIN BOTÓN X) -->
+<div class="ios-install-sheet" id="iosInstallSheet" onclick="if(event.target===this)dismissModalCleanly()">
+  <div class="ios-sheet-card" id="iosSheetCard">
+    <div class="sheet-grab-pill"></div>
     <div class="ios-sheet-head">
       <div class="ios-sheet-brand">
         <img src="1793842789444.jpg" alt="Mr. Invoice Pro" class="brand-mascot-img">
@@ -880,9 +975,6 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
           <div style="font-size:0.74rem;color:#d97706;font-weight:800;" id="ui-ios-sub">App Oficial para iPhone / iPad</div>
         </div>
       </div>
-      <button type="button" class="close-modal-x" onclick="closeIosInstallSheet()">
-        <svg class="ico-stroke-sm"><use href="#ico-x"></use></svg>
-      </button>
     </div>
     <div class="ios-step-row">
       <div class="ios-step-num">1</div>
@@ -908,7 +1000,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
         <svg class="ico-stroke ico-gold"><use href="#ico-doc"></use></svg>
         <span>Estimado / Cotización Oficial</span>
       </h2>
-      <button type="button" class="reset-zero-btn" id="ui-reset" onclick="resetBuilderToZero()">
+      <button type="button" class="reset-zero-btn" id="ui-reset" onclick="askResetBuilderToZero()">
         <svg class="ico-stroke-sm"><use href="#ico-sync"></use></svg><span>Limpiar ($0.00)</span>
       </button>
     </div>
@@ -916,7 +1008,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
     <button type="button" class="open-sample-btn" id="ui-sample-btn" onclick="openDocPreviewModal()">
       <span class="live-pulse-dot"></span>
       <svg class="ico-stroke ico-gold"><use href="#ico-eye"></use></svg>
-      <span>Vista Previa en Vivo y Ejemplos PDF</span>
+      <span>Vista Previa en Vivo y Ejemplo Oficial</span>
     </button>
 
     <div class="mb-section">
@@ -1017,7 +1109,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
   <div class="history-card">
     <div class="history-header">
       <h3 id="ui-hist-title"><svg class="ico-stroke ico-gold"><use href="#ico-doc"></use></svg><span>Récord de Documentos Pagados</span></h3>
-      <button type="button" class="clear-btn" id="ui-hist-clear" onclick="clearCalcHistory()">
+      <button type="button" class="clear-btn" id="ui-hist-clear" onclick="askClearCalcHistory()">
         <svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-trash"></use></svg><span>Borrar</span>
       </button>
     </div>
@@ -1028,31 +1120,21 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
   </div>
 </div>
 
-<!-- VISTA PREVIA EN VIVO + EJEMPLOS CON BLINDAJE -->
-<div class="doc-modal-overlay" id="docPreviewModal" oncontextmenu="return false;" onclick="if(event.target===this)closeDocPreviewModal()">
-  <div class="doc-modal-container">
-    <div class="doc-modal-topbar">
+<!-- VISTA PREVIA EN VIVO + EJEMPLO EXACTO DE LA PLANTILLA ACTIVA (SIN BOTÓN X) -->
+<div class="doc-modal-overlay" id="docPreviewModal" oncontextmenu="return false;" onclick="if(event.target===this)dismissModalCleanly()">
+  <div class="doc-modal-container" onclick="if(event.target===this)dismissModalCleanly()">
+    <div class="doc-modal-topbar" id="docModalTopbar">
+      <div class="sheet-grab-pill"></div>
       <div class="sample-switch-group">
-        <button type="button" class="sample-type-btn live-tab active" onclick="renderModalSheet('live')">
+        <button type="button" class="sample-type-btn live-tab active" id="previewTabLiveBtn" onclick="renderModalSheet('live')">
           <span class="live-pulse-dot" style="width:6px;height:6px;"></span>
           <span id="ui-live-tab">Mi Documento</span>
         </button>
-        <button type="button" class="sample-type-btn" onclick="renderModalSheet('quote')">
-          <svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-doc"></use></svg><span>Quote</span>
-        </button>
-        <button type="button" class="sample-type-btn" onclick="renderModalSheet('invoice')">
-          <svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-vault"></use></svg><span>Invoice</span>
-        </button>
-        <button type="button" class="sample-type-btn" onclick="renderModalSheet('billsale')">
-          <svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-shield"></use></svg><span>Bill of Sale</span>
-        </button>
-        <button type="button" class="sample-type-btn" onclick="renderModalSheet('lease')">
-          <svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-home"></use></svg><span>Lease</span>
+        <button type="button" class="sample-type-btn" id="previewTabSampleBtn" onclick="renderModalSheet('sample')">
+          <svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-eye"></use></svg>
+          <span id="ui-sample-tab">Ejemplo Oficial</span>
         </button>
       </div>
-      <button type="button" class="close-modal-x" onclick="closeDocPreviewModal()">
-        <svg class="ico-stroke-sm"><use href="#ico-x"></use></svg>
-      </button>
     </div>
     <div class="luxury-paper-sheet" id="modalPaperContent"></div>
     <div class="preview-unlock-bar" id="modalBottomCta"></div>
@@ -1127,8 +1209,14 @@ function svgIco(id, extraCls) {
 const I18N = {
   es: {
     suiteBtn: "Plantillas", suiteTitle: "Suite Oficial de Documentos",
+    backHint: "Toca una plantilla o usa el botón Atrás para volver",
     cat1: "Facturación y Cobros", cat2: "Contratos Legales", cat3: "Operaciones y Campo",
-    liveTab: "Mi Documento",
+    liveTab: "Mi Documento", sampleTabPrefix: "Ejemplo: ",
+    cfmResetTitle: "¿Limpiar todo a $0.00?",
+    cfmResetMsg: "Se borrarán los textos, montos y el logo actual de este borrador.",
+    cfmHistTitle: "¿Borrar el récord guardado?",
+    cfmHistMsg: "Esta acción eliminará la lista de documentos guardados en este teléfono.",
+    btnNo: "No", btnYes: "Sí, borrar",
     wmTile: "BORRADOR • SIN VALIDEZ • MRINVOICEPRO.COM",
     wmStamp: "VISTA PREVIA PROTEGIDA — DESBLOQUEA EL PDF OFICIAL",
     installBtn: "App", iosSub: "App Oficial para iPhone / iPad",
@@ -1136,7 +1224,7 @@ const I18N = {
     iosS2: 'Selecciona <strong>"Agregar a inicio"</strong> (Add to Home Screen) y toca <strong>Agregar</strong> arriba a la derecha.',
     iosDone: "Listo, ya la agregué a mi inicio", attOk: "Imagen 2da Pág. Lista",
     sub: "Estimados, Facturas y Contratos PDF", reset: "Limpiar ($0.00)",
-    sampleBtn: "Vista Previa en Vivo y Ejemplos PDF", sec1: "Datos de las Partes y Numeración",
+    sampleBtn: "Vista Previa en Vivo y Ejemplo Oficial", sec1: "Datos de las Partes y Numeración",
     docNum: "Número de Documento (#)", phone: "Teléfono / Licencia / ID",
     clientPh: "Nombre - Dirección - Teléfono", logo: "Sube aquí el Logo de tu Negocio (Opcional)",
     sec2: "Descripción, Bienes, Medidas o Servicios", addLine: "Añadir Otra Línea / Concepto",
@@ -1170,8 +1258,14 @@ const I18N = {
   },
   en: {
     suiteBtn: "Templates", suiteTitle: "Official Document Suite",
+    backHint: "Tap a template or press Back on your phone to return",
     cat1: "Billing & Collections", cat2: "Legal Contracts", cat3: "Field & Operations",
-    liveTab: "My Live Doc",
+    liveTab: "My Live Doc", sampleTabPrefix: "Sample: ",
+    cfmResetTitle: "Clear everything to $0.00?",
+    cfmResetMsg: "All current text, amounts, and uploaded logo in this draft will be cleared.",
+    cfmHistTitle: "Clear saved document record?",
+    cfmHistMsg: "This will remove the saved documents list from this device.",
+    btnNo: "No", btnYes: "Yes, clear",
     wmTile: "DRAFT PREVIEW • NOT VALID • MRINVOICEPRO.COM",
     wmStamp: "PROTECTED PREVIEW — UNLOCK OFFICIAL PDF",
     installBtn: "App", iosSub: "Official App for iPhone / iPad",
@@ -1179,7 +1273,7 @@ const I18N = {
     iosS2: 'Select <strong>"Add to Home Screen"</strong> and tap <strong>Add</strong> at the top right.',
     iosDone: "Done, added to Home Screen", attOk: "Page 2 Image Ready",
     sub: "Official PDF Estimates, Invoices & Contracts", reset: "Clear ($0.00)",
-    sampleBtn: "Live Preview & Sample PDFs", sec1: "Party Details & Numbering",
+    sampleBtn: "Live Preview & Official Sample", sec1: "Party Details & Numbering",
     docNum: "Document Number (#)", phone: "Phone / License / ID",
     clientPh: "Name - Address - Phone", logo: "Upload Business Logo (Optional)",
     sec2: "Description, Goods, Measurements or Services", addLine: "Add Another Line Item",
@@ -1213,8 +1307,14 @@ const I18N = {
   },
   fr: {
     suiteBtn: "Modèles", suiteTitle: "Suite Officielle de Documents",
+    backHint: "Touchez un modèle ou utilisez Retour pour revenir",
     cat1: "Facturation & Paiements", cat2: "Contrats Juridiques", cat3: "Opérations & Terrain",
-    liveTab: "Mon Document",
+    liveTab: "Mon Document", sampleTabPrefix: "Exemple : ",
+    cfmResetTitle: "Tout effacer à 0.00 ?",
+    cfmResetMsg: "Tous les textes, montants et le logo actuel de ce brouillon seront effacés.",
+    cfmHistTitle: "Effacer l'historique enregistré ?",
+    cfmHistMsg: "Cette action supprimera la liste des documents enregistrés sur cet appareil.",
+    btnNo: "Non", btnYes: "Oui, effacer",
     wmTile: "APERÇU • SANS VALEUR • MRINVOICEPRO.COM",
     wmStamp: "APERÇU PROTÉGÉ — DÉBLOQUER LE PDF OFFICIEL",
     installBtn: "App", iosSub: "App Officielle pour iPhone / iPad",
@@ -1222,7 +1322,7 @@ const I18N = {
     iosS2: 'Sélectionnez <strong>"Sur l\'écran d\'accueil"</strong> puis appuyez sur <strong>Ajouter</strong>.',
     iosDone: "C'est fait, ajoutée à l'accueil", attOk: "Image 2e Page Prête",
     sub: "Devis, Factures et Contrats PDF Officiels", reset: "Effacer (0.00)",
-    sampleBtn: "Aperçu en Direct & Exemples PDF", sec1: "Coordonnées des Parties et Numéro",
+    sampleBtn: "Aperçu en Direct & Exemple Officiel", sec1: "Coordonnées des Parties et Numéro",
     docNum: "Numéro du Document (#)", phone: "Téléphone / Licence / SIRET",
     clientPh: "Nom - Adresse - Téléphone", logo: "Télécharger le Logo de l'Entreprise (Optionnel)",
     sec2: "Description, Biens, Mesures ou Services", addLine: "Ajouter une Autre Ligne",
@@ -1256,8 +1356,14 @@ const I18N = {
   },
   pl: {
     suiteBtn: "Szablony", suiteTitle: "Oficjalny Pakiet Dokumentów",
+    backHint: "Wybierz szablon lub użyj przycisku Wstecz w telefonie",
     cat1: "Faktury i Płatności", cat2: "Umowy Prawne", cat3: "Prace i Teren",
-    liveTab: "Mój Dokument",
+    liveTab: "Mój Dokument", sampleTabPrefix: "Wzór: ",
+    cfmResetTitle: "Wyczyścić wszystko do 0.00?",
+    cfmResetMsg: "Wszystkie wpisane dane, kwoty oraz wgrane logo zostaną usunięte.",
+    cfmHistTitle: "Usunąć zapisaną historię?",
+    cfmHistMsg: "Ta operacja usunie listę zapisanych dokumentów z tego telefonu.",
+    btnNo: "Nie", btnYes: "Tak, usuń",
     wmTile: "PODGLĄD • NIEWAŻNY • MRINVOICEPRO.COM",
     wmStamp: "CHRONIONY PODGLĄD — ODBLOKUJ OFICJALNY PDF",
     installBtn: "App", iosSub: "Oficjalna Aplikacja na iPhone / iPad",
@@ -1265,7 +1371,7 @@ const I18N = {
     iosS2: 'Wybierz <strong>"Dodaj do ekranu początkowego"</strong> i kliknij <strong>Dodaj</strong>.',
     iosDone: "Gotowe, dodano do ekranu", attOk: "Obraz 2. Strony Gotowy",
     sub: "Kosztorysy, Faktury i Umowy PDF", reset: "Wyczyść (0.00)",
-    sampleBtn: "Podgląd na Żywo i Wzory PDF", sec1: "Dane Stron i Numeracja",
+    sampleBtn: "Podgląd na Żywo i Wzór PDF", sec1: "Dane Stron i Numeracja",
     docNum: "Numer Dokumentu (#)", phone: "Telefon / NIP / Licencja",
     clientPh: "Nazwa - Adres - Telefon", logo: "Wgraj Logo Swojej Firmy (Opcjonalnie)",
     sec2: "Opis, Towary, Wymiary lub Usługi", addLine: "Dodaj Kolejną Pozycję",
@@ -1299,8 +1405,14 @@ const I18N = {
   },
   pt: {
     suiteBtn: "Modelos", suiteTitle: "Suíte Oficial de Documentos",
+    backHint: "Toque em um modelo ou use Voltar no celular",
     cat1: "Faturamento e Cobrança", cat2: "Contratos Legais", cat3: "Operações e Campo",
-    liveTab: "Meu Documento",
+    liveTab: "Meu Documento", sampleTabPrefix: "Exemplo: ",
+    cfmResetTitle: "Limpar tudo para 0.00?",
+    cfmResetMsg: "Todos os textos, valores e o logotipo atual deste rascunho serão apagados.",
+    cfmHistTitle: "Apagar o histórico salvo?",
+    cfmHistMsg: "Esta ação removerá a lista de documentos salvos neste aparelho.",
+    btnNo: "Não", btnYes: "Sim, apagar",
     wmTile: "RASCUNHO • SEM VALIDADE • MRINVOICEPRO.COM",
     wmStamp: "PRÉVIA PROTEGIDA — DESBLOQUEIE O PDF OFICIAL",
     installBtn: "App", iosSub: "App Oficial para iPhone / iPad",
@@ -1308,7 +1420,7 @@ const I18N = {
     iosS2: 'Selecione <strong>"Adicionar à Tela de Início"</strong> e toque em <strong>Adicionar</strong>.',
     iosDone: "Pronto, já adicionei ao início", attOk: "Imagem da 2ª Pág. Pronta",
     sub: "Orçamentos, Faturas e Contratos em PDF", reset: "Limpar (0.00)",
-    sampleBtn: "Prévia ao Vivo e Exemplos em PDF", sec1: "Dados das Partes e Numeração",
+    sampleBtn: "Prévia ao Vivo e Exemplo Oficial", sec1: "Dados das Partes e Numeração",
     docNum: "Número do Documento (#)", phone: "Telefone / CNPJ / CPF / ID",
     clientPh: "Nome - Endereço - Telefone", logo: "Envie o Logotipo da sua Empresa (Opcional)",
     sec2: "Descrição, Bens, Medidas ou Serviços", addLine: "Adicionar Outra Linha / Item",
@@ -1335,13 +1447,14 @@ const I18N = {
       promissory: ["Nota Promissória / Confissão de Dívida", "CONFISSÃO DE DÍVIDA", "NPR #", "CREDOR:", "DEVEDOR:", "VALOR RECONHECIDO", "COMPROMISSO INCONDICIONAL DE PAGAMENTO:", "O Devedor reconhece a dívida e compromete-se incondicionalmente a pagar ao Credor a quantia indicada nos prazos acordados.", "Assinatura do Devedor", "Assinatura do Credor", false],
       delivery: ["Comprovante de Entrega / Romaneio", "COMPROVANTE DE ENTREGA", "ENT #", "EXPEDIDO POR:", "RECEBIDO POR:", "VALOR DA MERCADORIA", "CONFIRMAÇÃO DE RECEBIMENTO:", "O recebedor confirma ter conferido e recebido em bom estado os itens e quantidades detalhados acima.", "Recebido por (Assinatura)", "Entregue por", false],
       workorder: ["Ordem de Serviço (OS)", "ORDEM DE SERVIÇO", "OS #", "EMPRESA / TÉCNICO:", "CLIENTE / LOCAL:", "TOTAL DA ORDEM DE SERVIÇO", "AUTORIZAÇÃO DE SERVIÇO:", "Autorizo a execução das tarefas descritas e certifico sua conclusão no local.", "Assinatura do Cliente", "Assinatura do Técnico", true],
-      po: ["Pedido de Compra (PO)", "PEDIDO DE COMPRA", "PC #", "COMPRADOR / EMPRESA:", "FORNECEDOR:", "TOTAL DO PEDIDO", "AUTORIZAÇÃO DE COMPRA:", "Autoriza-se o fornecimento e faturamento dos itens listados nas quantidades e preços especificados.", "Comprador Autorizado", "Fornecedor", false],
+      po: ["Pedido de Compra (PO)", "PEDIDO DE COMPRA", "PC #", "COMPRADOR / EMPRESA:", "FORNECIMENTO:", "TOTAL DO PEDIDO", "AUTORIZAÇÃO DE COMPRA:", "Autoriza-se o fornecimento e faturamento dos itens listados nas quantidades e preços especificados.", "Comprador Autorizado", "Fornecedor", false],
       receipt: ["Recibo Oficial de Pagamento", "RECIBO DE PAGAMENTO", "REC #", "RECEBIDO POR:", "PAGO POR:", "VALOR TOTAL", "COMPROVANTE OFICIAL DE PAGAMENTO:", "Este recibo oficial é emitido como comprovante dos pagamentos ou sinais detalhados acima.", "Assinatura do Cliente", "Recebido por", false],
       change: ["Aditivo de Contrato / Serviços Extras", "ADITIVO DE ALTERAÇÃO", "ADT #", "EMPREITEIRO / CONTRATADO:", "CLIENTE:", "TOTAL DO ADITIVO", "APROVAÇÃO DE SERVIÇOS EXTRAS:", "O cliente autoriza as alterações ou trabalhos extras descritos e concorda em somar seu custo ao contrato principal.", "Assinatura do Cliente", "Assinatura do Contratado", true]
     }
   }
 };
 
+// 12 EJEMPLOS REALES HECHOS A LA MEDIDA PARA CADA TIPO DE DOCUMENTO
 const SAMPLES_I18N = {
   es: {
     quote: {
@@ -1351,7 +1464,7 @@ const SAMPLES_I18N = {
         ["1. Demolición y Preparación de Superficie (850 sq.ft.)", "Remoción de losas existentes, nivelación con mortero autonivelante y disposición final de escombros.", 1850],
         ["2. Suministro e Instalación de Porcelanato Rectificado 24\"x48\"", "Instalación con pega modificada con polímeros, niveladores de precisión y lechada epóxica antimanchas.", 4200],
         ["3. Remodelación de Baño Master (Plomería y Enchape Completo)", "Reemplazo de válvula en bronce, impermeabilización líquida, nicho empotrado y cristal templado 3/8\".", 2950],
-        ["4. Iluminación LED Empotrada y Acabados de Pintura", "Instalación de 12 focos LED 4\" (3000K), aplicación de sellador y 2 manos de pintura acrílica lavable.", 1450]
+        ["4. Iluminación LED Empotrada y Acabados de Pintura", "Instalación de 12 focos LED 4\" (3000K), sellador acrílico y 2 manos de pintura lavable.", 1450]
       ],
       tax: 731.50, dep: 5000.00, notes: "GARANTÍA Y CONDICIONES: Incluye 3 años de garantía escrita en mano de obra. Tiempo estimado: 10 a 12 días laborables. Cotización válida por 30 días."
     },
@@ -1363,27 +1476,102 @@ const SAMPLES_I18N = {
         ["2. Tubería de Cobre Refrigerante, Aislamiento UV y Drenaje", "35 pies lineales de tubería 3/8\" y 3/4\" aislada, presurización con nitrógeno y vacío a 350 micrones.", 680],
         ["3. Línea Eléctrica Dedicada 220V y Protector Comercial", "Breaker doble 30A, cablería THHN #10 en tubería EMT, desconectivo NEMA 3R y supresor de voltaje.", 540]
       ],
-      tax: 284.90, dep: 3000.00, notes: "CERTIFICACIÓN DE ENTREGA: Equipos operando al 100% con parámetros verificados. Garantía de 5 años en compresor y 1 año en mano de obra."
+      tax: 284.90, dep: 3000.00, notes: "CERTIFICACIÓN DE ENTREGA: Equipos operando al 100% con parámetros verificados. Balance pagadero contra entrega de factura."
+    },
+    receipt: {
+      comp: "SOLUCIONES SOLARES & ENERGÍA DEL CARIBE LLC", phone: "RUT / EIN: 66-0847120 • Tel: (787) 555-0311",
+      docNum: "2026-0419", date: "14/11/2026", client: "María E. Pérez Rosado — Carr. 135 Km 12.4, Adjuntas, PR • Tel: (787) 555-8210",
+      rows: [
+        ["1. Pago Inicial / Depósito de Separación — Sistema Solar 10kW + Batería", "Abono oficial del 50% para orden de paneles monocristalinos e inversor híbrido.", 6500],
+        ["2. Método de Pago Verificado", "Transferencia Bancaria / Cheque Oficial #004812 acreditado en cuenta comercial.", 0]
+      ],
+      tax: 0, dep: 6500.00, notes: "CONSTANCIA DE PAGO: Este recibo acredita el abono recibido en la fecha indicada. Balance restante de $6,500.00 vence al completar la instalación."
+    },
+    promissory: {
+      comp: "GRUPO COMERCIAL DEL OESTE LLC (ACREEDOR)", phone: "Reg. Corp. #410922 • Tel: (787) 555-0680 • legal@grupodeloste.com",
+      docNum: "2026-0095", date: "14/11/2026", client: "Héctor M. Rivera Torres (DEUDOR) — Licencia / ID: PR-6104928 • Mayagüez, PR",
+      rows: [
+        ["1. Capital Principal Reconocido (Financiamiento de Equipo Comercial)", "Reconocimiento líquido y exigible por la compra de maquinaria industrial entregada a satisfacción.", 12000],
+        ["2. Plan de Pagos Acordado (6 Plazos Mensuales Consecutivos)", "6 pagos iguales de $1,500.00 los días 15 de cada mes comenzando el 15 de diciembre de 2026.", 0]
+      ],
+      tax: 0, dep: 3000.00, notes: "CLÁUSULA DE MORA: Todo pago recibido con más de 5 días de atraso conllevará un cargo administrativo del 5%. El incumplimiento de dos cuotas faculta el cobro total del balance ($9,000.00)."
     },
     billsale: {
       comp: "ALBERTO RODRÍGUEZ MONTERO (VENDEDOR)", phone: "Licencia / ID: PR-5829104 • Tel: (787) 555-0912 • Adjuntas, PR",
       docNum: "2026-0318", date: "14/11/2026", client: "Jorge L. Santiago Vega (COMPRADOR) — ID: PR-9920184 • Urb. Valle Real #88, Ponce, PR",
       rows: [
-        ["1. Descripción Oficial del Vehículo Objeto de Venta", "Marca: TOYOTA | Modelo: 4RUNNER LIMITED | Año: 2023 | Color: Blanco Perla | Automática 4x4.", 38500],
-        ["2. Número de Serie (VIN), Millaje y Registro", "VIN: JTEBU5JR8P5928410 | Millaje Certificado: 24,180 millas | Título libre de gravámenes o multas.", 0],
-        ["3. Equipo Adicional Incluido en la Venta", "Aros 20\", gomas All-Terrain, tintes cerámicos, alfombras WeatherTech y 2 llaves inteligentes originales.", 1200]
+        ["1. Vehículo de Motor Objeto de Compraventa", "Marca: TOYOTA | Modelo: 4RUNNER LIMITED 4x4 | Año: 2023 | Color: Blanco Perla | Transmisión: Automática.", 38500],
+        ["2. Número de Serie (VIN), Millaje y Estado Registral", "VIN: JTEBU5JR8P5928410 | Millaje Exacto: 24,180 millas | Título original limpio libre de gravámenes o multas.", 0],
+        ["3. Accesorios Incluidos en la Transacción", "Aros 20\" Off-Road, gomas All-Terrain, tintes cerámicos, alfombras y 2 llaves inteligentes originales.", 1200]
       ],
-      tax: 0, dep: 39700.00, notes: "VENTA AS-IS: El Comprador certifica haber inspeccionado y probado el vehículo a su entera satisfacción en su condición actual ('Tal Cual / As-Is')."
+      tax: 0, dep: 39700.00, notes: "VENTA FINAL AS-IS (TAL CUAL): El Comprador certifica haber inspeccionado y probado mecánicamente el vehículo a su entera satisfacción y asume el traspaso oficial a su nombre."
+    },
+    contract: {
+      comp: "NATIVO STRUCTURAL & GENERAL CONTRACTORS LLC", phone: "Lic. DACO #19482 • EIN: 66-0984120 • Tel: (787) 555-0800",
+      docNum: "2026-0207", date: "14/11/2026", client: "Condominio Costa Azul — Junta de Directores • Ave. Ashford #910, Condado, PR",
+      rows: [
+        ["1. Impermeabilización Integral de Azotea (4,500 pies cuadrados)", "Lavado a presión industrial, reparación de grietas estructurales, primer asfáltico y membrana elastomérica.", 14800],
+        ["2. Reconstrucción de Pretiles y Sellado de Penetraciones", "Aplicación de mortero estructural polimérico y refuerzo en desagües pluviales y bases de equipos.", 3700],
+        ["3. Cronograma de Ejecución y Garantía", "Inicio: 20/11/2026 | Entrega: 15 días laborables | Garantía escrita de 7 años contra filtraciones.", 0]
+      ],
+      tax: 0, dep: 9250.00, notes: "FORMA DE PAGO CONTRACTUAL: 50% de anticipo a la firma ($9,250.00), 30% al completar preparación de losa y 20% contra entrega final e inspección firmada."
     },
     lease: {
       comp: "INVERSIONES & PROPIEDADES DEL SUR LLC", phone: "Tel: (787) 555-0770 • administracion@propiedadesdelsur.com",
       docNum: "2026-0509", date: "14/11/2026", client: "Dra. Valeria Morales Cruz (INQUILINA) — ID: PR-4410928 • Tel: (787) 390-1122",
       rows: [
-        ["1. Propiedad Arrendada y Canon Mensual", "Residencia de 3 habitaciones, 2 baños y marquesina doble en Carr. 525 Km 4.2. Uso residencial.", 1250],
-        ["2. Depósito de Garantía Reembolsable (Security Deposit)", "Equivalente a un (1) mes de renta para responder por daños o balances al finalizar el contrato.", 1250],
-        ["3. Inventario Incluido en Óptimo Estado", "Estufa, nevera inoxidable, calentador de línea, 3 aires Inverter, cisterna 600 gal y portón eléctrico.", 0]
+        ["1. Propiedad Arrendada y Canon Mensual Acordado", "Residencia de 3 habitaciones, 2 baños y marquesina doble en Carr. 525 Km 4.2. Uso estrictamente residencial.", 1250],
+        ["2. Depósito de Garantía Reembolsable (Fianza)", "Equivalente a un (1) mes de renta para responder por daños o balances pendientes al cierre del contrato.", 1250],
+        ["3. Inventario Entregado en Óptimo Funcionamiento", "Estufa tope cristal, nevera inoxidable, calentador de línea, 3 consolas Inverter y cisterna de 600 gal.", 0]
       ],
-      tax: 0, dep: 2500.00, notes: "VIGENCIA: 12 meses desde el 1 de diciembre de 2026. Renta vence del 1 al 5 de cada mes ($50.00 de recargo luego del día 5)."
+      tax: 0, dep: 2500.00, notes: "VIGENCIA: 12 meses desde el 1 de diciembre de 2026. Renta pagadera del 1 al 5 de cada mes ($50.00 de cargo por mora luego del día 5). Prohibido subarrendar."
+    },
+    waiver: {
+      comp: "ALL PHASE SOLUTIONS & REMODELING LLC", phone: "Tel: (787) 555-0510 • proyectos@allphasepr.com",
+      docNum: "2026-0614", date: "14/11/2026", client: "Clínica Dental San Miguel — Calle McKinley #44, Mayagüez, PR",
+      rows: [
+        ["1. Liquidación Final de Obra — Remodelación de Recepción y 3 Cubículos", "Cierre conforme de fascias en gypsum, iluminación arquitectónica, pisos vinílicos y pintura epóxica.", 16400],
+        ["2. Relevo Total de Gravámenes (Final Lien Waiver)", "El contratista certifica que todos los materiales y subcontratistas de esta obra han sido saldados en su totalidad.", 0]
+      ],
+      tax: 0, dep: 16400.00, notes: "FINIQUITO Y ENTREGA CONFORME: Ambas partes declaran recibido el proyecto sin defectos pendientes, quedando liquidado el balance al 100%."
+    },
+    change: {
+      comp: "ASD BUILDING SOLUTIONS LLC", phone: "Proyecto #PR-2026-88 • Tel: (787) 555-0244",
+      docNum: "CO-003", date: "14/11/2026", client: "Centro Médico del Oeste — Oficina de Ingeniería de Planta, Ponce, PR",
+      rows: [
+        ["1. Adicional Solicitado: Reubicación de Sub-Panel Eléctrico Trifásico", "Suministro e instalación de 45 pies lineales de tubería EMT 2\", cablería THHN #2 y anclaje sísmico.", 2450],
+        ["2. Instalación de 4 Luminarias de Emergencia NEMA 4X Exterior", "Incluye fotocelda industrial, cajas a prueba de intemperie y sellado cortafuego en cruces de pared.", 980]
+      ],
+      tax: 0, dep: 0, notes: "IMPACTO EN CRONOGRAMA: Esta Orden de Cambio añade tres (3) días laborables a la fecha de entrega sustancial del contrato base."
+    },
+    workorder: {
+      comp: "SERVICIOS TÉCNICOS ELECTROMECÁNICOS PR", phone: "Despacho 24/7: (787) 555-0991 • ordenes@serviciostecnicospr.com",
+      docNum: "WO-1084", date: "14/11/2026", client: "Supermercado Plaza Familiar — Carr. #2 Km 84.5, Arecibo, PR (Cuarto de Máquinas)",
+      rows: [
+        ["1. Diagnóstico y Reparación de Generador Diesel 150kW", "Reemplazo de solenoide de arranque, cambio de filtros primarios/secundarios y ajuste de gobernador.", 640],
+        ["2. Prueba de Transferencia Automática Con Carga Real (ATS)", "Simulación de corte eléctrico por 45 minutos verificando voltaje (208V), frecuencia (60.0Hz) y temperatura.", 285]
+      ],
+      tax: 64.75, dep: 0, notes: "REPORTE DE CAMPO: Generador y ATS quedan en modo automático listos para emergencia. Próximo mantenimiento preventivo en 250 horas."
+    },
+    po: {
+      comp: "CONSTRUCTORA DEL NORTE LLC (COMPRADOR)", phone: "Depto. de Compras • EIN: 66-0719283 • Tel: (787) 555-0140",
+      docNum: "PO-4420", date: "14/11/2026", client: "Suplidora Industrial de Acero y Materiales Inc. — Zona Industrial Luchetti, Bayamón, PR",
+      rows: [
+        ["1. Paneles de Gypsum Resistente a Humedad 5/8\" Type X (120 Unidades)", "4' x 8' certificados UL para divisiones interiores comerciales ($19.50 c/u).", 2340],
+        ["2. Studs Metálicos Galvanizados 3-5/8\" Calibre 20 (200 Unidades)", "Largo de 10 pies lineales en paquetes flejados para entrega en proyecto ($9.80 c/u).", 1960],
+        ["3. Pailas de Compuesto Joint Compound y Cinta de Fibra (25 Kits)", "Entrega requerida en rampa del proyecto antes de las 8:00 AM del lunes.", 575]
+      ],
+      tax: 560.63, dep: 0, notes: "INSTRUCCIONES DE DESPACHO: Favor citar PO-4420 en toda factura y conduce. Crédito corporativo Neto 30 días."
+    },
+    delivery: {
+      comp: "DISTRIBUIDORA DE MATERIALES Y AGREGADOS DEL SUR", phone: "Despacho Camión #07 • Tel: (787) 555-0377",
+      docNum: "DEL-7731", date: "14/11/2026", client: "Proyecto Residencial Vista Monte — Encargado en Obra: Ing. Luis Alvarado, Lares, PR",
+      rows: [
+        ["1. Paletas de Cemento Portland Tipo I (4 pallets / 160 sacos de 94 lbs)", "Entregados sellados sobre tarima plástica con cubierta impermeable en almacén de obra.", 1920],
+        ["2. Varilla Corrugada Grado 60 de 1/2\" x 20' (150 unidades)", "Descargadas con grúa boom en área designada y contadas físicamente junto al supervisor.", 1425],
+        ["3. Verificación de Condición Física al Despacho", "Mercancía revisada sin roturas ni humedad al momento de firmar este conduce.", 0]
+      ],
+      tax: 0, dep: 3345.00, notes: "NOTA DE ENTREGA: No se aceptan reclamaciones de faltantes una vez firmado conforme este conduce en el proyecto."
     }
   },
   en: {
@@ -1393,8 +1581,8 @@ const SAMPLES_I18N = {
       rows: [
         ["1. Surface Demolition & Subfloor Leveling (850 sq.ft.)", "Removal of existing tile, self-leveling mortar preparation, and debris container disposal.", 1850],
         ["2. 24\"x48\" Rectified Porcelain Tile Supply & Installation", "Installed with polymer-modified thinset, precision leveling clips, and stain-proof epoxy grout.", 4200],
-        ["3. Master Bathroom Remodel (Plumbing & Full Waterproofing)", "Brass shower valve upgrade, RedGard liquid membrane, recessed niche, and 3/8\" tempered glass.", 2950],
-        ["4. Recessed LED Lighting & Interior Paint Finish", "12x 4\" LED lights (3000K), primer sealer coat, and 2 coats of washable acrylic wall/ceiling paint.", 1450]
+        ["3. Master Bathroom Remodel (Plumbing & Full Waterproofing)", "Brass shower valve upgrade, liquid waterproofing membrane, recessed niche, and 3/8\" tempered glass.", 2950],
+        ["4. Recessed LED Lighting & Interior Paint Finish", "12x 4\" LED lights (3000K), primer sealer coat, and 2 coats of washable acrylic paint.", 1450]
       ],
       tax: 731.50, dep: 5000.00, notes: "WARRANTY & TERMS: Includes 3-year written workmanship warranty. Estimated timeline: 10-12 business days. Estimate valid for 30 days."
     },
@@ -1402,31 +1590,106 @@ const SAMPLES_I18N = {
       comp: "MASTER COOLING & ELECTRICAL SERVICES LLC", phone: "HVAC Lic. #CAC18831 • Tel: (305) 555-0420 • billing@mastercooling.com",
       docNum: "2026-1194", date: "11/14/2026", client: "Harbor Grill & Steakhouse — 1204 Biscayne Blvd, Miami, FL • Tax ID: 66-0921841",
       rows: [
-        ["1. 36,000 BTU (3-Ton) Commercial Inverter HVAC System", "High-efficiency SEER2 20 condenser with Gold Fin coil protection and smart Wi-Fi thermostat.", 2850],
-        ["2. Copper Refrigerant Line Set, UV Insulation & Drain", "35 linear ft. insulated 3/8\" & 3/4\" copper lines, dry nitrogen pressure test, and 350-micron vacuum.", 680],
+        ["1. 36,000 BTU (3-Ton) Commercial Inverter HVAC System", "High-efficiency SEER2 20 condenser with coil protection and smart Wi-Fi thermostat.", 2850],
+        ["2. Copper Refrigerant Line Set, UV Insulation & Drain", "35 linear ft. insulated 3/8\" & 3/4\" copper lines, nitrogen pressure test, and 350-micron vacuum.", 680],
         ["3. Dedicated 220V Circuit & Commercial Surge Suppressor", "30A double-pole breaker, #10 THHN wiring in EMT conduit, and NEMA 3R exterior disconnect.", 540]
       ],
-      tax: 284.90, dep: 3000.00, notes: "DELIVERY CERTIFICATION: System tested and operating at 100% factory specs. 5-year compressor warranty and 1-year labor warranty."
+      tax: 284.90, dep: 3000.00, notes: "DELIVERY CERTIFICATION: System tested and operating at 100% factory specs. Remaining balance due upon receipt."
+    },
+    receipt: {
+      comp: "SUNCOAST SOLAR & ENERGY SOLUTIONS LLC", phone: "EIN: 84-2910482 • Tel: (407) 555-0311",
+      docNum: "2026-0419", date: "11/14/2026", client: "Sarah Jenkins — 1180 Lakeview Dr, Winter Park, FL • Tel: (407) 555-8210",
+      rows: [
+        ["1. 50% Mobilization Deposit — 10kW Solar Array + Battery Backup", "Official deposit received to lock equipment allocation and engineering permit package.", 6500],
+        ["2. Verified Payment Method", "Wire Transfer / Cashier's Check #004812 cleared into corporate operating account.", 0]
+      ],
+      tax: 0, dep: 6500.00, notes: "PAYMENT CONFIRMATION: This receipt confirms cleared funds received on the date above. Remaining balance of $6,500.00 due upon final inspection."
+    },
+    promissory: {
+      comp: "ATLANTIC COMMERCIAL CAPITAL LLC (LENDER)", phone: "Reg. #FL-410922 • Tel: (305) 555-0680 • legal@atlanticcap.com",
+      docNum: "2026-0095", date: "11/14/2026", client: "Marcus D. Vance (BORROWER) — Driver Lic. ID: V520-610-4928 • Tampa, FL",
+      rows: [
+        ["1. Principal Debt Amount Acknowledged (Commercial Equipment Financing)", "Unconditional principal obligation for commercial machinery delivered in good working order.", 12000],
+        ["2. Agreed Installment Schedule (6 Consecutive Monthly Payments)", "6 equal installments of $1,500.00 due on the 15th of each month starting December 15, 2026.", 0]
+      ],
+      tax: 0, dep: 3000.00, notes: "DEFAULT & LATE FEE CLAUSE: Any installment over 5 days past due incurs a 5% late fee. Default on two consecutive installments accelerates the full remaining balance ($9,000.00)."
     },
     billsale: {
       comp: "ROBERT J. MILLER (SELLER / OWNER)", phone: "Driver Lic. / ID: M420-782-9104 • Tel: (407) 555-0912",
       docNum: "2026-0318", date: "11/14/2026", client: "David K. Anderson (BUYER) — ID: A530-992-0184 • 88 Oak Ridge Dr, Tampa, FL",
       rows: [
-        ["1. Motor Vehicle Description", "Make: TOYOTA | Model: 4RUNNER LIMITED | Year: 2023 | Color: Pearl White | 4WD Automatic.", 38500],
-        ["2. VIN, Certified Odometer & Title Status", "VIN: JTEBU5JR8P5928410 | Odometer: 24,180 miles | Clean title free of all liens or encumbrances.", 0],
-        ["3. Included Accessories & Equipment", "20\" wheels, All-Terrain tires, ceramic window tint, WeatherTech mats, and 2 OEM smart keys.", 1200]
+        ["1. Motor Vehicle Sold & Transferred", "Make: TOYOTA | Model: 4RUNNER LIMITED 4WD | Year: 2023 | Color: Pearl White | Transmission: Automatic.", 38500],
+        ["2. VIN, Certified Odometer & Clean Title Declaration", "VIN: JTEBU5JR8P5928410 | Odometer Reading: 24,180 miles | Clean title free of all liens or encumbrances.", 0],
+        ["3. Included Accessories & Keys", "20\" off-road wheels, All-Terrain tires, ceramic window tint, floor liners, and 2 OEM smart keys.", 1200]
       ],
-      tax: 0, dep: 39700.00, notes: "AS-IS SALE CLAUSE: Buyer has inspected and road-tested the vehicle to full satisfaction and accepts it strictly 'As-Is' without warranties."
+      tax: 0, dep: 39700.00, notes: "AS-IS SALE CLAUSE: Buyer has inspected and road-tested the vehicle to full satisfaction and accepts ownership strictly 'As-Is' with no implied warranties."
+    },
+    contract: {
+      comp: "SUMMIT STRUCTURAL & ROOFING CONTRACTORS LLC", phone: "State Lic. #CGC152948 • Tel: (305) 555-0800",
+      docNum: "2026-0207", date: "11/14/2026", client: "Oceanview Plaza HOA — Board of Directors • 910 Collins Ave, Miami Beach, FL",
+      rows: [
+        ["1. Commercial Flat Roof Elastomeric Waterproofing (4,500 sq.ft.)", "Industrial pressure wash, structural crack repair, primer coat, and reinforced silicone membrane.", 14800],
+        ["2. Parapet Wall Restoration & Drain Flashing", "Polymer-modified structural mortar repair and watertight sealing around all roof penetrations.", 3700],
+        ["3. Project Schedule & Workmanship Warranty", "Start Date: 11/20/2026 | Completion: 15 business days | Includes 7-year leak-free written warranty.", 0]
+      ],
+      tax: 0, dep: 9250.00, notes: "PAYMENT SCHEDULE: 50% deposit upon signing ($9,250.00), 30% at surface prep completion, and 20% upon final walk-through sign-off."
     },
     lease: {
       comp: "SOUTHERN HORIZON PROPERTIES LLC (LANDLORD)", phone: "Tel: (407) 555-0770 • leasing@southernhorizon.com",
       docNum: "2026-0509", date: "11/14/2026", client: "Dr. Valerie Morales (TENANT) — ID: FL-4410928 • Tel: (407) 390-1122",
       rows: [
-        ["1. Leased Premises & Monthly Base Rent", "3-Bedroom, 2-Bath single-family home with 2-car garage at 525 Pinecrest Way. Residential use only.", 1850],
+        ["1. Leased Premises & Monthly Base Rent", "3-Bedroom, 2-Bath single-family residence with 2-car garage at 525 Pinecrest Way. Residential use only.", 1850],
         ["2. Refundable Security Deposit", "Equal to one (1) month's rent held against property damage or unpaid balances upon lease end.", 1850],
-        ["3. Included Appliances in Working Order", "Glass-top range, stainless refrigerator, tankless water heater, central A/C, and garage opener.", 0]
+        ["3. Included Appliances & Fixtures", "Glass-top range, stainless refrigerator, tankless water heater, central HVAC, and 2 garage remotes.", 0]
       ],
-      tax: 0, dep: 3700.00, notes: "LEASE TERM: 12 months starting December 1, 2026. Rent is due on the 1st-5th of each month ($50.00 late fee applies after the 5th)."
+      tax: 0, dep: 3700.00, notes: "LEASE TERM: 12 months starting December 1, 2026. Rent is due on the 1st-5th of each month ($50.00 late fee applies after the 5th). No subleasing permitted."
+    },
+    waiver: {
+      comp: "ALL PHASE COMMERCIAL INTERIORS LLC", phone: "Tel: (305) 555-0510 • projects@allphasebuild.com",
+      docNum: "2026-0614", date: "11/14/2026", client: "Bayside Dental Studio — 440 Brickell Ave Suite 210, Miami, FL",
+      rows: [
+        ["1. Final Contract Settlement — Reception & 3 Operatory Build-Out", "Full completion of drywall soffits, architectural LED lighting, medical-grade vinyl flooring, and paint.", 16400],
+        ["2. Unconditional Final Lien Waiver & Release", "Contractor certifies all labor, subcontractors, and material suppliers have been paid in full.", 0]
+      ],
+      tax: 0, dep: 16400.00, notes: "FINAL ACCEPTANCE: Client confirms punch-list completion to 100% satisfaction with zero remaining balance."
+    },
+    change: {
+      comp: "ASD BUILDING SOLUTIONS LLC", phone: "Job #FL-2026-88 • Tel: (407) 555-0244",
+      docNum: "CO-003", date: "11/14/2026", client: "Westside Medical Center — Facilities Engineering Dept., Orlando, FL",
+      rows: [
+        ["1. Approved Extra: Relocate 3-Phase Electrical Sub-Panel", "Supply and install 45 linear ft. of 2\" EMT conduit, #2 THHN copper feeders, and seismic anchoring.", 2450],
+        ["2. Add 4 Exterior NEMA 4X Emergency Wall Packs", "Includes industrial photocell sensor, weatherproof junction boxes, and fire-caulked penetrations.", 980]
+      ],
+      tax: 0, dep: 0, notes: "SCHEDULE IMPACT: This Change Order adds three (3) business days to the substantial completion date of the base contract."
+    },
+    workorder: {
+      comp: "PRECISION POWER & GENERATOR SERVICE LLC", phone: "24/7 Dispatch: (305) 555-0991 • service@precisionpower.com",
+      docNum: "WO-1084", date: "11/14/2026", client: "FreshMarket Grocers #14 — 8450 NW 36th St, Doral, FL (Mechanical Room)",
+      rows: [
+        ["1. Emergency Diagnostics & Repair on 150kW Diesel Generator", "Replaced starter solenoid, primary/secondary fuel filters, bled fuel lines, and calibrated governor.", 640],
+        ["2. Live Load Transfer Test on Automatic Transfer Switch (ATS)", "45-minute full building load simulation verifying 208V output, 60.0Hz frequency, and coolant temp.", 285]
+      ],
+      tax: 64.75, dep: 0, notes: "FIELD TECH REPORT: Generator and ATS restored to Auto-Standby mode. Next scheduled PM service in 250 run hours."
+    },
+    po: {
+      comp: "NORTHSTAR GENERAL CONTRACTORS LLC (BUYER)", phone: "Purchasing Dept • EIN: 59-0719283 • Tel: (407) 555-0140",
+      docNum: "PO-4420", date: "11/14/2026", client: "Metro Steel & Drywall Supply Inc. — 2900 Industrial Pkwy, Sanford, FL",
+      rows: [
+        ["1. 5/8\" Type X Moisture-Resistant Drywall Sheets (120 Sheets)", "4' x 8' UL-rated commercial boards for interior partitions ($19.50 ea).", 2340],
+        ["2. 3-5/8\" 20-Gauge Galvanized Metal Studs x 10' (200 Pieces)", "Bundled and strapped for jobsite forklift unloading ($9.80 ea).", 1960],
+        ["3. All-Purpose Joint Compound Buckets & Mesh Tape (25 Kits)", "Jobsite dock delivery required Monday prior to 8:00 AM.", 575]
+      ],
+      tax: 341.25, dep: 0, notes: "SHIPPING INSTRUCTIONS: Reference PO-4420 on all invoices and delivery tickets. Corporate terms: Net 30 Days."
+    },
+    delivery: {
+      comp: "SOUTHERN AGGREGATES & BUILDING SUPPLY CO.", phone: "Truck Dispatch #07 • Tel: (407) 555-0377",
+      docNum: "DEL-7731", date: "11/14/2026", client: "Vista Monte Jobsite — Site Superintendent: Luis Alvarado, Clermont, FL",
+      rows: [
+        ["1. Type I Portland Cement Pallets (4 Pallets / 160 Bags @ 94 lbs)", "Delivered shrink-wrapped on pallets and staged inside covered site storage.", 1920],
+        ["2. #4 Grade-60 Deformed Rebar x 20' Lengths (150 Bars)", "Boom-unloaded in designated laydown yard and physically counted with site foreman.", 1425],
+        ["3. Good-Order Inspection Upon Unloading", "All materials inspected free of damage or moisture at time of signature.", 0]
+      ],
+      tax: 0, dep: 3345.00, notes: "DELIVERY NOTICE: No shortage or damage claims accepted once signed in good order on site."
     }
   }
 };
@@ -1455,6 +1718,135 @@ let uploadedHwQuoteImg = '';
 let cleanMascotLogoDataUrl = '';
 let customLineItems = [{ desc: '', qty: '1', price: '' }];
 let deferredPrompt = null;
+
+// GESTOR DE NAVEGACIÓN CON BOTÓN ATRÁS DEL TELÉFONO (HISTORIAL / POPSTATE)
+let activeModalId = null;
+let closingViaBack = false;
+let pendingConfirmAction = null;
+
+function pushModalHistory(modalId) {
+  if (activeModalId !== modalId) {
+    activeModalId = modalId;
+    try { window.history.pushState({ mcpModal: modalId }, ''); } catch (e) {}
+  }
+}
+
+function hideAllModalsDOM() {
+  const ids = ['suiteDrawerOverlay', 'docPreviewModal', 'iosInstallSheet', 'confirmModalOverlay'];
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+  activeModalId = null;
+}
+
+function dismissModalCleanly() {
+  const hadActive = !!activeModalId;
+  hideAllModalsDOM();
+  pendingConfirmAction = null;
+  if (hadActive && !closingViaBack && window.history.state && window.history.state.mcpModal) {
+    try { window.history.back(); } catch (e) {}
+  }
+}
+
+window.addEventListener('popstate', function() {
+  if (activeModalId) {
+    closingViaBack = true;
+    hideAllModalsDOM();
+    pendingConfirmAction = null;
+    closingViaBack = false;
+  }
+});
+
+window.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && activeModalId) dismissModalCleanly();
+});
+
+// SOPORTE DE GESTOS TÁCTILES (DESLIZAR PARA CERRAR EN IPHONE / ANDROID)
+function attachSwipeGestures() {
+  const drawer = document.getElementById('suiteDrawerPanel');
+  if (drawer) {
+    let sx = 0, sy = 0;
+    drawer.addEventListener('touchstart', e => {
+      sx = e.touches[0].clientX;
+      sy = e.touches[0].clientY;
+    }, { passive: true });
+    drawer.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - sx;
+      const dy = Math.abs(e.changedTouches[0].clientY - sy);
+      if (dx > 65 && dy < 60) dismissModalCleanly();
+    }, { passive: true });
+  }
+
+  const topbar = document.getElementById('docModalTopbar');
+  if (topbar) {
+    let sy = 0;
+    topbar.addEventListener('touchstart', e => { sy = e.touches[0].clientY; }, { passive: true });
+    topbar.addEventListener('touchend', e => {
+      if (e.changedTouches[0].clientY - sy > 55) dismissModalCleanly();
+    }, { passive: true });
+  }
+
+  const iosCard = document.getElementById('iosSheetCard');
+  if (iosCard) {
+    let sy = 0;
+    iosCard.addEventListener('touchstart', e => { sy = e.touches[0].clientY; }, { passive: true });
+    iosCard.addEventListener('touchend', e => {
+      if (e.changedTouches[0].clientY - sy > 55) dismissModalCleanly();
+    }, { passive: true });
+  }
+}
+
+// SISTEMA DE CONFIRMACIÓN SÍ / NO CONTRA TOQUES ACCIDENTALES
+function openConfirmDialog(titleTxt, msgTxt, onYesCallback) {
+  const L = I18N[currentLang] || I18N.es;
+  document.getElementById('cfmTitle').innerText = titleTxt;
+  document.getElementById('cfmMsg').innerText = msgTxt;
+  document.getElementById('cfmBtnNo').innerText = L.btnNo;
+  document.getElementById('cfmBtnYes').innerText = L.btnYes;
+  pendingConfirmAction = onYesCallback;
+  document.getElementById('confirmModalOverlay').style.display = 'flex';
+  pushModalHistory('confirm');
+}
+
+function executePendingConfirmAction() {
+  const fn = pendingConfirmAction;
+  dismissModalCleanly();
+  if (typeof fn === 'function') fn();
+}
+
+function isBuilderDirty() {
+  syncCustomLinesFromDOM();
+  if ((document.getElementById('qb-comp')?.value || '').trim() !== '') return true;
+  if ((document.getElementById('qb-phone')?.value || '').trim() !== '') return true;
+  if ((document.getElementById('qb-client')?.value || '').trim() !== '') return true;
+  if ((document.getElementById('qb-notes')?.value || '').trim() !== '') return true;
+  if ((parseFloat(document.getElementById('qb-tax')?.value) || 0) > 0) return true;
+  if ((parseFloat(document.getElementById('qb-dep')?.value) || 0) > 0) return true;
+  if (uploadedLogoData || uploadedHwQuoteImg) return true;
+  return customLineItems.some(it =>
+    it.desc.trim() !== '' ||
+    (parseFloat(it.price) || 0) > 0 ||
+    (it.qty !== '1' && it.qty !== '')
+  );
+}
+
+function askResetBuilderToZero() {
+  if (!isBuilderDirty()) {
+    resetBuilderToZero();
+    return;
+  }
+  const L = I18N[currentLang] || I18N.es;
+  openConfirmDialog(L.cfmResetTitle, L.cfmResetMsg, resetBuilderToZero);
+}
+
+function askClearCalcHistory() {
+  let hist = [];
+  try { hist = JSON.parse(localStorage.getItem('mcp_calc_history') || '[]'); } catch (e) {}
+  if (hist.length === 0) return;
+  const L = I18N[currentLang] || I18N.es;
+  openConfirmDialog(L.cfmHistTitle, L.cfmHistMsg, clearCalcHistory);
+}
 
 function removeBlackBoxFromBrandIcons() {
   if (cleanMascotLogoDataUrl) {
@@ -1520,23 +1912,25 @@ function removeBlackBoxFromBrandIcons() {
   probe.src = srcToLoad;
 }
 
-// FUNCIONES DEL SUITE DRAWER (MENÚ SUPERIOR DERECHO)
+// FUNCIONES DEL SUITE DRAWER (MENÚ SUPERIOR DERECHO SIN X)
 function openSuiteDrawer() {
   renderSuiteDrawerItems();
   const ov = document.getElementById('suiteDrawerOverlay');
-  if (ov) ov.style.display = 'flex';
+  if (ov) {
+    ov.style.display = 'flex';
+    pushModalHistory('suite');
+  }
 }
-function closeSuiteDrawer() {
-  const ov = document.getElementById('suiteDrawerOverlay');
-  if (ov) ov.style.display = 'none';
-}
+
 function selectDocTypeFromSuite(docKey) {
   const inp = document.getElementById('qb-doctype');
   if (inp) inp.value = docKey;
+  try { localStorage.setItem('mcp_active_doctype', docKey); } catch (e) {}
   syncActiveDocTypeUI();
   recalcMasterTotals();
-  closeSuiteDrawer();
+  dismissModalCleanly();
 }
+
 function renderSuiteDrawerItems() {
   const body = document.getElementById('suiteDrawerBody');
   if (!body) return;
@@ -1561,6 +1955,7 @@ function renderSuiteDrawerItems() {
 }
 
 function syncActiveDocTypeUI() {
+  const L = I18N[currentLang] || I18N.es;
   const docType = document.getElementById('qb-doctype')?.value || 'quote';
   const meta = getDocMeta(docType);
   const codeClean = meta.prefix.replace(/[^a-zA-Z]/g, '') || 'EST';
@@ -1581,6 +1976,9 @@ function syncActiveDocTypeUI() {
   const clientLbl = document.getElementById('lbl-client');
   if (compLbl) compLbl.innerText = meta.party1;
   if (clientLbl) clientLbl.innerText = meta.party2;
+
+  const sampleTabTxt = document.getElementById('ui-sample-tab');
+  if (sampleTabTxt) sampleTabTxt.innerText = L.sampleTabPrefix + meta.menuName;
 }
 
 function isAppAlreadyInstalled() {
@@ -1603,8 +2001,7 @@ if (navigator.getInstalledRelatedApps) {
   }).catch(() => {});
 }
 
-function closeIosInstallSheet() { const s = document.getElementById('iosInstallSheet'); if (s) s.style.display = 'none'; }
-function markAppInstalledAndHide() { localStorage.setItem('mcp_pwa_installed', 'true'); closeIosInstallSheet(); syncInstallButtonVisibility(); }
+function markAppInstalledAndHide() { localStorage.setItem('mcp_pwa_installed', 'true'); dismissModalCleanly(); syncInstallButtonVisibility(); }
 function installPWA() {
   if (deferredPrompt) {
     deferredPrompt.prompt();
@@ -1621,7 +2018,10 @@ function installPWA() {
     return;
   }
   const sheet = document.getElementById('iosInstallSheet');
-  if (sheet) sheet.style.display = 'flex';
+  if (sheet) {
+    sheet.style.display = 'flex';
+    pushModalHistory('ios');
+  }
 }
 
 function activateOwnerSuccess() {
@@ -1680,9 +2080,8 @@ function changeLang(val) {
   applyLanguageUI();
   const modal = document.getElementById('docPreviewModal');
   if (modal && modal.style.display === 'flex') {
-    const activeBtn = document.querySelector('.sample-type-btn.active');
-    const modeMatch = activeBtn?.getAttribute('onclick')?.match(/'([^']+)'/);
-    renderModalSheet(modeMatch ? modeMatch[1] : 'live');
+    const isLiveAct = document.getElementById('previewTabLiveBtn')?.classList.contains('active');
+    renderModalSheet(isLiveAct ? 'live' : 'sample');
   }
 }
 
@@ -1699,10 +2098,10 @@ function applyLanguageUI() {
   document.getElementById('currSelect').value = currentCurr;
 
   const mapTxt = {
-    'ui-suite-btn': L.suiteBtn, 'ui-suite-title': L.suiteTitle, 'ui-live-tab': L.liveTab,
-    'ui-install-btn': L.installBtn, 'ui-ios-sub': L.iosSub, 'ui-ios-done': L.iosDone,
-    'ui-att-ok': L.attOk, 'ui-sub': L.sub, 'ui-lbl-docnum': L.docNum, 'lbl-phone': L.phone,
-    'ui-lbl-tax': L.tax, 'ui-lbl-dep': L.dep, 'ui-lbl-notes': L.notes,
+    'ui-suite-btn': L.suiteBtn, 'ui-suite-title': L.suiteTitle, 'ui-back-hint': L.backHint,
+    'ui-live-tab': L.liveTab, 'ui-install-btn': L.installBtn, 'ui-ios-sub': L.iosSub,
+    'ui-ios-done': L.iosDone, 'ui-att-ok': L.attOk, 'ui-sub': L.sub, 'ui-lbl-docnum': L.docNum,
+    'lbl-phone': L.phone, 'ui-lbl-tax': L.tax, 'ui-lbl-dep': L.dep, 'ui-lbl-notes': L.notes,
     'ui-lbl-attach-chk': L.attachChk, 'ui-bal-lbl': L.balLbl
   };
   Object.keys(mapTxt).forEach(id => { const el = document.getElementById(id); if (el) el.innerText = mapTxt[id]; });
@@ -1938,29 +2337,30 @@ function hasUserTypedData() {
 }
 
 function openDocPreviewModal() {
-  const docType = document.getElementById('qb-doctype')?.value || 'quote';
-  if (hasUserTypedData()) {
-    renderModalSheet('live');
-  } else {
-    const sampleMode = ['quote', 'invoice', 'billsale', 'lease'].includes(docType) ? docType : 'quote';
-    renderModalSheet(sampleMode);
+  syncActiveDocTypeUI();
+  renderModalSheet(hasUserTypedData() ? 'live' : 'sample');
+  const modal = document.getElementById('docPreviewModal');
+  if (modal) {
+    modal.style.display = 'flex';
+    modal.scrollTop = 0;
+    pushModalHistory('preview');
   }
-  document.getElementById('docPreviewModal').style.display = 'flex';
 }
-function closeDocPreviewModal() { document.getElementById('docPreviewModal').style.display = 'none'; }
 
+// RENDERIZA EN VIVO O EL EJEMPLO EXACTO DE LAS 12 PLANTILLAS
 function renderModalSheet(mode) {
   const L = I18N[currentLang] || I18N.es;
   const paper = document.getElementById('modalPaperContent');
   const ctaBox = document.getElementById('modalBottomCta');
   if (!paper) return;
 
-  document.querySelectorAll('.sample-type-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.getAttribute('onclick')?.includes("'" + mode + "'"));
-  });
-
   const isLive = (mode === 'live');
-  const activeType = isLive ? (document.getElementById('qb-doctype')?.value || 'quote') : mode;
+  const liveBtn = document.getElementById('previewTabLiveBtn');
+  const sampleBtn = document.getElementById('previewTabSampleBtn');
+  if (liveBtn) liveBtn.classList.toggle('active', isLive);
+  if (sampleBtn) sampleBtn.classList.toggle('active', !isLive);
+
+  const activeType = document.getElementById('qb-doctype')?.value || 'quote';
   const meta = getDocMeta(activeType);
 
   let data;
@@ -1982,7 +2382,7 @@ function renderModalSheet(mode) {
       const sub = qtyVal * p;
       if (sub > 0 || it.desc.trim() !== '') {
         const titleLine = (idx + 1) + '. ' + (it.desc.trim() || '-');
-        const subLine = qtyVal !== 1 ? (L.qty + ': ' + qtyVal + ' × ' + formatUSD(p)) : '';
+        const subLine = (qtyVal !== 1 && p > 0) ? (L.qty + ': ' + qtyVal + ' × ' + formatUSD(p)) : '';
         liveRows.push([titleLine, subLine, sub]);
       }
     });
@@ -1995,16 +2395,18 @@ function renderModalSheet(mode) {
     };
   } else {
     const samplePack = (currentLang === 'es') ? SAMPLES_I18N.es : SAMPLES_I18N.en;
-    data = samplePack[mode] || samplePack.quote;
+    data = samplePack[activeType] || samplePack.quote;
   }
 
   let subtotal = 0;
   const rowsHtml = data.rows.map(r => {
-    subtotal += r[2];
+    const amt = Number(r[2]) || 0;
+    subtotal += amt;
+    const amtCell = amt > 0 ? escapeHtml(formatUSD(amt)) : '—';
     return '<tr>' +
       '<td><div style="font-weight:800;color:#0f172a;margin-bottom:2px;">' + escapeHtml(r[0]) + '</div>' +
       (r[1] ? '<div style="font-size:0.74rem;color:#475569;line-height:1.35;">' + escapeHtml(r[1]) + '</div>' : '') + '</td>' +
-      '<td style="vertical-align:top;white-space:nowrap;">' + escapeHtml(formatUSD(r[2])) + '</td>' +
+      '<td style="vertical-align:top;white-space:nowrap;">' + amtCell + '</td>' +
     '</tr>';
   }).join('');
 
@@ -2012,7 +2414,6 @@ function renderModalSheet(mode) {
   const remBalance = Math.max(0, grandTotal - (data.dep || 0));
   const logoSrcForModal = (isLive && uploadedLogoData) ? uploadedLogoData : (cleanMascotLogoDataUrl || '1793842789444.jpg');
 
-  // Blindaje Anti-Screenshot activo cuando no ha pagado
   const showWatermark = !isPaidUser;
   const wmHtml = showWatermark
     ? '<div class="wm-mesh-overlay" style="background-image:' + buildWatermarkSvgTile(L.wmTile).replace(/"/g, '&quot;') + ';"></div>' +
@@ -2311,7 +2712,7 @@ async function buildPureVectorPDF() {
     const lineTotal = qtyVal * p;
     if (lineTotal > 0 || it.desc.trim() !== '') {
       grandTotal += lineTotal;
-      const rawDesc = pdfSafeText((idx + 1) + '. ' + (it.desc.trim() || '-') + (qtyVal !== 1 ? ' (' + qtyVal + ' x ' + formatPDFCurr(p) + ')' : ''));
+      const rawDesc = pdfSafeText((idx + 1) + '. ' + (it.desc.trim() || '-') + ((qtyVal !== 1 && p > 0) ? ' (' + qtyVal + ' x ' + formatPDFCurr(p) + ')' : ''));
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(9);
       const splitDesc = doc.splitTextToSize(rawDesc, 136);
@@ -2325,7 +2726,7 @@ async function buildPureVectorPDF() {
       doc.setFont('helvetica', 'normal');
       doc.text(splitDesc, 17, y + 5.8);
       doc.setFont('helvetica', 'bold');
-      doc.text(pdfSafeText(formatPDFCurr(lineTotal)), 198, y + 5.8, { align: 'right' });
+      doc.text(lineTotal > 0 ? pdfSafeText(formatPDFCurr(lineTotal)) : '-', 198, y + 5.8, { align: 'right' });
       y += rowH;
     }
   });
@@ -2499,28 +2900,35 @@ async function processOfficialPDF(actionMode) {
 
 function handleWhatsAppQuoteClick() {
   saveAllBuilderState();
-  if (!isPaidUser) { window.location.href = STRIPE_SINGLE_URL; return; }
-  closeDocPreviewModal();
+  if (!isPaidUser) { hideAllModalsDOM(); window.location.href = STRIPE_SINGLE_URL; return; }
+  hideAllModalsDOM();
   processOfficialPDF('share');
 }
 function handleEmailQuoteClick() {
   saveAllBuilderState();
-  if (!isPaidUser) { window.location.href = STRIPE_SINGLE_URL; return; }
-  closeDocPreviewModal();
+  if (!isPaidUser) { hideAllModalsDOM(); window.location.href = STRIPE_SINGLE_URL; return; }
+  hideAllModalsDOM();
   processOfficialPDF('email');
 }
 function handleFinalDownloadClick() {
   saveAllBuilderState();
-  if (!isPaidUser) { window.location.href = STRIPE_SINGLE_URL; return; }
-  closeDocPreviewModal();
+  if (!isPaidUser) { hideAllModalsDOM(); window.location.href = STRIPE_SINGLE_URL; return; }
+  hideAllModalsDOM();
   processOfficialPDF('download');
 }
 function handleProPassClick() {
   saveAllBuilderState();
+  hideAllModalsDOM();
   window.location.href = STRIPE_PRO_PASS_URL;
 }
 
 function restoreStateOnLoad() {
+  const savedDocType = localStorage.getItem('mcp_active_doctype');
+  if (savedDocType && I18N.es.types[savedDocType]) {
+    const dtInp = document.getElementById('qb-doctype');
+    if (dtInp) dtInp.value = savedDocType;
+  }
+
   uploadedLogoData = localStorage.getItem('mcp_company_logo') || '';
   if (uploadedLogoData) showIdentifiedLogoPicture(uploadedLogoData);
   if (!isReturningFromStripeCheckout) return;
@@ -2557,6 +2965,7 @@ window.addEventListener('DOMContentLoaded', function() {
   applyLanguageUI();
   syncInstallButtonVisibility();
   removeBlackBoxFromBrandIcons();
+  attachSwipeGestures();
 });
 </script>
 </body>
