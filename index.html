@@ -11,16 +11,16 @@
 <meta name="description" content="Generador profesional de cotizaciones, estimados, facturas y contratos legales en PDF.">
 <meta property="og:title" content="Mr. Invoice Pro | Official PDF Suite">
 <meta property="og:description" content="Generador profesional de cotizaciones, estimados, facturas y contratos legales en PDF.">
-<meta property="og:image" content="https://mrinvoicepro.com/1793842789444.jpg?v=14">
-<meta property="og:image:secure_url" content="https://mrinvoicepro.com/1793842789444.jpg?v=14">
+<meta property="og:image" content="https://mrinvoicepro.com/1793842789444.jpg?v=15">
+<meta property="og:image:secure_url" content="https://mrinvoicepro.com/1793842789444.jpg?v=15">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="512">
 <meta property="og:image:height" content="512">
 <meta property="og:type" content="website">
-<link rel="manifest" href="/manifest.json?v=14">
+<link rel="manifest" href="/manifest.json?v=15">
 <meta name="theme-color" content="#ffffff">
-<link rel="icon" type="image/jpeg" href="/1793842789444.jpg?v=14">
-<link rel="apple-touch-icon" href="/1793842789444.jpg?v=14">
+<link rel="icon" type="image/jpeg" href="/1793842789444.jpg?v=15">
+<link rel="apple-touch-icon" href="/1793842789444.jpg?v=15">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 if ('serviceWorker' in navigator) {
@@ -32,20 +32,21 @@ if ('serviceWorker' in navigator) {
 <script data-goatcounter="https://materialcalcpro.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <style>
 :root {
-  --bg-white: #ffffff;
+  --bg-page: #f4f6f9;
   --surface-card: #ffffff;
   --surface-subtle: #f8fafc;
-  --surface-pill: #f0f2f5;
-  --line-fine: #e2e8f0;
-  --line-mid: #dadde1;
+  --surface-pill: #f1f5f9;
+  --line-fine: rgba(15, 23, 42, 0.08);
+  --line-mid: rgba(15, 23, 42, 0.13);
+  --obsidian: #0b0f19;
+  --obsidian-soft: #1e293b;
   --accent: #d97706;
   --accent-bright: #fbbf24;
-  --accent-line: rgba(217, 119, 6, 0.35);
   --emerald: #059669;
   --emerald-bright: #34d399;
-  --text-dark: #050505;
+  --text-dark: #090d16;
   --text-mid: #334155;
-  --text-muted: #65676b;
+  --text-muted: #64748b;
 }
 
 html, * {
@@ -53,128 +54,233 @@ html, * {
   margin: 0;
   padding: 0;
   -webkit-tap-highlight-color: transparent;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", Roboto, sans-serif;
 }
 
 body {
-  background-color: var(--bg-white);
+  background-color: var(--bg-page);
   color: var(--text-dark);
   min-height: 100vh;
-  padding-bottom: max(2.8rem, env(safe-area-inset-bottom));
+  padding-bottom: max(3rem, env(safe-area-inset-bottom));
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ICONOS VECTORIALES ESTILO ARGON */
-.ico-stroke {
-  width: 19px;
-  height: 19px;
-  stroke: currentColor;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  fill: none;
-  flex-shrink: 0;
-  display: inline-block;
-  vertical-align: middle;
+/* BLOQUEO DE IMPRESIÓN DE PANTALLA PARA PROTEGER VISTA PREVIA */
+@media print {
+  body * { display: none !important; }
+  body::after {
+    content: "Mr. Invoice Pro — Vista previa protegida. Descargue el archivo PDF oficial desde la aplicación.";
+    display: block !important;
+    padding: 3rem 1.5rem;
+    font-size: 1.1rem;
+    font-weight: 800;
+    text-align: center;
+    color: #0f172a;
+  }
 }
-.ico-stroke-sm {
-  width: 15px;
-  height: 15px;
-  stroke: currentColor;
-  stroke-width: 2;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  fill: none;
-  flex-shrink: 0;
-  display: inline-block;
-  vertical-align: middle;
-}
+
+.ico-stroke { width: 19px; height: 19px; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; flex-shrink: 0; display: inline-block; vertical-align: middle; }
+.ico-stroke-sm { width: 15px; height: 15px; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; flex-shrink: 0; display: inline-block; vertical-align: middle; }
 .ico-gold { color: var(--accent); }
 .ico-gold-bright { color: var(--accent-bright); }
 .ico-emerald { color: var(--emerald); }
 
-/* HEADER BLANCO LIMPIO DE 1PX ESTILO ARGON */
+/* HEADER EJECUTIVO DE CRISTAL ESMERILADO */
 header {
   position: sticky;
   top: 0;
-  z-index: 50;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  color: var(--text-dark);
-  padding: 0.75rem 1rem;
+  z-index: 60;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line-mid);
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+  padding: 0.6rem 1rem 0.55rem;
   padding-left: max(1rem, env(safe-area-inset-left));
   padding-right: max(1rem, env(safe-area-inset-right));
-  border-bottom: 1px solid var(--line-mid);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
 }
-.top-bar {
+.header-inner { max-width: 760px; margin: 0 auto; }
+.top-bar { display: flex; justify-content: space-between; align-items: center; gap: 0.6rem; }
+.brand-logo { display: flex; align-items: center; gap: 0.55rem; min-width: 0; }
+.brand-icon { width: 50px; height: 50px; background: transparent; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.brand-icon img { width: 100%; height: 100%; object-fit: contain; }
+.logo-main { font-size: 1.22rem; font-weight: 900; letter-spacing: -0.02em; color: var(--text-dark); line-height: 1.1; }
+.logo-main span { color: var(--accent); }
+.logo-sub { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1.2px; color: var(--text-muted); font-weight: 800; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* BOTÓN SUITE EN LA ESQUINA SUPERIOR DERECHA */
+.suite-trigger-btn {
+  background: linear-gradient(145deg, #1e293b 0%, #090d16 100%);
+  color: #ffffff;
+  border: 1px solid rgba(251, 191, 36, 0.45);
+  padding: 0.48rem 0.82rem;
+  border-radius: 12px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.42rem;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(9, 13, 22, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transition: transform 0.14s ease, box-shadow 0.15s ease;
+}
+.suite-trigger-btn:active { transform: scale(0.96); }
+.suite-count-pill {
+  background: rgba(251, 191, 36, 0.18);
+  color: var(--accent-bright);
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  padding: 1px 6px;
+  border-radius: 999px;
+  font-size: 0.66rem;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+/* SUB-BARRA EJECUTIVA SIMÉTRICA */
+.sub-control-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 740px;
-  margin: 0 auto;
-  gap: 0.65rem;
+  gap: 0.45rem;
+  margin-top: 0.52rem;
+  padding-top: 0.48rem;
+  border-top: 1px solid var(--line-fine);
   flex-wrap: wrap;
 }
-.brand-logo { display: flex; align-items: center; gap: 0.6rem; color: var(--text-dark); }
-.brand-icon {
-  width: 54px;
-  height: 54px;
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  display: flex;
+.active-doc-chip {
+  background: var(--surface-subtle);
+  border: 1px solid var(--line-mid);
+  color: var(--text-dark);
+  padding: 0.34rem 0.68rem;
+  border-radius: 999px;
+  font-size: 0.73rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  box-shadow: none;
-  flex-shrink: 0;
-  overflow: visible;
+  gap: 0.38rem;
+  max-width: 100%;
+  transition: background 0.15s ease;
 }
-.brand-icon img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
-.logo-main { font-size: 1.28rem; font-weight: 900; letter-spacing: 0.3px; color: var(--text-dark); }
-.logo-main span { color: var(--accent); }
-.logo-sub { font-size: 0.64rem; text-transform: uppercase; letter-spacing: 1.3px; color: var(--text-muted); font-weight: 800; margin-top: 2px; }
-.top-actions { display: flex; gap: 0.45rem; align-items: center; flex-wrap: wrap; }
+.active-doc-chip:hover { background: var(--surface-pill); }
+.chip-code {
+  background: var(--obsidian);
+  color: var(--accent-bright);
+  font-size: 0.62rem;
+  font-weight: 900;
+  padding: 1px 6px;
+  border-radius: 999px;
+  letter-spacing: 0.5px;
+}
+.top-actions { display: flex; gap: 0.38rem; align-items: center; margin-left: auto; }
 
 .lang-select, .curr-select, .install-top-btn {
   background: var(--surface-pill);
   color: var(--text-dark);
   border: 1px solid var(--line-mid);
-  padding: 0.42rem 0.75rem;
+  padding: 0.34rem 0.62rem;
   border-radius: 999px;
   font-weight: 800;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   cursor: pointer;
   width: auto;
   transition: all 0.15s ease;
 }
-.lang-select:hover, .curr-select:hover { background: #e4e6eb; }
-.curr-select {
-  border-color: #a7f3d0;
-  background: #ecfdf5;
-  color: var(--emerald);
-}
-.install-top-btn {
-  background: var(--text-dark);
-  color: #ffffff;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-weight: 800;
-  border: 1px solid var(--text-dark);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-}
-.install-top-btn:active { transform: scale(0.97); }
+.curr-select { border-color: #a7f3d0; background: #ecfdf5; color: var(--emerald); }
+.install-top-btn { background: var(--obsidian); color: #fff; border-color: var(--obsidian); display: inline-flex; align-items: center; gap: 0.3rem; }
 
 @media all and (display-mode: standalone), all and (display-mode: fullscreen), all and (display-mode: minimal-ui) {
   #installPwaBtn { display: none !important; }
 }
 
-/* MODAL INSTALACIÓN IOS EN BLANCO */
+/* DRAWER DE LA SUITE DE 12 DOCUMENTOS */
+.suite-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(9, 13, 22, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: none;
+  justify-content: flex-end;
+  z-index: 9998;
+}
+.suite-drawer-panel {
+  width: 100%;
+  max-width: 430px;
+  height: 100%;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -12px 0 40px rgba(0, 0, 0, 0.25);
+  animation: slideInRight 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
+.suite-drawer-head {
+  padding: 1rem 1.15rem;
+  background: var(--obsidian);
+  color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid var(--accent);
+}
+.suite-drawer-body { padding: 1rem; overflow-y: auto; flex: 1; background: #f8fafc; }
+.suite-cat-label {
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1.1px;
+  color: var(--text-muted);
+  margin: 0.85rem 0 0.45rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.suite-cat-label:first-child { margin-top: 0.1rem; }
+.suite-grid { display: grid; grid-template-columns: 1fr; gap: 0.45rem; }
+.suite-item-btn {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid var(--line-mid);
+  border-radius: 12px;
+  padding: 0.7rem 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.14s ease;
+}
+.suite-item-btn:hover { border-color: #94a3b8; transform: translateY(-1px); }
+.suite-item-btn.active {
+  background: #fffbeb;
+  border: 1.5px solid var(--accent);
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.1);
+}
+.suite-item-left { display: flex; align-items: center; gap: 0.65rem; min-width: 0; }
+.suite-ico-box {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: var(--surface-pill);
+  color: var(--obsidian);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.suite-item-btn.active .suite-ico-box { background: var(--obsidian); color: var(--accent-bright); }
+.suite-item-title { font-size: 0.83rem; font-weight: 800; color: var(--text-dark); }
+.suite-item-code { font-size: 0.65rem; font-weight: 900; color: var(--text-muted); background: var(--surface-pill); padding: 2px 7px; border-radius: 6px; flex-shrink: 0; }
+.suite-item-btn.active .suite-item-code { background: var(--emerald); color: #ffffff; }
+
+/* MODAL INSTALACIÓN IOS */
 .ios-install-sheet {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.55);
+  background: rgba(9, 13, 22, 0.6);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   display: none;
@@ -187,135 +293,75 @@ header {
   width: 100%;
   max-width: 420px;
   background: #ffffff;
-  color: var(--text-dark);
   border: 1px solid var(--line-mid);
   border-radius: 20px;
   padding: 1.25rem;
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.22);
-  margin-bottom: 0.5rem;
-  animation: slideUpSheet 0.22s ease-out;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
 }
-@keyframes slideUpSheet { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-.ios-sheet-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  border-bottom: 1px solid var(--surface-pill);
-  padding-bottom: 0.85rem;
-  margin-bottom: 0.9rem;
-}
+.ios-sheet-head { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; border-bottom: 1px solid var(--surface-pill); padding-bottom: 0.85rem; margin-bottom: 0.9rem; }
 .ios-sheet-brand { display: flex; align-items: center; gap: 0.7rem; }
-.ios-sheet-brand img {
-  width: 48px;
-  height: 48px;
-  border-radius: 0;
-  border: none;
-  background: transparent;
-  object-fit: contain;
-}
-.ios-step-row {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  background: var(--surface-subtle);
-  border: 1px solid var(--line-fine);
-  padding: 0.75rem 0.85rem;
-  border-radius: 12px;
-  margin-bottom: 0.6rem;
-  font-size: 0.83rem;
-  line-height: 1.4;
-  color: var(--text-mid);
-}
-.ios-step-num {
-  background: var(--text-dark);
-  color: #ffffff;
-  font-weight: 900;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-size: 0.76rem;
-}
-.ios-done-btn {
-  width: 100%;
-  background: var(--text-dark);
-  color: #ffffff;
-  border: none;
-  padding: 0.84rem;
-  border-radius: 12px;
-  font-weight: 800;
-  font-size: 0.88rem;
-  cursor: pointer;
-  margin-top: 0.35rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.45rem;
-}
+.ios-sheet-brand img { width: 48px; height: 48px; object-fit: contain; }
+.ios-step-row { display: flex; align-items: center; gap: 0.7rem; background: var(--surface-subtle); border: 1px solid var(--line-fine); padding: 0.75rem 0.85rem; border-radius: 12px; margin-bottom: 0.6rem; font-size: 0.83rem; line-height: 1.4; color: var(--text-mid); }
+.ios-step-num { background: var(--obsidian); color: #fff; font-weight: 900; width: 25px; height: 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.76rem; }
+.ios-done-btn { width: 100%; background: var(--obsidian); color: #fff; border: none; padding: 0.84rem; border-radius: 12px; font-weight: 800; font-size: 0.88rem; cursor: pointer; margin-top: 0.35rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem; }
 
-/* CONTENEDOR Y TARJETA PRINCIPAL BLANCA ESTILO ARGON */
+/* CONTENEDOR Y TARJETA FINTECH */
 .container {
-  max-width: 740px;
-  margin: 1.2rem auto;
-  padding: 0 1rem;
-  padding-left: max(1rem, env(safe-area-inset-left));
-  padding-right: max(1rem, env(safe-area-inset-right));
+  max-width: 760px;
+  margin: 1rem auto;
+  padding: 0 0.9rem;
+  padding-left: max(0.9rem, env(safe-area-inset-left));
+  padding-right: max(0.9rem, env(safe-area-inset-right));
 }
 .builder-card {
   background: var(--surface-card);
-  color: var(--text-dark);
-  padding: 1.3rem;
-  border-radius: 16px;
+  padding: 1.25rem;
+  border-radius: 20px;
   border: 1px solid var(--line-mid);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
 }
 .mb-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid var(--surface-pill);
+  border-bottom: 1px solid var(--line-fine);
   padding-bottom: 0.85rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.9rem;
   flex-wrap: wrap;
   gap: 0.6rem;
 }
 .mb-header h2 {
-  font-size: 1.05rem;
+  font-size: 1.04rem;
   color: var(--text-dark);
   font-weight: 900;
-  letter-spacing: 0.1px;
+  letter-spacing: -0.015em;
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 .reset-zero-btn {
   background: var(--surface-pill);
-  color: var(--text-dark);
+  color: var(--text-mid);
   border: 1px solid var(--line-mid);
-  padding: 0.4rem 0.8rem;
+  padding: 0.38rem 0.78rem;
   border-radius: 999px;
-  font-size: 0.75rem;
+  font-size: 0.74rem;
   font-weight: 800;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 0.38rem;
-  transition: all 0.15s ease;
+  gap: 0.35rem;
 }
-.reset-zero-btn:hover { background: #e4e6eb; }
 
+/* BOTÓN DE VISTA PREVIA EN VIVO PREMIUM */
 .open-sample-btn {
   width: 100%;
-  background: var(--surface-subtle);
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
   color: var(--text-dark);
-  border: 1px solid var(--line-mid);
+  border: 1.5px solid #cbd5e1;
   padding: 0.82rem 1rem;
-  border-radius: 12px;
-  font-size: 0.86rem;
+  border-radius: 14px;
+  font-size: 0.85rem;
   font-weight: 800;
   cursor: pointer;
   margin-bottom: 1rem;
@@ -323,29 +369,35 @@ header {
   align-items: center;
   justify-content: center;
   gap: 0.55rem;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
   transition: all 0.15s ease;
 }
-.open-sample-btn:hover { background: var(--surface-pill); border-color: #cbd5e1; }
-.open-sample-btn:active { transform: scale(0.99); }
+.open-sample-btn:hover { border-color: var(--obsidian); background: #ffffff; }
+.live-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--emerald);
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2);
+  flex-shrink: 0;
+}
 
-/* SECCIONES INTERNAS DE 1PX */
+/* SECCIONES Y CAMPOS DE ALTA PRECISIÓN */
 .mb-section {
   background: var(--surface-subtle);
   border: 1px solid var(--line-fine);
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 1.05rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.95rem;
 }
 .mb-sec-title {
-  font-size: 0.86rem;
+  font-size: 0.85rem;
   font-weight: 900;
   color: var(--text-dark);
   margin-bottom: 0.8rem;
   display: flex;
   align-items: center;
-  gap: 0.55rem;
-  letter-spacing: 0.1px;
+  gap: 0.5rem;
 }
 .sec-step-badge {
   display: inline-flex;
@@ -353,10 +405,10 @@ header {
   justify-content: center;
   padding: 2px 8px;
   border-radius: 999px;
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 900;
   letter-spacing: 0.8px;
-  background: var(--text-dark);
+  background: var(--obsidian);
   color: var(--accent-bright);
   font-variant-numeric: tabular-nums;
 }
@@ -366,67 +418,73 @@ header {
 
 label {
   display: block;
-  font-size: 0.73rem;
+  font-size: 0.71rem;
   font-weight: 800;
   color: var(--text-mid);
   margin-bottom: 0.28rem;
-  letter-spacing: 0.1px;
+  text-transform: uppercase;
+  letter-spacing: 0.35px;
 }
 input, select, textarea {
   width: 100%;
-  padding: 0.62rem 0.78rem;
-  border: 1px solid #ced0d4;
-  border-radius: 10px;
-  font-size: 0.87rem;
+  padding: 0.65rem 0.82rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 11px;
+  font-size: 0.88rem;
+  font-weight: 500;
   background: #ffffff;
   color: var(--text-dark);
   outline: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color 0.16s ease, box-shadow 0.16s ease;
 }
-input[type="number"] { font-variant-numeric: tabular-nums; }
-input::placeholder, textarea::placeholder { color: #94a3b8; }
+input[type="number"] { font-variant-numeric: tabular-nums; font-weight: 700; }
+input::placeholder, textarea::placeholder { color: #94a3b8; font-weight: 400; }
 input:focus, select:focus, textarea:focus {
-  border-color: var(--text-dark);
-  box-shadow: 0 0 0 3px rgba(5, 5, 5, 0.06);
+  border-color: var(--obsidian);
+  box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08);
 }
-select option { background: #ffffff; color: #050505; }
 textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
 
-/* PARTIDAS / CONCEPTOS */
+/* TARJETAS DE PARTIDA CON SUBTOTAL EN VIVO */
 .line-item-card {
   background: #ffffff;
   border: 1px solid var(--line-mid);
-  border-radius: 12px;
-  padding: 0.8rem;
+  border-radius: 13px;
+  padding: 0.82rem;
   margin-bottom: 0.65rem;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 2px 5px rgba(15, 23, 42, 0.02);
 }
 .line-item-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.45rem;
-  font-size: 0.74rem;
+  font-size: 0.72rem;
   color: var(--text-dark);
   font-weight: 900;
   letter-spacing: 0.4px;
   text-transform: uppercase;
 }
-.line-item-bottom {
-  display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: 0.6rem;
-  margin-top: 0.5rem;
-  align-items: end;
+.line-top-right { display: flex; align-items: center; gap: 0.45rem; }
+.line-live-sub {
+  font-size: 0.76rem;
+  font-weight: 900;
+  color: var(--emerald);
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-variant-numeric: tabular-nums;
 }
+.line-item-bottom { display: grid; grid-template-columns: 1fr 1.4fr; gap: 0.6rem; margin-top: 0.5rem; align-items: end; }
 .add-line-btn {
   width: 100%;
   background: #ffffff;
   color: var(--text-dark);
-  border: 1px solid var(--line-mid);
-  padding: 0.68rem;
-  border-radius: 10px;
-  font-size: 0.83rem;
+  border: 1.5px dashed #94a3b8;
+  padding: 0.7rem;
+  border-radius: 12px;
+  font-size: 0.82rem;
   font-weight: 800;
   cursor: pointer;
   margin-top: 0.25rem;
@@ -436,27 +494,23 @@ textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
   gap: 0.4rem;
   transition: all 0.15s ease;
 }
-.add-line-btn:hover { background: var(--surface-pill); }
+.add-line-btn:hover { border-style: solid; border-color: var(--obsidian); background: var(--surface-pill); }
 .cart-remove {
   background: #fef2f2;
-  color: #e41e3f;
-  border: 1px solid #fecaca;
+  color: #e11d48;
+  border: 1px solid #fecdd3;
   border-radius: 7px;
-  padding: 0.24rem 0.5rem;
-  font-size: 0.72rem;
-  font-weight: 800;
+  padding: 0.22rem 0.48rem;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
 }
-.cart-remove:hover { background: #fee2e2; }
 
-/* ZONAS DE CARGA (LOGO Y ADJUNTOS) */
+/* ZONAS DE CARGA */
 .logo-upload-box {
   border: 1px dashed #cbd5e1;
   border-radius: 12px;
-  padding: 0.8rem;
+  padding: 0.78rem;
   text-align: center;
   margin-top: 0.7rem;
   background: #ffffff;
@@ -469,20 +523,14 @@ textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
   border: 1px solid #f59e0b;
   color: #b45309;
   font-weight: 900;
-  font-size: 0.66rem;
+  font-size: 0.64rem;
   letter-spacing: 0.8px;
-  padding: 0.2rem 0.6rem;
+  padding: 0.18rem 0.58rem;
   border-radius: 999px;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.38rem;
   text-transform: uppercase;
 }
-.logo-upload-box input[type="file"] {
-  font-size: 0.76rem;
-  color: var(--text-muted);
-  border: none;
-  padding: 0.25rem;
-  background: transparent;
-}
+.logo-upload-box input[type="file"] { font-size: 0.75rem; color: var(--text-muted); border: none; padding: 0.2rem; background: transparent; }
 .logo-upload-box input[type="file"]::file-selector-button {
   background: var(--surface-pill);
   color: var(--text-dark);
@@ -490,9 +538,9 @@ textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
   border-radius: 8px;
   padding: 0.35rem 0.75rem;
   font-weight: 800;
-  font-size: 0.74rem;
+  font-size: 0.73rem;
   cursor: pointer;
-  margin-right: 0.6rem;
+  margin-right: 0.55rem;
 }
 .logo-id-wrap {
   display: none;
@@ -505,149 +553,118 @@ textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
   border-radius: 10px;
   border: 1px solid #a7f3d0;
 }
-.logo-mini-thumb {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
-  background: #fff;
-  border-radius: 7px;
-  padding: 2px;
-  border: 1px solid var(--line-mid);
-}
-.logo-status-msg {
-  font-size: 0.75rem;
-  color: var(--emerald);
-  font-weight: 800;
-  text-align: left;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-}
+.logo-mini-thumb { width: 40px; height: 40px; object-fit: contain; background: #fff; border-radius: 7px; padding: 2px; border: 1px solid var(--line-mid); }
+.logo-status-msg { font-size: 0.75rem; color: var(--emerald); font-weight: 800; text-align: left; flex: 1; display: flex; align-items: center; gap: 0.35rem; }
 
-/* TARJETA METÁLICA DE BALANCE ESTILO BÓVEDA ARGON */
+/* BÓVEDA DE TITANIO PARA EL BALANCE TOTAL */
 .contractor-numbers-bar {
   background:
-    radial-gradient(circle at 18% 15%, rgba(255, 255, 255, 0.16) 0%, transparent 48%),
-    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.025) 0px, rgba(255, 255, 255, 0.025) 1px, transparent 1px, transparent 4px),
-    linear-gradient(145deg, #242834 0%, #101218 52%, #07080c 100%);
-  border: 1.5px solid rgba(226, 232, 240, 0.35);
-  border-radius: 14px;
-  padding: 0.95rem 1.1rem;
+    radial-gradient(circle at 14% 18%, rgba(251, 191, 36, 0.12) 0%, transparent 45%),
+    linear-gradient(145deg, #1e293b 0%, #0b0f19 60%, #05070c 100%);
+  border: 1.5px solid rgba(226, 232, 240, 0.25);
+  border-radius: 16px;
+  padding: 1rem 1.15rem;
   margin: 0.95rem 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 0.6rem;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 12px 28px rgba(9, 13, 22, 0.2);
 }
 .contractor-numbers-bar strong {
-  font-size: 1.45rem;
+  font-size: 1.55rem;
   font-weight: 900;
   color: var(--emerald-bright);
-  letter-spacing: 0.5px;
+  letter-spacing: -0.02em;
   font-variant-numeric: tabular-nums;
 }
 
 /* BOTONES DE ACCIÓN Y STRIPE */
-.wa-master-btn,
-.email-master-btn,
-.stripe-pay-btn,
-.pro-pass-btn {
+.wa-master-btn, .email-master-btn, .stripe-pay-btn, .pro-pass-btn {
   width: 100%;
-  padding: 0.92rem 1rem;
-  border-radius: 12px;
+  padding: 0.94rem 1rem;
+  border-radius: 13px;
   font-size: 0.88rem;
   font-weight: 800;
-  letter-spacing: 0.2px;
+  letter-spacing: 0.15px;
   cursor: pointer;
-  transition: transform 0.12s ease, background 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.12s ease, box-shadow 0.15s ease;
   text-align: center;
 }
-.wa-master-btn .ico-stroke,
-.email-master-btn .ico-stroke,
-.stripe-pay-btn .ico-stroke,
-.pro-pass-btn .ico-stroke {
-  margin-right: 0.45rem;
-  vertical-align: -4px;
-}
-.wa-master-btn:active,
-.email-master-btn:active,
-.stripe-pay-btn:active,
-.pro-pass-btn:active {
-  transform: scale(0.985);
-}
+.wa-master-btn .ico-stroke, .email-master-btn .ico-stroke, .stripe-pay-btn .ico-stroke, .pro-pass-btn .ico-stroke { margin-right: 0.45rem; vertical-align: -4px; }
+.wa-master-btn:active, .email-master-btn:active, .stripe-pay-btn:active, .pro-pass-btn:active { transform: scale(0.985); }
 
 .wa-master-btn {
-  background: #059669;
+  background: linear-gradient(180deg, #10b981 0%, #059669 100%);
   color: #ffffff;
   border: 1px solid #047857;
   margin-top: 0.4rem;
-  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.22);
+  box-shadow: 0 6px 18px rgba(5, 150, 105, 0.26);
 }
-.email-master-btn {
-  background: #1877f2;
-  color: #ffffff;
-  border: 1px solid #1877f2;
-  margin-top: 0.55rem;
-  display: none;
-}
-.stripe-pay-btn {
-  background: var(--surface-pill);
-  color: var(--text-dark);
-  border: 1px solid var(--line-mid);
-  margin-top: 0.55rem;
-  display: none;
-}
+.email-master-btn { background: #2563eb; color: #ffffff; border: 1px solid #1d4ed8; margin-top: 0.55rem; display: none; }
+.stripe-pay-btn { background: var(--surface-pill); color: var(--text-dark); border: 1px solid var(--line-mid); margin-top: 0.55rem; display: none; }
 .pro-pass-btn {
-  background: linear-gradient(135deg, #1e293b 0%, #090a0f 100%);
+  background: linear-gradient(135deg, #1e293b 0%, #090d16 100%);
   color: #ffffff;
   border: 1.5px solid var(--accent-bright);
   margin-top: 0.6rem;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 20px rgba(9, 13, 22, 0.16);
 }
+.stripe-note { text-align: center; font-size: 0.73rem; color: var(--text-muted); margin-top: 0.6rem; line-height: 1.45; display: flex; align-items: center; justify-content: center; gap: 0.35rem; }
 
-.stripe-note {
-  text-align: center;
-  font-size: 0.73rem;
-  color: var(--text-muted);
-  margin-top: 0.6rem;
-  line-height: 1.45;
-  display: flex;
-  align-items: center;
+/* HISTORIAL */
+.history-card { background: var(--surface-card); padding: 1.2rem; border-radius: 20px; margin-top: 1.15rem; border: 1px solid var(--line-mid); box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04); }
+.history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
+.history-header h3 { font-size: 0.92rem; color: var(--text-dark); font-weight: 900; display: flex; align-items: center; gap: 0.45rem; }
+.clear-btn { background: #fef2f2; border: 1px solid #fecdd3; color: #e11d48; padding: 0.28rem 0.68rem; border-radius: 999px; font-size: 0.72rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 0.3rem; }
+.hist-search-input { width: 100%; margin-bottom: 0.8rem; background: var(--surface-subtle); border: 1px solid var(--line-mid); padding: 0.58rem 0.78rem; border-radius: 10px; font-size: 0.83rem; }
+.history-list { list-style: none; font-size: 0.82rem; color: var(--text-mid); }
+.history-list li { padding: 0.68rem 0; border-bottom: 1px solid var(--surface-pill); display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.history-list li:last-child { border-bottom: none; }
+.hist-btn-group { display: flex; gap: 0.4rem; align-items: center; }
+.hist-open-btn { background: var(--surface-pill); color: var(--text-dark); border: 1px solid var(--line-mid); padding: 0.36rem 0.68rem; border-radius: 8px; font-size: 0.74rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 0.3rem; }
+.hist-pdf-btn { background: #ecfdf5; color: var(--emerald); border: 1px solid #a7f3d0; padding: 0.36rem 0.68rem; border-radius: 8px; font-size: 0.74rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 0.3rem; }
+
+/* MODAL DE VISTA PREVIA CON BLINDAJE ANTI-SCREENSHOT */
+.doc-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 8, 15, 0.78);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+  display: none;
   justify-content: center;
-  gap: 0.35rem;
+  align-items: flex-start;
+  padding: 0.9rem 0.65rem;
+  padding-left: max(0.65rem, env(safe-area-inset-left));
+  padding-right: max(0.65rem, env(safe-area-inset-right));
+  z-index: 9999;
+  overflow-y: auto;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
 }
-
-/* HISTORIAL EN TARJETA BLANCA DE 1PX */
-.history-card {
-  background: var(--surface-card);
-  padding: 1.2rem;
-  border-radius: 16px;
-  margin-top: 1.15rem;
+.doc-modal-container { width: 100%; max-width: 730px; margin: 0 auto 2rem; }
+.doc-modal-topbar {
+  background: #ffffff;
   border: 1px solid var(--line-mid);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-}
-.history-header {
+  border-radius: 14px;
+  padding: 0.6rem 0.78rem;
+  margin-bottom: 0.75rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.8rem;
-}
-.history-header h3 {
-  font-size: 0.92rem;
-  color: var(--text-dark);
-  font-weight: 900;
-  display: flex;
-  align-items: center;
+  flex-wrap: wrap;
   gap: 0.45rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
 }
-.clear-btn {
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  color: #e41e3f;
-  padding: 0.28rem 0.68rem;
+.sample-switch-group { display: flex; gap: 0.35rem; flex-wrap: wrap; align-items: center; }
+.sample-type-btn {
+  background: var(--surface-pill);
+  color: var(--text-mid);
+  border: 1px solid var(--line-mid);
+  padding: 0.36rem 0.65rem;
   border-radius: 999px;
   font-size: 0.72rem;
   font-weight: 800;
@@ -656,134 +673,66 @@ textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
   align-items: center;
   gap: 0.3rem;
 }
-.hist-search-input {
-  width: 100%;
-  margin-bottom: 0.8rem;
-  background: var(--surface-pill);
-  color: var(--text-dark);
-  border: 1px solid var(--line-mid);
-  padding: 0.58rem 0.78rem;
-  border-radius: 10px;
-  font-size: 0.83rem;
-}
-.history-list { list-style: none; font-size: 0.82rem; color: var(--text-mid); }
-.history-list li {
-  padding: 0.68rem 0;
-  border-bottom: 1px solid var(--surface-pill);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-.history-list li:last-child { border-bottom: none; }
-.hist-btn-group { display: flex; gap: 0.4rem; align-items: center; }
-.hist-open-btn {
-  background: var(--surface-pill);
-  color: var(--text-dark);
-  border: 1px solid var(--line-mid);
-  padding: 0.36rem 0.68rem;
-  border-radius: 8px;
-  font-size: 0.74rem;
-  font-weight: 800;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-}
-.hist-pdf-btn {
-  background: #ecfdf5;
-  color: var(--emerald);
-  border: 1px solid #a7f3d0;
-  padding: 0.36rem 0.68rem;
-  border-radius: 8px;
-  font-size: 0.74rem;
-  font-weight: 800;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-}
+.sample-type-btn.live-tab { border-color: #a7f3d0; background: #ecfdf5; color: #065f46; }
+.sample-type-btn.active { background: var(--obsidian); color: #ffffff; border-color: var(--obsidian); }
+.close-modal-x { background: #e2e8f0; color: var(--text-dark); border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
-/* VISTA PREVIA DEL DOCUMENTO PDF */
-.doc-modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(5, 7, 12, 0.72);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  display: none;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 1rem 0.65rem;
-  padding-left: max(0.65rem, env(safe-area-inset-left));
-  padding-right: max(0.65rem, env(safe-area-inset-right));
-  z-index: 9999;
-  overflow-y: auto;
-}
-.doc-modal-container { width: 100%; max-width: 720px; margin: 0 auto 2rem; }
-.doc-modal-topbar {
-  background: #ffffff;
-  border: 1px solid var(--line-mid);
-  border-radius: 14px;
-  padding: 0.65rem 0.85rem;
-  margin-bottom: 0.75rem;
-  color: var(--text-dark);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-}
-.sample-switch-group { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-.sample-type-btn {
-  background: var(--surface-pill);
-  color: var(--text-mid);
-  border: 1px solid var(--line-mid);
-  padding: 0.38rem 0.68rem;
-  border-radius: 999px;
-  font-size: 0.73rem;
-  font-weight: 800;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.32rem;
-  transition: all 0.15s ease;
-}
-.sample-type-btn.active {
-  background: var(--text-dark);
-  color: #ffffff;
-  border-color: var(--text-dark);
-}
-.close-modal-x {
-  background: #e4e6eb;
-  color: var(--text-dark);
-  border: none;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  font-weight: 900;
-  font-size: 0.8rem;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* HOJA DE PAPEL DE VISTA PREVIA */
+/* HOJA DE PAPEL EJECUTIVA + CAPAS DE MARCA DE AGUA */
 .luxury-paper-sheet {
-  background: #fff;
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
   color: #0f172a;
   border-radius: 12px;
   padding: 1.35rem;
   border-top: 5px solid #0f172a;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.4);
 }
+.wm-mesh-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+  background-repeat: repeat;
+  background-size: 230px 135px;
+}
+.wm-diagonal-stamp {
+  position: absolute;
+  left: 50%;
+  bottom: 82px;
+  transform: translateX(-50%) rotate(-11deg);
+  z-index: 7;
+  pointer-events: none;
+  border: 2.5px solid rgba(220, 38, 38, 0.55);
+  background: rgba(255, 255, 255, 0.76);
+  color: rgba(185, 28, 28, 0.86);
+  padding: 0.42rem 1rem;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+@media (max-width: 480px) {
+  .wm-diagonal-stamp { font-size: 0.62rem; padding: 0.35rem 0.65rem; white-space: normal; width: 88%; }
+}
+.preview-unlock-bar {
+  margin-top: 0.75rem;
+  background: #0b0f19;
+  border: 1px solid rgba(251, 191, 36, 0.45);
+  border-radius: 14px;
+  padding: 0.75rem;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
 .lux-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1.5px solid #0f172a; padding-bottom: 0.8rem; margin-bottom: 0.85rem; gap: 0.8rem; flex-wrap: wrap; }
 .lux-brand { display: flex; align-items: center; gap: 0.75rem; }
-.lux-logo-box { width: 60px; height: 60px; background: #ffffff; border: none; border-radius: 0; overflow: visible; flex-shrink: 0; }
-.lux-logo-box img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
+.lux-logo-box { width: 58px; height: 58px; background: #ffffff; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.lux-logo-box img { width: 100%; height: 100%; object-fit: contain; }
 .lux-badge-box { background: #f8fafc; border: 1px solid #cbd5e1; border-right: 3px solid #eab308; padding: 0.5rem 0.8rem; border-radius: 8px; text-align: right; }
 .lux-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin: 0.75rem 0; font-variant-numeric: tabular-nums; }
 .lux-table th { background: #0f172a; color: #fff; padding: 0.45rem 0.65rem; text-align: left; }
@@ -796,27 +745,25 @@ textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
 .lux-sign-line { border-top: 1px solid #0f172a; padding-top: 0.28rem; font-weight: 700; display: flex; align-items: center; gap: 0.3rem; }
 .lux-viral-footer { text-align: center; font-size: 0.7rem; color: #64748b; margin-top: 0.85rem; padding-top: 0.45rem; border-top: 1px dashed #cbd5e1; font-weight: 700; }
 
-footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margin-top: 2rem; letter-spacing: 0.2px; }
+footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margin-top: 2rem; }
 
-/* ADAPTACIÓN AUTOMÁTICA AL VIRAR EL TELÉFONO EN HORIZONTAL (LANDSCAPE) */
+/* ADAPTACIÓN HORIZONTAL AL VIRAR EL TELÉFONO (LANDSCAPE) */
 @media screen and (orientation: landscape) and (max-height: 600px) {
-  header { padding-top: 0.42rem; padding-bottom: 0.42rem; }
-  .brand-icon { width: 42px; height: 42px; }
-  .logo-main { font-size: 1.08rem; }
-  .logo-sub { font-size: 0.58rem; }
-  .top-bar, .container { max-width: 980px; }
+  header { padding-top: 0.35rem; padding-bottom: 0.35rem; }
+  .brand-icon { width: 40px; height: 40px; }
+  .logo-main { font-size: 1.06rem; }
+  .header-inner, .container { max-width: 980px; }
   .container { margin: 0.65rem auto; }
   .builder-card { padding: 0.95rem; }
   .mb-section { padding: 0.85rem; margin-bottom: 0.75rem; }
   .price-grid { grid-template-columns: 1fr 1fr; }
   .line-item-bottom { grid-template-columns: 1fr 1.6fr; }
   .ios-install-sheet { align-items: center; }
-  .ios-sheet-card { max-height: 88vh; overflow-y: auto; margin-bottom: 0; }
+  .ios-sheet-card { max-height: 88vh; overflow-y: auto; }
   .doc-modal-container { max-width: 880px; }
 }
-
 @media screen and (orientation: landscape) and (min-width: 840px) {
-  .top-bar, .container { max-width: 1080px; }
+  .header-inner, .container { max-width: 1080px; }
   .doc-modal-container { max-width: 920px; }
 }
 </style>
@@ -845,45 +792,84 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
     <symbol id="ico-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol>
     <symbol id="ico-home" viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5.5v-6h-5v6H4a1 1 0 0 1-1-1v-9.5z"/></symbol>
     <symbol id="ico-vault" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><line x1="2" y1="10" x2="22" y2="10"/><line x1="6" y1="15" x2="10" y2="15"/></symbol>
+    <symbol id="ico-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+    <symbol id="ico-chev" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></symbol>
+    <symbol id="ico-truck" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13" rx="1"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></symbol>
+    <symbol id="ico-tool" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></symbol>
   </defs>
 </svg>
 
 <header>
-  <div class="top-bar">
-    <div class="brand-logo">
-      <div class="brand-icon">
-        <img src="1793842789444.jpg" alt="Mr. Invoice Pro" class="brand-mascot-img">
+  <div class="header-inner">
+    <div class="top-bar">
+      <div class="brand-logo">
+        <div class="brand-icon">
+          <img src="1793842789444.jpg" alt="Mr. Invoice Pro" class="brand-mascot-img">
+        </div>
+        <div style="min-width:0;">
+          <div class="logo-main">Mr. <span>Invoice</span> Pro</div>
+          <div class="logo-sub" id="ui-sub">Estimados, Facturas y Contratos PDF</div>
+        </div>
       </div>
-      <div>
-        <div class="logo-main">Mr. <span>Invoice</span> Pro</div>
-        <div class="logo-sub" id="ui-sub">Estimados, Facturas y Contratos PDF</div>
-      </div>
-    </div>
-    <div class="top-actions">
-      <button type="button" class="install-top-btn" id="installPwaBtn" onclick="installPWA()">
-        <svg class="ico-stroke-sm ico-gold-bright"><use href="#ico-download"></use></svg>
-        <span id="ui-install-btn">Instalar App</span>
+
+      <button type="button" class="suite-trigger-btn" onclick="openSuiteDrawer()">
+        <svg class="ico-stroke-sm ico-gold-bright"><use href="#ico-grid"></use></svg>
+        <span id="ui-suite-btn">Plantillas</span>
+        <span class="suite-count-pill">12</span>
+        <svg class="ico-stroke-sm" style="width:13px;height:13px;opacity:0.8;"><use href="#ico-chev"></use></svg>
       </button>
-      <select class="curr-select" id="currSelect" onchange="changeCurrency(this.value)">
-        <option value="USD">USD ($)</option>
-        <option value="EUR">EUR (€)</option>
-        <option value="PLN">PLN (zł)</option>
-        <option value="BRL">BRL (R$)</option>
-        <option value="DOP">DOP (RD$)</option>
-        <option value="MXN">MXN ($)</option>
-        <option value="COP">COP ($)</option>
-      </select>
-      <select class="lang-select" id="langSelect" onchange="changeLang(this.value)">
-        <option value="es">ES</option>
-        <option value="en">EN</option>
-        <option value="fr">FR</option>
-        <option value="pl">PL</option>
-        <option value="pt">PT</option>
-      </select>
+    </div>
+
+    <div class="sub-control-bar">
+      <button type="button" class="active-doc-chip" onclick="openSuiteDrawer()">
+        <span class="chip-code" id="headerActiveCode">EST</span>
+        <span id="headerActiveDocName" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:175px;">Estimado / Cotización</span>
+        <svg class="ico-stroke-sm" style="width:13px;height:13px;color:#64748b;"><use href="#ico-chev"></use></svg>
+      </button>
+
+      <div class="top-actions">
+        <button type="button" class="install-top-btn" id="installPwaBtn" onclick="installPWA()">
+          <svg class="ico-stroke-sm ico-gold-bright" style="width:13px;height:13px;"><use href="#ico-download"></use></svg>
+          <span id="ui-install-btn">App</span>
+        </button>
+        <select class="curr-select" id="currSelect" onchange="changeCurrency(this.value)">
+          <option value="USD">USD ($)</option>
+          <option value="EUR">EUR (€)</option>
+          <option value="PLN">PLN (zł)</option>
+          <option value="BRL">BRL (R$)</option>
+          <option value="DOP">DOP (RD$)</option>
+          <option value="MXN">MXN ($)</option>
+          <option value="COP">COP ($)</option>
+        </select>
+        <select class="lang-select" id="langSelect" onchange="changeLang(this.value)">
+          <option value="es">ES</option>
+          <option value="en">EN</option>
+          <option value="fr">FR</option>
+          <option value="pl">PL</option>
+          <option value="pt">PT</option>
+        </select>
+      </div>
     </div>
   </div>
 </header>
 
+<!-- PANEL EJECUTIVO DE LA SUITE DE 12 DOCUMENTOS -->
+<div class="suite-drawer-overlay" id="suiteDrawerOverlay" onclick="if(event.target===this)closeSuiteDrawer()">
+  <div class="suite-drawer-panel">
+    <div class="suite-drawer-head">
+      <div>
+        <div style="font-size:0.65rem;color:#fbbf24;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;">MR. INVOICE PRO</div>
+        <div style="font-size:1rem;font-weight:900;margin-top:2px;" id="ui-suite-title">Suite Oficial de Documentos</div>
+      </div>
+      <button type="button" class="close-modal-x" onclick="closeSuiteDrawer()">
+        <svg class="ico-stroke-sm"><use href="#ico-x"></use></svg>
+      </button>
+    </div>
+    <div class="suite-drawer-body" id="suiteDrawerBody"></div>
+  </div>
+</div>
+
+<!-- MODAL INSTALACIÓN IOS -->
 <div class="ios-install-sheet" id="iosInstallSheet" onclick="if(event.target===this)closeIosInstallSheet()">
   <div class="ios-sheet-card">
     <div class="ios-sheet-head">
@@ -915,30 +901,30 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
 
 <div class="container">
   <div class="builder-card">
+    <input type="hidden" id="qb-doctype" value="quote">
+
     <div class="mb-header">
-      <h2 id="ui-h2"><svg class="ico-stroke ico-gold"><use href="#ico-doc"></use></svg><span>Crear Documento Oficial o Contrato (PDF)</span></h2>
+      <h2 id="ui-h2" onclick="openSuiteDrawer()" style="cursor:pointer;">
+        <svg class="ico-stroke ico-gold"><use href="#ico-doc"></use></svg>
+        <span>Estimado / Cotización Oficial</span>
+      </h2>
       <button type="button" class="reset-zero-btn" id="ui-reset" onclick="resetBuilderToZero()">
         <svg class="ico-stroke-sm"><use href="#ico-sync"></use></svg><span>Limpiar ($0.00)</span>
       </button>
     </div>
 
     <button type="button" class="open-sample-btn" id="ui-sample-btn" onclick="openDocPreviewModal()">
+      <span class="live-pulse-dot"></span>
       <svg class="ico-stroke ico-gold"><use href="#ico-eye"></use></svg>
-      <span>Ver Ejemplo de Cómo Queda el PDF Final</span>
+      <span>Vista Previa en Vivo y Ejemplos PDF</span>
     </button>
 
     <div class="mb-section">
-      <div class="mb-sec-title" id="ui-sec1"><span class="sec-step-badge">01</span><span>Tipo de Documento y Datos de las Partes</span></div>
+      <div class="mb-sec-title" id="ui-sec1"><span class="sec-step-badge">01</span><span>Datos de las Partes y Numeración</span></div>
       <div class="price-grid">
         <div>
-          <label id="ui-lbl-doctype">Tipo de Documento Oficial</label>
-          <select id="qb-doctype" onchange="recalcMasterTotals()">
-            <option value="quote">Estimado / Cotización Oficial</option>
-            <option value="invoice">Factura / Invoice Oficial</option>
-            <option value="billsale">Contrato de Compraventa (Bill of Sale)</option>
-            <option value="contract">Contrato de Servicios / Obra</option>
-            <option value="lease">Contrato de Alquiler / Renta (Lease)</option>
-          </select>
+          <label id="lbl-comp">EMISOR / NEGOCIO:</label>
+          <input type="text" id="qb-comp" placeholder="ASD Building Solutions LLC" oninput="recalcMasterTotals()">
         </div>
         <div>
           <label id="ui-lbl-docnum">Número de Documento (#)</label>
@@ -947,21 +933,18 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
       </div>
       <div class="price-grid" style="margin-top:0.65rem;">
         <div>
-          <label id="lbl-comp">Nombre de tu Negocio / Emisor</label>
-          <input type="text" id="qb-comp" placeholder="ASD Building Solutions LLC" oninput="recalcMasterTotals()">
-        </div>
-        <div>
           <label id="lbl-phone">Teléfono / Licencia / ID</label>
           <input type="text" id="qb-phone" placeholder="(787) 000-0000" oninput="recalcMasterTotals()">
         </div>
+        <div>
+          <label id="lbl-client">CLIENTE:</label>
+          <input type="text" id="qb-client" placeholder="Nombre - Dirección - Teléfono" oninput="recalcMasterTotals()">
+        </div>
       </div>
-      <div style="margin-top:0.65rem;">
-        <label id="lbl-client">Cliente / Comprador y Dirección</label>
-        <input type="text" id="qb-client" placeholder="Nombre - Dirección - Teléfono" oninput="recalcMasterTotals()">
-      </div>
+
       <div class="logo-upload-box">
         <div class="logo-pic-badge"><svg class="ico-stroke-sm" style="width:12px;height:12px;"><use href="#ico-camera"></use></svg><span>LOGO PICTURE</span></div>
-        <label style="color:#050505;font-size:0.78rem;display:flex;align-items:center;justify-content:center;gap:0.38rem;" id="ui-lbl-logo">
+        <label style="color:#050505;font-size:0.76rem;text-transform:none;display:flex;align-items:center;justify-content:center;gap:0.38rem;" id="ui-lbl-logo">
           <svg class="ico-stroke-sm ico-gold"><use href="#ico-camera"></use></svg><span>Sube aquí el Logo de tu Negocio (Opcional)</span>
         </label>
         <input type="file" id="qb-logo-input" accept="image/*" onchange="handleLogoUpload(this)">
@@ -975,16 +958,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
 
     <div class="mb-section">
       <div class="mb-sec-title" id="ui-sec2"><span class="sec-step-badge">02</span><span>Descripción, Bienes, Medidas o Servicios</span></div>
-      <div id="customLinesContainer">
-        <div class="line-item-card">
-          <div class="line-item-top"><span>Partida #1</span></div>
-          <textarea class="cl-desc" placeholder="Descripción detallada (ej. Vehículo/VIN, Propiedad, Servicios o Materiales)..." oninput="recalcMasterTotals()"></textarea>
-          <div class="line-item-bottom">
-            <div><label>Cantidad</label><input type="number" step="any" class="cl-qty" value="1" oninput="recalcMasterTotals()"></div>
-            <div><label>Precio Unitario</label><input type="number" step="any" class="cl-price" placeholder="0.00" value="" oninput="recalcMasterTotals()"></div>
-          </div>
-        </div>
-      </div>
+      <div id="customLinesContainer"></div>
       <button type="button" class="add-line-btn" id="ui-add-line" onclick="addCustomLine('','1','')">
         <svg class="ico-stroke-sm"><use href="#ico-plus"></use></svg><span>Añadir Otra Línea / Concepto</span>
       </button>
@@ -1007,7 +981,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
         <textarea id="qb-notes" oninput="recalcMasterTotals()"></textarea>
       </div>
       <div class="logo-upload-box">
-        <label style="color:#050505;font-size:0.78rem;display:flex;align-items:center;justify-content:center;gap:0.38rem;" id="ui-lbl-attach">
+        <label style="color:#050505;font-size:0.76rem;text-transform:none;display:flex;align-items:center;justify-content:center;gap:0.38rem;" id="ui-lbl-attach">
           <svg class="ico-stroke-sm ico-gold"><use href="#ico-clip"></use></svg><span>Adjuntar Foto, ID o Documento en 2da Página (Opcional)</span>
         </label>
         <input type="file" id="qb-hw-input" accept="image/*" onchange="handleHwQuoteUpload(this)">
@@ -1017,7 +991,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
           <button type="button" class="cart-remove" onclick="clearHwAttachment()"><svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-x"></use></svg></button>
         </div>
         <div style="margin-top:0.35rem;font-size:0.74rem;">
-          <label style="display:inline-flex;align-items:center;color:#334155;cursor:pointer;">
+          <label style="display:inline-flex;align-items:center;color:#334155;cursor:pointer;text-transform:none;">
             <input type="checkbox" id="qb-hw-print-attach" style="width:auto;margin-right:0.4rem;accent-color:#059669;">
             <span id="ui-lbl-attach-chk">Incluir imagen en 2da página del PDF</span>
           </label>
@@ -1026,8 +1000,8 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
 
       <div class="contractor-numbers-bar">
         <div>
-          <div style="font-size:0.68rem;color:#94a3b8;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;" id="ui-bal-lbl">BALANCE TOTAL:</div>
-          <div id="contractorSummaryLine" style="font-size:0.82rem;color:#e2e8f0;margin-top:2px;font-variant-numeric:tabular-nums;">Total: $0.00</div>
+          <div style="font-size:0.66rem;color:#94a3b8;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;" id="ui-bal-lbl">BALANCE TOTAL:</div>
+          <div id="contractorSummaryLine" style="font-size:0.81rem;color:#e2e8f0;margin-top:3px;font-variant-numeric:tabular-nums;">Total: $0.00</div>
         </div>
         <strong id="contractorBigTotal">$0.00</strong>
       </div>
@@ -1054,11 +1028,16 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
   </div>
 </div>
 
-<div class="doc-modal-overlay" id="docPreviewModal" onclick="if(event.target===this)closeDocPreviewModal()">
+<!-- VISTA PREVIA EN VIVO + EJEMPLOS CON BLINDAJE -->
+<div class="doc-modal-overlay" id="docPreviewModal" oncontextmenu="return false;" onclick="if(event.target===this)closeDocPreviewModal()">
   <div class="doc-modal-container">
     <div class="doc-modal-topbar">
       <div class="sample-switch-group">
-        <button type="button" class="sample-type-btn active" onclick="renderModalSheet('quote')">
+        <button type="button" class="sample-type-btn live-tab active" onclick="renderModalSheet('live')">
+          <span class="live-pulse-dot" style="width:6px;height:6px;"></span>
+          <span id="ui-live-tab">Mi Documento</span>
+        </button>
+        <button type="button" class="sample-type-btn" onclick="renderModalSheet('quote')">
           <svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-doc"></use></svg><span>Quote</span>
         </button>
         <button type="button" class="sample-type-btn" onclick="renderModalSheet('invoice')">
@@ -1076,6 +1055,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
       </button>
     </div>
     <div class="luxury-paper-sheet" id="modalPaperContent"></div>
+    <div class="preview-unlock-bar" id="modalBottomCta"></div>
   </div>
 </div>
 
@@ -1101,6 +1081,27 @@ const CURRENCIES = {
   COP: { sym: '$', pdfSym: 'COP $', dec: 0 }
 };
 
+const SUITE_CATEGORIES = [
+  { key: 'cat1', items: [
+    { id: 'quote', ico: 'ico-doc' },
+    { id: 'invoice', ico: 'ico-vault' },
+    { id: 'receipt', ico: 'ico-check' },
+    { id: 'promissory', ico: 'ico-calendar' }
+  ]},
+  { key: 'cat2', items: [
+    { id: 'billsale', ico: 'ico-shield' },
+    { id: 'contract', ico: 'ico-edit' },
+    { id: 'lease', ico: 'ico-home' },
+    { id: 'waiver', ico: 'ico-lock' }
+  ]},
+  { key: 'cat3', items: [
+    { id: 'change', ico: 'ico-sync' },
+    { id: 'workorder', ico: 'ico-tool' },
+    { id: 'po', ico: 'ico-folder' },
+    { id: 'delivery', ico: 'ico-truck' }
+  ]}
+];
+
 function escapeHtml(str) {
   return String(str ?? '')
     .replace(/&/g, '&amp;')
@@ -1125,14 +1126,19 @@ function svgIco(id, extraCls) {
 
 const I18N = {
   es: {
-    installBtn: "Instalar App", iosSub: "App Oficial para iPhone / iPad",
+    suiteBtn: "Plantillas", suiteTitle: "Suite Oficial de Documentos",
+    cat1: "Facturación y Cobros", cat2: "Contratos Legales", cat3: "Operaciones y Campo",
+    liveTab: "Mi Documento",
+    wmTile: "BORRADOR • SIN VALIDEZ • MRINVOICEPRO.COM",
+    wmStamp: "VISTA PREVIA PROTEGIDA — DESBLOQUEA EL PDF OFICIAL",
+    installBtn: "App", iosSub: "App Oficial para iPhone / iPad",
     iosS1: 'Toca los <strong>3 puntitos (•••)</strong> o el botón <strong>Compartir</strong> en la barra inferior de tu iPhone.',
     iosS2: 'Selecciona <strong>"Agregar a inicio"</strong> (Add to Home Screen) y toca <strong>Agregar</strong> arriba a la derecha.',
     iosDone: "Listo, ya la agregué a mi inicio", attOk: "Imagen 2da Pág. Lista",
-    sub: "Estimados, Facturas y Contratos PDF", h2: "Crear Documento Oficial o Contrato (PDF)", reset: "Limpiar ($0.00)",
-    sampleBtn: "Ver Ejemplo de Cómo Queda el PDF Final", sec1: "Tipo de Documento y Datos de las Partes",
-    docType: "Tipo de Documento Oficial", docNum: "Número de Documento (#)", comp: "Nombre de tu Negocio / Emisor",
-    phone: "Teléfono / Licencia / ID", client: "Cliente / Comprador y Dirección", clientPh: "Nombre - Dirección - Teléfono", logo: "Sube aquí el Logo de tu Negocio (Opcional)",
+    sub: "Estimados, Facturas y Contratos PDF", reset: "Limpiar ($0.00)",
+    sampleBtn: "Vista Previa en Vivo y Ejemplos PDF", sec1: "Datos de las Partes y Numeración",
+    docNum: "Número de Documento (#)", phone: "Teléfono / Licencia / ID",
+    clientPh: "Nombre - Dirección - Teléfono", logo: "Sube aquí el Logo de tu Negocio (Opcional)",
     sec2: "Descripción, Bienes, Medidas o Servicios", addLine: "Añadir Otra Línea / Concepto",
     sec3: "Impuestos, Depósito, Condiciones y Envío PDF", tax: "Impuestos / Tax ($)", dep: "Depósito / Abono Pagado ($)",
     notes: "Notas, Garantía o Condiciones Especiales", attach: "Adjuntar Foto, ID o Documento en 2da Página",
@@ -1140,10 +1146,10 @@ const I18N = {
     histSearch: "Buscar por cliente, # de documento o fecha...", openBtn: "Abrir", pdfBtn: "PDF",
     qty: "Cantidad", price: "Precio Unitario", itemLbl: "Partida #", descPh: "Descripción detallada (ej. Vehículo/VIN, Propiedad, Servicios o Materiales)...",
     waPaid: "Enviar PDF Oficial por WhatsApp", emailPaid: "Enviar PDF Oficial por Email", dlPaid: "Descargar / Guardar PDF en mi Teléfono",
-    waLock: "Desbloquear, Descargar y Enviar PDF por WhatsApp / Email ($1.99)",
+    waLock: "Desbloquear PDF Oficial Sin Marca de Agua ($1.99)",
     proPassBtn: "Pase Pro Ilimitado para Contratistas y Negocios ($9.99/mes)",
-    notePaid: "Acceso Activo: Puedes enviar tu PDF por WhatsApp, Email o guardarlo en tu teléfono",
-    noteLock: "Un solo pago de $1.99 incluye descarga con tu logo, envío por WhatsApp/Email y guardado en tu récord",
+    notePaid: "Acceso Activo: Puedes enviar tu PDF limpio por WhatsApp, Email o guardarlo",
+    noteLock: "Un solo pago de $1.99 quita la marca de agua, incluye tu logo y guarda en tu récord",
     pdfViralFooter: "Documento Oficial generado con Mr. Invoice Pro - Crea tus Estimados, Facturas y Contratos en: mrinvoicepro.com",
     emailBodyTpl: "Adjunto encontrará su {BADGE} ({NUM}) emitido por {COMP} por un balance de {TOTAL}.",
     dateLbl: "Fecha", accept: "ACEPTO", decline: "NO ACEPTO", remBal: "BALANCE PENDIENTE", paidAmt: "MONTO ABONADO / PAGADO",
@@ -1163,14 +1169,19 @@ const I18N = {
     }
   },
   en: {
-    installBtn: "Install App", iosSub: "Official App for iPhone / iPad",
+    suiteBtn: "Templates", suiteTitle: "Official Document Suite",
+    cat1: "Billing & Collections", cat2: "Legal Contracts", cat3: "Field & Operations",
+    liveTab: "My Live Doc",
+    wmTile: "DRAFT PREVIEW • NOT VALID • MRINVOICEPRO.COM",
+    wmStamp: "PROTECTED PREVIEW — UNLOCK OFFICIAL PDF",
+    installBtn: "App", iosSub: "Official App for iPhone / iPad",
     iosS1: 'Tap the <strong>3 dots (•••)</strong> or the <strong>Share</strong> button on your iPhone bottom bar.',
     iosS2: 'Select <strong>"Add to Home Screen"</strong> and tap <strong>Add</strong> at the top right.',
     iosDone: "Done, added to Home Screen", attOk: "Page 2 Image Ready",
-    sub: "Official PDF Estimates, Invoices & Contracts", h2: "Create Official Document or Contract (PDF)", reset: "Clear ($0.00)",
-    sampleBtn: "View Sample of Final PDF Format", sec1: "Document Type & Party Details",
-    docType: "Official Document Type", docNum: "Document Number (#)", comp: "Your Business / Issuer Name",
-    phone: "Phone / License / ID", client: "Client / Buyer Name & Address", clientPh: "Name - Address - Phone", logo: "Upload Business Logo (Optional)",
+    sub: "Official PDF Estimates, Invoices & Contracts", reset: "Clear ($0.00)",
+    sampleBtn: "Live Preview & Sample PDFs", sec1: "Party Details & Numbering",
+    docNum: "Document Number (#)", phone: "Phone / License / ID",
+    clientPh: "Name - Address - Phone", logo: "Upload Business Logo (Optional)",
     sec2: "Description, Goods, Measurements or Services", addLine: "Add Another Line Item",
     sec3: "Taxes, Deposit, Terms & Send PDF", tax: "Taxes / Fees ($)", dep: "Deposit / Amount Paid ($)",
     notes: "Notes, Warranty or Special Terms", attach: "Attach Photo, ID or Doc on 2nd Page",
@@ -1178,10 +1189,10 @@ const I18N = {
     histSearch: "Search by client, doc # or date...", openBtn: "Open", pdfBtn: "PDF",
     qty: "Quantity", price: "Unit Price", itemLbl: "Item #", descPh: "Detailed description (e.g. Vehicle/VIN, Property, Services or Materials)...",
     waPaid: "Send Official PDF via WhatsApp", emailPaid: "Send Official PDF via Email", dlPaid: "Download / Save PDF to Phone",
-    waLock: "Unlock, Download & Send PDF via WhatsApp / Email ($1.99)",
+    waLock: "Unlock Watermark-Free Official PDF ($1.99)",
     proPassBtn: "Unlimited Pro Pass for Contractors & Pros ($9.99/mo)",
-    notePaid: "Access Active: Send your PDF via WhatsApp, Email or save it to your phone",
-    noteLock: "A single $1.99 payment includes logo download, WhatsApp/Email sharing & record storage",
+    notePaid: "Access Active: Send your clean PDF via WhatsApp, Email or save it",
+    noteLock: "A single $1.99 payment removes watermarks, includes your logo & saves to record",
     pdfViralFooter: "Official Document generated with Mr. Invoice Pro - Create Estimates, Invoices & Contracts at: mrinvoicepro.com",
     emailBodyTpl: "Please find attached your {BADGE} ({NUM}) issued by {COMP} with a balance of {TOTAL}.",
     dateLbl: "Date", accept: "I ACCEPT", decline: "DECLINE", remBal: "REMAINING BALANCE", paidAmt: "AMOUNT PAID / DEPOSIT",
@@ -1201,14 +1212,19 @@ const I18N = {
     }
   },
   fr: {
-    installBtn: "Installer l'App", iosSub: "App Officielle pour iPhone / iPad",
+    suiteBtn: "Modèles", suiteTitle: "Suite Officielle de Documents",
+    cat1: "Facturation & Paiements", cat2: "Contrats Juridiques", cat3: "Opérations & Terrain",
+    liveTab: "Mon Document",
+    wmTile: "APERÇU • SANS VALEUR • MRINVOICEPRO.COM",
+    wmStamp: "APERÇU PROTÉGÉ — DÉBLOQUER LE PDF OFFICIEL",
+    installBtn: "App", iosSub: "App Officielle pour iPhone / iPad",
     iosS1: 'Appuyez sur le bouton <strong>Partager</strong> dans la barre inférieure de votre iPhone.',
     iosS2: 'Sélectionnez <strong>"Sur l\'écran d\'accueil"</strong> puis appuyez sur <strong>Ajouter</strong>.',
     iosDone: "C'est fait, ajoutée à l'accueil", attOk: "Image 2e Page Prête",
-    sub: "Devis, Factures et Contrats PDF Officiels", h2: "Créer un Document Officiel ou Contrat (PDF)", reset: "Effacer (0.00)",
-    sampleBtn: "Voir un Exemple du Format PDF Final", sec1: "Type de Document et Coordonnées des Parties",
-    docType: "Type de Document Officiel", docNum: "Numéro du Document (#)", comp: "Nom de votre Entreprise / Émetteur",
-    phone: "Téléphone / Licence / SIRET", client: "Client / Acheteur et Adresse", clientPh: "Nom - Adresse - Téléphone", logo: "Télécharger le Logo de l'Entreprise (Optionnel)",
+    sub: "Devis, Factures et Contrats PDF Officiels", reset: "Effacer (0.00)",
+    sampleBtn: "Aperçu en Direct & Exemples PDF", sec1: "Coordonnées des Parties et Numéro",
+    docNum: "Numéro du Document (#)", phone: "Téléphone / Licence / SIRET",
+    clientPh: "Nom - Adresse - Téléphone", logo: "Télécharger le Logo de l'Entreprise (Optionnel)",
     sec2: "Description, Biens, Mesures ou Services", addLine: "Ajouter une Autre Ligne",
     sec3: "Taxes, Acompte, Conditions et Envoi PDF", tax: "Taxes / TVA", dep: "Acompte / Montant Payé",
     notes: "Notes, Garantie ou Conditions Particulières", attach: "Joindre Photo, Pièce d'Identité ou Doc en 2e Page",
@@ -1216,10 +1232,10 @@ const I18N = {
     histSearch: "Rechercher par client, n° ou date...", openBtn: "Ouvrir", pdfBtn: "PDF",
     qty: "Quantité", price: "Prix Unitaire", itemLbl: "Ligne #", descPh: "Description détaillée (ex. Véhicule/VIN, Bien, Travaux ou Matériaux)...",
     waPaid: "Envoyer le PDF Officiel par WhatsApp", emailPaid: "Envoyer le PDF Officiel par E-mail", dlPaid: "Télécharger / Enregistrer le PDF",
-    waLock: "Débloquer, Télécharger et Envoyer PDF WhatsApp / E-mail ($1.99)",
+    waLock: "Débloquer le PDF Officiel Sans Filigrane ($1.99)",
     proPassBtn: "Pass Pro Illimité pour Entrepreneurs ($9.99/mois)",
-    notePaid: "Accès Actif : Envoyez votre PDF par WhatsApp, E-mail ou enregistrez-le",
-    noteLock: "Un seul paiement de $1.99 inclut le téléchargement avec logo, l'envoi et l'archivage",
+    notePaid: "Accès Actif : Envoyez votre PDF propre par WhatsApp, E-mail ou enregistrez-le",
+    noteLock: "Un seul paiement de $1.99 retire le filigrane, inclut votre logo et archive le PDF",
     pdfViralFooter: "Document Officiel généré avec Mr. Invoice Pro - Créez vos Devis, Factures et Contrats sur : mrinvoicepro.com",
     emailBodyTpl: "Veuillez trouver ci-joint votre {BADGE} ({NUM}) émis par {COMP} pour un solde de {TOTAL}.",
     dateLbl: "Date", accept: "J'ACCEPTE", decline: "REFUSER", remBal: "SOLDE RESTANT À PAYER", paidAmt: "MONTANT PAYÉ / ACOMPTE",
@@ -1239,14 +1255,19 @@ const I18N = {
     }
   },
   pl: {
-    installBtn: "Zainstaluj App", iosSub: "Oficjalna Aplikacja na iPhone / iPad",
+    suiteBtn: "Szablony", suiteTitle: "Oficjalny Pakiet Dokumentów",
+    cat1: "Faktury i Płatności", cat2: "Umowy Prawne", cat3: "Prace i Teren",
+    liveTab: "Mój Dokument",
+    wmTile: "PODGLĄD • NIEWAŻNY • MRINVOICEPRO.COM",
+    wmStamp: "CHRONIONY PODGLĄD — ODBLOKUJ OFICJALNY PDF",
+    installBtn: "App", iosSub: "Oficjalna Aplikacja na iPhone / iPad",
     iosS1: 'Kliknij przycisk <strong>Udostępnij</strong> na dolnym pasku przeglądarki iPhone.',
     iosS2: 'Wybierz <strong>"Dodaj do ekranu początkowego"</strong> i kliknij <strong>Dodaj</strong>.',
     iosDone: "Gotowe, dodano do ekranu", attOk: "Obraz 2. Strony Gotowy",
-    sub: "Kosztorysy, Faktury i Umowy PDF", h2: "Utwórz Oficjalny Dokument lub Umowę (PDF)", reset: "Wyczyść (0.00)",
-    sampleBtn: "Zobacz Przykład Gotowego Dokumentu PDF", sec1: "Rodzaj Dokumentu i Dane Stron",
-    docType: "Rodzaj Dokumentu", docNum: "Numer Dokumentu (#)", comp: "Nazwa Firmy / Wystawca",
-    phone: "Telefon / NIP / Licencja", client: "Klient / Nabywca i Adres", clientPh: "Nazwa - Adres - Telefon", logo: "Wgraj Logo Swojej Firmy (Opcjonalnie)",
+    sub: "Kosztorysy, Faktury i Umowy PDF", reset: "Wyczyść (0.00)",
+    sampleBtn: "Podgląd na Żywo i Wzory PDF", sec1: "Dane Stron i Numeracja",
+    docNum: "Numer Dokumentu (#)", phone: "Telefon / NIP / Licencja",
+    clientPh: "Nazwa - Adres - Telefon", logo: "Wgraj Logo Swojej Firmy (Opcjonalnie)",
     sec2: "Opis, Towary, Wymiary lub Usługi", addLine: "Dodaj Kolejną Pozycję",
     sec3: "Podatki, Zaliczka, Warunki i Wysyłka PDF", tax: "Podatek / VAT", dep: "Zaliczka / Wpłacona Kwota",
     notes: "Uwagi, Gwarancja lub Warunki Szczególne", attach: "Załącz Zdjęcie, Dowód lub Dokument na 2. Stronie",
@@ -1254,10 +1275,10 @@ const I18N = {
     histSearch: "Szukaj klienta, numeru lub daty...", openBtn: "Otwórz", pdfBtn: "PDF",
     qty: "Ilość", price: "Cena Jednostkowa", itemLbl: "Pozycja #", descPh: "Szczegółowy opis (np. Pojazd/VIN, Nieruchomość, Usługi lub Materiały)...",
     waPaid: "Wyślij Oficjalny PDF przez WhatsApp", emailPaid: "Wyślij Oficjalny PDF przez E-mail", dlPaid: "Pobierz / Zapisz PDF na Telefonie",
-    waLock: "Odblokuj, Pobierz i Wyślij PDF przez WhatsApp / E-mail ($1.99)",
+    waLock: "Odblokuj Oficjalny PDF Bez Znaku Wodnego ($1.99)",
     proPassBtn: "Pakiet Pro Bez Limitu dla Firm i Wykonawców ($9.99/mies.)",
-    notePaid: "Dostęp Aktywny: Możesz wysłać PDF przez WhatsApp, E-mail lub zapisać go",
-    noteLock: "Jednorazowa opłata $1.99 obejmuje pobranie z logo, wysyłkę i zapis w historii",
+    notePaid: "Dostęp Aktywny: Wyślij czysty PDF przez WhatsApp, E-mail lub zapisz go",
+    noteLock: "Jednorazowa opłata $1.99 usuwa znak wodny, dodaje logo i zapisuje w historii",
     pdfViralFooter: "Oficjalny dokument wygenerowany w Mr. Invoice Pro - Tworz kosztorysy, faktury i umowy na: mrinvoicepro.com",
     emailBodyTpl: "W załączeniu przesyłam dokument {BADGE} ({NUM}) wystawiony przez {COMP} na kwotę {TOTAL}.",
     dateLbl: "Data", accept: "AKCEPTUJĘ", decline: "ODRZUCAM", remBal: "POZOSTAŁO DO ZAPŁATY", paidAmt: "WPŁACONO / ZALICZKA",
@@ -1277,14 +1298,19 @@ const I18N = {
     }
   },
   pt: {
-    installBtn: "Instalar App", iosSub: "App Oficial para iPhone / iPad",
+    suiteBtn: "Modelos", suiteTitle: "Suíte Oficial de Documentos",
+    cat1: "Faturamento e Cobrança", cat2: "Contratos Legais", cat3: "Operações e Campo",
+    liveTab: "Meu Documento",
+    wmTile: "RASCUNHO • SEM VALIDADE • MRINVOICEPRO.COM",
+    wmStamp: "PRÉVIA PROTEGIDA — DESBLOQUEIE O PDF OFICIAL",
+    installBtn: "App", iosSub: "App Oficial para iPhone / iPad",
     iosS1: 'Toque no botão <strong>Compartilhar</strong> na barra inferior do seu iPhone.',
     iosS2: 'Selecione <strong>"Adicionar à Tela de Início"</strong> e toque em <strong>Adicionar</strong>.',
     iosDone: "Pronto, já adicionei ao início", attOk: "Imagem da 2ª Pág. Pronta",
-    sub: "Orçamentos, Faturas e Contratos em PDF", h2: "Criar Documento Oficial ou Contrato (PDF)", reset: "Limpar (0.00)",
-    sampleBtn: "Ver Exemplo de Como Fica o PDF Final", sec1: "Tipo de Documento e Dados das Partes",
-    docType: "Tipo de Documento Oficial", docNum: "Número do Documento (#)", comp: "Nome da sua Empresa / Emissor",
-    phone: "Telefone / CNPJ / CPF / ID", client: "Cliente / Comprador e Endereço", clientPh: "Nome - Endereço - Telefone", logo: "Envie o Logotipo da sua Empresa (Opcional)",
+    sub: "Orçamentos, Faturas e Contratos em PDF", reset: "Limpar (0.00)",
+    sampleBtn: "Prévia ao Vivo e Exemplos em PDF", sec1: "Dados das Partes e Numeração",
+    docNum: "Número do Documento (#)", phone: "Telefone / CNPJ / CPF / ID",
+    clientPh: "Nome - Endereço - Telefone", logo: "Envie o Logotipo da sua Empresa (Opcional)",
     sec2: "Descrição, Bens, Medidas ou Serviços", addLine: "Adicionar Outra Linha / Item",
     sec3: "Impostos, Sinal, Condições e Envio PDF", tax: "Impostos / Taxas", dep: "Sinal / Valor Pago",
     notes: "Observações, Garantia ou Condições Especiais", attach: "Anexar Foto, RG/CNH ou Doc na 2ª Página",
@@ -1292,10 +1318,10 @@ const I18N = {
     histSearch: "Buscar por cliente, nº do doc ou data...", openBtn: "Abrir", pdfBtn: "PDF",
     qty: "Quantidade", price: "Preço Unitário", itemLbl: "Item #", descPh: "Descrição detalhada (ex. Veículo/Chassi, Imóvel, Serviços ou Materiais)...",
     waPaid: "Enviar PDF Oficial pelo WhatsApp", emailPaid: "Enviar PDF Oficial por E-mail", dlPaid: "Baixar / Salvar PDF no Celular",
-    waLock: "Desbloquear, Baixar e Enviar PDF por WhatsApp / E-mail ($1.99)",
+    waLock: "Desbloquear PDF Oficial Sem Marca d'Água ($1.99)",
     proPassBtn: "Passe Pro Ilimitado para Empreiteiros e Empresas ($9.99/mês)",
-    notePaid: "Acesso Ativo: Envie seu PDF por WhatsApp, E-mail ou salve no celular",
-    noteLock: "Um único pagamento de $1.99 inclui download com logotipo, envio por WhatsApp/E-mail e histórico",
+    notePaid: "Acesso Ativo: Envie seu PDF limpo por WhatsApp, E-mail ou salve no celular",
+    noteLock: "Um único pagamento de $1.99 remove a marca d'água, inclui seu logo e salva no histórico",
     pdfViralFooter: "Documento Oficial gerado com Mr. Invoice Pro - Crie Orçamentos, Faturas e Contratos em: mrinvoicepro.com",
     emailBodyTpl: "Segue em anexo seu {BADGE} ({NUM}) emitido por {COMP} com saldo de {TOTAL}.",
     dateLbl: "Data", accept: "ACEITO", decline: "RECUSO", remBal: "SALDO PENDENTE", paidAmt: "VALOR PAGO / SINAL",
@@ -1319,112 +1345,88 @@ const I18N = {
 const SAMPLES_I18N = {
   es: {
     quote: {
-      comp: "APEX CONSTRUCTION & REMODELING LLC",
-      phone: "Lic. #10492-PR • Tel: (787) 555-0199 • info@apexbuildpr.com",
-      docNum: "2026-0842", date: "14/11/2026",
-      client: "Carlos M. Rodríguez — Urb. Los Paseos #412, San Juan, PR 00926 • Tel: (787) 400-8821",
+      comp: "APEX CONSTRUCTION & REMODELING LLC", phone: "Lic. #10492-PR • Tel: (787) 555-0199 • info@apexbuildpr.com",
+      docNum: "2026-0842", date: "14/11/2026", client: "Carlos M. Rodríguez — Urb. Los Paseos #412, San Juan, PR 00926 • Tel: (787) 400-8821",
       rows: [
         ["1. Demolición y Preparación de Superficie (850 sq.ft.)", "Remoción de losas existentes, nivelación con mortero autonivelante y disposición final de escombros.", 1850],
         ["2. Suministro e Instalación de Porcelanato Rectificado 24\"x48\"", "Instalación con pega modificada con polímeros, niveladores de precisión y lechada epóxica antimanchas.", 4200],
         ["3. Remodelación de Baño Master (Plomería y Enchape Completo)", "Reemplazo de válvula en bronce, impermeabilización líquida, nicho empotrado y cristal templado 3/8\".", 2950],
         ["4. Iluminación LED Empotrada y Acabados de Pintura", "Instalación de 12 focos LED 4\" (3000K), aplicación de sellador y 2 manos de pintura acrílica lavable.", 1450]
       ],
-      tax: 731.50, dep: 5000.00,
-      notes: "GARANTÍA Y CONDICIONES: Incluye 3 años de garantía escrita en mano de obra. Tiempo estimado: 10 a 12 días laborables. Cotización válida por 30 días."
+      tax: 731.50, dep: 5000.00, notes: "GARANTÍA Y CONDICIONES: Incluye 3 años de garantía escrita en mano de obra. Tiempo estimado: 10 a 12 días laborables. Cotización válida por 30 días."
     },
     invoice: {
-      comp: "MASTER COOLING & ELECTRICAL SERVICES LLC",
-      phone: "Cert. Técnico #8831 • Tel: (787) 555-0420 • cobros@mastercooling.com",
-      docNum: "2026-1194", date: "14/11/2026",
-      client: "Restaurante El Bohío Criollo — Ave. Roosevelt #1204, Hato Rey, PR • ID: 66-0921841",
+      comp: "MASTER COOLING & ELECTRICAL SERVICES LLC", phone: "Cert. Técnico #8831 • Tel: (787) 555-0420 • cobros@mastercooling.com",
+      docNum: "2026-1194", date: "14/11/2026", client: "Restaurante El Bohío Criollo — Ave. Roosevelt #1204, Hato Rey, PR • ID: 66-0921841",
       rows: [
         ["1. Suministro e Instalación Unidad Inverter 36,000 BTU (3 Ton)", "Unidad comercial SEER2 20 de alta eficiencia, condensador anticorrosivo y control Wi-Fi integrado.", 2850],
         ["2. Tubería de Cobre Refrigerante, Aislamiento UV y Drenaje", "35 pies lineales de tubería 3/8\" y 3/4\" aislada, presurización con nitrógeno y vacío a 350 micrones.", 680],
         ["3. Línea Eléctrica Dedicada 220V y Protector Comercial", "Breaker doble 30A, cablería THHN #10 en tubería EMT, desconectivo NEMA 3R y supresor de voltaje.", 540]
       ],
-      tax: 284.90, dep: 3000.00,
-      notes: "CERTIFICACIÓN DE ENTREGA: Equipos operando al 100% con parámetros verificados. Garantía de 5 años en compresor y 1 año en mano de obra."
+      tax: 284.90, dep: 3000.00, notes: "CERTIFICACIÓN DE ENTREGA: Equipos operando al 100% con parámetros verificados. Garantía de 5 años en compresor y 1 año en mano de obra."
     },
     billsale: {
-      comp: "ALBERTO RODRÍGUEZ MONTERO (VENDEDOR)",
-      phone: "Licencia / ID: PR-5829104 • Tel: (787) 555-0912 • Adjuntas, PR",
-      docNum: "2026-0318", date: "14/11/2026",
-      client: "Jorge L. Santiago Vega (COMPRADOR) — ID: PR-9920184 • Urb. Valle Real #88, Ponce, PR",
+      comp: "ALBERTO RODRÍGUEZ MONTERO (VENDEDOR)", phone: "Licencia / ID: PR-5829104 • Tel: (787) 555-0912 • Adjuntas, PR",
+      docNum: "2026-0318", date: "14/11/2026", client: "Jorge L. Santiago Vega (COMPRADOR) — ID: PR-9920184 • Urb. Valle Real #88, Ponce, PR",
       rows: [
         ["1. Descripción Oficial del Vehículo Objeto de Venta", "Marca: TOYOTA | Modelo: 4RUNNER LIMITED | Año: 2023 | Color: Blanco Perla | Automática 4x4.", 38500],
         ["2. Número de Serie (VIN), Millaje y Registro", "VIN: JTEBU5JR8P5928410 | Millaje Certificado: 24,180 millas | Título libre de gravámenes o multas.", 0],
         ["3. Equipo Adicional Incluido en la Venta", "Aros 20\", gomas All-Terrain, tintes cerámicos, alfombras WeatherTech y 2 llaves inteligentes originales.", 1200]
       ],
-      tax: 0, dep: 39700.00,
-      notes: "VENTA AS-IS: El Comprador certifica haber inspeccionado y probado el vehículo a su entera satisfacción en su condición actual ('Tal Cual / As-Is')."
+      tax: 0, dep: 39700.00, notes: "VENTA AS-IS: El Comprador certifica haber inspeccionado y probado el vehículo a su entera satisfacción en su condición actual ('Tal Cual / As-Is')."
     },
     lease: {
-      comp: "INVERSIONES & PROPIEDADES DEL SUR LLC",
-      phone: "Tel: (787) 555-0770 • administracion@propiedadesdelsur.com",
-      docNum: "2026-0509", date: "14/11/2026",
-      client: "Dra. Valeria Morales Cruz (INQUILINA) — ID: PR-4410928 • Tel: (787) 390-1122",
+      comp: "INVERSIONES & PROPIEDADES DEL SUR LLC", phone: "Tel: (787) 555-0770 • administracion@propiedadesdelsur.com",
+      docNum: "2026-0509", date: "14/11/2026", client: "Dra. Valeria Morales Cruz (INQUILINA) — ID: PR-4410928 • Tel: (787) 390-1122",
       rows: [
         ["1. Propiedad Arrendada y Canon Mensual", "Residencia de 3 habitaciones, 2 baños y marquesina doble en Carr. 525 Km 4.2. Uso residencial.", 1250],
         ["2. Depósito de Garantía Reembolsable (Security Deposit)", "Equivalente a un (1) mes de renta para responder por daños o balances al finalizar el contrato.", 1250],
         ["3. Inventario Incluido en Óptimo Estado", "Estufa, nevera inoxidable, calentador de línea, 3 aires Inverter, cisterna 600 gal y portón eléctrico.", 0]
       ],
-      tax: 0, dep: 2500.00,
-      notes: "VIGENCIA: 12 meses desde el 1 de diciembre de 2026. Renta vence del 1 al 5 de cada mes ($50.00 de recargo luego del día 5)."
+      tax: 0, dep: 2500.00, notes: "VIGENCIA: 12 meses desde el 1 de diciembre de 2026. Renta vence del 1 al 5 de cada mes ($50.00 de recargo luego del día 5)."
     }
   },
   en: {
     quote: {
-      comp: "APEX CONSTRUCTION & REMODELING LLC",
-      phone: "Lic. #10492 • Tel: (305) 555-0199 • estimates@apexbuild.com",
-      docNum: "2026-0842", date: "11/14/2026",
-      client: "Michael R. Thompson — 742 Evergreen Terrace, Orlando, FL 32801 • (407) 555-8821",
+      comp: "APEX CONSTRUCTION & REMODELING LLC", phone: "Lic. #10492 • Tel: (305) 555-0199 • estimates@apexbuild.com",
+      docNum: "2026-0842", date: "11/14/2026", client: "Michael R. Thompson — 742 Evergreen Terrace, Orlando, FL 32801 • (407) 555-8821",
       rows: [
         ["1. Surface Demolition & Subfloor Leveling (850 sq.ft.)", "Removal of existing tile, self-leveling mortar preparation, and debris container disposal.", 1850],
         ["2. 24\"x48\" Rectified Porcelain Tile Supply & Installation", "Installed with polymer-modified thinset, precision leveling clips, and stain-proof epoxy grout.", 4200],
         ["3. Master Bathroom Remodel (Plumbing & Full Waterproofing)", "Brass shower valve upgrade, RedGard liquid membrane, recessed niche, and 3/8\" tempered glass.", 2950],
         ["4. Recessed LED Lighting & Interior Paint Finish", "12x 4\" LED lights (3000K), primer sealer coat, and 2 coats of washable acrylic wall/ceiling paint.", 1450]
       ],
-      tax: 731.50, dep: 5000.00,
-      notes: "WARRANTY & TERMS: Includes 3-year written workmanship warranty. Estimated timeline: 10-12 business days. Estimate valid for 30 days."
+      tax: 731.50, dep: 5000.00, notes: "WARRANTY & TERMS: Includes 3-year written workmanship warranty. Estimated timeline: 10-12 business days. Estimate valid for 30 days."
     },
     invoice: {
-      comp: "MASTER COOLING & ELECTRICAL SERVICES LLC",
-      phone: "HVAC Lic. #CAC18831 • Tel: (305) 555-0420 • billing@mastercooling.com",
-      docNum: "2026-1194", date: "11/14/2026",
-      client: "Harbor Grill & Steakhouse — 1204 Biscayne Blvd, Miami, FL • Tax ID: 66-0921841",
+      comp: "MASTER COOLING & ELECTRICAL SERVICES LLC", phone: "HVAC Lic. #CAC18831 • Tel: (305) 555-0420 • billing@mastercooling.com",
+      docNum: "2026-1194", date: "11/14/2026", client: "Harbor Grill & Steakhouse — 1204 Biscayne Blvd, Miami, FL • Tax ID: 66-0921841",
       rows: [
         ["1. 36,000 BTU (3-Ton) Commercial Inverter HVAC System", "High-efficiency SEER2 20 condenser with Gold Fin coil protection and smart Wi-Fi thermostat.", 2850],
         ["2. Copper Refrigerant Line Set, UV Insulation & Drain", "35 linear ft. insulated 3/8\" & 3/4\" copper lines, dry nitrogen pressure test, and 350-micron vacuum.", 680],
         ["3. Dedicated 220V Circuit & Commercial Surge Suppressor", "30A double-pole breaker, #10 THHN wiring in EMT conduit, and NEMA 3R exterior disconnect.", 540]
       ],
-      tax: 284.90, dep: 3000.00,
-      notes: "DELIVERY CERTIFICATION: System tested and operating at 100% factory specs. 5-year compressor warranty and 1-year labor warranty."
+      tax: 284.90, dep: 3000.00, notes: "DELIVERY CERTIFICATION: System tested and operating at 100% factory specs. 5-year compressor warranty and 1-year labor warranty."
     },
     billsale: {
-      comp: "ROBERT J. MILLER (SELLER / OWNER)",
-      phone: "Driver Lic. / ID: M420-782-9104 • Tel: (407) 555-0912",
-      docNum: "2026-0318", date: "11/14/2026",
-      client: "David K. Anderson (BUYER) — ID: A530-992-0184 • 88 Oak Ridge Dr, Tampa, FL",
+      comp: "ROBERT J. MILLER (SELLER / OWNER)", phone: "Driver Lic. / ID: M420-782-9104 • Tel: (407) 555-0912",
+      docNum: "2026-0318", date: "11/14/2026", client: "David K. Anderson (BUYER) — ID: A530-992-0184 • 88 Oak Ridge Dr, Tampa, FL",
       rows: [
         ["1. Motor Vehicle Description", "Make: TOYOTA | Model: 4RUNNER LIMITED | Year: 2023 | Color: Pearl White | 4WD Automatic.", 38500],
         ["2. VIN, Certified Odometer & Title Status", "VIN: JTEBU5JR8P5928410 | Odometer: 24,180 miles | Clean title free of all liens or encumbrances.", 0],
         ["3. Included Accessories & Equipment", "20\" wheels, All-Terrain tires, ceramic window tint, WeatherTech mats, and 2 OEM smart keys.", 1200]
       ],
-      tax: 0, dep: 39700.00,
-      notes: "AS-IS SALE CLAUSE: Buyer has inspected and road-tested the vehicle to full satisfaction and accepts it strictly 'As-Is' without warranties."
+      tax: 0, dep: 39700.00, notes: "AS-IS SALE CLAUSE: Buyer has inspected and road-tested the vehicle to full satisfaction and accepts it strictly 'As-Is' without warranties."
     },
     lease: {
-      comp: "SOUTHERN HORIZON PROPERTIES LLC (LANDLORD)",
-      phone: "Tel: (407) 555-0770 • leasing@southernhorizon.com",
-      docNum: "2026-0509", date: "11/14/2026",
-      client: "Dr. Valerie Morales (TENANT) — ID: FL-4410928 • Tel: (407) 390-1122",
+      comp: "SOUTHERN HORIZON PROPERTIES LLC (LANDLORD)", phone: "Tel: (407) 555-0770 • leasing@southernhorizon.com",
+      docNum: "2026-0509", date: "11/14/2026", client: "Dr. Valerie Morales (TENANT) — ID: FL-4410928 • Tel: (407) 390-1122",
       rows: [
         ["1. Leased Premises & Monthly Base Rent", "3-Bedroom, 2-Bath single-family home with 2-car garage at 525 Pinecrest Way. Residential use only.", 1850],
         ["2. Refundable Security Deposit", "Equal to one (1) month's rent held against property damage or unpaid balances upon lease end.", 1850],
         ["3. Included Appliances in Working Order", "Glass-top range, stainless refrigerator, tankless water heater, central A/C, and garage opener.", 0]
       ],
-      tax: 0, dep: 3700.00,
-      notes: "LEASE TERM: 12 months starting December 1, 2026. Rent is due on the 1st-5th of each month ($50.00 late fee applies after the 5th)."
+      tax: 0, dep: 3700.00, notes: "LEASE TERM: 12 months starting December 1, 2026. Rent is due on the 1st-5th of each month ($50.00 late fee applies after the 5th)."
     }
   }
 };
@@ -1433,13 +1435,9 @@ const urlParams = new URLSearchParams(window.location.search);
 const justPaidSingle = urlParams.get('paid') === 'true';
 const justPaidPro = urlParams.get('pro') === 'true';
 
-if (justPaidPro) {
-  localStorage.setItem('mcp_pro_pass_active', 'true');
-}
+if (justPaidPro) localStorage.setItem('mcp_pro_pass_active', 'true');
 if (justPaidSingle || justPaidPro) {
-  try {
-    window.history.replaceState({}, document.title, window.location.pathname);
-  } catch (e) {}
+  try { window.history.replaceState({}, document.title, window.location.pathname); } catch (e) {}
 }
 
 const isProSubscriber = localStorage.getItem('mcp_pro_pass_active') === 'true';
@@ -1458,7 +1456,6 @@ let cleanMascotLogoDataUrl = '';
 let customLineItems = [{ desc: '', qty: '1', price: '' }];
 let deferredPrompt = null;
 
-// Limpia automáticamente el cuadro negro alrededor del muñequito conservando su camisa blanca y bordes suaves
 function removeBlackBoxFromBrandIcons() {
   if (cleanMascotLogoDataUrl) {
     document.querySelectorAll('.brand-mascot-img').forEach(im => { im.src = cleanMascotLogoDataUrl; });
@@ -1486,8 +1483,7 @@ function removeBlackBoxFromBrandIcons() {
         const idx = y * w + x;
         if (visited[idx]) return;
         const p = idx * 4;
-        const maxCh = Math.max(d[p], d[p + 1], d[p + 2]);
-        if (maxCh < 46) {
+        if (Math.max(d[p], d[p + 1], d[p + 2]) < 46) {
           visited[idx] = 1;
           stack.push(idx);
         }
@@ -1498,16 +1494,12 @@ function removeBlackBoxFromBrandIcons() {
 
       while (stack.length > 0) {
         const idx = stack.pop();
-        const p = idx * 4;
-        d[p + 3] = 0;
+        d[idx * 4 + 3] = 0;
         const x = idx % w, y = (idx / w) | 0;
-        pushIfExteriorDark(x + 1, y);
-        pushIfExteriorDark(x - 1, y);
-        pushIfExteriorDark(x, y + 1);
-        pushIfExteriorDark(x, y - 1);
+        pushIfExteriorDark(x + 1, y); pushIfExteriorDark(x - 1, y);
+        pushIfExteriorDark(x, y + 1); pushIfExteriorDark(x, y - 1);
       }
 
-      // Suavizado ligero en el borde exterior del muñequito para que no queden picos oscuros sobre blanco
       for (let y = 1; y < h - 1; y++) {
         for (let x = 1; x < w - 1; x++) {
           const idx = y * w + x;
@@ -1515,9 +1507,7 @@ function removeBlackBoxFromBrandIcons() {
           if (visited[idx - 1] || visited[idx + 1] || visited[idx - w] || visited[idx + w]) {
             const p = idx * 4;
             const lum = (d[p] + d[p + 1] + d[p + 2]) / 3;
-            if (lum < 85) {
-              d[p + 3] = Math.round((lum / 85) * 200);
-            }
+            if (lum < 85) d[p + 3] = Math.round((lum / 85) * 200);
           }
         }
       }
@@ -1530,6 +1520,69 @@ function removeBlackBoxFromBrandIcons() {
   probe.src = srcToLoad;
 }
 
+// FUNCIONES DEL SUITE DRAWER (MENÚ SUPERIOR DERECHO)
+function openSuiteDrawer() {
+  renderSuiteDrawerItems();
+  const ov = document.getElementById('suiteDrawerOverlay');
+  if (ov) ov.style.display = 'flex';
+}
+function closeSuiteDrawer() {
+  const ov = document.getElementById('suiteDrawerOverlay');
+  if (ov) ov.style.display = 'none';
+}
+function selectDocTypeFromSuite(docKey) {
+  const inp = document.getElementById('qb-doctype');
+  if (inp) inp.value = docKey;
+  syncActiveDocTypeUI();
+  recalcMasterTotals();
+  closeSuiteDrawer();
+}
+function renderSuiteDrawerItems() {
+  const body = document.getElementById('suiteDrawerBody');
+  if (!body) return;
+  const L = I18N[currentLang] || I18N.es;
+  const currentType = document.getElementById('qb-doctype')?.value || 'quote';
+
+  body.innerHTML = SUITE_CATEGORIES.map(cat => {
+    const itemsHtml = cat.items.map(it => {
+      const meta = getDocMeta(it.id);
+      const codeClean = meta.prefix.replace(/[^a-zA-Z]/g, '') || 'DOC';
+      const isAct = currentType === it.id;
+      return '<button type="button" class="suite-item-btn' + (isAct ? ' active' : '') + '" onclick="selectDocTypeFromSuite(\'' + it.id + '\')">' +
+        '<div class="suite-item-left">' +
+          '<div class="suite-ico-box">' + svgIco(it.ico, 'ico-stroke-sm') + '</div>' +
+          '<div class="suite-item-title">' + escapeHtml(meta.menuName) + '</div>' +
+        '</div>' +
+        '<span class="suite-item-code">' + escapeHtml(codeClean) + '</span>' +
+      '</button>';
+    }).join('');
+    return '<div class="suite-cat-label">' + escapeHtml(L[cat.key] || '') + '</div><div class="suite-grid">' + itemsHtml + '</div>';
+  }).join('');
+}
+
+function syncActiveDocTypeUI() {
+  const docType = document.getElementById('qb-doctype')?.value || 'quote';
+  const meta = getDocMeta(docType);
+  const codeClean = meta.prefix.replace(/[^a-zA-Z]/g, '') || 'EST';
+
+  const codeEl = document.getElementById('headerActiveCode');
+  const nameEl = document.getElementById('headerActiveDocName');
+  if (codeEl) codeEl.innerText = codeClean;
+  if (nameEl) nameEl.innerText = meta.menuName;
+
+  const h2El = document.getElementById('ui-h2');
+  if (h2El) {
+    h2El.innerHTML = svgIco('ico-doc', 'ico-stroke ico-gold') +
+      '<span>' + escapeHtml(meta.menuName) + '</span>' +
+      '<svg class="ico-stroke-sm" style="width:14px;height:14px;color:#94a3b8;"><use href="#ico-chev"></use></svg>';
+  }
+
+  const compLbl = document.getElementById('lbl-comp');
+  const clientLbl = document.getElementById('lbl-client');
+  if (compLbl) compLbl.innerText = meta.party1;
+  if (clientLbl) clientLbl.innerText = meta.party2;
+}
+
 function isAppAlreadyInstalled() {
   if (window.matchMedia('(display-mode: standalone)').matches) return true;
   if (window.matchMedia('(display-mode: fullscreen)').matches) return true;
@@ -1538,59 +1591,30 @@ function isAppAlreadyInstalled() {
   if (localStorage.getItem('mcp_pwa_installed') === 'true') return true;
   return false;
 }
-
 function syncInstallButtonVisibility() {
   const btn = document.getElementById('installPwaBtn');
-  if (!btn) return;
-  btn.style.display = isAppAlreadyInstalled() ? 'none' : 'inline-flex';
+  if (btn) btn.style.display = isAppAlreadyInstalled() ? 'none' : 'inline-flex';
 }
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  syncInstallButtonVisibility();
-});
-
-window.addEventListener('appinstalled', () => {
-  localStorage.setItem('mcp_pwa_installed', 'true');
-  deferredPrompt = null;
-  syncInstallButtonVisibility();
-});
-
+window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; syncInstallButtonVisibility(); });
+window.addEventListener('appinstalled', () => { localStorage.setItem('mcp_pwa_installed', 'true'); deferredPrompt = null; syncInstallButtonVisibility(); });
 if (navigator.getInstalledRelatedApps) {
   navigator.getInstalledRelatedApps().then(apps => {
-    if (apps && apps.length > 0) {
-      localStorage.setItem('mcp_pwa_installed', 'true');
-      syncInstallButtonVisibility();
-    }
+    if (apps && apps.length > 0) { localStorage.setItem('mcp_pwa_installed', 'true'); syncInstallButtonVisibility(); }
   }).catch(() => {});
 }
 
-function closeIosInstallSheet() {
-  const sheet = document.getElementById('iosInstallSheet');
-  if (sheet) sheet.style.display = 'none';
-}
-
-function markAppInstalledAndHide() {
-  localStorage.setItem('mcp_pwa_installed', 'true');
-  closeIosInstallSheet();
-  syncInstallButtonVisibility();
-}
-
+function closeIosInstallSheet() { const s = document.getElementById('iosInstallSheet'); if (s) s.style.display = 'none'; }
+function markAppInstalledAndHide() { localStorage.setItem('mcp_pwa_installed', 'true'); closeIosInstallSheet(); syncInstallButtonVisibility(); }
 function installPWA() {
   if (deferredPrompt) {
     deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choice) => {
-      if (choice.outcome === 'accepted') {
-        localStorage.setItem('mcp_pwa_installed', 'true');
-        syncInstallButtonVisibility();
-      }
+    deferredPrompt.userChoice.then((c) => {
+      if (c.outcome === 'accepted') { localStorage.setItem('mcp_pwa_installed', 'true'); syncInstallButtonVisibility(); }
       deferredPrompt = null;
     });
     return;
   }
-  const isAndroid = /Android/i.test(navigator.userAgent);
-  if (isAndroid) {
+  if (/Android/i.test(navigator.userAgent)) {
     localStorage.setItem('mcp_pwa_installed', 'true');
     setTimeout(syncInstallButtonVisibility, 1500);
     window.location.href = '/Mr.%20Invoice%20Pro.apk';
@@ -1617,10 +1641,7 @@ async function checkSecretOwnerCode(val) {
     const msgBuffer = new TextEncoder().encode(clean);
     const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
     const hashHex = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
-    if (hashHex === OWNER_HASH) {
-      activateOwnerSuccess();
-      return true;
-    }
+    if (hashHex === OWNER_HASH) { activateOwnerSuccess(); return true; }
   } catch (e) {}
   return false;
 }
@@ -1661,7 +1682,7 @@ function changeLang(val) {
   if (modal && modal.style.display === 'flex') {
     const activeBtn = document.querySelector('.sample-type-btn.active');
     const modeMatch = activeBtn?.getAttribute('onclick')?.match(/'([^']+)'/);
-    renderModalSheet(modeMatch ? modeMatch[1] : 'quote');
+    renderModalSheet(modeMatch ? modeMatch[1] : 'live');
   }
 }
 
@@ -1677,51 +1698,35 @@ function applyLanguageUI() {
   document.getElementById('langSelect').value = currentLang;
   document.getElementById('currSelect').value = currentCurr;
 
-  const instSpan = document.getElementById('ui-install-btn');
-  if (instSpan) instSpan.innerText = L.installBtn;
-  const iosSub = document.getElementById('ui-ios-sub');
-  if (iosSub) iosSub.innerText = L.iosSub;
-  const iosS1 = document.getElementById('ui-ios-s1');
-  if (iosS1) iosS1.innerHTML = L.iosS1;
-  const iosS2 = document.getElementById('ui-ios-s2');
-  if (iosS2) iosS2.innerHTML = L.iosS2;
-  const iosDone = document.getElementById('ui-ios-done');
-  if (iosDone) iosDone.innerText = L.iosDone;
-  const attOk = document.getElementById('ui-att-ok');
-  if (attOk) attOk.innerText = L.attOk;
+  const mapTxt = {
+    'ui-suite-btn': L.suiteBtn, 'ui-suite-title': L.suiteTitle, 'ui-live-tab': L.liveTab,
+    'ui-install-btn': L.installBtn, 'ui-ios-sub': L.iosSub, 'ui-ios-done': L.iosDone,
+    'ui-att-ok': L.attOk, 'ui-sub': L.sub, 'ui-lbl-docnum': L.docNum, 'lbl-phone': L.phone,
+    'ui-lbl-tax': L.tax, 'ui-lbl-dep': L.dep, 'ui-lbl-notes': L.notes,
+    'ui-lbl-attach-chk': L.attachChk, 'ui-bal-lbl': L.balLbl
+  };
+  Object.keys(mapTxt).forEach(id => { const el = document.getElementById(id); if (el) el.innerText = mapTxt[id]; });
 
-  document.getElementById('ui-sub').innerText = L.sub;
-  document.getElementById('ui-h2').innerHTML = svgIco('ico-doc', 'ico-stroke ico-gold') + '<span>' + escapeHtml(L.h2) + '</span>';
+  const iosS1 = document.getElementById('ui-ios-s1'); if (iosS1) iosS1.innerHTML = L.iosS1;
+  const iosS2 = document.getElementById('ui-ios-s2'); if (iosS2) iosS2.innerHTML = L.iosS2;
+
   document.getElementById('ui-reset').innerHTML = svgIco('ico-sync') + '<span>' + escapeHtml(L.reset) + '</span>';
-  document.getElementById('ui-sample-btn').innerHTML = svgIco('ico-eye', 'ico-stroke ico-gold') + '<span>' + escapeHtml(L.sampleBtn) + '</span>';
+  document.getElementById('ui-sample-btn').innerHTML = '<span class="live-pulse-dot"></span>' + svgIco('ico-eye', 'ico-stroke ico-gold') + '<span>' + escapeHtml(L.sampleBtn) + '</span>';
   document.getElementById('ui-sec1').innerHTML = '<span class="sec-step-badge">01</span><span>' + escapeHtml(L.sec1) + '</span>';
-  document.getElementById('ui-lbl-doctype').innerText = L.docType;
-  document.getElementById('ui-lbl-docnum').innerText = L.docNum;
-  document.getElementById('lbl-comp').innerText = L.comp;
-  document.getElementById('lbl-phone').innerText = L.phone;
-  document.getElementById('lbl-client').innerText = L.client;
-  const clientInp = document.getElementById('qb-client');
-  if (clientInp && L.clientPh) clientInp.placeholder = L.clientPh;
+  const clientInp = document.getElementById('qb-client'); if (clientInp && L.clientPh) clientInp.placeholder = L.clientPh;
   document.getElementById('ui-lbl-logo').innerHTML = svgIco('ico-camera', 'ico-stroke-sm ico-gold') + '<span>' + escapeHtml(L.logo) + '</span>';
   document.getElementById('ui-sec2').innerHTML = '<span class="sec-step-badge">02</span><span>' + escapeHtml(L.sec2) + '</span>';
   document.getElementById('ui-add-line').innerHTML = svgIco('ico-plus') + '<span>' + escapeHtml(L.addLine) + '</span>';
   document.getElementById('ui-sec3').innerHTML = '<span class="sec-step-badge">03</span><span>' + escapeHtml(L.sec3) + '</span>';
-  document.getElementById('ui-lbl-tax').innerText = L.tax;
-  document.getElementById('ui-lbl-dep').innerText = L.dep;
-  document.getElementById('ui-lbl-notes').innerText = L.notes;
   document.getElementById('ui-lbl-attach').innerHTML = svgIco('ico-clip', 'ico-stroke-sm ico-gold') + '<span>' + escapeHtml(L.attach) + '</span>';
-  document.getElementById('ui-lbl-attach-chk').innerText = L.attachChk;
-  document.getElementById('ui-bal-lbl').innerText = L.balLbl;
   document.getElementById('ui-hist-title').innerHTML = svgIco('ico-doc', 'ico-stroke ico-gold') + '<span>' + escapeHtml(L.histTitle) + '</span>';
   document.getElementById('ui-hist-clear').innerHTML = '<svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-trash"></use></svg><span>' + escapeHtml(L.histClear) + '</span>';
-  const searchInp = document.getElementById('histSearchInput');
-  if (searchInp) searchInp.placeholder = L.histSearch;
+  const searchInp = document.getElementById('histSearchInput'); if (searchInp) searchInp.placeholder = L.histSearch;
 
-  const sel = document.getElementById('qb-doctype');
-  const prevVal = sel.value || 'quote';
-  sel.innerHTML = Object.keys(L.types).map(k => '<option value="' + escapeHtml(k) + '">' + escapeHtml(L.types[k][0]) + '</option>').join('');
-  sel.value = L.types[prevVal] ? prevVal : 'quote';
+  const docInp = document.getElementById('qb-doctype');
+  if (docInp && !L.types[docInp.value]) docInp.value = 'quote';
 
+  syncActiveDocTypeUI();
   renderCustomLines();
   updatePayButtonState();
   syncLockVisualState();
@@ -1759,18 +1764,26 @@ function renderCustomLines() {
   const wrap = document.getElementById('customLinesContainer');
   if (!wrap) return;
   const L = I18N[currentLang] || I18N.es;
-  wrap.innerHTML = customLineItems.map((item, idx) =>
-    '<div class="line-item-card">' +
-      '<div class="line-item-top"><span>' + escapeHtml(L.itemLbl) + (idx + 1) + '</span>' +
-      (customLineItems.length > 1 ? '<button type="button" class="cart-remove" onclick="removeCustomLine(' + idx + ')"><svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-x"></use></svg></button>' : '') +
+  wrap.innerHTML = customLineItems.map((item, idx) => {
+    const q = parseFloat(item.qty);
+    const qtyVal = isNaN(q) ? 1 : q;
+    const p = parseFloat(item.price) || 0;
+    const sub = qtyVal * p;
+    return '<div class="line-item-card">' +
+      '<div class="line-item-top">' +
+        '<span>' + escapeHtml(L.itemLbl) + (idx + 1) + '</span>' +
+        '<div class="line-top-right">' +
+          '<span class="line-live-sub" id="line-sub-' + idx + '">' + escapeHtml(formatUSD(sub)) + '</span>' +
+          (customLineItems.length > 1 ? '<button type="button" class="cart-remove" onclick="removeCustomLine(' + idx + ')"><svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-x"></use></svg></button>' : '') +
+        '</div>' +
       '</div>' +
       '<textarea class="cl-desc" placeholder="' + escapeHtml(L.descPh) + '" oninput="recalcMasterTotals()">' + escapeHtml(item.desc || '') + '</textarea>' +
       '<div class="line-item-bottom">' +
         '<div><label>' + escapeHtml(L.qty) + '</label><input type="number" step="any" class="cl-qty" value="' + escapeHtml(item.qty || '1') + '" oninput="recalcMasterTotals()"></div>' +
         '<div><label>' + escapeHtml(L.price) + '</label><input type="number" step="any" class="cl-price" placeholder="0.00" value="' + escapeHtml(item.price || '') + '" oninput="recalcMasterTotals()"></div>' +
       '</div>' +
-    '</div>'
-  ).join('');
+    '</div>';
+  }).join('');
 }
 
 function compressImageFile(file, maxDim, quality, keepTransparency) {
@@ -1785,21 +1798,15 @@ function compressImageFile(file, maxDim, quality, keepTransparency) {
         let h = img.naturalHeight || img.height;
         if (w > maxDim || h > maxDim) {
           const ratio = Math.min(maxDim / w, maxDim / h);
-          w = Math.round(w * ratio);
-          h = Math.round(h * ratio);
+          w = Math.round(w * ratio); h = Math.round(h * ratio);
         }
         const canvas = document.createElement('canvas');
-        canvas.width = w;
-        canvas.height = h;
+        canvas.width = w; canvas.height = h;
         const ctx = canvas.getContext('2d');
         const isPng = keepTransparency && file.type === 'image/png';
-        if (!isPng) {
-          ctx.fillStyle = '#ffffff';
-          ctx.fillRect(0, 0, w, h);
-        }
+        if (!isPng) { ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, w, h); }
         ctx.drawImage(img, 0, 0, w, h);
-        const outMime = isPng ? 'image/png' : 'image/jpeg';
-        resolve(canvas.toDataURL(outMime, quality));
+        resolve(canvas.toDataURL(isPng ? 'image/png' : 'image/jpeg', quality));
       };
       img.src = e.target.result;
     };
@@ -1821,15 +1828,13 @@ function showIdentifiedLogoPicture(dataUrl) {
   const wrap = document.getElementById('logoIdentifiedBox'), thumb = document.getElementById('logoMiniThumb');
   if (wrap && thumb && dataUrl) { thumb.src = dataUrl; wrap.style.display = 'flex'; }
 }
-
 function showIdentifiedHwPicture(dataUrl) {
   const wrap = document.getElementById('hwIdentifiedBox'), thumb = document.getElementById('hwMiniThumb');
   if (wrap && thumb && dataUrl) { thumb.src = dataUrl; wrap.style.display = 'flex'; }
 }
 
 async function handleLogoUpload(input) {
-  const file = input.files && input.files[0];
-  if (!file) return;
+  const file = input.files && input.files[0]; if (!file) return;
   try {
     uploadedLogoData = await compressImageFile(file, 500, 0.86, true);
     showIdentifiedLogoPicture(uploadedLogoData);
@@ -1838,27 +1843,22 @@ async function handleLogoUpload(input) {
 }
 
 async function handleHwQuoteUpload(input) {
-  const file = input.files && input.files[0];
-  if (!file) return;
+  const file = input.files && input.files[0]; if (!file) return;
   try {
     uploadedHwQuoteImg = await compressImageFile(file, 1400, 0.76, false);
     showIdentifiedHwPicture(uploadedHwQuoteImg);
-    const chk = document.getElementById('qb-hw-print-attach');
-    if (chk) chk.checked = true;
+    const chk = document.getElementById('qb-hw-print-attach'); if (chk) chk.checked = true;
     try { localStorage.setItem('mcp_hw_quote_img', uploadedHwQuoteImg); } catch (e) {}
   } catch (err) {}
 }
 
 function clearLogoPicture() {
-  uploadedLogoData = '';
-  localStorage.removeItem('mcp_company_logo');
+  uploadedLogoData = ''; localStorage.removeItem('mcp_company_logo');
   const inp = document.getElementById('qb-logo-input'); if (inp) inp.value = '';
   const wrap = document.getElementById('logoIdentifiedBox'); if (wrap) wrap.style.display = 'none';
 }
-
 function clearHwAttachment() {
-  uploadedHwQuoteImg = '';
-  localStorage.removeItem('mcp_hw_quote_img');
+  uploadedHwQuoteImg = ''; localStorage.removeItem('mcp_hw_quote_img');
   const inp = document.getElementById('qb-hw-input'); if (inp) inp.value = '';
   const chk = document.getElementById('qb-hw-print-attach'); if (chk) chk.checked = false;
   const wrap = document.getElementById('hwIdentifiedBox'); if (wrap) wrap.style.display = 'none';
@@ -1866,14 +1866,11 @@ function clearHwAttachment() {
 
 function resetBuilderToZero() {
   customLineItems = [{ desc: '', qty: '1', price: '' }];
-  clearLogoPicture();
-  clearHwAttachment();
-  localStorage.removeItem('mcp_custom_lines');
-  localStorage.removeItem('mcp_checkout_state');
+  clearLogoPicture(); clearHwAttachment();
+  localStorage.removeItem('mcp_custom_lines'); localStorage.removeItem('mcp_checkout_state');
   ['qb-tax', 'qb-dep'].forEach(id => { const el = document.getElementById(id); if (el) el.value = '0'; });
   ['qb-comp', 'qb-phone', 'qb-client', 'qb-notes'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
-  renderCustomLines();
-  recalcMasterTotals();
+  renderCustomLines(); recalcMasterTotals();
 }
 
 function recalcMasterTotals() {
@@ -1881,11 +1878,14 @@ function recalcMasterTotals() {
   const tax = parseFloat(document.getElementById('qb-tax')?.value) || 0;
   const dep = parseFloat(document.getElementById('qb-dep')?.value) || 0;
   let grandTotal = 0;
-  customLineItems.forEach(it => {
+  customLineItems.forEach((it, idx) => {
     const q = parseFloat(it.qty);
     const qtyVal = isNaN(q) ? 1 : q;
     const p = parseFloat(it.price) || 0;
-    if (p > 0) grandTotal += (qtyVal * p);
+    const lineSub = p > 0 ? (qtyVal * p) : 0;
+    grandTotal += lineSub;
+    const subBadge = document.getElementById('line-sub-' + idx);
+    if (subBadge) subBadge.innerText = formatUSD(lineSub);
   });
   grandTotal += tax;
   const balance = Math.max(0, grandTotal - dep);
@@ -1922,48 +1922,112 @@ function syncLockVisualState() {
   if (keyEl) keyEl.style.display = unlocked ? 'inline-block' : 'none';
 }
 
+function buildWatermarkSvgTile(text) {
+  const safe = escapeHtml(text);
+  const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="240" height="140">' +
+    '<text x="120" y="75" fill="rgba(15,23,42,0.11)" font-family="sans-serif" font-size="11" font-weight="900" text-anchor="middle" transform="rotate(-24 120 75)">' + safe + '</text>' +
+    '</svg>';
+  return 'url("data:image/svg+xml;utf8,' + encodeURIComponent(svg) + '")';
+}
+
+function hasUserTypedData() {
+  syncCustomLinesFromDOM();
+  if ((document.getElementById('qb-comp')?.value || '').trim()) return true;
+  if ((document.getElementById('qb-client')?.value || '').trim()) return true;
+  return customLineItems.some(it => it.desc.trim() !== '' || (parseFloat(it.price) || 0) > 0);
+}
+
 function openDocPreviewModal() {
   const docType = document.getElementById('qb-doctype')?.value || 'quote';
-  const previewMode = ['quote', 'invoice', 'billsale', 'lease'].includes(docType) ? docType : 'quote';
-  renderModalSheet(previewMode);
+  if (hasUserTypedData()) {
+    renderModalSheet('live');
+  } else {
+    const sampleMode = ['quote', 'invoice', 'billsale', 'lease'].includes(docType) ? docType : 'quote';
+    renderModalSheet(sampleMode);
+  }
   document.getElementById('docPreviewModal').style.display = 'flex';
 }
 function closeDocPreviewModal() { document.getElementById('docPreviewModal').style.display = 'none'; }
 
 function renderModalSheet(mode) {
   const L = I18N[currentLang] || I18N.es;
-  const meta = getDocMeta(mode);
   const paper = document.getElementById('modalPaperContent');
+  const ctaBox = document.getElementById('modalBottomCta');
   if (!paper) return;
 
   document.querySelectorAll('.sample-type-btn').forEach(btn => {
     btn.classList.toggle('active', btn.getAttribute('onclick')?.includes("'" + mode + "'"));
   });
 
-  const samplePack = (currentLang === 'es') ? SAMPLES_I18N.es : SAMPLES_I18N.en;
-  const data = samplePack[mode] || samplePack.quote;
+  const isLive = (mode === 'live');
+  const activeType = isLive ? (document.getElementById('qb-doctype')?.value || 'quote') : mode;
+  const meta = getDocMeta(activeType);
+
+  let data;
+  if (isLive) {
+    syncCustomLinesFromDOM();
+    const compVal = (document.getElementById('qb-comp')?.value || '').trim() || 'Mr. Invoice Pro';
+    const phoneVal = (document.getElementById('qb-phone')?.value || '').trim() || '';
+    const docNumVal = (document.getElementById('qb-docnum')?.value || '').trim() || '2026-0101';
+    const clientVal = (document.getElementById('qb-client')?.value || '').trim() || '---';
+    const taxVal = parseFloat(document.getElementById('qb-tax')?.value) || 0;
+    const depVal = parseFloat(document.getElementById('qb-dep')?.value) || 0;
+    const notesVal = (document.getElementById('qb-notes')?.value || '').trim();
+    const liveRows = [];
+
+    customLineItems.forEach((it, idx) => {
+      const q = parseFloat(it.qty);
+      const qtyVal = isNaN(q) ? 1 : q;
+      const p = parseFloat(it.price) || 0;
+      const sub = qtyVal * p;
+      if (sub > 0 || it.desc.trim() !== '') {
+        const titleLine = (idx + 1) + '. ' + (it.desc.trim() || '-');
+        const subLine = qtyVal !== 1 ? (L.qty + ': ' + qtyVal + ' × ' + formatUSD(p)) : '';
+        liveRows.push([titleLine, subLine, sub]);
+      }
+    });
+    if (liveRows.length === 0) liveRows.push(['1. ---', '', 0]);
+
+    data = {
+      comp: compVal, phone: phoneVal, docNum: docNumVal,
+      date: new Date().toLocaleDateString(), client: clientVal,
+      rows: liveRows, tax: taxVal, dep: depVal, notes: notesVal
+    };
+  } else {
+    const samplePack = (currentLang === 'es') ? SAMPLES_I18N.es : SAMPLES_I18N.en;
+    data = samplePack[mode] || samplePack.quote;
+  }
 
   let subtotal = 0;
   const rowsHtml = data.rows.map(r => {
     subtotal += r[2];
     return '<tr>' +
-      '<td><div style="font-weight:800;color:#0f172a;margin-bottom:2px;">' + escapeHtml(r[0]) + '</div><div style="font-size:0.74rem;color:#475569;line-height:1.35;">' + escapeHtml(r[1]) + '</div></td>' +
+      '<td><div style="font-weight:800;color:#0f172a;margin-bottom:2px;">' + escapeHtml(r[0]) + '</div>' +
+      (r[1] ? '<div style="font-size:0.74rem;color:#475569;line-height:1.35;">' + escapeHtml(r[1]) + '</div>' : '') + '</td>' +
       '<td style="vertical-align:top;white-space:nowrap;">' + escapeHtml(formatUSD(r[2])) + '</td>' +
     '</tr>';
   }).join('');
 
   const grandTotal = subtotal + (data.tax || 0);
   const remBalance = Math.max(0, grandTotal - (data.dep || 0));
-  const logoSrcForModal = cleanMascotLogoDataUrl || '1793842789444.jpg';
+  const logoSrcForModal = (isLive && uploadedLogoData) ? uploadedLogoData : (cleanMascotLogoDataUrl || '1793842789444.jpg');
+
+  // Blindaje Anti-Screenshot activo cuando no ha pagado
+  const showWatermark = !isPaidUser;
+  const wmHtml = showWatermark
+    ? '<div class="wm-mesh-overlay" style="background-image:' + buildWatermarkSvgTile(L.wmTile).replace(/"/g, '&quot;') + ';"></div>' +
+      '<div class="wm-diagonal-stamp">' + escapeHtml(L.wmStamp) + '</div>'
+    : '';
 
   paper.innerHTML =
+    wmHtml +
     '<div class="lux-header">' +
       '<div class="lux-brand">' +
-        '<div class="lux-logo-box"><img src="' + logoSrcForModal + '" alt="Logo" class="brand-mascot-img"></div>' +
+        '<div class="lux-logo-box"><img src="' + logoSrcForModal + '" alt="Logo"></div>' +
         '<div>' +
           '<div style="font-size:0.7rem;font-weight:800;color:#64748b;text-transform:uppercase;">' + escapeHtml(meta.party1) + '</div>' +
           '<div style="font-weight:900;font-size:1.05rem;color:#0f172a;">' + escapeHtml(data.comp) + '</div>' +
-          '<div style="font-size:0.74rem;color:#475569;">' + escapeHtml(data.phone) + '</div>' +
+          (data.phone ? '<div style="font-size:0.74rem;color:#475569;">' + escapeHtml(data.phone) + '</div>' : '') +
         '</div>' +
       '</div>' +
       '<div class="lux-badge-box">' +
@@ -1986,9 +2050,7 @@ function renderModalSheet(mode) {
         (data.dep > 0 ? '<tr style="background:#dcfce7;font-weight:900;"><td style="color:#065f46;">' + escapeHtml(L.remBal) + '</td><td style="color:#065f46;font-size:0.92rem;">' + escapeHtml(formatUSD(remBalance)) + '</td></tr>' : '') +
       '</tbody>' +
     '</table>' +
-    '<div style="background:#f8fafc;border:1px solid #cbd5e1;border-left:3px solid #0f172a;padding:0.55rem 0.75rem;border-radius:6px;font-size:0.75rem;color:#1e293b;line-height:1.4;margin-top:0.6rem;">' +
-      '<strong>' + escapeHtml(L.notes) + ':</strong> ' + escapeHtml(data.notes) +
-    '</div>' +
+    (data.notes ? '<div style="background:#f8fafc;border:1px solid #cbd5e1;border-left:3px solid #0f172a;padding:0.55rem 0.75rem;border-radius:6px;font-size:0.75rem;color:#1e293b;line-height:1.4;margin-top:0.6rem;"><strong>' + escapeHtml(L.notes) + ':</strong> ' + escapeHtml(data.notes) + '</div>' : '') +
     '<div class="lux-sign-box">' +
       '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.4rem;">' +
         '<div style="font-size:0.78rem;font-weight:900;color:#0f172a;">' + escapeHtml(meta.signTitle) + '</div>' +
@@ -2002,6 +2064,12 @@ function renderModalSheet(mode) {
       '</div>' +
     '</div>' +
     '<div class="lux-viral-footer"><svg class="ico-stroke-sm" style="width:12px;height:12px;margin-right:4px;vertical-align:-2px;"><use href="#ico-shield"></use></svg>' + escapeHtml(L.pdfViralFooter) + '</div>';
+
+  if (ctaBox) {
+    ctaBox.innerHTML = '<button type="button" class="wa-master-btn" style="margin-top:0;" onclick="handleWhatsAppQuoteClick()">' +
+      svgIco(isPaidUser ? 'ico-download' : 'ico-lock', 'ico-stroke') +
+      '<span>' + escapeHtml(isPaidUser ? L.dlPaid : L.waLock) + '</span></button>';
+  }
 }
 
 function savePaidDocumentToRecord() {
@@ -2022,16 +2090,10 @@ function savePaidDocumentToRecord() {
   });
 
   const recordEntry = {
-    id: Date.now(),
-    docNum: docNum,
-    client: clientName,
+    id: Date.now(), docNum: docNum, client: clientName,
     label: meta.badge + ' (' + meta.prefix + docNum + '): ' + clientName,
-    res: totalTxt,
-    time: time,
-    lang: currentLang,
-    curr: currentCurr,
-    inputs: inputs,
-    lines: JSON.parse(JSON.stringify(customLineItems))
+    res: totalTxt, time: time, lang: currentLang, curr: currentCurr,
+    inputs: inputs, lines: JSON.parse(JSON.stringify(customLineItems))
   };
 
   let hist = [];
@@ -2054,8 +2116,6 @@ function loadInvoiceFromRecord(id, autoDownloadPDF) {
   if (item.curr && CURRENCIES[item.curr]) currentCurr = item.curr;
   if (item.lang && I18N[item.lang]) currentLang = item.lang;
   if (item.lines && Array.isArray(item.lines)) customLineItems = JSON.parse(JSON.stringify(item.lines));
-  applyLanguageUI();
-
   if (item.inputs) {
     Object.keys(item.inputs).forEach(k => {
       const el = document.getElementById(k);
@@ -2064,7 +2124,7 @@ function loadInvoiceFromRecord(id, autoDownloadPDF) {
       else el.value = item.inputs[k];
     });
   }
-  recalcMasterTotals();
+  applyLanguageUI();
 
   if (autoDownloadPDF) {
     isPaidUser = true;
@@ -2091,11 +2151,8 @@ function renderHistory() {
       (item.time || '').toLowerCase().includes(query)
     );
   }
+  if (hist.length === 0) { list.innerHTML = '<li style="color:#94a3b8;">---</li>'; return; }
 
-  if (hist.length === 0) {
-    list.innerHTML = '<li style="color:#94a3b8;">---</li>';
-    return;
-  }
   list.innerHTML = hist.map(item => {
     const safeId = Number(item.id) || 0;
     return '<li>' +
@@ -2109,10 +2166,7 @@ function renderHistory() {
   }).join('');
 }
 
-function clearCalcHistory() {
-  localStorage.removeItem('mcp_calc_history');
-  renderHistory();
-}
+function clearCalcHistory() { localStorage.removeItem('mcp_calc_history'); renderHistory(); }
 
 function saveAllBuilderState() {
   syncCustomLinesFromDOM();
@@ -2167,13 +2221,10 @@ async function buildPureVectorPDF() {
       let lw = maxBox, lh = maxBox, lx = 14, ly = 12;
       if (logoDims && logoDims.w && logoDims.h) {
         const ratio = Math.min(maxBox / logoDims.w, maxBox / logoDims.h);
-        lw = logoDims.w * ratio;
-        lh = logoDims.h * ratio;
-        lx = 14 + (maxBox - lw) / 2;
-        ly = 12 + (maxBox - lh) / 2;
+        lw = logoDims.w * ratio; lh = logoDims.h * ratio;
+        lx = 14 + (maxBox - lw) / 2; ly = 12 + (maxBox - lh) / 2;
       }
-      const fmt = pdfLogoSource.startsWith('data:image/png') ? 'PNG' : 'JPEG';
-      doc.addImage(pdfLogoSource, fmt, lx, ly, lw, lh);
+      doc.addImage(pdfLogoSource, pdfLogoSource.startsWith('data:image/png') ? 'PNG' : 'JPEG', lx, ly, lw, lh);
       leftX = 40;
     } catch (e) {}
   } else {
@@ -2193,8 +2244,7 @@ async function buildPureVectorPDF() {
 
   doc.setTextColor(15, 23, 42);
   doc.setFontSize(12);
-  const compTrim = pdfSafeText(comp).substring(0, 38);
-  doc.text(compTrim, leftX, 21.5);
+  doc.text(pdfSafeText(comp).substring(0, 38), leftX, 21.5);
 
   if (phone) {
     doc.setFont('helvetica', 'normal');
@@ -2266,11 +2316,7 @@ async function buildPureVectorPDF() {
       doc.setFontSize(9);
       const splitDesc = doc.splitTextToSize(rawDesc, 136);
       const rowH = Math.max(9, splitDesc.length * 4.8 + 4);
-      if (y + rowH > 256) {
-        drawPdfPageFooter(doc, L.pdfViralFooter);
-        doc.addPage();
-        y = 20;
-      }
+      if (y + rowH > 256) { drawPdfPageFooter(doc, L.pdfViralFooter); doc.addPage(); y = 20; }
       doc.setDrawColor(203, 213, 225);
       doc.setLineWidth(0.3);
       doc.rect(14, y, 142, rowH);
@@ -2284,11 +2330,7 @@ async function buildPureVectorPDF() {
     }
   });
 
-  if (y + 32 > 260) {
-    drawPdfPageFooter(doc, L.pdfViralFooter);
-    doc.addPage();
-    y = 20;
-  }
+  if (y + 32 > 260) { drawPdfPageFooter(doc, L.pdfViralFooter); doc.addPage(); y = 20; }
 
   if (tax > 0) {
     doc.setDrawColor(203, 213, 225);
@@ -2317,11 +2359,7 @@ async function buildPureVectorPDF() {
 
   const balance = Math.max(0, grandTotal - dep);
   if (dep > 0 || docType === 'receipt') {
-    if (y + 20 > 260) {
-      drawPdfPageFooter(doc, L.pdfViralFooter);
-      doc.addPage();
-      y = 20;
-    }
+    if (y + 20 > 260) { drawPdfPageFooter(doc, L.pdfViralFooter); doc.addPage(); y = 20; }
     doc.setFillColor(255, 255, 255);
     doc.rect(14, y, 142, 8.5, 'FD');
     doc.rect(156, y, 46, 8.5, 'FD');
@@ -2345,13 +2383,7 @@ async function buildPureVectorPDF() {
     doc.setFontSize(8.5);
     const splitNotes = doc.splitTextToSize(pdfSafeText(L.notes + ': ' + notes), 180);
     const notesH = splitNotes.length * 4.6 + 6;
-    if (y + 4 + notesH > 260) {
-      drawPdfPageFooter(doc, L.pdfViralFooter);
-      doc.addPage();
-      y = 20;
-    } else {
-      y += 4;
-    }
+    if (y + 4 + notesH > 260) { drawPdfPageFooter(doc, L.pdfViralFooter); doc.addPage(); y = 20; } else { y += 4; }
     doc.setFillColor(248, 250, 252);
     doc.setDrawColor(203, 213, 225);
     doc.roundedRect(14, y, 188, notesH, 1.5, 1.5, 'FD');
@@ -2365,11 +2397,7 @@ async function buildPureVectorPDF() {
   doc.setFontSize(8);
   const splitLegal = doc.splitTextToSize(pdfSafeText(meta.legalClause), 180);
   const boxH = Math.max(38, 24 + splitLegal.length * 4.2 + (meta.showAcceptChecks ? 6 : 0));
-  if (y + boxH > 262) {
-    drawPdfPageFooter(doc, L.pdfViralFooter);
-    doc.addPage();
-    y = 20;
-  }
+  if (y + boxH > 262) { drawPdfPageFooter(doc, L.pdfViralFooter); doc.addPage(); y = 20; }
   doc.setDrawColor(15, 23, 42);
   doc.setLineWidth(0.35);
   doc.roundedRect(14, y, 188, boxH, 2, 2);
@@ -2411,7 +2439,6 @@ async function buildPureVectorPDF() {
       doc.addPage();
       doc.setFillColor(15, 23, 42);
       doc.rect(0, 0, 215.9, 6, 'F');
-
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(9.5);
       doc.setTextColor(15, 23, 42);
@@ -2422,14 +2449,9 @@ async function buildPureVectorPDF() {
       let drawW = maxW, drawH = 180;
       if (attDims && attDims.w && attDims.h) {
         const ratio = Math.min(maxW / attDims.w, maxH / attDims.h);
-        drawW = attDims.w * ratio;
-        drawH = attDims.h * ratio;
+        drawW = attDims.w * ratio; drawH = attDims.h * ratio;
       }
-      const posX = 14 + (maxW - drawW) / 2;
-      const posY = 22;
-      const attFmt = uploadedHwQuoteImg.startsWith('data:image/png') ? 'PNG' : 'JPEG';
-      doc.addImage(uploadedHwQuoteImg, attFmt, posX, posY, drawW, drawH);
-
+      doc.addImage(uploadedHwQuoteImg, uploadedHwQuoteImg.startsWith('data:image/png') ? 'PNG' : 'JPEG', 14 + (maxW - drawW) / 2, 22, drawW, drawH);
       drawPdfPageFooter(doc, L.pdfViralFooter);
     } catch (e) {}
   }
@@ -2466,10 +2488,8 @@ async function processOfficialPDF(actionMode) {
     if (actionMode === 'email') {
       const subj = encodeURIComponent(meta.badge + ' ' + meta.prefix + docNum + ' - ' + comp);
       const bodyStr = (L.emailBodyTpl || I18N.es.emailBodyTpl)
-        .replace('{BADGE}', meta.badge)
-        .replace('{NUM}', meta.prefix + docNum)
-        .replace('{COMP}', comp)
-        .replace('{TOTAL}', totalTxt);
+        .replace('{BADGE}', meta.badge).replace('{NUM}', meta.prefix + docNum)
+        .replace('{COMP}', comp).replace('{TOTAL}', totalTxt);
       window.location.href = 'mailto:?subject=' + subj + '&body=' + encodeURIComponent(bodyStr);
     }
   } catch (err) {
@@ -2483,21 +2503,18 @@ function handleWhatsAppQuoteClick() {
   closeDocPreviewModal();
   processOfficialPDF('share');
 }
-
 function handleEmailQuoteClick() {
   saveAllBuilderState();
   if (!isPaidUser) { window.location.href = STRIPE_SINGLE_URL; return; }
   closeDocPreviewModal();
   processOfficialPDF('email');
 }
-
 function handleFinalDownloadClick() {
   saveAllBuilderState();
   if (!isPaidUser) { window.location.href = STRIPE_SINGLE_URL; return; }
   closeDocPreviewModal();
   processOfficialPDF('download');
 }
-
 function handleProPassClick() {
   saveAllBuilderState();
   window.location.href = STRIPE_PRO_PASS_URL;
@@ -2506,7 +2523,6 @@ function handleProPassClick() {
 function restoreStateOnLoad() {
   uploadedLogoData = localStorage.getItem('mcp_company_logo') || '';
   if (uploadedLogoData) showIdentifiedLogoPicture(uploadedLogoData);
-
   if (!isReturningFromStripeCheckout) return;
 
   try {
