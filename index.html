@@ -11,16 +11,16 @@
 <meta name="description" content="Generador profesional de cotizaciones, estimados, facturas y contratos legales en PDF.">
 <meta property="og:title" content="Mr. Invoice Pro | Official PDF Suite">
 <meta property="og:description" content="Generador profesional de cotizaciones, estimados, facturas y contratos legales en PDF.">
-<meta property="og:image" content="https://mrinvoicepro.com/1793842789444.jpg?v=13">
-<meta property="og:image:secure_url" content="https://mrinvoicepro.com/1793842789444.jpg?v=13">
+<meta property="og:image" content="https://mrinvoicepro.com/1793842789444.jpg?v=14">
+<meta property="og:image:secure_url" content="https://mrinvoicepro.com/1793842789444.jpg?v=14">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="512">
 <meta property="og:image:height" content="512">
 <meta property="og:type" content="website">
-<link rel="manifest" href="/manifest.json?v=13">
+<link rel="manifest" href="/manifest.json?v=14">
 <meta name="theme-color" content="#ffffff">
-<link rel="icon" type="image/jpeg" href="/1793842789444.jpg?v=13">
-<link rel="apple-touch-icon" href="/1793842789444.jpg?v=13">
+<link rel="icon" type="image/jpeg" href="/1793842789444.jpg?v=14">
+<link rel="apple-touch-icon" href="/1793842789444.jpg?v=14">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 if ('serviceWorker' in navigator) {
@@ -116,19 +116,19 @@ header {
   gap: 0.65rem;
   flex-wrap: wrap;
 }
-.brand-logo { display: flex; align-items: center; gap: 0.75rem; color: var(--text-dark); }
+.brand-logo { display: flex; align-items: center; gap: 0.6rem; color: var(--text-dark); }
 .brand-icon {
-  width: 50px;
-  height: 50px;
-  background: #0b0d13;
-  border: 1px solid #1e293b;
-  border-radius: 12px;
+  width: 54px;
+  height: 54px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: none;
   flex-shrink: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 .brand-icon img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
 .logo-main { font-size: 1.28rem; font-weight: 900; letter-spacing: 0.3px; color: var(--text-dark); }
@@ -207,11 +207,11 @@ header {
 }
 .ios-sheet-brand { display: flex; align-items: center; gap: 0.7rem; }
 .ios-sheet-brand img {
-  width: 46px;
-  height: 46px;
-  border-radius: 12px;
-  border: 1px solid var(--line-mid);
-  background: #000;
+  width: 48px;
+  height: 48px;
+  border-radius: 0;
+  border: none;
+  background: transparent;
   object-fit: contain;
 }
 .ios-step-row {
@@ -782,7 +782,7 @@ textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
 }
 .lux-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1.5px solid #0f172a; padding-bottom: 0.8rem; margin-bottom: 0.85rem; gap: 0.8rem; flex-wrap: wrap; }
 .lux-brand { display: flex; align-items: center; gap: 0.75rem; }
-.lux-logo-box { width: 60px; height: 60px; background: #000; border: 1px solid #eab308; border-radius: 12px; overflow: hidden; flex-shrink: 0; }
+.lux-logo-box { width: 60px; height: 60px; background: #ffffff; border: none; border-radius: 0; overflow: visible; flex-shrink: 0; }
 .lux-logo-box img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
 .lux-badge-box { background: #f8fafc; border: 1px solid #cbd5e1; border-right: 3px solid #eab308; padding: 0.5rem 0.8rem; border-radius: 8px; text-align: right; }
 .lux-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin: 0.75rem 0; font-variant-numeric: tabular-nums; }
@@ -801,7 +801,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
 /* ADAPTACIÓN AUTOMÁTICA AL VIRAR EL TELÉFONO EN HORIZONTAL (LANDSCAPE) */
 @media screen and (orientation: landscape) and (max-height: 600px) {
   header { padding-top: 0.42rem; padding-bottom: 0.42rem; }
-  .brand-icon { width: 38px; height: 38px; border-radius: 9px; }
+  .brand-icon { width: 42px; height: 42px; }
   .logo-main { font-size: 1.08rem; }
   .logo-sub { font-size: 0.58rem; }
   .top-bar, .container { max-width: 980px; }
@@ -852,7 +852,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
   <div class="top-bar">
     <div class="brand-logo">
       <div class="brand-icon">
-        <img src="1793842789444.jpg" alt="Mr. Invoice Pro">
+        <img src="1793842789444.jpg" alt="Mr. Invoice Pro" class="brand-mascot-img">
       </div>
       <div>
         <div class="logo-main">Mr. <span>Invoice</span> Pro</div>
@@ -888,7 +888,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
   <div class="ios-sheet-card">
     <div class="ios-sheet-head">
       <div class="ios-sheet-brand">
-        <img src="1793842789444.jpg" alt="Mr. Invoice Pro">
+        <img src="1793842789444.jpg" alt="Mr. Invoice Pro" class="brand-mascot-img">
         <div>
           <div style="font-weight:900;font-size:1rem;color:#050505;">Mr. Invoice Pro</div>
           <div style="font-size:0.74rem;color:#d97706;font-weight:800;" id="ui-ios-sub">App Oficial para iPhone / iPad</div>
@@ -1454,8 +1454,81 @@ if (!CURRENCIES[currentCurr]) currentCurr = 'USD';
 let isPaidUser = justPaidSingle || isProSubscriber || isOwnerDevice;
 let uploadedLogoData = '';
 let uploadedHwQuoteImg = '';
+let cleanMascotLogoDataUrl = '';
 let customLineItems = [{ desc: '', qty: '1', price: '' }];
 let deferredPrompt = null;
+
+// Limpia automáticamente el cuadro negro alrededor del muñequito conservando su camisa blanca y bordes suaves
+function removeBlackBoxFromBrandIcons() {
+  if (cleanMascotLogoDataUrl) {
+    document.querySelectorAll('.brand-mascot-img').forEach(im => { im.src = cleanMascotLogoDataUrl; });
+    return;
+  }
+  const firstImg = document.querySelector('.brand-mascot-img');
+  const srcToLoad = firstImg ? firstImg.getAttribute('src') : '1793842789444.jpg';
+  const probe = new Image();
+  probe.crossOrigin = 'anonymous';
+  probe.onload = function() {
+    try {
+      const w = probe.naturalWidth, h = probe.naturalHeight;
+      if (!w || !h) return;
+      const c = document.createElement('canvas');
+      c.width = w; c.height = h;
+      const ctx = c.getContext('2d');
+      ctx.drawImage(probe, 0, 0);
+      const imgData = ctx.getImageData(0, 0, w, h);
+      const d = imgData.data;
+      const visited = new Uint8Array(w * h);
+      const stack = [];
+
+      function pushIfExteriorDark(x, y) {
+        if (x < 0 || y < 0 || x >= w || y >= h) return;
+        const idx = y * w + x;
+        if (visited[idx]) return;
+        const p = idx * 4;
+        const maxCh = Math.max(d[p], d[p + 1], d[p + 2]);
+        if (maxCh < 46) {
+          visited[idx] = 1;
+          stack.push(idx);
+        }
+      }
+
+      for (let x = 0; x < w; x++) { pushIfExteriorDark(x, 0); pushIfExteriorDark(x, h - 1); }
+      for (let y = 0; y < h; y++) { pushIfExteriorDark(0, y); pushIfExteriorDark(w - 1, y); }
+
+      while (stack.length > 0) {
+        const idx = stack.pop();
+        const p = idx * 4;
+        d[p + 3] = 0;
+        const x = idx % w, y = (idx / w) | 0;
+        pushIfExteriorDark(x + 1, y);
+        pushIfExteriorDark(x - 1, y);
+        pushIfExteriorDark(x, y + 1);
+        pushIfExteriorDark(x, y - 1);
+      }
+
+      // Suavizado ligero en el borde exterior del muñequito para que no queden picos oscuros sobre blanco
+      for (let y = 1; y < h - 1; y++) {
+        for (let x = 1; x < w - 1; x++) {
+          const idx = y * w + x;
+          if (visited[idx]) continue;
+          if (visited[idx - 1] || visited[idx + 1] || visited[idx - w] || visited[idx + w]) {
+            const p = idx * 4;
+            const lum = (d[p] + d[p + 1] + d[p + 2]) / 3;
+            if (lum < 85) {
+              d[p + 3] = Math.round((lum / 85) * 200);
+            }
+          }
+        }
+      }
+
+      ctx.putImageData(imgData, 0, 0);
+      cleanMascotLogoDataUrl = c.toDataURL('image/png');
+      document.querySelectorAll('.brand-mascot-img').forEach(im => { im.src = cleanMascotLogoDataUrl; });
+    } catch (e) {}
+  };
+  probe.src = srcToLoad;
+}
 
 function isAppAlreadyInstalled() {
   if (window.matchMedia('(display-mode: standalone)').matches) return true;
@@ -1881,11 +1954,12 @@ function renderModalSheet(mode) {
 
   const grandTotal = subtotal + (data.tax || 0);
   const remBalance = Math.max(0, grandTotal - (data.dep || 0));
+  const logoSrcForModal = cleanMascotLogoDataUrl || '1793842789444.jpg';
 
   paper.innerHTML =
     '<div class="lux-header">' +
       '<div class="lux-brand">' +
-        '<div class="lux-logo-box"><img src="1793842789444.jpg" alt="Logo"></div>' +
+        '<div class="lux-logo-box"><img src="' + logoSrcForModal + '" alt="Logo" class="brand-mascot-img"></div>' +
         '<div>' +
           '<div style="font-size:0.7rem;font-weight:800;color:#64748b;text-transform:uppercase;">' + escapeHtml(meta.party1) + '</div>' +
           '<div style="font-weight:900;font-size:1.05rem;color:#0f172a;">' + escapeHtml(data.comp) + '</div>' +
@@ -2085,9 +2159,10 @@ async function buildPureVectorPDF() {
   doc.rect(0, 0, 215.9, 6, 'F');
 
   let leftX = 14;
-  if (uploadedLogoData) {
+  const pdfLogoSource = uploadedLogoData || cleanMascotLogoDataUrl;
+  if (pdfLogoSource) {
     try {
-      const logoDims = await getImageNaturalDims(uploadedLogoData);
+      const logoDims = await getImageNaturalDims(pdfLogoSource);
       const maxBox = 22;
       let lw = maxBox, lh = maxBox, lx = 14, ly = 12;
       if (logoDims && logoDims.w && logoDims.h) {
@@ -2097,8 +2172,8 @@ async function buildPureVectorPDF() {
         lx = 14 + (maxBox - lw) / 2;
         ly = 12 + (maxBox - lh) / 2;
       }
-      const fmt = uploadedLogoData.startsWith('data:image/png') ? 'PNG' : 'JPEG';
-      doc.addImage(uploadedLogoData, fmt, lx, ly, lw, lh);
+      const fmt = pdfLogoSource.startsWith('data:image/png') ? 'PNG' : 'JPEG';
+      doc.addImage(pdfLogoSource, fmt, lx, ly, lw, lh);
       leftX = 40;
     } catch (e) {}
   } else {
@@ -2465,6 +2540,7 @@ window.addEventListener('DOMContentLoaded', function() {
   restoreStateOnLoad();
   applyLanguageUI();
   syncInstallButtonVisibility();
+  removeBlackBoxFromBrandIcons();
 });
 </script>
 </body>
