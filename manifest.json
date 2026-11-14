@@ -1,11 +1,12 @@
 {
   "name": "Mr. Invoice Pro",
   "short_name": "Mr. Invoice Pro",
-  "description": "Generador profesional de cotizaciones, estimados y facturas en PDF.",
+  "description": "Generador profesional de cotizaciones, estimados, facturas y contratos legales en PDF.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0f172a",
-  "theme_color": "#0f172a",
+  "orientation": "any",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
   "icons": [
     {
       "src": "/icon-192%20(2).png",
