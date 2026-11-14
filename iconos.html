@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
 <meta name="google-site-verification" content="QK9UkO8Wa6ApdBs0sG4Gk8ojj5vx9duiBlAG9b618-g" />
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -57,12 +57,22 @@ html, * {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", Roboto, sans-serif;
 }
 
+/* PANTALLA CLAVADA VERTICALMENTE COMO APP NATIVA (CERO JUEGO LATERAL) */
+html, body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
+  touch-action: pan-y pinch-zoom;
+}
+
 body {
   background-color: var(--bg-page);
   color: var(--text-dark);
   min-height: 100vh;
   padding-bottom: max(3rem, env(safe-area-inset-bottom));
   -webkit-font-smoothing: antialiased;
+  position: relative;
 }
 
 /* BLOQUEO DE IMPRESIÓN DE PANTALLA PARA PROTEGER VISTA PREVIA */
@@ -94,25 +104,36 @@ body {
   margin: 0 auto 0.55rem;
 }
 
-/* HEADER EJECUTIVO DE CRISTAL ESMERILADO */
+/* HEADER ESTABILIZADO SIN LÍNEAS CORTANTES NI PARPADEO DE LOGO */
 header {
   position: sticky;
   top: 0;
   z-index: 60;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--line-mid);
-  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
-  padding: 0.6rem 1rem 0.55rem;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+  box-shadow: none;
+  padding: 0.6rem 1rem 0.5rem;
   padding-left: max(1rem, env(safe-area-inset-left));
   padding-right: max(1rem, env(safe-area-inset-right));
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 .header-inner { max-width: 760px; margin: 0 auto; }
 .top-bar { display: flex; justify-content: space-between; align-items: center; gap: 0.55rem; }
 .brand-logo { display: flex; align-items: center; gap: 0.5rem; min-width: 0; flex: 1; }
 .brand-icon { width: 46px; height: 46px; background: transparent; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.brand-icon img { width: 100%; height: 100%; object-fit: contain; }
+.brand-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
 .logo-main { font-size: 1.18rem; font-weight: 900; letter-spacing: -0.02em; color: var(--text-dark); line-height: 1.1; white-space: nowrap; }
 .logo-main span { color: var(--accent); }
 .logo-sub { font-size: 0.58rem; text-transform: uppercase; letter-spacing: 1.1px; color: var(--text-muted); font-weight: 800; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -153,15 +174,15 @@ header {
   text-overflow: ellipsis;
 }
 
-/* SUB-BARRA CON TEXTO LIMPIO DEL DOCUMENTO ABIERTO */
+/* SUB-BARRA CON TEXTO LIMPIO DEL DOCUMENTO ABIERTO (SIN RAYA DIVISORIA) */
 .sub-control-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
-  margin-top: 0.5rem;
-  padding-top: 0.48rem;
-  border-top: 1px solid var(--line-fine);
+  margin-top: 0.38rem;
+  padding-top: 0.22rem;
+  border-top: none;
   flex-wrap: wrap;
 }
 .open-doc-plain-title {
@@ -373,7 +394,7 @@ header {
 .ios-step-num { background: var(--obsidian); color: #fff; font-weight: 900; width: 25px; height: 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.76rem; }
 .ios-done-btn { width: 100%; background: var(--obsidian); color: #fff; border: none; padding: 0.84rem; border-radius: 12px; font-weight: 800; font-size: 0.88rem; cursor: pointer; margin-top: 0.35rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem; }
 
-/* CONTENEDOR Y TARJETA FINTECH */
+/* CONTENEDOR PRINCIPAL */
 .container {
   max-width: 760px;
   margin: 1rem auto;
@@ -406,6 +427,10 @@ header {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  min-width: 0;
+}
+.mb-header h2 span {
+  overflow-wrap: anywhere;
 }
 .reset-zero-btn {
   background: var(--surface-pill);
@@ -479,6 +504,7 @@ header {
   background: var(--obsidian);
   color: var(--accent-bright);
   font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
 }
 
 .price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
@@ -495,6 +521,7 @@ label {
 }
 input, select, textarea {
   width: 100%;
+  max-width: 100%;
   padding: 0.65rem 0.82rem;
   border: 1px solid #cbd5e1;
   border-radius: 11px;
@@ -582,6 +609,7 @@ textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
   text-align: center;
   margin-top: 0.7rem;
   background: #ffffff;
+  overflow: hidden;
 }
 .logo-pic-badge {
   display: inline-flex;
@@ -598,7 +626,7 @@ textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
   margin-bottom: 0.38rem;
   text-transform: uppercase;
 }
-.logo-upload-box input[type="file"] { font-size: 0.75rem; color: var(--text-muted); border: none; padding: 0.2rem; background: transparent; }
+.logo-upload-box input[type="file"] { font-size: 0.75rem; color: var(--text-muted); border: none; padding: 0.2rem; background: transparent; max-width: 100%; }
 .logo-upload-box input[type="file"]::file-selector-button {
   background: var(--surface-pill);
   color: var(--text-dark);
@@ -724,6 +752,37 @@ textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
 .hist-open-btn { background: var(--surface-pill); color: var(--text-dark); border: 1px solid var(--line-mid); padding: 0.36rem 0.68rem; border-radius: 8px; font-size: 0.74rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 0.3rem; }
 .hist-pdf-btn { background: #ecfdf5; color: var(--emerald); border: 1px solid #a7f3d0; padding: 0.36rem 0.68rem; border-radius: 8px; font-size: 0.74rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 0.3rem; }
 
+/* MÓVIL LIMPIO DE PUNTA A PUNTA (SIN BORDES NI ESQUINAS EN LA TARJETA SUPERIOR) */
+@media (max-width: 760px) {
+  body {
+    background-color: #ffffff;
+  }
+  .container {
+    margin: 0 auto;
+    padding-left: 0;
+    padding-right: 0;
+    max-width: 100%;
+  }
+  .builder-card {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    padding: 0.9rem 1rem 1.25rem;
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+  .history-card {
+    border: none;
+    border-top: 6px solid #f1f5f9;
+    border-radius: 0;
+    box-shadow: none;
+    margin-top: 0;
+    padding: 1.15rem 1rem;
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+}
+
 /* MODAL DE VISTA PREVIA CON BLINDAJE ANTI-SCREENSHOT (SIN BOTÓN X) */
 .doc-modal-overlay {
   position: fixed;
@@ -740,6 +799,7 @@ textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
   padding-right: max(0.65rem, env(safe-area-inset-right));
   z-index: 9999;
   overflow-y: auto;
+  overflow-x: hidden;
   user-select: none;
   -webkit-user-select: none;
   -webkit-touch-callout: none;
@@ -851,7 +911,7 @@ textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
 .lux-sign-line { border-top: 1px solid #0f172a; padding-top: 0.28rem; font-weight: 700; display: flex; align-items: center; gap: 0.3rem; }
 .lux-viral-footer { text-align: center; font-size: 0.7rem; color: #64748b; margin-top: 0.85rem; padding-top: 0.45rem; border-top: 1px dashed #cbd5e1; font-weight: 700; }
 
-footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margin-top: 2rem; }
+footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margin-top: 1.6rem; padding: 0 1rem; }
 
 /* ADAPTACIÓN HORIZONTAL AL VIRAR EL TELÉFONO (LANDSCAPE) */
 @media screen and (orientation: landscape) and (max-height: 600px) {
@@ -876,7 +936,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
 </head>
 <body>
 
-<svg width="0" height="0" style="position:absolute">
+<svg width="0" height="0" aria-hidden="true" style="position:fixed;top:0;left:0;width:0;height:0;overflow:hidden;pointer-events:none;">
   <defs>
     <symbol id="ico-doc" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></symbol>
     <symbol id="ico-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
@@ -1811,7 +1871,7 @@ if (!CURRENCIES[currentCurr]) currentCurr = 'USD';
 let isPaidUser = justPaidSingle || isProSubscriber || isOwnerDevice;
 let uploadedLogoData = '';
 let uploadedHwQuoteImg = '';
-let cleanMascotLogoDataUrl = '';
+let cleanMascotLogoDataUrl = localStorage.getItem('mcp_clean_mascot_v1') || '';
 let customLineItems = [{ desc: '', qty: '1', price: '' }];
 let deferredPrompt = null;
 
@@ -2015,6 +2075,7 @@ function removeBlackBoxFromBrandIcons() {
 
       ctx.putImageData(imgData, 0, 0);
       cleanMascotLogoDataUrl = c.toDataURL('image/png');
+      try { localStorage.setItem('mcp_clean_mascot_v1', cleanMascotLogoDataUrl); } catch (err) {}
       document.querySelectorAll('.brand-mascot-img').forEach(im => { im.src = cleanMascotLogoDataUrl; });
     } catch (e) {}
   };
@@ -3074,6 +3135,10 @@ function handleProPassClick() {
 }
 
 function restoreStateOnLoad() {
+  if (cleanMascotLogoDataUrl) {
+    document.querySelectorAll('.brand-mascot-img').forEach(im => { im.src = cleanMascotLogoDataUrl; });
+  }
+
   const savedDocType = localStorage.getItem('mcp_active_doctype');
   if (savedDocType && I18N.es.types[savedDocType]) {
     const dtInp = document.getElementById('qb-doctype');
