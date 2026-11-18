@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="google-site-verification" content="QK9UkO8Wa6ApdBs0sG4Gk8ojj5vx9duiBlAG9b618-g" />
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Mr. Invoice Pro">
@@ -29,7 +30,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 </script>
-<script data-goatcounter="https://materialcalcpro.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script data-goatcounter="https://mrinvoicepro.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 <style>
 :root {
   --bg-page: #f4f6f9;
@@ -341,7 +342,7 @@ header {
   box-shadow: 0 6px 14px rgba(225, 29, 72, 0.25);
 }
 
-/* MODAL INSTALACIÓN IOS */
+/* MODAL INSTALACIÓN PWA (IOS / ANDROID) */
 .ios-install-sheet {
   position: fixed;
   inset: 0;
@@ -869,7 +870,37 @@ textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
 .lux-signs { display: grid; grid-template-columns: 2fr 2fr 1fr; gap: 0.85rem; margin-top: 1.1rem; font-size: 0.74rem; }
 @media (max-width: 520px) { .lux-signs { grid-template-columns: 1fr; gap: 0.65rem; } }
 .lux-sign-line { border-top: 1px solid #0f172a; padding-top: 0.28rem; font-weight: 700; display: flex; align-items: center; gap: 0.3rem; }
+.lux-page2-preview { margin-top: 1rem; padding-top: 0.85rem; border-top: 2px dashed #94a3b8; text-align: center; }
+.lux-page2-label { font-size: 0.72rem; font-weight: 900; color: #334155; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 0.5rem; }
+.lux-page2-img { max-width: 100%; max-height: 280px; object-fit: contain; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; padding: 4px; }
 .lux-viral-footer { text-align: center; font-size: 0.7rem; color: #64748b; margin-top: 0.85rem; padding-top: 0.45rem; border-top: 1px dashed #cbd5e1; font-weight: 700; }
+
+/* AVISO EJECUTIVO FLOTANTE (TOAST) */
+.mcp-toast {
+  position: fixed;
+  left: 50%;
+  bottom: max(1.25rem, env(safe-area-inset-bottom));
+  transform: translateX(-50%) translateY(20px);
+  background: var(--obsidian);
+  color: #ffffff;
+  border: 1px solid rgba(251, 191, 36, 0.45);
+  padding: 0.72rem 1.1rem;
+  border-radius: 14px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  line-height: 1.38;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.32);
+  z-index: 10020;
+  max-width: 92%;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease, transform 0.22s ease;
+}
+.mcp-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
 
 footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margin-top: 2rem; }
 
@@ -894,6 +925,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
 }
 </style>
 </head>
+<!-- ==================== FIN PARTE 1 DE 4 ==================== -->
 <body>
 
 <svg width="0" height="0" style="position:absolute">
@@ -1001,7 +1033,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
   </div>
 </div>
 
-<!-- MODAL INSTALACIÓN IOS -->
+<!-- MODAL INSTALACIÓN PWA -->
 <div class="ios-install-sheet" id="iosInstallSheet" onclick="if(event.target===this)dismissModalCleanly()">
   <div class="ios-sheet-card" id="iosSheetCard">
     <div class="sheet-grab-pill"></div>
@@ -1010,17 +1042,17 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
         <img src="1793842789444.jpg" alt="Mr. Invoice Pro" class="brand-mascot-img">
         <div>
           <div style="font-weight:900;font-size:1rem;color:#050505;">Mr. Invoice Pro</div>
-          <div style="font-size:0.74rem;color:#d97706;font-weight:800;" id="ui-ios-sub">App Oficial para iPhone / iPad</div>
+          <div style="font-size:0.74rem;color:#d97706;font-weight:800;" id="ui-ios-sub">App Oficial para tu Teléfono</div>
         </div>
       </div>
     </div>
     <div class="ios-step-row">
       <div class="ios-step-num">1</div>
-      <div id="ui-ios-s1">Toca los <strong>3 puntitos (•••)</strong> o el botón <strong>Compartir</strong> en la barra inferior de tu iPhone.</div>
+      <div id="ui-ios-s1">Toca los <strong>3 puntitos (•••)</strong> o el botón <strong>Compartir</strong> en la barra de tu navegador.</div>
     </div>
     <div class="ios-step-row">
       <div class="ios-step-num">2</div>
-      <div id="ui-ios-s2">Selecciona <strong>"Agregar a inicio"</strong> (Add to Home Screen) y toca <strong>Agregar</strong> arriba a la derecha.</div>
+      <div id="ui-ios-s2">Selecciona <strong>"Agregar a inicio"</strong> o <strong>"Instalar aplicación"</strong> y confirma.</div>
     </div>
     <button type="button" class="ios-done-btn" onclick="markAppInstalledAndHide()">
       <svg class="ico-stroke-sm"><use href="#ico-check"></use></svg>
@@ -1186,26 +1218,28 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
   </div>
 </div>
 
+<div class="mcp-toast" id="mcpToast" role="status" aria-live="polite"></div>
+
 <footer>
   &copy; 2026 Mr. Invoice Pro | mrinvoicepro.com
   <span onclick="deactivateOwnerMode()" style="display:none;cursor:pointer;color:#059669;font-weight:800;margin-left:8px;padding:3px 9px;border:1px solid #a7f3d0;background:#ecfdf5;border-radius:999px;" id="ownerKeyBtn">
     <svg class="ico-stroke-sm" style="width:13px;height:13px;margin-right:3px;"><use href="#ico-crown"></use></svg>Salir de Modo Dueño
   </span>
 </footer>
-
+<!-- ==================== FIN PARTE 2 DE 4 ==================== -->
 <script>
 const STRIPE_SINGLE_URL = "https://buy.stripe.com/7sY4gB3Vl6217aeg2S7ok04";
 const STRIPE_PRO_PASS_URL = "https://buy.stripe.com/eVq28t77xbml8eidUK7ok01";
 const OWNER_HASH = "f4d2cf685d7904be105675a5159c8717134d23914f80aa0714496303d347b2d1";
 
 const CURRENCIES = {
-  USD: { sym: '$', pdfSym: '$', dec: 2 },
-  EUR: { sym: '€', pdfSym: 'EUR ', dec: 2 },
-  PLN: { sym: 'zł', pdfSym: 'PLN ', dec: 2 },
-  BRL: { sym: 'R$', pdfSym: 'R$ ', dec: 2 },
-  DOP: { sym: 'RD$', pdfSym: 'RD$ ', dec: 2 },
-  MXN: { sym: '$', pdfSym: 'MXN $', dec: 2 },
-  COP: { sym: '$', pdfSym: 'COP $', dec: 0 }
+  USD: { sym: '$', pdfSym: '$', dec: 2, sampleMult: 1 },
+  EUR: { sym: '€', pdfSym: 'EUR ', dec: 2, sampleMult: 1 },
+  PLN: { sym: 'zł', pdfSym: 'PLN ', dec: 2, sampleMult: 4 },
+  BRL: { sym: 'R$', pdfSym: 'R$ ', dec: 2, sampleMult: 5 },
+  DOP: { sym: 'RD$', pdfSym: 'RD$ ', dec: 2, sampleMult: 60 },
+  MXN: { sym: '$', pdfSym: 'MXN $', dec: 2, sampleMult: 20 },
+  COP: { sym: '$', pdfSym: 'COP $', dec: 0, sampleMult: 4000 }
 };
 
 const LANG_LOCALES = {
@@ -1247,21 +1281,53 @@ function escapeHtml(str) {
 }
 
 function pdfSafeText(str) {
-  const map = {
+  const charMap = {
     'ą':'a','ć':'c','ę':'e','ł':'l','ń':'n','ś':'s','ź':'z','ż':'z',
     'Ą':'A','Ć':'C','Ę':'E','Ł':'L','Ń':'N','Ś':'S','Ź':'Z','Ż':'Z',
-    'œ':'oe','Œ':'OE','–':'-','—':'-','•':'-'
+    'œ':'oe','Œ':'OE','Ÿ':'Y','€':'EUR ','™':'(TM)',
+    '✓':'[x]','✔':'[x]','☑':'[x]','☐':'[ ]','×':'x','÷':'/'
   };
-  return String(str ?? '').replace(/[ąćęłńśźżĄĆĘŁŃŚŹŻœŒ–—•]/g, ch => map[ch] || ch);
+  return String(str ?? '')
+    .replace(/[\u201C\u201D\u201E\u201F\u2033\u2036]/g, '"')
+    .replace(/[\u2018\u2019\u201A\u201B\u2032\u2035]/g, "'")
+    .replace(/[\u2013\u2014\u2015\u2212]/g, '-')
+    .replace(/[\u2022\u2023\u25E6\u2043\u2219]/g, '-')
+    .replace(/\u2026/g, '...')
+    .replace(/[\u00A0\u202F\u2007]/g, ' ')
+    .replace(/[ąćęłńśźżĄĆĘŁŃŚŹŻœŒŸ€™✓✔☑☐×÷]/g, ch => charMap[ch] || ch)
+    .replace(/[^\x09\x0A\x0D\x20-\xFF]/g, ch => {
+      const norm = ch.normalize ? ch.normalize('NFD').replace(/[\u0300-\u036f]/g, '') : '';
+      return /^[\x20-\xFF]+$/.test(norm) ? norm : '';
+    });
 }
 
 function svgIco(id, extraCls) {
   return '<svg class="' + (extraCls || 'ico-stroke-sm') + '"><use href="#' + id + '"></use></svg>';
 }
 
-function getFormattedDate() {
+function roundMoney(num) {
+  const currKey = (typeof currentCurr !== 'undefined' && CURRENCIES[currentCurr]) ? currentCurr : 'USD';
+  const dec = CURRENCIES[currKey].dec;
+  const factor = Math.pow(10, dec);
+  const n = Number(num) || 0;
+  return Math.round((n + (n >= 0 ? 1e-9 : -1e-9)) * factor) / factor;
+}
+
+let mcpToastTimer = null;
+function showExecutiveToast(msg, durationMs) {
+  const el = document.getElementById('mcpToast');
+  if (!el || !msg) return;
+  el.innerText = msg;
+  el.classList.add('show');
+  if (mcpToastTimer) clearTimeout(mcpToastTimer);
+  mcpToastTimer = setTimeout(() => { el.classList.remove('show'); }, durationMs || 3600);
+}
+
+function getFormattedDate(overrideDateStr) {
+  if (overrideDateStr && String(overrideDateStr).trim()) return String(overrideDateStr).trim();
+  const langKey = (typeof currentLang !== 'undefined' && LANG_LOCALES[currentLang]) ? currentLang : 'es';
   try {
-    return new Date().toLocaleDateString(LANG_LOCALES[currentLang] || 'es-PR');
+    return new Date().toLocaleDateString(LANG_LOCALES[langKey]);
   } catch (e) {
     return new Date().toLocaleDateString();
   }
@@ -1283,23 +1349,31 @@ const I18N = {
     installBtn: "App", iosSub: "App Oficial para iPhone / iPad",
     iosS1: 'Toca los <strong>3 puntitos (•••)</strong> o el botón <strong>Compartir</strong> en la barra inferior de tu iPhone.',
     iosS2: 'Selecciona <strong>"Agregar a inicio"</strong> (Add to Home Screen) y toca <strong>Agregar</strong> arriba a la derecha.',
+    androidSub: "App Oficial para Android",
+    androidS1: 'Toca el menú de <strong>3 puntitos (⋮)</strong> arriba a la derecha en tu navegador.',
+    androidS2: 'Selecciona <strong>"Instalar aplicación"</strong> o <strong>"Agregar a pantalla principal"</strong>.',
     iosDone: "Listo, ya la agregué a mi inicio", attOk: "Imagen 2da Pág. Lista",
     sub: "Estimados, Facturas y Contratos PDF", reset: "Nuevo ($0.00)",
     sampleBtn: "Vista Previa en Vivo y Ejemplo Oficial", sec1: "Datos de las Partes y Numeración",
+    compPh: "ASD Building Solutions LLC", phonePh: "(787) 000-0000",
     docNum: "Número de Documento (#)", phone: "Teléfono / Licencia / ID",
     clientPh: "Nombre - Dirección - Teléfono", logo: "Sube aquí el Logo de tu Negocio (Opcional)",
     sec2: "Descripción, Bienes, Medidas o Servicios", addLine: "Añadir Otra Línea / Concepto",
     sec3: "Impuestos, Depósito, Condiciones y Envío PDF", tax: "Impuestos / Tax", dep: "Depósito / Abono Pagado",
     notes: "Notas, Garantía o Condiciones Especiales", attach: "Adjuntar Foto, ID o Documento en 2da Página",
-    attachChk: "Incluir imagen en 2da página del PDF", balLbl: "BALANCE TOTAL:", histTitle: "Récord de Documentos Pagados", histClear: "Borrar",
+    attachChk: "Incluir imagen en 2da página del PDF", page2PreviewLbl: "2da Página Adjunta en el PDF",
+    balLbl: "BALANCE TOTAL:", histTitle: "Récord de Documentos Pagados", histClear: "Borrar",
     histSearch: "Buscar por cliente, # de documento o fecha...", openBtn: "Abrir", pdfBtn: "PDF",
     qty: "Cantidad", price: "Precio Unitario", itemLbl: "Partida #", descPh: "Descripción detallada (ej. Vehículo/VIN, Propiedad, Servicios o Materiales)...",
-    waPaid: "Enviar PDF Oficial por WhatsApp", emailPaid: "Enviar PDF Oficial por Email", dlPaid: "Descargar / Guardar PDF en mi Teléfono",
+    waPaid: "Enviar PDF Oficial por WhatsApp / Compartir", emailPaid: "Enviar PDF Oficial por Email", dlPaid: "Descargar / Guardar PDF en mi Teléfono",
     waLock: "Desbloquear PDF Oficial Sin Marca de Agua ($1.99)",
     proPassBtn: "Pase Pro Ilimitado para Contratistas y Negocios ($9.99/mes)",
     notePaid: "Acceso Activo: Puedes enviar tu PDF limpio por WhatsApp, Email o guardarlo",
+    noteDocUnlocked: "Documento Desbloqueado: Descárgalo y envíalo por WhatsApp o Email sin límite",
     noteCredit: "Crédito de $1.99 listo: Descarga o envía tu PDF oficial sin marca de agua",
     noteLock: "Un solo pago de $1.99 quita la marca de agua, incluye tu logo y guarda en tu récord",
+    emailDesktopHint: "PDF descargado en tu equipo. Adjúntalo al correo que se acaba de abrir.",
+    ownerUnlockedMsg: "Modo Dueño Activado: Tienes descargas y envíos ilimitados.",
     pdfViralFooter: "Documento Oficial generado con Mr. Invoice Pro - Crea tus Estimados, Facturas y Contratos en: mrinvoicepro.com",
     emailBodyTpl: "Adjunto encontrará su {BADGE} ({NUM}) emitido por {COMP} por un balance de {TOTAL}.",
     dateLbl: "Fecha", accept: "ACEPTO", decline: "NO ACEPTO", remBal: "BALANCE PENDIENTE", paidAmt: "MONTO ABONADO / PAGADO",
@@ -1333,23 +1407,31 @@ const I18N = {
     installBtn: "App", iosSub: "Official App for iPhone / iPad",
     iosS1: 'Tap the <strong>3 dots (•••)</strong> or the <strong>Share</strong> button on your iPhone bottom bar.',
     iosS2: 'Select <strong>"Add to Home Screen"</strong> and tap <strong>Add</strong> at the top right.',
+    androidSub: "Official App for Android",
+    androidS1: 'Tap the <strong>3-dot menu (⋮)</strong> at the top right of your browser.',
+    androidS2: 'Select <strong>"Install app"</strong> or <strong>"Add to Home screen"</strong>.',
     iosDone: "Done, added to Home Screen", attOk: "Page 2 Image Ready",
     sub: "Official PDF Estimates, Invoices & Contracts", reset: "New ($0.00)",
     sampleBtn: "Live Preview & Official Sample", sec1: "Party Details & Numbering",
+    compPh: "Apex Construction & Remodeling LLC", phonePh: "(305) 555-0199",
     docNum: "Document Number (#)", phone: "Phone / License / ID",
     clientPh: "Name - Address - Phone", logo: "Upload Business Logo (Optional)",
     sec2: "Description, Goods, Measurements or Services", addLine: "Add Another Line Item",
     sec3: "Taxes, Deposit, Terms & Send PDF", tax: "Taxes / Fees", dep: "Deposit / Amount Paid",
     notes: "Notes, Warranty or Special Terms", attach: "Attach Photo, ID or Doc on 2nd Page",
-    attachChk: "Include image on 2nd page of PDF", balLbl: "TOTAL BALANCE:", histTitle: "Paid Documents Record", histClear: "Clear",
+    attachChk: "Include image on 2nd page of PDF", page2PreviewLbl: "Attached 2nd Page in PDF",
+    balLbl: "TOTAL BALANCE:", histTitle: "Paid Documents Record", histClear: "Clear",
     histSearch: "Search by client, doc # or date...", openBtn: "Open", pdfBtn: "PDF",
     qty: "Quantity", price: "Unit Price", itemLbl: "Item #", descPh: "Detailed description (e.g. Vehicle/VIN, Property, Services or Materials)...",
-    waPaid: "Send Official PDF via WhatsApp", emailPaid: "Send Official PDF via Email", dlPaid: "Download / Save PDF to Phone",
+    waPaid: "Send Official PDF via WhatsApp / Share", emailPaid: "Send Official PDF via Email", dlPaid: "Download / Save PDF to Phone",
     waLock: "Unlock Watermark-Free Official PDF ($1.99)",
     proPassBtn: "Unlimited Pro Pass for Contractors & Pros ($9.99/mo)",
     notePaid: "Access Active: Send your clean PDF via WhatsApp, Email or save it",
+    noteDocUnlocked: "Document Unlocked: Download and send via WhatsApp or Email freely",
     noteCredit: "$1.99 Credit Ready: Download or share your watermark-free official PDF",
     noteLock: "A single $1.99 payment removes watermarks, includes your logo & saves to record",
+    emailDesktopHint: "PDF downloaded to your device. Please attach it to the email draft just opened.",
+    ownerUnlockedMsg: "Owner Mode Activated: Unlimited downloads and sharing.",
     pdfViralFooter: "Official Document generated with Mr. Invoice Pro - Create Estimates, Invoices & Contracts at: mrinvoicepro.com",
     emailBodyTpl: "Please find attached your {BADGE} ({NUM}) issued by {COMP} with a balance of {TOTAL}.",
     dateLbl: "Date", accept: "I ACCEPT", decline: "DECLINE", remBal: "REMAINING BALANCE", paidAmt: "AMOUNT PAID / DEPOSIT",
@@ -1383,23 +1465,31 @@ const I18N = {
     installBtn: "App", iosSub: "App Officielle pour iPhone / iPad",
     iosS1: 'Appuyez sur le bouton <strong>Partager</strong> dans la barre inférieure de votre iPhone.',
     iosS2: 'Sélectionnez <strong>"Sur l\'écran d\'accueil"</strong> puis appuyez sur <strong>Ajouter</strong>.',
+    androidSub: "App Officielle pour Android",
+    androidS1: 'Appuyez sur le menu <strong>3 points (⋮)</strong> en haut à droite du navigateur.',
+    androidS2: 'Sélectionnez <strong>"Installer l\'application"</strong> ou <strong>"Ajouter à l\'écran d\'accueil"</strong>.',
     iosDone: "C'est fait, ajoutée à l'accueil", attOk: "Image 2e Page Prête",
     sub: "Devis, Factures et Contrats PDF Officiels", reset: "Nouveau (0.00)",
     sampleBtn: "Aperçu en Direct & Exemple Officiel", sec1: "Coordonnées des Parties et Numéro",
+    compPh: "Entreprise Générale Bâtiment SARL", phonePh: "+33 1 40 00 00 00",
     docNum: "Numéro du Document (#)", phone: "Téléphone / Licence / SIRET",
     clientPh: "Nom - Adresse - Téléphone", logo: "Télécharger le Logo de l'Entreprise (Optionnel)",
     sec2: "Description, Biens, Mesures ou Services", addLine: "Ajouter une Autre Ligne",
     sec3: "Taxes, Acompte, Conditions et Envoi PDF", tax: "Taxes / TVA", dep: "Acompte / Montant Payé",
     notes: "Notes, Garantie ou Conditions Particulières", attach: "Joindre Photo, Pièce d'Identité ou Doc en 2e Page",
-    attachChk: "Inclure l'image sur la 2e page du PDF", balLbl: "SOLDE TOTAL :", histTitle: "Historique des Documents Payés", histClear: "Effacer",
+    attachChk: "Inclure l'image sur la 2e page du PDF", page2PreviewLbl: "2e Page Jointe au PDF",
+    balLbl: "SOLDE TOTAL :", histTitle: "Historique des Documents Payés", histClear: "Effacer",
     histSearch: "Rechercher par client, n° ou date...", openBtn: "Ouvrir", pdfBtn: "PDF",
     qty: "Quantité", price: "Prix Unitaire", itemLbl: "Ligne #", descPh: "Description détaillée (ex. Véhicule/VIN, Bien, Travaux ou Matériaux)...",
-    waPaid: "Envoyer le PDF Officiel par WhatsApp", emailPaid: "Envoyer le PDF Officiel par E-mail", dlPaid: "Télécharger / Enregistrer le PDF",
+    waPaid: "Envoyer le PDF Officiel par WhatsApp / Partager", emailPaid: "Envoyer le PDF Officiel par E-mail", dlPaid: "Télécharger / Enregistrer le PDF",
     waLock: "Débloquer le PDF Officiel Sans Filigrane ($1.99)",
     proPassBtn: "Pass Pro Illimité pour Entrepreneurs ($9.99/mois)",
     notePaid: "Accès Actif : Envoyez votre PDF propre par WhatsApp, E-mail ou enregistrez-le",
+    noteDocUnlocked: "Document Débloqué : Téléchargez et envoyez par WhatsApp ou E-mail librement",
     noteCredit: "Crédit $1.99 Prêt : Téléchargez ou envoyez votre PDF officiel sans filigrane",
     noteLock: "Un seul paiement de $1.99 retire le filigrane, inclut votre logo et archive le PDF",
+    emailDesktopHint: "PDF téléchargé. Veuillez le joindre à l'e-mail qui vient de s'ouvrir.",
+    ownerUnlockedMsg: "Mode Propriétaire Activé : Téléchargements illimités.",
     pdfViralFooter: "Document Officiel généré avec Mr. Invoice Pro - Créez vos Devis, Factures et Contrats sur : mrinvoicepro.com",
     emailBodyTpl: "Veuillez trouver ci-joint votre {BADGE} ({NUM}) émis par {COMP} pour un solde de {TOTAL}.",
     dateLbl: "Date", accept: "J'ACCEPTE", decline: "REFUSER", remBal: "SOLDE RESTANT À PAYER", paidAmt: "MONTANT PAYÉ / ACOMPTE",
@@ -1433,23 +1523,31 @@ const I18N = {
     installBtn: "App", iosSub: "Oficjalna Aplikacja na iPhone / iPad",
     iosS1: 'Kliknij przycisk <strong>Udostępnij</strong> na dolnym pasku przeglądarki iPhone.',
     iosS2: 'Wybierz <strong>"Dodaj do ekranu początkowego"</strong> i kliknij <strong>Dodaj</strong>.',
+    androidSub: "Oficjalna Aplikacja na Androida",
+    androidS1: 'Kliknij menu <strong>3 kropek (⋮)</strong> w prawym górnym rogu przeglądarki.',
+    androidS2: 'Wybierz <strong>"Zainstaluj aplikację"</strong> lub <strong>"Dodaj do ekranu głównego"</strong>.',
     iosDone: "Gotowe, dodano do ekranu", attOk: "Obraz 2. Strony Gotowy",
     sub: "Kosztorysy, Faktury i Umowy PDF", reset: "Nowy (0.00)",
     sampleBtn: "Podgląd na Żywo i Wzór PDF", sec1: "Dane Stron i Numeracja",
+    compPh: "Firma Budowlano-Remontowa Sp. z o.o.", phonePh: "+48 600 000 000",
     docNum: "Numer Dokumentu (#)", phone: "Telefon / NIP / Licencja",
     clientPh: "Nazwa - Adres - Telefon", logo: "Wgraj Logo Swojej Firmy (Opcjonalnie)",
     sec2: "Opis, Towary, Wymiary lub Usługi", addLine: "Dodaj Kolejną Pozycję",
     sec3: "Podatki, Zaliczka, Warunki i Wysyłka PDF", tax: "Podatek / VAT", dep: "Zaliczka / Wpłacona Kwota",
     notes: "Uwagi, Gwarancja lub Warunki Szczególne", attach: "Załącz Zdjęcie, Dowód lub Dokument na 2. Stronie",
-    attachChk: "Dołącz obraz na 2. stronie pliku PDF", balLbl: "DO ZAPŁATY:", histTitle: "Historia Opłaconych Dokumentów", histClear: "Usuń",
+    attachChk: "Dołącz obraz na 2. stronie pliku PDF", page2PreviewLbl: "Załączona 2. Strona w PDF",
+    balLbl: "DO ZAPŁATY:", histTitle: "Historia Opłaconych Dokumentów", histClear: "Usuń",
     histSearch: "Szukaj klienta, numeru lub daty...", openBtn: "Otwórz", pdfBtn: "PDF",
     qty: "Ilość", price: "Cena Jednostkowa", itemLbl: "Pozycja #", descPh: "Szczegółowy opis (np. Pojazd/VIN, Nieruchomość, Usługi lub Materiały)...",
-    waPaid: "Wyślij Oficjalny PDF przez WhatsApp", emailPaid: "Wyślij Oficjalny PDF przez E-mail", dlPaid: "Pobierz / Zapisz PDF na Telefonie",
+    waPaid: "Wyślij Oficjalny PDF przez WhatsApp / Udostępnij", emailPaid: "Wyślij Oficjalny PDF przez E-mail", dlPaid: "Pobierz / Zapisz PDF na Telefonie",
     waLock: "Odblokuj Oficjalny PDF Bez Znaku Wodnego ($1.99)",
     proPassBtn: "Pakiet Pro Bez Limitu dla Firm i Wykonawców ($9.99/mies.)",
     notePaid: "Dostęp Aktywny: Wyślij czysty PDF przez WhatsApp, E-mail lub zapisz go",
+    noteDocUnlocked: "Dokument Odblokowany: Pobieraj i wysyłaj przez WhatsApp lub E-mail bez limitu",
     noteCredit: "Kredyt $1.99 Aktywny: Pobierz lub wyślij swój oficjalny plik PDF",
     noteLock: "Jednorazowa opłata $1.99 usuwa znak wodny, dodaje logo i zapisuje w historii",
+    emailDesktopHint: "Plik PDF pobrany. Załącz go do otwartej wiadomości e-mail.",
+    ownerUnlockedMsg: "Tryb Właściciela Aktywny: Nielimitowane pobieranie.",
     pdfViralFooter: "Oficjalny dokument wygenerowany w Mr. Invoice Pro - Tworz kosztorysy, faktury i umowy na: mrinvoicepro.com",
     emailBodyTpl: "W załączeniu przesyłam dokument {BADGE} ({NUM}) wystawiony przez {COMP} na kwotę {TOTAL}.",
     dateLbl: "Data", accept: "AKCEPTUJĘ", decline: "ODRZUCAM", remBal: "POZOSTAŁO DO ZAPŁATY", paidAmt: "WPŁACONO / ZALICZKA",
@@ -1483,23 +1581,31 @@ const I18N = {
     installBtn: "App", iosSub: "App Oficial para iPhone / iPad",
     iosS1: 'Toque no botão <strong>Compartilhar</strong> na barra inferior do seu iPhone.',
     iosS2: 'Selecione <strong>"Adicionar à Tela de Início"</strong> e toque em <strong>Adicionar</strong>.',
+    androidSub: "App Oficial para Android",
+    androidS1: 'Toque no menu de <strong>3 pontos (⋮)</strong> no canto superior direito do navegador.',
+    androidS2: 'Selecione <strong>"Instalar aplicativo"</strong> ou <strong>"Adicionar à tela inicial"</strong>.',
     iosDone: "Pronto, já adicionei ao início", attOk: "Imagem da 2ª Pág. Pronta",
     sub: "Orçamentos, Faturas e Contratos em PDF", reset: "Novo (0.00)",
     sampleBtn: "Prévia ao Vivo e Exemplo Oficial", sec1: "Dados das Partes e Numeração",
+    compPh: "Construtora & Reformas Pro Ltda", phonePh: "(11) 99000-0000",
     docNum: "Número do Documento (#)", phone: "Telefone / CNPJ / CPF / ID",
     clientPh: "Nome - Endereço - Telefone", logo: "Envie o Logotipo da sua Empresa (Opcional)",
     sec2: "Descrição, Bens, Medidas ou Serviços", addLine: "Adicionar Outra Linha / Item",
     sec3: "Impostos, Sinal, Condições e Envio PDF", tax: "Impostos / Taxas", dep: "Sinal / Valor Pago",
     notes: "Observações, Garantia ou Condições Especiais", attach: "Anexar Foto, RG/CNH ou Doc na 2ª Página",
-    attachChk: "Incluir imagem na 2ª página do PDF", balLbl: "SALDO TOTAL:", histTitle: "Histórico de Documentos Pagos", histClear: "Limpar",
+    attachChk: "Incluir imagem na 2ª página do PDF", page2PreviewLbl: "2ª Página Anexada no PDF",
+    balLbl: "SALDO TOTAL:", histTitle: "Histórico de Documentos Pagos", histClear: "Limpar",
     histSearch: "Buscar por cliente, nº do doc ou data...", openBtn: "Abrir", pdfBtn: "PDF",
     qty: "Quantidade", price: "Preço Unitário", itemLbl: "Item #", descPh: "Descrição detalhada (ex. Veículo/Chassi, Imóvel, Serviços ou Materiais)...",
-    waPaid: "Enviar PDF Oficial pelo WhatsApp", emailPaid: "Enviar PDF Oficial por E-mail", dlPaid: "Baixar / Salvar PDF no Celular",
+    waPaid: "Enviar PDF Oficial pelo WhatsApp / Compartilhar", emailPaid: "Enviar PDF Oficial por E-mail", dlPaid: "Baixar / Salvar PDF no Celular",
     waLock: "Desbloquear PDF Oficial Sem Marca d'Água ($1.99)",
     proPassBtn: "Passe Pro Ilimitado para Empreiteiros e Empresas ($9.99/mês)",
     notePaid: "Acesso Ativo: Envie seu PDF limpo por WhatsApp, E-mail ou salve no celular",
+    noteDocUnlocked: "Documento Desbloqueado: Baixe e envie por WhatsApp ou E-mail sem limite",
     noteCredit: "Crédito de $1.99 Pronto: Baixe ou envie seu PDF oficial sem marca d'água",
     noteLock: "Um único pagamento de $1.99 remove a marca d'água, inclui seu logo e salva no histórico",
+    emailDesktopHint: "PDF baixado no seu dispositivo. Anexe-o ao e-mail que acabou de abrir.",
+    ownerUnlockedMsg: "Modo Proprietário Ativado: Downloads ilimitados.",
     pdfViralFooter: "Documento Oficial gerado com Mr. Invoice Pro - Crie Orçamentos, Faturas e Contratos em: mrinvoicepro.com",
     emailBodyTpl: "Segue em anexo seu {BADGE} ({NUM}) emitido por {COMP} com saldo de {TOTAL}.",
     dateLbl: "Data", accept: "ACEITO", decline: "RECUSO", remBal: "SALDO PENDENTE", paidAmt: "VALOR PAGO / SINAL",
@@ -1550,16 +1656,16 @@ const SAMPLES_I18N = {
         ["1. Pago Inicial / Depósito de Separación — Sistema Solar 10kW + Batería", "Abono oficial del 50% para orden de paneles monocristalinos e inversor híbrido.", 6500],
         ["2. Método de Pago Verificado", "Transferencia Bancaria / Cheque Oficial #004812 acreditado en cuenta comercial.", 0]
       ],
-      tax: 0, dep: 6500.00, notes: "CONSTANCIA DE PAGO: Este recibo acredita el abono recibido en la fecha indicada. Balance restante de $6,500.00 vence al completar la instalación."
+      tax: 0, dep: 6500.00, notes: "CONSTANCIA DE PAGO: Este recibo acredita el abono recibido en la fecha indicada. Liquidación pendiente al completar la instalación."
     },
     promissory: {
       comp: "GRUPO COMERCIAL DEL OESTE LLC (ACREEDOR)", phone: "Reg. Corp. #410922 • Tel: (787) 555-0680 • legal@grupodeloste.com",
       docNum: "2026-0095", date: "14/11/2026", client: "Héctor M. Rivera Torres (DEUDOR) — Licencia / ID: PR-6104928 • Mayagüez, PR",
       rows: [
         ["1. Capital Principal Reconocido (Financiamiento de Equipo Comercial)", "Reconocimiento líquido y exigible por la compra de maquinaria industrial entregada a satisfacción.", 12000],
-        ["2. Plan de Pagos Acordado (6 Plazos Mensuales Consecutivos)", "6 pagos iguales de $1,500.00 los días 15 de cada mes comenzando el 15 de diciembre de 2026.", 0]
+        ["2. Plan de Pagos Acordado (6 Plazos Mensuales Consecutivos)", "6 pagos iguales los días 15 de cada mes comenzando el 15 de diciembre de 2026.", 0]
       ],
-      tax: 0, dep: 3000.00, notes: "CLÁUSULA DE MORA: Todo pago recibido con más de 5 días de atraso conllevará un cargo administrativo del 5%. El incumplimiento de dos cuotas faculta el cobro total del balance ($9,000.00)."
+      tax: 0, dep: 3000.00, notes: "CLÁUSULA DE MORA: Todo pago recibido con más de 5 días de atraso conllevará un cargo administrativo del 5%. El incumplimiento de dos cuotas faculta el cobro total del balance."
     },
     billsale: {
       comp: "ALBERTO RODRÍGUEZ MONTERO (VENDEDOR)", phone: "Licencia / ID: PR-5829104 • Tel: (787) 555-0912 • Adjuntas, PR",
@@ -1579,7 +1685,7 @@ const SAMPLES_I18N = {
         ["2. Reconstrucción de Pretiles y Sellado de Penetraciones", "Aplicación de mortero estructural polimérico y refuerzo en desagües pluviales y bases de equipos.", 3700],
         ["3. Cronograma de Ejecución y Garantía", "Inicio: 20/11/2026 | Entrega: 15 días laborables | Garantía escrita de 7 años contra filtraciones.", 0]
       ],
-      tax: 0, dep: 9250.00, notes: "FORMA DE PAGO CONTRACTUAL: 50% de anticipo a la firma ($9,250.00), 30% al completar preparación de losa y 20% contra entrega final e inspección firmada."
+      tax: 0, dep: 9250.00, notes: "FORMA DE PAGO CONTRACTUAL: 50% de anticipo a la firma, 30% al completar preparación de losa y 20% contra entrega final e inspección firmada."
     },
     lease: {
       comp: "INVERSIONES & PROPIEDADES DEL SUR LLC", phone: "Tel: (787) 555-0770 • administracion@propiedadesdelsur.com",
@@ -1589,7 +1695,7 @@ const SAMPLES_I18N = {
         ["2. Depósito de Garantía Reembolsable (Fianza)", "Equivalente a un (1) mes de renta para responder por daños o balances pendientes al cierre del contrato.", 1250],
         ["3. Inventario Entregado en Óptimo Funcionamiento", "Estufa tope cristal, nevera inoxidable, calentador de línea, 3 consolas Inverter y cisterna de 600 gal.", 0]
       ],
-      tax: 0, dep: 2500.00, notes: "VIGENCIA: 12 meses desde el 1 de diciembre de 2026. Renta pagadera del 1 al 5 de cada mes ($50.00 de cargo por mora luego del día 5). Prohibido subarrendar."
+      tax: 0, dep: 2500.00, notes: "VIGENCIA: 12 meses desde el 1 de diciembre de 2026. Renta pagadera del 1 al 5 de cada mes. Prohibido subarrendar."
     },
     waiver: {
       comp: "ALL PHASE SOLUTIONS & REMODELING LLC", phone: "Tel: (787) 555-0510 • proyectos@allphasepr.com",
@@ -1622,8 +1728,8 @@ const SAMPLES_I18N = {
       comp: "CONSTRUCTORA DEL NORTE LLC (COMPRADOR)", phone: "Depto. de Compras • EIN: 66-0719283 • Tel: (787) 555-0140",
       docNum: "PO-4420", date: "14/11/2026", client: "Suplidora Industrial de Acero y Materiales Inc. — Zona Industrial Luchetti, Bayamón, PR",
       rows: [
-        ["1. Paneles de Gypsum Resistente a Humedad 5/8\" Type X (120 Unidades)", "4' x 8' certificados UL para divisiones interiores comerciales ($19.50 c/u).", 2340],
-        ["2. Studs Metálicos Galvanizados 3-5/8\" Calibre 20 (200 Unidades)", "Largo de 10 pies lineales en paquetes flejados para entrega en proyecto ($9.80 c/u).", 1960],
+        ["1. Paneles de Gypsum Resistente a Humedad 5/8\" Type X (120 Unidades)", "4' x 8' certificados UL para divisiones interiores comerciales.", 2340],
+        ["2. Studs Metálicos Galvanizados 3-5/8\" Calibre 20 (200 Unidades)", "Largo de 10 pies lineales en paquetes flejados para entrega en proyecto.", 1960],
         ["3. Pailas de Compuesto Joint Compound y Cinta de Fibra (25 Kits)", "Entrega requerida en rampa del proyecto antes de las 8:00 AM del lunes.", 575]
       ],
       tax: 560.63, dep: 0, notes: "INSTRUCCIONES DE DESPACHO: Favor citar PO-4420 en toda factura y conduce. Crédito corporativo Neto 30 días."
@@ -1668,16 +1774,16 @@ const SAMPLES_I18N = {
         ["1. 50% Mobilization Deposit — 10kW Solar Array + Battery Backup", "Official deposit received to lock equipment allocation and engineering permit package.", 6500],
         ["2. Verified Payment Method", "Wire Transfer / Cashier's Check #004812 cleared into corporate operating account.", 0]
       ],
-      tax: 0, dep: 6500.00, notes: "PAYMENT CONFIRMATION: This receipt confirms cleared funds received on the date above. Remaining balance of $6,500.00 due upon final inspection."
+      tax: 0, dep: 6500.00, notes: "PAYMENT CONFIRMATION: This receipt confirms cleared funds received on the date above. Remaining balance due upon final inspection."
     },
     promissory: {
       comp: "ATLANTIC COMMERCIAL CAPITAL LLC (LENDER)", phone: "Reg. #FL-410922 • Tel: (305) 555-0680 • legal@atlanticcap.com",
       docNum: "2026-0095", date: "11/14/2026", client: "Marcus D. Vance (BORROWER) — Driver Lic. ID: V520-610-4928 • Tampa, FL",
       rows: [
         ["1. Principal Debt Amount Acknowledged (Commercial Equipment Financing)", "Unconditional principal obligation for commercial machinery delivered in good working order.", 12000],
-        ["2. Agreed Installment Schedule (6 Consecutive Monthly Payments)", "6 equal installments of $1,500.00 due on the 15th of each month starting December 15, 2026.", 0]
+        ["2. Agreed Installment Schedule (6 Consecutive Monthly Payments)", "6 equal monthly installments due on the 15th of each month starting December 15, 2026.", 0]
       ],
-      tax: 0, dep: 3000.00, notes: "DEFAULT & LATE FEE CLAUSE: Any installment over 5 days past due incurs a 5% late fee. Default on two consecutive installments accelerates the full remaining balance ($9,000.00)."
+      tax: 0, dep: 3000.00, notes: "DEFAULT & LATE FEE CLAUSE: Any installment over 5 days past due incurs a 5% late fee. Default on two consecutive installments accelerates the full remaining balance."
     },
     billsale: {
       comp: "ROBERT J. MILLER (SELLER / OWNER)", phone: "Driver Lic. / ID: M420-782-9104 • Tel: (407) 555-0912",
@@ -1697,7 +1803,7 @@ const SAMPLES_I18N = {
         ["2. Parapet Wall Restoration & Drain Flashing", "Polymer-modified structural mortar repair and watertight sealing around all roof penetrations.", 3700],
         ["3. Project Schedule & Workmanship Warranty", "Start Date: 11/20/2026 | Completion: 15 business days | Includes 7-year leak-free written warranty.", 0]
       ],
-      tax: 0, dep: 9250.00, notes: "PAYMENT SCHEDULE: 50% deposit upon signing ($9,250.00), 30% at surface prep completion, and 20% upon final walk-through sign-off."
+      tax: 0, dep: 9250.00, notes: "PAYMENT SCHEDULE: 50% deposit upon signing, 30% at surface prep completion, and 20% upon final walk-through sign-off."
     },
     lease: {
       comp: "SOUTHERN HORIZON PROPERTIES LLC (LANDLORD)", phone: "Tel: (407) 555-0770 • leasing@southernhorizon.com",
@@ -1707,7 +1813,7 @@ const SAMPLES_I18N = {
         ["2. Refundable Security Deposit", "Equal to one (1) month's rent held against property damage or unpaid balances upon lease end.", 1850],
         ["3. Included Appliances & Fixtures", "Glass-top range, stainless refrigerator, tankless water heater, central HVAC, and 2 garage remotes.", 0]
       ],
-      tax: 0, dep: 3700.00, notes: "LEASE TERM: 12 months starting December 1, 2026. Rent is due on the 1st-5th of each month ($50.00 late fee applies after the 5th). No subleasing permitted."
+      tax: 0, dep: 3700.00, notes: "LEASE TERM: 12 months starting December 1, 2026. Rent is due on the 1st-5th of each month. No subleasing permitted."
     },
     waiver: {
       comp: "ALL PHASE COMMERCIAL INTERIORS LLC", phone: "Tel: (305) 555-0510 • projects@allphasebuild.com",
@@ -1740,8 +1846,8 @@ const SAMPLES_I18N = {
       comp: "NORTHSTAR GENERAL CONTRACTORS LLC (BUYER)", phone: "Purchasing Dept • EIN: 59-0719283 • Tel: (407) 555-0140",
       docNum: "PO-4420", date: "11/14/2026", client: "Metro Steel & Drywall Supply Inc. — 2900 Industrial Pkwy, Sanford, FL",
       rows: [
-        ["1. 5/8\" Type X Moisture-Resistant Drywall Sheets (120 Sheets)", "4' x 8' UL-rated commercial boards for interior partitions ($19.50 ea).", 2340],
-        ["2. 3-5/8\" 20-Gauge Galvanized Metal Studs x 10' (200 Pieces)", "Bundled and strapped for jobsite forklift unloading ($9.80 ea).", 1960],
+        ["1. 5/8\" Type X Moisture-Resistant Drywall Sheets (120 Sheets)", "4' x 8' UL-rated commercial boards for interior partitions.", 2340],
+        ["2. 3-5/8\" 20-Gauge Galvanized Metal Studs x 10' (200 Pieces)", "Bundled and strapped for jobsite forklift unloading.", 1960],
         ["3. All-Purpose Joint Compound Buckets & Mesh Tape (25 Kits)", "Jobsite dock delivery required Monday prior to 8:00 AM.", 575]
       ],
       tax: 341.25, dep: 0, notes: "SHIPPING INSTRUCTIONS: Reference PO-4420 on all invoices and delivery tickets. Corporate terms: Net 30 Days."
@@ -1756,10 +1862,64 @@ const SAMPLES_I18N = {
       ],
       tax: 0, dep: 3345.00, notes: "DELIVERY NOTICE: No shortage or damage claims accepted once signed in good order on site."
     }
+  },
+  fr: {
+    quote: {
+      comp: "ATELIER BÂTIMENT & RÉNOVATION SARL", phone: "SIRET 849 201 440 • Tél : +33 1 42 68 55 00",
+      docNum: "2026-0842", date: "14/11/2026", client: "Laurent Dubois — 24 Rue de Rivoli, 75004 Paris • Tél : +33 6 18 44 92 10",
+      rows: [
+        ["1. Dépose et Préparation des Sols (80 m²)", "Enlèvement de l'ancien carrelage, ragréage autolissant et évacuation des gravats.", 1850],
+        ["2. Fourniture et Pose de Grès Cérame Rectifié 60x120 cm", "Pose collée haute performance, croisillons autonivelants et joints époxy antitaches.", 4200],
+        ["3. Rénovation Complète Salle de Bain Principale", "Robinetterie encastrée laiton, étanchéité liquide SPEC et paroi vitrée trempée 10 mm.", 2950]
+      ],
+      tax: 1800.00, dep: 4500.00, notes: "GARANTIE & CONDITIONS : Garantie décennale et biennale incluse. Délai d'exécution : 10 à 12 jours ouvrés. Devis valable 30 jours."
+    }
+  },
+  pl: {
+    quote: {
+      comp: "BUD-MAX REMONTY I WYKOŃCZENIA SP. Z O.O.", phone: "NIP: 521-390-84-12 • Tel: +48 602 418 900",
+      docNum: "2026-0842", date: "14.11.2026", client: "Piotr Kowalski — ul. Mokotowska 44/12, 00-542 Warszawa • Tel: +48 501 882 310",
+      rows: [
+        ["1. Demontaż i Przygotowanie Podłoża (80 m²)", "Skucie starych płytek, wylewka samopoziomująca oraz wywóz gruzu w kontenerze.", 1850],
+        ["2. Dostawa i Układanie Gresu Rektyfikowanego 60x120 cm", "Klej elastyczny C2TE S1, system poziomowania oraz fuga epoksydowa plamoodporna.", 4200],
+        ["3. Kompleksowy Remont Łazienki Głównej", "Armatura podtynkowa, hydroizolacja podpłytkowa oraz szyba prysznicowa hartowana.", 2950]
+      ],
+      tax: 720.00, dep: 4000.00, notes: "GWARANCJA I WARUNKI: 36 miesięcy pisemnej gwarancji na robociznę. Czas realizacji: 10-12 dni roboczych. Wycena ważna 30 dni."
+    }
+  },
+  pt: {
+    quote: {
+      comp: "CONSTRUTORA HORIZONTE & REFORMAS LTDA", phone: "CNPJ: 34.819.204/0001-18 • Tel: (11) 99420-8810",
+      docNum: "2026-0842", date: "14/11/2026", client: "Ricardo Almeida — Av. Paulista, 1578, São Paulo - SP • Tel: (11) 98110-4429",
+      rows: [
+        ["1. Demolição e Regularização de Contrapiso (80 m²)", "Remoção de piso antigo, argamassa autonivelante e descarte ecológico de entulho.", 1850],
+        ["2. Fornecimento e Assentamento de Porcelanato Retificado 120x60 cm", "Argamassa AC-III flexível, niveladores de precisão e rejunte epóxi impermeável.", 4200],
+        ["3. Reforma Completa de Banheiro Suíte Master", "Registro monocomando em bronze, impermeabilização líquida e box de vidro temperado.", 2950]
+      ],
+      tax: 450.00, dep: 4500.00, notes: "GARANTIA E CONDIÇÕES: Garantia escrita de 3 anos na mão de obra. Prazo estimado: 10 a 12 dias úteis. Orçamento válido por 30 dias."
+    }
   }
 };
 
-// GESTIÓN SEGURA DE CRÉDITOS STRIPE Y ACCESO PRO / OWNER
+function getLocalizedSampleData(activeType) {
+  const langPack = SAMPLES_I18N[currentLang] || SAMPLES_I18N.en;
+  const fallbackPack = (currentLang === 'es' || currentLang === 'pt') ? SAMPLES_I18N.es : SAMPLES_I18N.en;
+  const raw = langPack[activeType] || fallbackPack[activeType] || SAMPLES_I18N.en.quote;
+  const mult = (CURRENCIES[currentCurr] && CURRENCIES[currentCurr].sampleMult) || 1;
+  return {
+    comp: raw.comp,
+    phone: raw.phone,
+    docNum: raw.docNum,
+    date: raw.date,
+    client: raw.client,
+    rows: raw.rows.map(r => [r[0], r[1], roundMoney((Number(r[2]) || 0) * mult)]),
+    tax: roundMoney((Number(raw.tax) || 0) * mult),
+    dep: roundMoney((Number(raw.dep) || 0) * mult),
+    notes: raw.notes,
+    taxLabelExtra: ''
+  };
+}
+// GESTIÓN SEGURA DE CRÉDITOS STRIPE, HUELLA POR DOCUMENTO Y ACCESO PRO / OWNER
 const urlParams = new URLSearchParams(window.location.search);
 const stripeSid = urlParams.get('sid') || urlParams.get('session_id') || '';
 const hasValidStripeSid = /^cs_(live|test)_[a-zA-Z0-9]{20,}/.test(stripeSid);
@@ -1768,14 +1928,12 @@ const cameFromCheckoutIntent = localStorage.getItem('mcp_pending_stripe_intent')
 const rawSingleParam = urlParams.get('paid') === 'true' || urlParams.get('checkout_ok') === '1';
 const rawProParam = urlParams.get('pro') === 'true' || urlParams.get('pro_ok') === '1';
 
-// Acepta retorno legítimo si viene con Session ID real de Stripe o si el usuario inició el pago desde esta sesión
 if (rawProParam && (hasValidStripeSid || cameFromCheckoutIntent === 'pro')) {
   localStorage.setItem('mcp_pro_pass_active', 'true');
   localStorage.removeItem('mcp_pending_stripe_intent');
 }
 if (rawSingleParam && (hasValidStripeSid || cameFromCheckoutIntent === 'single')) {
-  let prevCredits = parseInt(localStorage.getItem('mcp_paid_credits') || '0', 10) || 0;
-  // Evita duplicar si el mismo sid ya se acreditó
+  const prevCredits = parseInt(localStorage.getItem('mcp_paid_credits') || '0', 10) || 0;
   const lastSid = localStorage.getItem('mcp_last_credited_sid') || '';
   if (!stripeSid || stripeSid !== lastSid) {
     localStorage.setItem('mcp_paid_credits', String(prevCredits + 1));
@@ -1793,6 +1951,62 @@ if (!I18N[currentLang]) currentLang = 'es';
 let currentCurr = localStorage.getItem('mcp_currency') || 'USD';
 if (!CURRENCIES[currentCurr]) currentCurr = 'USD';
 
+let uploadedLogoData = '';
+let uploadedHwQuoteImg = '';
+let cleanMascotLogoDataUrl = '';
+let customLineItems = [{ desc: '', qty: '1', price: '' }];
+let deferredPrompt = null;
+let autoSaveTimer = null;
+let loadedRecordDate = '';
+
+function getRawGrandTotalForFp() {
+  const rows = document.querySelectorAll('.line-item-card');
+  const items = rows.length > 0
+    ? Array.from(rows).map(r => ({
+        qty: r.querySelector('.cl-qty')?.value || '1',
+        price: r.querySelector('.cl-price')?.value || ''
+      }))
+    : customLineItems;
+  let sub = 0;
+  items.forEach(it => {
+    const q = parseFloat(it.qty);
+    const qtyVal = isNaN(q) ? 1 : q;
+    const p = parseFloat(it.price) || 0;
+    sub = roundMoney(sub + roundMoney(qtyVal * p));
+  });
+  const rawTax = Math.max(0, parseFloat(document.getElementById('qb-tax')?.value) || 0);
+  const taxMode = document.getElementById('qb-tax-mode')?.value || 'amt';
+  const tax = taxMode === 'pct' ? roundMoney(Math.max(0, sub) * (rawTax / 100)) : roundMoney(rawTax);
+  return roundMoney(Math.max(0, sub + tax));
+}
+
+function getCurrentDocFingerprint() {
+  const docType = document.getElementById('qb-doctype')?.value || 'quote';
+  const docNum = (document.getElementById('qb-docnum')?.value || '2026-0101').trim().toLowerCase();
+  const client = (document.getElementById('qb-client')?.value || '').trim().toLowerCase();
+  if (client) return docType + '|' + docNum + '|' + client;
+  return docType + '|' + docNum + '|_noclient_|' + getRawGrandTotalForFp();
+}
+
+function getUnlockedDocFingerprints() {
+  try {
+    const arr = JSON.parse(localStorage.getItem('mcp_unlocked_doc_fps') || '[]');
+    return Array.isArray(arr) ? arr : [];
+  } catch (e) { return []; }
+}
+
+function isCurrentDocUnlocked() {
+  return getUnlockedDocFingerprints().includes(getCurrentDocFingerprint());
+}
+
+function markCurrentDocUnlocked() {
+  const fp = getCurrentDocFingerprint();
+  const list = getUnlockedDocFingerprints().filter(item => item !== fp);
+  list.unshift(fp);
+  if (list.length > 100) list.length = 100;
+  try { localStorage.setItem('mcp_unlocked_doc_fps', JSON.stringify(list)); } catch (e) {}
+}
+
 function getPaidCreditsCount() {
   return Math.max(0, parseInt(localStorage.getItem('mcp_paid_credits') || '0', 10) || 0);
 }
@@ -1801,16 +2015,22 @@ function hasUnlimitedAccess() {
          localStorage.getItem('mcp_owner_device_unlocked') === 'true';
 }
 function checkIsPaidUser() {
-  return hasUnlimitedAccess() || getPaidCreditsCount() > 0;
+  return hasUnlimitedAccess() || isCurrentDocUnlocked() || getPaidCreditsCount() > 0;
+}
+
+function claimSingleCreditForCurrentDoc() {
+  if (hasUnlimitedAccess() || isCurrentDocUnlocked()) return true;
+  const credits = getPaidCreditsCount();
+  if (credits > 0) {
+    localStorage.setItem('mcp_paid_credits', String(credits - 1));
+    markCurrentDocUnlocked();
+    isPaidUser = checkIsPaidUser();
+    return true;
+  }
+  return false;
 }
 
 let isPaidUser = checkIsPaidUser();
-let uploadedLogoData = '';
-let uploadedHwQuoteImg = '';
-let cleanMascotLogoDataUrl = '';
-let customLineItems = [{ desc: '', qty: '1', price: '' }];
-let deferredPrompt = null;
-let autoSaveTimer = null;
 
 // PILA DE NAVEGACIÓN NATIVA SILENCIOSA
 let activeModalId = null;
@@ -1858,6 +2078,14 @@ function dismissModalCleanly() {
   }
 }
 
+function closeModalForRedirect() {
+  hideAllModalsDOM();
+  pendingConfirmAction = null;
+  if (window.history.state && window.history.state.mcpModal) {
+    try { window.history.replaceState({ mcpScreen: 'main' }, ''); } catch (e) {}
+  }
+}
+
 window.addEventListener('popstate', function(e) {
   if (suppressPopHandler) {
     suppressPopHandler = false;
@@ -1881,6 +2109,7 @@ window.addEventListener('popstate', function(e) {
     try { localStorage.setItem('mcp_active_doctype', prevDoc); } catch (err) {}
     syncActiveDocTypeUI();
     recalcMasterTotals();
+    updatePayButtonState();
     scheduleAutoSave();
     if (isAppAlreadyInstalled() && e.state && e.state.mcpFloor) {
       try { window.history.pushState({ mcpScreen: 'main' }, ''); } catch (err) {}
@@ -1959,7 +2188,9 @@ function persistDraftSilently() {
 }
 
 function onBuilderUserEdit() {
+  if (!isCurrentDocUnlocked()) loadedRecordDate = '';
   recalcMasterTotals();
+  updatePayButtonState();
   scheduleAutoSave();
 }
 
@@ -2075,8 +2306,10 @@ function selectDocTypeFromSuite(docKey) {
   try { localStorage.setItem('mcp_active_doctype', docKey); } catch (e) {}
 
   hideAllModalsDOM();
+  if (!isCurrentDocUnlocked()) loadedRecordDate = '';
   syncActiveDocTypeUI();
   recalcMasterTotals();
+  updatePayButtonState();
   scheduleAutoSave();
 
   if (docKey !== prevKey) {
@@ -2161,6 +2394,7 @@ if (navigator.getInstalledRelatedApps) {
 
 function markAppInstalledAndHide() { localStorage.setItem('mcp_pwa_installed', 'true'); dismissModalCleanly(); syncInstallButtonVisibility(); }
 function installPWA() {
+  const L = I18N[currentLang] || I18N.es;
   if (deferredPrompt) {
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then((c) => {
@@ -2169,16 +2403,18 @@ function installPWA() {
     });
     return;
   }
-  if (/Android/i.test(navigator.userAgent)) {
-    localStorage.setItem('mcp_pwa_installed', 'true');
-    setTimeout(syncInstallButtonVisibility, 1500);
-    window.location.href = '/Mr.%20Invoice%20Pro.apk';
-    return;
-  }
+  const isAndroid = /Android/i.test(navigator.userAgent);
+  const subEl = document.getElementById('ui-ios-sub');
+  const s1El = document.getElementById('ui-ios-s1');
+  const s2El = document.getElementById('ui-ios-s2');
+  if (subEl) subEl.innerText = isAndroid ? L.androidSub : L.iosSub;
+  if (s1El) s1El.innerHTML = isAndroid ? L.androidS1 : L.iosS1;
+  if (s2El) s2El.innerHTML = isAndroid ? L.androidS2 : L.iosS2;
   openModalWithStep('ios', 'iosInstallSheet');
 }
 
 function activateOwnerSuccess() {
+  const L = I18N[currentLang] || I18N.es;
   localStorage.setItem('mcp_owner_device_unlocked', 'true');
   isPaidUser = checkIsPaidUser();
   const docInput = document.getElementById('qb-docnum');
@@ -2186,15 +2422,16 @@ function activateOwnerSuccess() {
   syncLockVisualState();
   updatePayButtonState();
   scheduleAutoSave();
-  alert('Modo Dueño Activado: Tienes descargas y envíos ilimitados.');
+  showExecutiveToast(L.ownerUnlockedMsg, 4000);
 }
 
 async function checkSecretOwnerCode(val) {
   if (!val || val.length < 6) return false;
   try {
+    if (!window.crypto || !window.crypto.subtle) return false;
     const clean = val.trim().toUpperCase();
     const msgBuffer = new TextEncoder().encode(clean);
-    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+    const hashBuffer = await window.crypto.subtle.digest('SHA-256', msgBuffer);
     const hashHex = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
     if (hashHex === OWNER_HASH) { activateOwnerSuccess(); return true; }
   } catch (e) {}
@@ -2205,6 +2442,7 @@ function deactivateOwnerMode() {
   localStorage.removeItem('mcp_owner_device_unlocked');
   localStorage.removeItem('mcp_pro_pass_active');
   localStorage.removeItem('mcp_paid_credits');
+  localStorage.removeItem('mcp_unlocked_doc_fps');
   isPaidUser = checkIsPaidUser();
   syncLockVisualState();
   updatePayButtonState();
@@ -2213,13 +2451,13 @@ function deactivateOwnerMode() {
 function getCurrObj() { return CURRENCIES[currentCurr] || CURRENCIES.USD; }
 function formatUSD(num) {
   const c = getCurrObj();
-  const n = Number(num) || 0;
+  const n = roundMoney(num);
   const sign = n < 0 ? '-' : '';
   return sign + c.sym + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: c.dec, maximumFractionDigits: c.dec });
 }
 function formatPDFCurr(num) {
   const c = getCurrObj();
-  const n = Number(num) || 0;
+  const n = roundMoney(num);
   const sign = n < 0 ? '-' : '';
   return sign + c.pdfSym + Math.abs(n).toLocaleString('en-US', { minimumFractionDigits: c.dec, maximumFractionDigits: c.dec });
 }
@@ -2251,8 +2489,18 @@ function changeCurrency(val) {
   localStorage.setItem('mcp_currency', currentCurr);
   const optAmt = document.getElementById('qb-tax-opt-amt');
   if (optAmt) optAmt.innerText = getCurrObj().sym;
+  const depLbl = document.getElementById('ui-lbl-dep');
+  const L = I18N[currentLang] || I18N.es;
+  if (depLbl) depLbl.innerText = L.dep + ' (' + getCurrObj().sym + ')';
+  renderCustomLines();
   recalcMasterTotals();
+  updatePayButtonState();
   scheduleAutoSave();
+  const modal = document.getElementById('docPreviewModal');
+  if (modal && modal.style.display === 'flex') {
+    const isLiveAct = document.getElementById('previewTabLiveBtn')?.classList.contains('active');
+    renderModalSheet(isLiveAct ? 'live' : 'sample');
+  }
 }
 
 function applyLanguageUI() {
@@ -2276,10 +2524,13 @@ function applyLanguageUI() {
   const iosS1 = document.getElementById('ui-ios-s1'); if (iosS1) iosS1.innerHTML = L.iosS1;
   const iosS2 = document.getElementById('ui-ios-s2'); if (iosS2) iosS2.innerHTML = L.iosS2;
 
+  const compInp = document.getElementById('qb-comp'); if (compInp && L.compPh) compInp.placeholder = L.compPh;
+  const phoneInp = document.getElementById('qb-phone'); if (phoneInp && L.phonePh) phoneInp.placeholder = L.phonePh;
+  const clientInp = document.getElementById('qb-client'); if (clientInp && L.clientPh) clientInp.placeholder = L.clientPh;
+
   document.getElementById('ui-reset').innerHTML = svgIco('ico-sync') + '<span>' + escapeHtml(L.reset) + '</span>';
   document.getElementById('ui-sample-btn').innerHTML = '<span class="live-pulse-dot"></span>' + svgIco('ico-eye', 'ico-stroke ico-gold') + '<span>' + escapeHtml(L.sampleBtn) + '</span>';
   document.getElementById('ui-sec1').innerHTML = '<span class="sec-step-badge">01</span><span>' + escapeHtml(L.sec1) + '</span>';
-  const clientInp = document.getElementById('qb-client'); if (clientInp && L.clientPh) clientInp.placeholder = L.clientPh;
   document.getElementById('ui-lbl-logo').innerHTML = svgIco('ico-camera', 'ico-stroke-sm ico-gold') + '<span>' + escapeHtml(L.logo) + '</span>';
   document.getElementById('ui-sec2').innerHTML = '<span class="sec-step-badge">02</span><span>' + escapeHtml(L.sec2) + '</span>';
   document.getElementById('ui-add-line').innerHTML = svgIco('ico-plus') + '<span>' + escapeHtml(L.addLine) + '</span>';
@@ -2294,10 +2545,10 @@ function applyLanguageUI() {
 
   syncActiveDocTypeUI();
   renderCustomLines();
+  recalcMasterTotals();
   updatePayButtonState();
   syncLockVisualState();
   syncInstallButtonVisibility();
-  recalcMasterTotals();
   renderHistory();
 }
 
@@ -2306,6 +2557,7 @@ function addCustomLine(desc, qty, price) {
   customLineItems.push({ desc: desc || '', qty: qty || '1', price: price || '' });
   renderCustomLines();
   recalcMasterTotals();
+  updatePayButtonState();
   scheduleAutoSave();
 }
 
@@ -2315,6 +2567,7 @@ function removeCustomLine(idx) {
   if (customLineItems.length === 0) customLineItems.push({ desc: '', qty: '1', price: '' });
   renderCustomLines();
   recalcMasterTotals();
+  updatePayButtonState();
   scheduleAutoSave();
 }
 
@@ -2336,7 +2589,7 @@ function renderCustomLines() {
     const q = parseFloat(item.qty);
     const qtyVal = isNaN(q) ? 1 : q;
     const p = parseFloat(item.price) || 0;
-    const sub = qtyVal * p;
+    const sub = roundMoney(qtyVal * p);
     const negCls = sub < 0 ? ' neg' : '';
     return '<div class="line-item-card">' +
       '<div class="line-item-top">' +
@@ -2437,6 +2690,7 @@ function clearHwAttachment() {
 
 // LIMPIA EL BORRADOR PERO CONSERVA PERFIL DE EMPRESA, LOGO Y SUBE CORRELATIVO
 function resetBuilderToZero() {
+  loadedRecordDate = '';
   customLineItems = [{ desc: '', qty: '1', price: '' }];
   clearHwAttachment();
   ['qb-tax', 'qb-dep'].forEach(id => { const el = document.getElementById(id); if (el) el.value = '0'; });
@@ -2447,18 +2701,21 @@ function resetBuilderToZero() {
 
   renderCustomLines();
   recalcMasterTotals();
+  updatePayButtonState();
   persistDraftSilently();
 }
 
 function computeTotalsSnapshot() {
   syncCustomLinesFromDOM();
   let subtotal = 0;
+  const lineSubtotals = [];
   customLineItems.forEach((it, idx) => {
     const q = parseFloat(it.qty);
     const qtyVal = isNaN(q) ? 1 : q;
     const p = parseFloat(it.price) || 0;
-    const lineSub = qtyVal * p;
-    subtotal += lineSub;
+    const lineSub = roundMoney(qtyVal * p);
+    lineSubtotals.push(lineSub);
+    subtotal = roundMoney(subtotal + lineSub);
     const subBadge = document.getElementById('line-sub-' + idx);
     if (subBadge) {
       subBadge.innerText = formatUSD(lineSub);
@@ -2469,24 +2726,36 @@ function computeTotalsSnapshot() {
   const rawTaxInput = Math.max(0, parseFloat(document.getElementById('qb-tax')?.value) || 0);
   const taxMode = document.getElementById('qb-tax-mode')?.value || 'amt';
   const taxableBase = Math.max(0, subtotal);
-  const computedTax = taxMode === 'pct' ? (taxableBase * (rawTaxInput / 100)) : rawTaxInput;
+  const computedTax = taxMode === 'pct'
+    ? roundMoney(taxableBase * (rawTaxInput / 100))
+    : roundMoney(rawTaxInput);
   const taxLabelSuffix = (taxMode === 'pct' && rawTaxInput > 0) ? (' (' + rawTaxInput + '%)') : '';
 
-  const dep = Math.max(0, parseFloat(document.getElementById('qb-dep')?.value) || 0);
-  const grandTotal = Math.max(0, subtotal + computedTax);
-  const balance = Math.max(0, grandTotal - dep);
+  const dep = roundMoney(Math.max(0, parseFloat(document.getElementById('qb-dep')?.value) || 0));
+  const grandTotal = roundMoney(Math.max(0, subtotal + computedTax));
+  const balance = roundMoney(Math.max(0, grandTotal - dep));
 
-  return { subtotal, rawTaxInput, taxMode, computedTax, taxLabelSuffix, dep, grandTotal, balance };
+  return { subtotal, lineSubtotals, rawTaxInput, taxMode, computedTax, taxLabelSuffix, dep, grandTotal, balance };
 }
 
 function recalcMasterTotals() {
   const snap = computeTotalsSnapshot();
+  const L = I18N[currentLang] || I18N.es;
+  const docType = document.getElementById('qb-doctype')?.value || 'quote';
+  const meta = getDocMeta(docType);
+
   const hintEl = document.getElementById('taxComputedHint');
   if (hintEl) {
     hintEl.innerText = (snap.taxMode === 'pct' && snap.rawTaxInput > 0)
       ? ('= ' + formatUSD(snap.computedTax))
       : '';
   }
+
+  const balLblEl = document.getElementById('ui-bal-lbl');
+  if (balLblEl) {
+    balLblEl.innerText = (docType === 'receipt' && snap.dep === 0) ? (meta.totalLabel + ':') : L.balLbl;
+  }
+
   const sumLine = document.getElementById('contractorSummaryLine');
   const bigTot = document.getElementById('contractorBigTotal');
   if (sumLine) sumLine.innerText = 'Total: ' + formatUSD(snap.grandTotal) + (snap.dep > 0 ? (' | -' + formatUSD(snap.dep)) : '');
@@ -2498,6 +2767,7 @@ function updatePayButtonState() {
   const L = I18N[currentLang] || I18N.es;
   const credits = getPaidCreditsCount();
   const unlimited = hasUnlimitedAccess();
+  const docUnlocked = isCurrentDocUnlocked();
 
   const btn = document.getElementById('finalActionBtn'),
         waBtn = document.getElementById('finalWaBtn'),
@@ -2520,6 +2790,7 @@ function updatePayButtonState() {
 
   let noteText = L.noteLock;
   if (unlimited) noteText = L.notePaid;
+  else if (docUnlocked) noteText = L.noteDocUnlocked;
   else if (credits > 0) noteText = (L.noteCredit || L.notePaid) + ' (' + credits + ')';
 
   note.innerHTML = svgIco(isPaidUser ? 'ico-shield' : 'ico-lock', isPaidUser ? 'ico-stroke-sm ico-emerald' : 'ico-stroke-sm') + '<span>' + escapeHtml(noteText) + '</span>';
@@ -2584,7 +2855,7 @@ function renderModalSheet(mode) {
       const q = parseFloat(it.qty);
       const qtyVal = isNaN(q) ? 1 : q;
       const p = parseFloat(it.price) || 0;
-      const sub = qtyVal * p;
+      const sub = snap.lineSubtotals[idx] !== undefined ? snap.lineSubtotals[idx] : roundMoney(qtyVal * p);
       if (sub !== 0 || it.desc.trim() !== '') {
         const titleLine = (idx + 1) + '. ' + (it.desc.trim() || '-');
         const subLine = (qtyVal !== 1 && p !== 0) ? (L.qty + ': ' + qtyVal + ' × ' + formatUSD(p)) : '';
@@ -2595,19 +2866,17 @@ function renderModalSheet(mode) {
 
     data = {
       comp: compVal, phone: phoneVal, docNum: docNumVal,
-      date: getFormattedDate(), client: clientVal,
+      date: getFormattedDate(loadedRecordDate), client: clientVal,
       rows: liveRows, tax: snap.computedTax, taxLabelExtra: snap.taxLabelSuffix, dep: snap.dep, notes: notesVal
     };
   } else {
-    const samplePack = (currentLang === 'es') ? SAMPLES_I18N.es : SAMPLES_I18N.en;
-    const baseSample = samplePack[activeType] || samplePack.quote;
-    data = Object.assign({ taxLabelExtra: '' }, baseSample);
+    data = getLocalizedSampleData(activeType);
   }
 
   let subtotal = 0;
   const rowsHtml = data.rows.map(r => {
-    const amt = Number(r[2]) || 0;
-    subtotal += amt;
+    const amt = roundMoney(Number(r[2]) || 0);
+    subtotal = roundMoney(subtotal + amt);
     const amtCell = amt !== 0 ? escapeHtml(formatUSD(amt)) : '—';
     return '<tr>' +
       '<td><div style="font-weight:800;color:#0f172a;margin-bottom:2px;">' + escapeHtml(r[0]) + '</div>' +
@@ -2616,9 +2885,20 @@ function renderModalSheet(mode) {
     '</tr>';
   }).join('');
 
-  const grandTotal = Math.max(0, subtotal + (data.tax || 0));
-  const remBalance = Math.max(0, grandTotal - (data.dep || 0));
+  const grandTotal = roundMoney(Math.max(0, subtotal + (data.tax || 0)));
+  const isReceiptAutoPaid = (activeType === 'receipt' && (!data.dep || data.dep <= 0));
+  const effectivePaid = isReceiptAutoPaid ? grandTotal : roundMoney(data.dep || 0);
+  const remBalance = roundMoney(Math.max(0, grandTotal - effectivePaid));
+  const showPaidRows = effectivePaid > 0 || activeType === 'receipt';
   const logoSrcForModal = (isLive && uploadedLogoData) ? uploadedLogoData : (cleanMascotLogoDataUrl || '1793842789444.jpg');
+
+  const attachCheck = document.getElementById('qb-hw-print-attach')?.checked;
+  const page2PreviewHtml = (isLive && attachCheck && uploadedHwQuoteImg)
+    ? '<div class="lux-page2-preview">' +
+        '<div class="lux-page2-label">' + escapeHtml(L.page2PreviewLbl) + '</div>' +
+        '<img class="lux-page2-img" src="' + uploadedHwQuoteImg + '" alt="Page 2">' +
+      '</div>'
+    : '';
 
   const showWatermark = !checkIsPaidUser();
   const wmHtml = showWatermark
@@ -2653,15 +2933,15 @@ function renderModalSheet(mode) {
         rowsHtml +
         (data.tax > 0 ? '<tr><td style="text-align:right;font-weight:700;color:#475569;">' + escapeHtml(L.tax + (data.taxLabelExtra || '')) + '</td><td>' + escapeHtml(formatUSD(data.tax)) + '</td></tr>' : '') +
         '<tr class="lux-tot-row"><td>' + escapeHtml(meta.totalLabel + ' (' + currentCurr + ')') + '</td><td>' + escapeHtml(formatUSD(grandTotal)) + '</td></tr>' +
-        (data.dep > 0 ? '<tr><td style="color:#065f46;font-weight:800;">' + escapeHtml(L.paidAmt) + '</td><td style="color:#065f46;">-' + escapeHtml(formatUSD(data.dep)) + '</td></tr>' : '') +
-        (data.dep > 0 ? '<tr style="background:#dcfce7;font-weight:900;"><td style="color:#065f46;">' + escapeHtml(L.remBal) + '</td><td style="color:#065f46;font-size:0.92rem;">' + escapeHtml(formatUSD(remBalance)) + '</td></tr>' : '') +
+        (showPaidRows ? '<tr><td style="color:#065f46;font-weight:800;">' + escapeHtml(L.paidAmt) + '</td><td style="color:#065f46;">-' + escapeHtml(formatUSD(effectivePaid)) + '</td></tr>' : '') +
+        (showPaidRows ? '<tr style="background:#dcfce7;font-weight:900;"><td style="color:#065f46;">' + escapeHtml(L.remBal) + '</td><td style="color:#065f46;font-size:0.92rem;">' + escapeHtml(formatUSD(remBalance)) + '</td></tr>' : '') +
       '</tbody>' +
     '</table>' +
     (data.notes ? '<div style="background:#f8fafc;border:1px solid #cbd5e1;border-left:3px solid #0f172a;padding:0.55rem 0.75rem;border-radius:6px;font-size:0.75rem;color:#1e293b;line-height:1.4;margin-top:0.6rem;"><strong>' + escapeHtml(L.notes) + ':</strong> ' + escapeHtml(data.notes) + '</div>' : '') +
     '<div class="lux-sign-box">' +
       '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.4rem;">' +
         '<div style="font-size:0.78rem;font-weight:900;color:#0f172a;">' + escapeHtml(meta.signTitle) + '</div>' +
-        (meta.showAcceptChecks ? '<div style="font-size:0.74rem;font-weight:800;color:#0f172a;">☑ ' + escapeHtml(L.accept) + ' &nbsp;&nbsp; ☐ ' + escapeHtml(L.decline) + '</div>' : '') +
+        (meta.showAcceptChecks ? '<div style="font-size:0.74rem;font-weight:800;color:#0f172a;">☐ ' + escapeHtml(L.accept) + ' &nbsp;&nbsp; ☐ ' + escapeHtml(L.decline) + '</div>' : '') +
       '</div>' +
       '<div style="font-size:0.74rem;color:#334155;margin-top:5px;line-height:1.38;">' + escapeHtml(meta.legalClause) + '</div>' +
       '<div class="lux-signs">' +
@@ -2670,24 +2950,32 @@ function renderModalSheet(mode) {
         '<div class="lux-sign-line"><svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-calendar"></use></svg><span>' + escapeHtml(L.dateLbl + ': ' + data.date) + '</span></div>' +
       '</div>' +
     '</div>' +
+    page2PreviewHtml +
     '<div class="lux-viral-footer"><svg class="ico-stroke-sm" style="width:12px;height:12px;margin-right:4px;vertical-align:-2px;"><use href="#ico-shield"></use></svg>' + escapeHtml(L.pdfViralFooter) + '</div>';
 
   if (ctaBox) {
     const unlockedNow = checkIsPaidUser();
-    ctaBox.innerHTML = '<button type="button" class="wa-master-btn" style="margin-top:0;" onclick="handleWhatsAppQuoteClick()">' +
+    const clickHandler = unlockedNow ? 'handleFinalDownloadClick()' : 'handleWhatsAppQuoteClick()';
+    ctaBox.innerHTML = '<button type="button" class="wa-master-btn" style="margin-top:0;" onclick="' + clickHandler + '">' +
       svgIco(unlockedNow ? 'ico-download' : 'ico-lock', 'ico-stroke') +
       '<span>' + escapeHtml(unlockedNow ? L.dlPaid : L.waLock) + '</span></button>';
   }
 }
 
-function savePaidDocumentToRecord() {
+function savePaidDocumentToRecord(preserveDateStr) {
   syncCustomLinesFromDOM();
   const docType = document.getElementById('qb-doctype')?.value || 'quote';
   const meta = getDocMeta(docType);
   const docNum = document.getElementById('qb-docnum')?.value.trim() || '2026-0101';
   const clientName = document.getElementById('qb-client')?.value.trim() || 'Client';
   const totalTxt = document.getElementById('contractorBigTotal')?.innerText || '$0.00';
-  const time = getFormattedDate();
+
+  let hist = [];
+  try { hist = JSON.parse(localStorage.getItem('mcp_calc_history') || '[]'); } catch (e) {}
+  const existingIdx = hist.findIndex(h => h.docType === docType && h.docNum === docNum && h.client === clientName);
+  const existingEntry = existingIdx >= 0 ? hist[existingIdx] : null;
+  const time = preserveDateStr || loadedRecordDate || (existingEntry && existingEntry.time) || getFormattedDate();
+  if (existingIdx >= 0) hist.splice(existingIdx, 1);
 
   const inputs = {};
   document.querySelectorAll('input[id], select[id], textarea[id]').forEach(el => {
@@ -2696,21 +2984,27 @@ function savePaidDocumentToRecord() {
     else if (el.type !== 'file') inputs[el.id] = el.value;
   });
 
+  const attachChecked = !!document.getElementById('qb-hw-print-attach')?.checked;
+  const hwImgToStore = (attachChecked && uploadedHwQuoteImg && uploadedHwQuoteImg.length < 320000)
+    ? uploadedHwQuoteImg
+    : '';
+
   const recordEntry = {
     id: Date.now(), docType: docType, docNum: docNum, client: clientName,
     label: meta.badge + ' (' + meta.prefix + docNum + '): ' + clientName,
     res: totalTxt, time: time, lang: currentLang, curr: currentCurr,
-    inputs: inputs, lines: JSON.parse(JSON.stringify(customLineItems))
+    inputs: inputs, lines: JSON.parse(JSON.stringify(customLineItems)),
+    hwImg: hwImgToStore
   };
-
-  let hist = [];
-  try { hist = JSON.parse(localStorage.getItem('mcp_calc_history') || '[]'); } catch (e) {}
-  const existingIdx = hist.findIndex(h => h.docType === docType && h.docNum === docNum && h.client === clientName);
-  if (existingIdx >= 0) hist.splice(existingIdx, 1);
 
   hist.unshift(recordEntry);
   if (hist.length > 50) hist = hist.slice(0, 50);
-  try { localStorage.setItem('mcp_calc_history', JSON.stringify(hist)); } catch (e) {}
+  try {
+    localStorage.setItem('mcp_calc_history', JSON.stringify(hist));
+  } catch (e) {
+    recordEntry.hwImg = '';
+    try { localStorage.setItem('mcp_calc_history', JSON.stringify(hist)); } catch (e2) {}
+  }
   renderHistory();
 }
 
@@ -2720,6 +3014,7 @@ function loadInvoiceFromRecord(id, autoDownloadPDF) {
   const item = hist.find(h => h.id === id);
   if (!item) return;
 
+  loadedRecordDate = item.time || '';
   if (item.curr && CURRENCIES[item.curr]) currentCurr = item.curr;
   if (item.lang && I18N[item.lang]) currentLang = item.lang;
   if (item.lines && Array.isArray(item.lines)) customLineItems = JSON.parse(JSON.stringify(item.lines));
@@ -2731,12 +3026,17 @@ function loadInvoiceFromRecord(id, autoDownloadPDF) {
       else el.value = item.inputs[k];
     });
   }
+  if (item.hwImg) {
+    uploadedHwQuoteImg = item.hwImg;
+    showIdentifiedHwPicture(uploadedHwQuoteImg);
+  }
   applyLanguageUI();
+  markCurrentDocUnlocked();
+  updatePayButtonState();
   persistDraftSilently();
 
   if (autoDownloadPDF) {
-    // Re-descargar un documento ya pagado en el récord no consume créditos nuevos
-    processOfficialPDF('download', true);
+    processOfficialPDF('download', true, item.time || '');
   } else {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -2791,7 +3091,10 @@ function drawPdfPageFooter(doc, footerText) {
   doc.text(pdfSafeText(footerText), 108, 272.5, { align: 'center' });
 }
 
-async function buildPureVectorPDF() {
+async function buildPureVectorPDF(overrideDateStr) {
+  if (!window.jspdf || !window.jspdf.jsPDF) {
+    throw new Error('PDF_ENGINE_UNAVAILABLE');
+  }
   const snap = computeTotalsSnapshot();
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'letter' });
@@ -2803,7 +3106,7 @@ async function buildPureVectorPDF() {
   const phone = document.getElementById('qb-phone')?.value.trim() || '';
   const client = document.getElementById('qb-client')?.value.trim() || 'Client';
   const notes = document.getElementById('qb-notes')?.value.trim() || '';
-  const dateStr = getFormattedDate();
+  const dateStr = getFormattedDate(overrideDateStr || loadedRecordDate);
 
   doc.setFillColor(15, 23, 42);
   doc.rect(0, 0, 215.9, 6, 'F');
@@ -2838,7 +3141,6 @@ async function buildPureVectorPDF() {
   doc.setTextColor(100, 116, 139);
   doc.text(pdfSafeText(meta.party1), leftX, 14.5);
 
-  // SOPORTE PARA NOMBRES DE EMPRESA LARGOS SIN CORTARLOS
   const maxCompWidth = 122 - leftX;
   doc.setTextColor(15, 23, 42);
   const cleanComp = pdfSafeText(comp);
@@ -2908,7 +3210,7 @@ async function buildPureVectorPDF() {
     const q = parseFloat(it.qty);
     const qtyVal = isNaN(q) ? 1 : q;
     const p = parseFloat(it.price) || 0;
-    const lineTotal = qtyVal * p;
+    const lineTotal = snap.lineSubtotals[idx] !== undefined ? snap.lineSubtotals[idx] : roundMoney(qtyVal * p);
     if (lineTotal !== 0 || it.desc.trim() !== '') {
       const rawDesc = pdfSafeText((idx + 1) + '. ' + (it.desc.trim() || '-') + ((qtyVal !== 1 && p !== 0) ? ' (' + qtyVal + ' x ' + formatPDFCurr(p) + ')' : ''));
       doc.setFont('helvetica', 'normal');
@@ -2959,13 +3261,16 @@ async function buildPureVectorPDF() {
 
   if (snap.dep > 0 || docType === 'receipt') {
     if (y + 20 > 260) { drawPdfPageFooter(doc, L.pdfViralFooter); doc.addPage(); y = 20; }
+    const paidDisplayAmt = snap.dep > 0 ? snap.dep : snap.grandTotal;
+    const remDisplayAmt = snap.dep > 0 ? snap.balance : 0;
+
     doc.setFillColor(255, 255, 255);
     doc.rect(14, y, 142, 8.5, 'FD');
     doc.rect(156, y, 46, 8.5, 'FD');
     doc.setTextColor(6, 95, 70);
     doc.setFontSize(9);
     doc.text(pdfSafeText(L.paidAmt), 17, y + 5.8);
-    doc.text(pdfSafeText(formatPDFCurr(snap.dep > 0 ? snap.dep : snap.grandTotal)), 198, y + 5.8, { align: 'right' });
+    doc.text(pdfSafeText('-' + formatPDFCurr(paidDisplayAmt)), 198, y + 5.8, { align: 'right' });
     y += 8.5;
 
     doc.setFillColor(220, 252, 231);
@@ -2973,7 +3278,7 @@ async function buildPureVectorPDF() {
     doc.rect(156, y, 46, 10, 'FD');
     doc.setFontSize(9.8);
     doc.text(pdfSafeText(L.remBal), 17, y + 6.8);
-    doc.text(pdfSafeText(formatPDFCurr(snap.dep > 0 ? snap.balance : 0)), 198, y + 6.8, { align: 'right' });
+    doc.text(pdfSafeText(formatPDFCurr(remDisplayAmt)), 198, y + 6.8, { align: 'right' });
     y += 10;
   }
 
@@ -3061,21 +3366,13 @@ async function buildPureVectorPDF() {
   return { doc, pdfBlob, fileName };
 }
 
-function consumeSingleCreditIfNeeded() {
-  if (hasUnlimitedAccess()) return;
-  const credits = getPaidCreditsCount();
-  if (credits > 0) {
-    localStorage.setItem('mcp_paid_credits', String(credits - 1));
-  }
-  isPaidUser = checkIsPaidUser();
-}
-
-async function processOfficialPDF(actionMode, isHistoryReprint) {
+async function processOfficialPDF(actionMode, isHistoryReprint, overrideDateStr) {
   try {
-    const { doc, pdfBlob, fileName } = await buildPureVectorPDF();
+    const { doc, pdfBlob, fileName } = await buildPureVectorPDF(overrideDateStr);
+
     if (!isHistoryReprint) {
-      savePaidDocumentToRecord();
-      consumeSingleCreditIfNeeded();
+      claimSingleCreditForCurrentDoc();
+      savePaidDocumentToRecord(overrideDateStr);
     }
     updatePayButtonState();
 
@@ -3097,13 +3394,17 @@ async function processOfficialPDF(actionMode, isHistoryReprint) {
         return;
       }
     }
+
     doc.save(fileName);
     if (actionMode === 'email') {
+      showExecutiveToast(L.emailDesktopHint, 5200);
       const subj = encodeURIComponent(meta.badge + ' ' + meta.prefix + docNum + ' - ' + comp);
       const bodyStr = (L.emailBodyTpl || I18N.es.emailBodyTpl)
         .replace('{BADGE}', meta.badge).replace('{NUM}', meta.prefix + docNum)
         .replace('{COMP}', comp).replace('{TOTAL}', totalTxt);
-      window.location.href = 'mailto:?subject=' + subj + '&body=' + encodeURIComponent(bodyStr);
+      setTimeout(() => {
+        window.location.href = 'mailto:?subject=' + subj + '&body=' + encodeURIComponent(bodyStr);
+      }, 350);
     }
   } catch (err) {
     updatePayButtonState();
@@ -3114,39 +3415,39 @@ function handleWhatsAppQuoteClick() {
   saveAllBuilderState();
   if (!checkIsPaidUser()) {
     localStorage.setItem('mcp_pending_stripe_intent', 'single');
-    hideAllModalsDOM();
+    closeModalForRedirect();
     window.location.href = STRIPE_SINGLE_URL;
     return;
   }
-  hideAllModalsDOM();
+  dismissModalCleanly();
   processOfficialPDF('share', false);
 }
 function handleEmailQuoteClick() {
   saveAllBuilderState();
   if (!checkIsPaidUser()) {
     localStorage.setItem('mcp_pending_stripe_intent', 'single');
-    hideAllModalsDOM();
+    closeModalForRedirect();
     window.location.href = STRIPE_SINGLE_URL;
     return;
   }
-  hideAllModalsDOM();
+  dismissModalCleanly();
   processOfficialPDF('email', false);
 }
 function handleFinalDownloadClick() {
   saveAllBuilderState();
   if (!checkIsPaidUser()) {
     localStorage.setItem('mcp_pending_stripe_intent', 'single');
-    hideAllModalsDOM();
+    closeModalForRedirect();
     window.location.href = STRIPE_SINGLE_URL;
     return;
   }
-  hideAllModalsDOM();
+  dismissModalCleanly();
   processOfficialPDF('download', false);
 }
 function handleProPassClick() {
   saveAllBuilderState();
   localStorage.setItem('mcp_pending_stripe_intent', 'pro');
-  hideAllModalsDOM();
+  closeModalForRedirect();
   window.location.href = STRIPE_PRO_PASS_URL;
 }
 
@@ -3163,7 +3464,6 @@ function restoreStateOnLoad() {
   uploadedHwQuoteImg = localStorage.getItem('mcp_hw_quote_img') || '';
   if (uploadedHwQuoteImg) showIdentifiedHwPicture(uploadedHwQuoteImg);
 
-  // 1. Cargar perfil fijo del negocio por defecto
   try {
     const biz = JSON.parse(localStorage.getItem('mcp_biz_profile') || 'null');
     if (biz) {
@@ -3174,7 +3474,6 @@ function restoreStateOnLoad() {
     }
   } catch (e) {}
 
-  // 2. Restaurar siempre el borrador activo (evita pérdidas por recarga del teléfono)
   try {
     const savedLines = JSON.parse(localStorage.getItem('mcp_custom_lines') || '[]');
     if (Array.isArray(savedLines) && savedLines.length > 0) customLineItems = savedLines;
@@ -3195,15 +3494,16 @@ function restoreStateOnLoad() {
       }
     }
   } catch (e) {}
-
-  if (rawSingleParam || rawProParam) {
-    setTimeout(savePaidDocumentToRecord, 250);
-  }
 }
 
 window.addEventListener('DOMContentLoaded', function() {
   restoreStateOnLoad();
   applyLanguageUI();
+  if ((rawSingleParam || rawProParam) && hasUserTypedData()) {
+    claimSingleCreditForCurrentDoc();
+    savePaidDocumentToRecord();
+    updatePayButtonState();
+  }
   syncInstallButtonVisibility();
   removeBlackBoxFromBrandIcons();
   attachSwipeGestures();
@@ -3212,3 +3512,4 @@ window.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
+
