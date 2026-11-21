@@ -38,18 +38,18 @@ self.addEventListener('fetch', (event) => {
 
   const url = new URL(req.url);
 
-  // Nunca cachear analíticas ni redirecciones de Stripe
   if (url.hostname.includes('goatcounter.com') || url.hostname.includes('zgo.at') || url.hostname.includes('stripe.com')) {
     return;
   }
 
-  // Navegación / index.html: intenta red primero para mostrar siempre la última versión y guarda copia offline
   if (req.mode === 'navigate' || url.pathname === '/' || url.pathname.endsWith('.html')) {
     event.respondWith(
       fetch(req)
         .then((networkRes) => {
-          const copy = networkRes.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put('/index.html', copy));
+          if (networkRes && networkRes.ok) {
+            const copy = networkRes.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put('/index.html', copy));
+          }
           return networkRes;
         })
         .catch(() => caches.match(req).then((r) => r || caches.match('/index.html')))
@@ -57,7 +57,6 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Librería jsPDF, manifest e imágenes: sirve rápido desde caché y actualiza en segundo plano
   event.respondWith(
     caches.match(req).then((cachedRes) => {
       const fetchPromise = fetch(req)
