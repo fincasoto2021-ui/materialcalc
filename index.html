@@ -1230,7 +1230,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
             <button type="button" class="sig-open-btn" onclick="openSignatureModal('issuer')">
               <svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-edit"></use></svg><span id="ui-btn-sign1">Firmar</span>
             </button>
-            <button type="button" class="cart-remove" id="sigClearIssuerBtn" style="display:none;" onclick="removeSavedSignature('issuer')"><svg class="ico-stroke-sm" style="width:12px;height:12px;"><use href="#ico-x"></use></svg></button>
+            <button type="button" class="cart-remove" id="sigClearIssuerBtn" style="display:none;" onclick="removeSavedSignature('issuer')"><svg class="ico-stroke-sm" style="width:12px;height:13px;"><use href="#ico-x"></use></svg></button>
           </div>
         </div>
 
@@ -1246,7 +1246,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
             <button type="button" class="sig-open-btn" onclick="openSignatureModal('client')">
               <svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-edit"></use></svg><span id="ui-btn-sign2">Firmar</span>
             </button>
-            <button type="button" class="cart-remove" id="sigClearClientBtn" style="display:none;" onclick="removeSavedSignature('client')"><svg class="ico-stroke-sm" style="width:12px;height:12px;"><use href="#ico-x"></use></svg></button>
+            <button type="button" class="cart-remove" id="sigClearClientBtn" style="display:none;" onclick="removeSavedSignature('client')"><svg class="ico-stroke-sm" style="width:12px;height:13px;"><use href="#ico-x"></use></svg></button>
           </div>
         </div>
       </div>
@@ -1532,6 +1532,7 @@ const I18N = {
     notes: "Notas, Garantía o Condiciones Especiales", attach: "Adjuntar Foto, ID o Documento en 2da Página",
     attachChk: "Incluir imagen en 2da página del PDF", page2PreviewLbl: "2da Página Adjunta en el PDF",
     balLbl: "BALANCE PENDIENTE:", settledLbl: "TOTAL LIQUIDADO:", recHeadlineLbl: "MONTO RECIBIDO:",
+    agreedTotalLbl: "MONTO TOTAL ACORDADO",
     histTitle: "Récord de Documentos Pagados", histClear: "Borrar",
     histSearch: "Buscar por cliente, # de documento o fecha...", openBtn: "Abrir", pdfBtn: "PDF", toInvBtn: "→ Factura", toRecBtn: "→ Recibo",
     qty: "Cantidad", price: "Precio Unitario", qtyShort: "Cant.", unitPriceShort: "P. Unit.", totalColShort: "Total",
@@ -1611,6 +1612,7 @@ const I18N = {
     notes: "Notes, Warranty or Special Terms", attach: "Attach Photo, ID or Doc on 2nd Page",
     attachChk: "Include image on 2nd page of PDF", page2PreviewLbl: "Attached 2nd Page in PDF",
     balLbl: "BALANCE DUE:", settledLbl: "TOTAL SETTLED:", recHeadlineLbl: "AMOUNT RECEIVED:",
+    agreedTotalLbl: "TOTAL AGREED AMOUNT",
     histTitle: "Paid Documents Record", histClear: "Clear",
     histSearch: "Search by client, doc # or date...", openBtn: "Open", pdfBtn: "PDF", toInvBtn: "→ Invoice", toRecBtn: "→ Receipt",
     qty: "Quantity", price: "Unit Price", qtyShort: "Qty", unitPriceShort: "Unit Price", totalColShort: "Amount",
@@ -1690,6 +1692,7 @@ const I18N = {
     notes: "Notes, Garantie ou Conditions Particulières", attach: "Joindre Photo, Pièce d'Identité ou Doc en 2e Page",
     attachChk: "Inclure l'image sur la 2e page du PDF", page2PreviewLbl: "2e Page Jointe au PDF",
     balLbl: "SOLDE À PAYER :", settledLbl: "TOTAL RÉGLÉ :", recHeadlineLbl: "MONTANT REÇU :",
+    agreedTotalLbl: "MONTANT TOTAL CONVENU",
     histTitle: "Historique des Documents Payés", histClear: "Effacer",
     histSearch: "Rechercher par client, n° ou date...", openBtn: "Ouvrir", pdfBtn: "PDF", toInvBtn: "→ Facture", toRecBtn: "→ Reçu",
     qty: "Quantité", price: "Prix Unitaire", qtyShort: "Qté", unitPriceShort: "P.U.", totalColShort: "Montant",
@@ -1769,6 +1772,7 @@ const I18N = {
     notes: "Uwagi, Gwarancja lub Warunki Szczególne", attach: "Załącz Zdjęcie, Dowód lub Dokument na 2. Stronie",
     attachChk: "Dołącz obraz na 2. stronie pliku PDF", page2PreviewLbl: "Załączona 2. Strona w PDF",
     balLbl: "DO ZAPŁATY:", settledLbl: "CAŁKOWITA KWOTA:", recHeadlineLbl: "OTRZYMANA KWOTA:",
+    agreedTotalLbl: "CAŁKOWITA KWOTA UMOWY",
     histTitle: "Historia Opłaconych Dokumentów", histClear: "Usuń",
     histSearch: "Szukaj klienta, numeru lub daty...", openBtn: "Otwórz", pdfBtn: "PDF", toInvBtn: "→ Faktura", toRecBtn: "→ Pokwitowanie",
     qty: "Ilość", price: "Cena Jednostkowa", qtyShort: "Ilość", unitPriceShort: "Cena Jedn.", totalColShort: "Kwota",
@@ -1848,6 +1852,7 @@ const I18N = {
     notes: "Observações, Garantia ou Condições Especiais", attach: "Anexar Foto, RG/CNH ou Doc na 2ª Página",
     attachChk: "Incluir imagem na 2ª página do PDF", page2PreviewLbl: "2ª Página Anexada no PDF",
     balLbl: "SALDO PENDENTE:", settledLbl: "TOTAL QUITADO:", recHeadlineLbl: "VALOR RECEBIDO:",
+    agreedTotalLbl: "VALOR TOTAL ACORDADO",
     histTitle: "Histórico de Documentos Pagos", histClear: "Limpar",
     histSearch: "Buscar por cliente, nº do doc ou data...", openBtn: "Abrir", pdfBtn: "PDF", toInvBtn: "→ Fatura", toRecBtn: "→ Recibo",
     qty: "Quantidade", price: "Preço Unitário", qtyShort: "Qtd.", unitPriceShort: "P. Unit.", totalColShort: "Total",
@@ -2327,31 +2332,63 @@ let autoSaveTimer = null;
 let pendingBizSave = false;
 let loadedRecordDate = '';
 
+const CLIENT_STOP_WORDS = new Set([
+  'llc', 'inc', 'corp', 'ltd', 'co', 'srl', 'sarl', 'sas', 'ltda', 'sp', 'zoo',
+  'urb', 'urbanizacion', 'calle', 'ave', 'avenida', 'carr', 'carretera', 'km',
+  'apt', 'apto', 'suite', 'ste', 'blvd', 'st', 'rd', 'dr', 'ln',
+  'tel', 'cel', 'phone', 'id', 'ein', 'the', 'and', 'por', 'con'
+]);
+
 function normalizeIdentityText(str) {
   const raw = String(str || '').toLowerCase();
   const deaccented = raw.normalize ? raw.normalize('NFD').replace(/[\u0300-\u036f]/g, '') : raw;
   return deaccented.replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
 }
 
-function isSameClientIdentity(lockedNorm, currentRaw) {
-  const curNorm = normalizeIdentityText(currentRaw);
-  if (!lockedNorm) return true;
-  if (!curNorm) return false;
-  if (lockedNorm === curNorm) return true;
-  if (curNorm.includes(lockedNorm) || lockedNorm.includes(curNorm)) return true;
+function extractClientPrimaryKey(rawStr) {
+  const fullNorm = normalizeIdentityText(rawStr);
+  if (!fullNorm) return '';
+  const headSegment = String(rawStr || '').split(/\s*[-—•|:]\s*|\btel\b/i)[0] || rawStr;
+  const headNorm = normalizeIdentityText(headSegment);
+  const words = (headNorm || fullNorm).split(' ').filter(w => w.length >= 2 && !CLIENT_STOP_WORDS.has(w));
+  return words.slice(0, 3).join(' ') || headNorm || fullNorm;
+}
 
-  const lockWords = lockedNorm.split(' ').filter(w => w.length >= 3);
-  const curWords = curNorm.split(' ').filter(w => w.length >= 3);
-  if (lockWords.length === 0 || curWords.length === 0) {
-    return lockedNorm.slice(0, 4) === curNorm.slice(0, 4);
-  }
-  for (let i = 0; i < lockWords.length; i++) {
-    for (let j = 0; j < curWords.length; j++) {
-      if (lockWords[i] === curWords[j]) return true;
-      if (lockWords[i].length >= 4 && curWords[j].length >= 4 && lockWords[i].slice(0, 4) === curWords[j].slice(0, 4)) {
-        return true;
-      }
+function editDistanceMax3(a, b) {
+  if (a === b) return 0;
+  const la = a.length, lb = b.length;
+  if (Math.abs(la - lb) > 3) return 4;
+  const dp = Array.from({ length: la + 1 }, (_, i) => i);
+  for (let j = 1; j <= lb; j++) {
+    let prev = dp[0];
+    dp[0] = j;
+    let rowMin = dp[0];
+    for (let i = 1; i <= la; i++) {
+      const temp = dp[i];
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      dp[i] = Math.min(dp[i] + 1, dp[i - 1] + 1, prev + cost);
+      prev = temp;
+      if (dp[i] < rowMin) rowMin = dp[i];
     }
+    if (rowMin > 3) return 4;
+  }
+  return dp[la];
+}
+
+function isSameClientIdentity(lockedNorm, currentRaw) {
+  const lockKey = extractClientPrimaryKey(lockedNorm);
+  const curKey = extractClientPrimaryKey(currentRaw);
+  if (!lockKey) return !curKey;
+  if (!curKey) return false;
+  if (lockKey === curKey) return true;
+  if (lockKey.length >= 5 && curKey.length >= 5 && editDistanceMax3(lockKey, curKey) <= 2) {
+    return true;
+  }
+  const lockTokens = lockKey.split(' ');
+  const curTokens = curKey.split(' ');
+  if (lockTokens.length >= 2 && curTokens.length >= 2) {
+    return editDistanceMax3(lockTokens[0], curTokens[0]) <= 1 &&
+           editDistanceMax3(lockTokens[1], curTokens[1]) <= 1;
   }
   return false;
 }
@@ -2388,7 +2425,12 @@ function matchesDraftLock(lockEntry) {
   if (lockEntry.docType && curDocType !== lockEntry.docType) return false;
 
   const curClient = (document.getElementById('qb-client')?.value || '').trim();
-  if (!isSameClientIdentity(lockEntry.clientNorm, curClient)) return false;
+  if (!lockEntry.clientNorm) {
+    const curKey = extractClientPrimaryKey(curClient);
+    if (curKey && (Date.now() - (lockEntry.ts || 0)) >= 15 * 60 * 1000) return false;
+  } else if (!isSameClientIdentity(lockEntry.clientNorm, curClient)) {
+    return false;
+  }
 
   const curDocNum = (document.getElementById('qb-docnum')?.value || '').trim();
   if (lockEntry.docNum && curDocNum && curDocNum !== lockEntry.docNum) {
@@ -2419,12 +2461,12 @@ function markCurrentDocUnlocked() {
   const locks = getDraftLocksMap();
   const prevLock = locks[currentDraftId];
   const curDocType = document.getElementById('qb-doctype')?.value || 'quote';
-  const curClientNorm = normalizeIdentityText(document.getElementById('qb-client')?.value || '');
+  const curClientKey = extractClientPrimaryKey(document.getElementById('qb-client')?.value || '');
   const curDocNum = (document.getElementById('qb-docnum')?.value || '').trim();
 
   locks[currentDraftId] = {
     docType: prevLock?.docType || curDocType,
-    clientNorm: prevLock?.clientNorm || curClientNorm,
+    clientNorm: prevLock?.clientNorm || curClientKey,
     docNum: prevLock?.docNum || curDocNum,
     ts: prevLock?.ts || Date.now()
   };
@@ -2457,7 +2499,11 @@ function checkIsPaidUser() {
 
 function claimSingleCreditForCurrentDoc() {
   ensureDistinctDraftForNewDocument();
-  if (hasUnlimitedAccess() || isCurrentDocUnlocked()) return true;
+  if (hasUnlimitedAccess()) return true;
+  if (isCurrentDocUnlocked()) {
+    markCurrentDocUnlocked();
+    return true;
+  }
   const credits = getPaidCreditsCount();
   if (credits > 0) {
     safeSetStorage('mcp_paid_credits', String(credits - 1));
@@ -2991,6 +3037,7 @@ function openSuiteDrawer() {
 function selectDocTypeFromSuite(docKey) {
   const inp = document.getElementById('qb-doctype');
   const prevKey = inp ? inp.value : 'quote';
+  const hadModalState = !!(window.history.state && window.history.state.mcpModal);
   if (inp) inp.value = docKey;
   safeSetStorage('mcp_active_doctype', docKey);
 
@@ -3003,8 +3050,11 @@ function selectDocTypeFromSuite(docKey) {
 
   if (docKey !== prevKey) {
     docHistoryStack.push(docKey);
-    try { window.history.replaceState({ mcpDocStep: docKey }, ''); } catch (e) {}
-  } else if (window.history.state && window.history.state.mcpModal) {
+    try {
+      if (hadModalState) window.history.replaceState({ mcpDocStep: docKey }, '');
+      else window.history.pushState({ mcpDocStep: docKey }, '');
+    } catch (e) {}
+  } else if (hadModalState) {
     suppressPopHandler = true;
     try { window.history.back(); } catch (e) { suppressPopHandler = false; }
   }
@@ -3160,6 +3210,14 @@ function getDocMeta(docType) {
     totalLabel: arr[5], signTitle: arr[6], legalClause: arr[7], sig1: arr[8], sig2: arr[9],
     showAcceptChecks: !!arr[10], filePrefix: (arr[2].replace(/[^a-zA-Z]/g, '') || 'DOC') + '_'
   };
+}
+
+function getEffectiveTotalRowLabel(docType, meta, remBalanceAmt) {
+  const L = I18N[currentLang] || I18N.es;
+  if (docType === 'receipt' && roundMoney(remBalanceAmt) > 0) {
+    return L.agreedTotalLbl || meta.totalLabel;
+  }
+  return meta.totalLabel;
 }
 
 function changeLang(val) {
@@ -3712,6 +3770,7 @@ function renderModalSheet(mode) {
   const isReceiptAutoPaid = (activeType === 'receipt' && (!data.dep || data.dep <= 0));
   const effectivePaid = isReceiptAutoPaid ? netPayable : roundMoney(data.dep || 0);
   const remBalance = roundMoney(Math.max(0, netPayable - effectivePaid));
+  const totalRowLabelTxt = getEffectiveTotalRowLabel(activeType, meta, remBalance);
   const showPaidRows = effectivePaid > 0 || activeType === 'receipt';
   const showRemBalanceRow = showPaidRows || retVal > 0;
   const logoSrcForModal = (isLive && uploadedLogoData) ? uploadedLogoData : (cleanMascotLogoDataUrl || '1793842789444.jpg');
@@ -3769,7 +3828,7 @@ function renderModalSheet(mode) {
         (showBreakdownSubtotal ? '<tr style="background:#f8fafc;"><td colspan="' + colSpanCount + '" style="text-align:right;font-weight:800;color:#334155;">' + escapeHtml(L.subtotalLbl) + '</td><td>' + escapeHtml(formatUSD(rawSubtotal)) + '</td></tr>' : '') +
         (discVal > 0 ? '<tr><td colspan="' + colSpanCount + '" style="text-align:right;font-weight:700;color:#be123c;">' + escapeHtml(L.disc + (data.discLabelExtra || '')) + '</td><td style="color:#be123c;">-' + escapeHtml(formatUSD(discVal)) + '</td></tr>' : '') +
         (taxVal > 0 ? '<tr><td colspan="' + colSpanCount + '" style="text-align:right;font-weight:700;color:#475569;">' + escapeHtml(L.tax + (data.taxLabelExtra || '')) + '</td><td>' + escapeHtml(formatUSD(taxVal)) + '</td></tr>' : '') +
-        '<tr class="lux-tot-row"><td colspan="' + colSpanCount + '">' + escapeHtml(meta.totalLabel + ' (' + currentCurr + ')') + '</td><td>' + escapeHtml(formatUSD(grandTotal)) + '</td></tr>' +
+        '<tr class="lux-tot-row"><td colspan="' + colSpanCount + '">' + escapeHtml(totalRowLabelTxt + ' (' + currentCurr + ')') + '</td><td>' + escapeHtml(formatUSD(grandTotal)) + '</td></tr>' +
         (retVal > 0 ? '<tr><td colspan="' + colSpanCount + '" style="text-align:right;font-weight:800;color:#b45309;">' + escapeHtml(L.retRowLbl + (data.retLabelExtra || '')) + '</td><td style="color:#b45309;">-' + escapeHtml(formatUSD(retVal)) + '</td></tr>' : '') +
         (showPaidRows ? '<tr><td colspan="' + colSpanCount + '" style="color:#065f46;font-weight:800;">' + escapeHtml(L.paidAmt) + '</td><td style="color:#065f46;">-' + escapeHtml(formatUSD(effectivePaid)) + '</td></tr>' : '') +
         (showRemBalanceRow ? '<tr style="background:#dcfce7;font-weight:900;"><td colspan="' + colSpanCount + '" style="color:#065f46;">' + escapeHtml(L.remBal) + '</td><td style="color:#065f46;font-size:0.92rem;">' + escapeHtml(formatUSD(remBalance)) + '</td></tr>' : '') +
@@ -3829,13 +3888,13 @@ function savePaidDocumentToRecord(preserveDateStr) {
   const existingDraftIdx = hist.findIndex(h => h.draftId === currentDraftId);
   if (existingDraftIdx >= 0) {
     const prevRec = hist[existingDraftIdx];
-    if (prevRec.docType !== docType || !isSameClientIdentity(normalizeIdentityText(prevRec.client), clientName)) {
+    if (prevRec.docType !== docType || !isSameClientIdentity(prevRec.client, clientName)) {
       currentDraftId = createNewDraftId();
       safeSetStorage('mcp_current_draft_id', currentDraftId);
     }
   }
 
-  const existingIdx = hist.findIndex(h => h.draftId === currentDraftId || (h.docType === docType && h.docNum === docNum && h.client === clientName));
+  const existingIdx = hist.findIndex(h => h.draftId === currentDraftId || (h.docType === docType && h.docNum === docNum && isSameClientIdentity(h.client, clientName)));
   const existingEntry = existingIdx >= 0 ? hist[existingIdx] : null;
   const time = getFormattedDate(preserveDateStr || loadedRecordDate) || (existingEntry && existingEntry.time) || getFormattedDate();
   if (existingIdx >= 0) hist.splice(existingIdx, 1);
@@ -4061,7 +4120,7 @@ function addContinuationPage(doc, meta, docNum, comp) {
   doc.setTextColor(100, 116, 139);
   doc.text(pdfSafeText(comp).substring(0, 55), 14, 12.5);
   doc.setTextColor(15, 23, 42);
-  doc.text(pdfSafeText(meta.badge + ' • ' + meta.prefix + docNum), 202, 12.5, { align: 'right' });
+  doc.text(pdfSafeText(meta.badge + ' | ' + meta.prefix + docNum), 202, 12.5, { align: 'right' });
   doc.setDrawColor(203, 213, 225);
   doc.setLineWidth(0.3);
   doc.line(14, 15.5, 202, 15.5);
@@ -4262,9 +4321,9 @@ async function buildPureVectorPDF(overrideDateStr) {
     const qtyVal = isNaN(q) ? 1 : q;
     const p = parseFloat(it.price) || 0;
     const lineTotal = snap.lineSubtotals[idx] !== undefined ? snap.lineSubtotals[idx] : roundMoney(qtyVal * p);
-    if (lineTotal !== 0 || it.desc.trim() !== '') {
+    if (lineTotal !== 0 || (it.desc || '').trim() !== '') {
       renderedRowsCount++;
-      const rawDesc = pdfSafeText((idx + 1) + '. ' + (it.desc.trim() || '-'));
+      const rawDesc = pdfSafeText((idx + 1) + '. ' + ((it.desc || '').trim() || '-'));
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(9);
       const wrapW = multiCols ? 94 : 136;
@@ -4321,6 +4380,7 @@ async function buildPureVectorPDF(overrideDateStr) {
   const showSubRow = (snap.computedDisc > 0 || snap.computedTax > 0);
   const showPaidRow = (snap.dep > 0 || docType === 'receipt');
   const showRemBalRow = (showPaidRow || snap.computedRet > 0);
+  const totalRowLabelTxt = getEffectiveTotalRowLabel(docType, meta, snap.balance);
 
   let totalsBlockH = 10;
   if (showSubRow) totalsBlockH += 8.5;
@@ -4385,7 +4445,7 @@ async function buildPureVectorPDF(overrideDateStr) {
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(9.6);
   doc.setTextColor(15, 23, 42);
-  doc.text(pdfSafeText(meta.totalLabel + ' (' + currentCurr + ')'), 17, y + 6.8);
+  doc.text(pdfSafeText(totalRowLabelTxt + ' (' + currentCurr + ')'), 17, y + 6.8);
   doc.text(pdfSafeText(formatPDFCurr(snap.grandTotal)), 198.5, y + 6.8, { align: 'right' });
   y += 10;
 
@@ -4653,7 +4713,13 @@ function restoreStateOnLoad() {
 
   try {
     const savedLines = JSON.parse(safeGetStorage('mcp_custom_lines', '[]'));
-    if (Array.isArray(savedLines) && savedLines.length > 0) customLineItems = savedLines;
+    if (Array.isArray(savedLines) && savedLines.length > 0) {
+      customLineItems = savedLines.map(it => ({
+        desc: String(it?.desc || ''),
+        qty: String(it?.qty ?? '1'),
+        price: String(it?.price ?? '')
+      }));
+    }
   } catch (e) {}
 
   try {
@@ -4674,7 +4740,7 @@ function restoreStateOnLoad() {
   } catch (e) {}
 
   const dateEl = document.getElementById('qb-date');
-  if (dateEl && !dateEl.value) {
+  if (dateEl && (!dateEl.value || (!hasUserTypedData() && !isCurrentDocUnlocked()))) {
     dateEl.value = getTodayIsoDate();
   }
 
