@@ -1,8 +1,9 @@
-const CACHE_NAME = 'mr-invoice-pro-v18';
+const CACHE_NAME = 'mr-invoice-pro-v19';
 const CORE_ASSETS = [
   '/',
   '/index.html',
   '/manifest.json?v=18',
+  '/1793842789444.jpg',
   '/1793842789444.jpg?v=18',
   'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js'
 ];
@@ -10,11 +11,16 @@ const CORE_ASSETS = [
 self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return Promise.allSettled(
-        CORE_ASSETS.map((url) => cache.add(url))
-      );
-    })
+    caches.open(CACHE_NAME).then((cache) =>
+      Promise.allSettled(
+        CORE_ASSETS.map((url) => {
+          const req = url.startsWith('http')
+            ? new Request(url, { mode: 'cors' })
+            : new Request(url, { cache: 'reload' });
+          return cache.add(req);
+        })
+      )
+    )
   );
 });
 
@@ -37,8 +43,14 @@ self.addEventListener('fetch', (event) => {
   if (req.method !== 'GET') return;
 
   const url = new URL(req.url);
+  if (url.protocol !== 'http:' && url.protocol !== 'https:') return;
 
-  if (url.hostname.includes('goatcounter.com') || url.hostname.includes('zgo.at') || url.hostname.includes('stripe.com')) {
+  if (
+    url.pathname.startsWith('/api/') ||
+    url.hostname.includes('goatcounter.com') ||
+    url.hostname.includes('zgo.at') ||
+    url.hostname.includes('stripe.com')
+  ) {
     return;
   }
 
@@ -46,13 +58,21 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       fetch(req)
         .then((networkRes) => {
-          if (networkRes && networkRes.ok) {
-            const copy = networkRes.clone();
-            caches.open(CACHE_NAME).then((cache) => cache.put('/index.html', copy));
+          if (networkRes && networkRes.status === 200 && url.origin === self.location.origin) {
+            const copyIndex = networkRes.clone();
+            const copyRoot = networkRes.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put('/index.html', copyIndex);
+              cache.put('/', copyRoot);
+            });
           }
           return networkRes;
         })
-        .catch(() => caches.match(req).then((r) => r || caches.match('/index.html')))
+        .catch(() =>
+          caches.match('/index.html')
+            .then((r) => r || caches.match('/') || caches.match(req))
+            .then((r) => r || new Response('Offline', { status: 503, headers: { 'Content-Type': 'text/plain' } }))
+        )
     );
     return;
   }
@@ -67,7 +87,7 @@ self.addEventListener('fetch', (event) => {
           }
           return networkRes;
         })
-        .catch(() => cachedRes);
+        .catch(() => cachedRes || new Response('', { status: 503 }));
 
       return cachedRes || fetchPromise;
     })
