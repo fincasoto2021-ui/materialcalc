@@ -10,6 +10,8 @@
 <meta name="apple-mobile-web-app-title" content="Mr. Invoice Pro">
 <title>Mr. Invoice Pro | Official PDF Suite</title>
 <meta name="description" content="Generador profesional de cotizaciones, estimados, facturas y contratos legales en PDF con firma digital.">
+<link rel="canonical" href="https://mrinvoicepro.com/">
+<meta property="og:url" content="https://mrinvoicepro.com/">
 <meta property="og:title" content="Mr. Invoice Pro | Official PDF Suite">
 <meta property="og:description" content="Generador profesional de cotizaciones, estimados, facturas y contratos legales en PDF con firma digital.">
 <meta property="og:image" content="https://mrinvoicepro.com/1793842789444.jpg?v=18">
@@ -267,6 +269,7 @@ header {
 .suite-item-title { font-size: 0.83rem; font-weight: 800; color: var(--text-dark); }
 .suite-item-code { font-size: 0.65rem; font-weight: 900; color: var(--text-muted); background: var(--surface-pill); padding: 2px 7px; border-radius: 6px; flex-shrink: 0; }
 .suite-item-btn.active .suite-item-code { background: var(--emerald); color: #ffffff; }
+
 .confirm-modal-overlay {
   position: fixed;
   inset: 0;
@@ -327,6 +330,7 @@ header {
   cursor: pointer;
   box-shadow: 0 6px 14px rgba(225, 29, 72, 0.25);
 }
+.confirm-btn-yes:disabled { opacity: 0.6; cursor: wait; }
 
 .sig-grid-boxes { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin-top: 0.75rem; }
 @media (max-width: 520px) { .sig-grid-boxes { grid-template-columns: 1fr; } }
@@ -535,7 +539,7 @@ input, select, textarea {
   outline: none;
   transition: border-color 0.16s ease, box-shadow 0.16s ease;
 }
-input[type="number"] { font-variant-numeric: tabular-nums; font-weight: 700; }
+input[type="number"], input[type="date"] { font-variant-numeric: tabular-nums; font-weight: 700; min-height: 42px; }
 input::placeholder, textarea::placeholder { color: #94a3b8; font-weight: 400; }
 input:focus, select:focus, textarea:focus {
   border-color: var(--obsidian);
@@ -696,7 +700,7 @@ textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
   font-variant-numeric: tabular-nums;
 }
 
-.wa-master-btn, .email-master-btn, .stripe-pay-btn, .pro-pass-btn {
+.wa-master-btn, .email-master-btn, .stripe-pay-btn, .pro-pass-btn, .preview-secondary-btn {
   width: 100%;
   border-radius: 13px;
   padding: 0.85rem 1rem;
@@ -712,7 +716,7 @@ textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
   justify-content: center;
   gap: 0.48rem;
 }
-.wa-master-btn:active, .email-master-btn:active, .stripe-pay-btn:active, .pro-pass-btn:active { transform: scale(0.985); }
+.wa-master-btn:active, .email-master-btn:active, .stripe-pay-btn:active, .pro-pass-btn:active, .preview-secondary-btn:active { transform: scale(0.985); }
 
 .wa-master-btn {
   background: var(--emerald);
@@ -726,6 +730,9 @@ textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
 .stripe-pay-btn { background: var(--obsidian); color: #ffffff; border: 1px solid var(--obsidian); margin-top: 0.5rem; display: none; }
 .pro-pass-btn { background: #fffbeb; color: #92400e; border: 1.5px solid #f59e0b; margin-top: 0.55rem; }
 .pro-pass-btn:hover { background: #fef3c7; }
+.preview-secondary-btn { background: var(--surface-pill); color: var(--text-dark); border: 1px solid var(--line-mid); font-size: 0.84rem; }
+.preview-cta-dual { display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem; }
+@media (max-width: 480px) { .preview-cta-dual { grid-template-columns: 1fr; } }
 
 .stripe-note { text-align: center; font-size: 0.73rem; color: var(--text-muted); margin-top: 0.6rem; line-height: 1.45; display: flex; align-items: center; justify-content: center; gap: 0.35rem; }
 .restore-purchase-link {
@@ -854,20 +861,22 @@ textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
 }
 
 .lux-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1.5px solid #0f172a; padding-bottom: 0.8rem; margin-bottom: 0.85rem; gap: 0.8rem; flex-wrap: wrap; }
-.lux-brand { display: flex; align-items: center; gap: 0.75rem; }
+.lux-brand { display: flex; align-items: center; gap: 0.75rem; max-width: 62%; }
+@media (max-width: 520px) { .lux-brand { max-width: 100%; } }
 .lux-logo-box { width: 58px; height: 58px; background: #ffffff; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
 .lux-logo-box img { width: 100%; height: 100%; object-fit: contain; }
-.lux-badge-box { background: #f8fafc; border: 1px solid #cbd5e1; border-right: 3px solid #eab308; padding: 0.5rem 0.8rem; border-radius: 8px; text-align: right; }
+.lux-badge-box { background: #f8fafc; border: 1px solid #cbd5e1; border-right: 3px solid #eab308; padding: 0.5rem 0.8rem; border-radius: 8px; text-align: right; margin-left: auto; }
 .lux-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin: 0.75rem 0; font-variant-numeric: tabular-nums; }
 .lux-table th { background: #0f172a; color: #fff; padding: 0.45rem 0.65rem; text-align: left; }
 .lux-table td { border: 1px solid #cbd5e1; padding: 0.5rem 0.65rem; }
-.lux-table td:last-child, .lux-table th:last-child { text-align: right; font-weight: 700; }
+.lux-table th.num-col, .lux-table td.num-col { text-align: right; white-space: nowrap; }
+.lux-table td:last-child, .lux-table th:last-child { text-align: right; font-weight: 700; white-space: nowrap; }
 .lux-tot-row { background: #fef3c7; font-weight: 900; }
 .lux-sign-box { border: 1px solid #0f172a; border-radius: 8px; padding: 0.65rem 0.8rem; margin-top: 0.6rem; }
 .lux-signs { display: grid; grid-template-columns: 2fr 2fr 1fr; gap: 0.85rem; margin-top: 0.85rem; font-size: 0.74rem; align-items: end; }
 @media (max-width: 520px) { .lux-signs { grid-template-columns: 1fr; gap: 0.65rem; } }
 .lux-sig-slot { display: flex; flex-direction: column; justify-content: flex-end; min-height: 48px; }
-.lux-sig-img { max-height: 36px; max-width: 150px; object-fit: contain; margin-bottom: 2px; }
+.lux-sig-img { max-height: 40px; max-width: 150px; object-fit: contain; margin-bottom: 2px; }
 .lux-sign-line { border-top: 1px solid #0f172a; padding-top: 0.28rem; font-weight: 700; display: flex; align-items: center; gap: 0.3rem; }
 .lux-page2-preview { margin-top: 1rem; padding-top: 0.85rem; border-top: 2px dashed #94a3b8; text-align: center; }
 .lux-page2-label { font-size: 0.72rem; font-weight: 900; color: #334155; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 0.5rem; }
@@ -1045,11 +1054,11 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
       <svg class="ico-stroke"><use href="#ico-shield"></use></svg>
     </div>
     <div class="confirm-title" id="ui-rest-title">Recuperar Compra o Pase Pro</div>
-    <div class="confirm-msg" id="ui-rest-msg">Si instalaste la App en tu inicio o cambiaste de navegador, pega aquí el ID de sesión o recibo enviado por Stripe a tu correo (ej. cs_live_...):</div>
-    <input type="text" id="restoreCodeInput" placeholder="cs_live_... / pi_... / sub_..." style="margin-bottom:0.85rem;text-align:center;font-weight:700;">
+    <div class="confirm-msg" id="ui-rest-msg">Si instalaste la App en tu inicio o cambiaste de navegador, ingresa el correo electrónico con el que pagaste en Stripe:</div>
+    <input type="text" id="restoreCodeInput" placeholder="correo@ejemplo.com" autocomplete="email" style="margin-bottom:0.85rem;text-align:center;font-weight:700;">
     <div class="confirm-btn-row">
       <button type="button" class="confirm-btn-no" onclick="dismissModalCleanly()" id="ui-rest-cancel">Cerrar</button>
-      <button type="button" class="confirm-btn-yes" style="background:var(--obsidian);border-color:var(--obsidian);box-shadow:none;" onclick="verifyAndRestorePurchase()" id="ui-rest-ok">Activar</button>
+      <button type="button" class="confirm-btn-yes" style="background:var(--obsidian);border-color:var(--obsidian);box-shadow:none;" onclick="verifyAndRestorePurchase()" id="ui-rest-ok">Verificar</button>
     </div>
   </div>
 </div>
@@ -1124,6 +1133,16 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
           <datalist id="recentClientsDatalist"></datalist>
         </div>
       </div>
+      <div class="price-grid" style="margin-top:0.65rem;">
+        <div>
+          <label id="ui-lbl-date">Fecha de Emisión</label>
+          <input type="date" id="qb-date" oninput="onBuilderUserEdit(false)" onchange="onBuilderUserEdit(false)">
+        </div>
+        <div>
+          <label id="ui-lbl-duedate">Válido Hasta / Vencimiento (Opcional)</label>
+          <input type="date" id="qb-duedate" oninput="onBuilderUserEdit(false)" onchange="onBuilderUserEdit(false)">
+        </div>
+      </div>
 
       <div class="logo-upload-box">
         <div class="logo-pic-badge"><svg class="ico-stroke-sm" style="width:12px;height:12px;"><use href="#ico-camera"></use></svg><span>LOGO PICTURE</span></div>
@@ -1149,7 +1168,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
 
     <div class="mb-section">
       <div class="mb-sec-title" id="ui-sec3"><span class="sec-step-badge">03</span><span>Impuestos, Firmas, Condiciones y Envío PDF</span></div>
-      <div class="price-grid-3">
+      <div class="price-grid">
         <div>
           <label id="ui-lbl-disc">Descuento</label>
           <div class="tax-input-combo">
@@ -1171,6 +1190,20 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
             <input type="number" step="any" id="qb-tax" value="0" oninput="onBuilderUserEdit(false)">
           </div>
           <div class="tax-calc-hint" id="taxComputedHint"></div>
+        </div>
+      </div>
+
+      <div class="price-grid" style="margin-top:0.35rem;">
+        <div>
+          <label id="ui-lbl-ret">Retención / Retainage (Opcional)</label>
+          <div class="tax-input-combo">
+            <select id="qb-ret-mode" class="tax-mode-select" onchange="onBuilderUserEdit(false)">
+              <option value="amt" id="qb-ret-opt-amt">$</option>
+              <option value="pct">%</option>
+            </select>
+            <input type="number" step="any" id="qb-ret" value="0" oninput="onBuilderUserEdit(false)">
+          </div>
+          <div class="tax-calc-hint" id="retComputedHint" style="color:#b45309;"></div>
         </div>
         <div>
           <label id="ui-lbl-dep">Depósito / Pagado ($)</label>
@@ -1298,6 +1331,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
 <script>
 const STRIPE_SINGLE_URL = "https://buy.stripe.com/7sY4gB3Vl6217aeg2S7ok04";
 const STRIPE_PRO_PASS_URL = "https://buy.stripe.com/eVq28t77xbml8eidUK7ok01";
+const STRIPE_VERIFY_API_URL = "/api/verify-stripe";
 const OWNER_HASH = "f4d2cf685d7904be105675a5159c8717134d23914f80aa0714496303d347b2d1";
 
 const CURRENCIES = {
@@ -1334,6 +1368,48 @@ const SUITE_CATEGORIES = [
 ];
 
 const SETTLEMENT_DOC_TYPES = ['receipt', 'billsale', 'waiver', 'delivery'];
+
+function safeGetStorage(key, fallbackVal) {
+  try {
+    const v = localStorage.getItem(key);
+    return v !== null ? v : (fallbackVal !== undefined ? fallbackVal : null);
+  } catch (e) {
+    return fallbackVal !== undefined ? fallbackVal : null;
+  }
+}
+
+function safeRemoveStorage(key) {
+  try { localStorage.removeItem(key); } catch (e) {}
+}
+
+function safeSetStorage(key, value) {
+  const strVal = String(value);
+  try {
+    localStorage.setItem(key, strVal);
+    return true;
+  } catch (err) {
+    try {
+      localStorage.removeItem('mcp_clean_mascot_v18');
+      let hist = [];
+      try { hist = JSON.parse(localStorage.getItem('mcp_calc_history') || '[]'); } catch (e2) {}
+      if (Array.isArray(hist) && hist.length > 0) {
+        hist = hist.slice(0, 25).map((item, idx) => {
+          if (idx > 4 && item && item.hwImg) {
+            const copy = Object.assign({}, item);
+            copy.hwImg = '';
+            return copy;
+          }
+          return item;
+        });
+        localStorage.setItem('mcp_calc_history', JSON.stringify(hist));
+      }
+      localStorage.setItem(key, strVal);
+      return true;
+    } catch (err2) {
+      return false;
+    }
+  }
+}
 
 function escapeHtml(str) {
   return String(str ?? '')
@@ -1387,10 +1463,40 @@ function showExecutiveToast(msg, durationMs) {
   mcpToastTimer = setTimeout(() => { el.classList.remove('show'); }, durationMs || 3800);
 }
 
+function getTodayIsoDate() {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return y + '-' + m + '-' + day;
+}
+
+function formatIsoToLocaleDate(dateStr) {
+  const clean = String(dateStr || '').trim();
+  if (!clean) return '';
+  const m = clean.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!m) return clean;
+  const dt = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+  const langKey = (typeof currentLang !== 'undefined' && LANG_LOCALES[currentLang]) ? currentLang : 'es';
+  try { return dt.toLocaleDateString(LANG_LOCALES[langKey]); } catch (e) { return clean; }
+}
+
 function getFormattedDate(overrideDateStr) {
-  if (overrideDateStr && String(overrideDateStr).trim()) return String(overrideDateStr).trim();
+  if (overrideDateStr && String(overrideDateStr).trim()) {
+    return formatIsoToLocaleDate(overrideDateStr);
+  }
+  const dateInp = document.getElementById('qb-date');
+  if (dateInp && dateInp.value) {
+    return formatIsoToLocaleDate(dateInp.value);
+  }
   const langKey = (typeof currentLang !== 'undefined' && LANG_LOCALES[currentLang]) ? currentLang : 'es';
   try { return new Date().toLocaleDateString(LANG_LOCALES[langKey]); } catch (e) { return new Date().toLocaleDateString(); }
+}
+
+function getFormattedDueDate() {
+  const dueInp = document.getElementById('qb-duedate');
+  if (dueInp && dueInp.value) return formatIsoToLocaleDate(dueInp.value);
+  return '';
 }
 
 const I18N = {
@@ -1417,31 +1523,42 @@ const I18N = {
     sampleBtn: "Vista Previa en Vivo y Ejemplo Oficial", sec1: "Datos de las Partes y Numeración",
     compPh: "ASD Building Solutions LLC", phonePh: "(787) 000-0000",
     docNum: "Número de Documento (#)", phone: "Teléfono / Licencia / ID",
+    issueDate: "Fecha de Emisión", dueDate: "Válido Hasta / Vencimiento (Opcional)", dueShort: "Vence",
     clientPh: "Nombre - Dirección - Teléfono", logo: "Sube aquí el Logo de tu Negocio (Opcional)",
     sec2: "Descripción, Bienes, Medidas o Servicios", addLine: "Añadir Otra Línea / Concepto",
     sec3: "Impuestos, Firmas, Condiciones y Envío PDF", disc: "Descuento", subtotalLbl: "SUBTOTAL",
-    tax: "Impuestos / Tax", dep: "Depósito / Pagado",
+    tax: "Impuestos / Tax", ret: "Retención / Retainage (Opcional)", retRowLbl: "RETENCIÓN",
+    dep: "Depósito / Pagado",
     notes: "Notas, Garantía o Condiciones Especiales", attach: "Adjuntar Foto, ID o Documento en 2da Página",
     attachChk: "Incluir imagen en 2da página del PDF", page2PreviewLbl: "2da Página Adjunta en el PDF",
-    balLbl: "BALANCE PENDIENTE:", settledLbl: "TOTAL LIQUIDADO:",
+    balLbl: "BALANCE PENDIENTE:", settledLbl: "TOTAL LIQUIDADO:", recHeadlineLbl: "MONTO RECIBIDO:",
     histTitle: "Récord de Documentos Pagados", histClear: "Borrar",
     histSearch: "Buscar por cliente, # de documento o fecha...", openBtn: "Abrir", pdfBtn: "PDF", toInvBtn: "→ Factura", toRecBtn: "→ Recibo",
-    qty: "Cantidad", price: "Precio Unitario", itemLbl: "Partida #", descPh: "Descripción detallada (ej. Vehículo/VIN, Propiedad, Servicios o Materiales)...",
+    qty: "Cantidad", price: "Precio Unitario", qtyShort: "Cant.", unitPriceShort: "P. Unit.", totalColShort: "Total",
+    itemLbl: "Partida #", descPh: "Descripción detallada (ej. Vehículo/VIN, Propiedad, Servicios o Materiales)...",
     waPaid: "Enviar PDF Oficial por WhatsApp / Compartir", emailPaid: "Enviar PDF Oficial por Email", dlPaid: "Descargar / Guardar PDF en mi Teléfono",
     waLock: "Desbloquear PDF Oficial Sin Marca de Agua ($1.99)",
     proPassBtn: "Pase Pro Ilimitado • Marca Blanca Sin Pie Web ($9.99/mes)",
     notePaid: "Pase Pro Activo: Marca blanca sin pie web, envíos y descargas ilimitadas",
-    noteDocUnlocked: "Documento Desbloqueado: Puedes corregirlo, descargarlo y enviarlo sin volver a pagar",
+    noteDocUnlocked: "Documento Desbloqueado: Puedes corregir detalles y descargarlo sin volver a pagar",
     noteCredit: "Crédito de $1.99 listo: Se activará al descargar o compartir tu PDF oficial",
     noteLock: "Pago rápido con Apple Pay, Google Pay o Tarjeta • Incluye tu logo, firma y récord",
     restoreLink: "¿Ya pagaste o instalaste la App? Recuperar Compra / Pase Pro",
     restTitle: "Recuperar Compra o Pase Pro",
-    restMsg: "Si instalaste la App en tu inicio o cambiaste de navegador, pega el ID de sesión o recibo de Stripe (ej. cs_live_... o sub_...):",
-    restCancel: "Cerrar", restOk: "Activar", restSuccess: "Compra verificada y restaurada en este dispositivo.", restInvalid: "Ingresa un código de recibo válido de Stripe (ej. cs_live_..., pi_... o sub_...).",
+    restMsg: "Ingresa el correo electrónico con el que realizaste tu compra en Stripe para verificar y restaurar tu acceso:",
+    restPh: "correo@ejemplo.com",
+    restCancel: "Cerrar", restOk: "Verificar", restChecking: "Verificando...",
+    restSuccess: "Compra verificada y restaurada en este dispositivo.",
+    restInvalid: "No se pudo verificar una compra activa con ese correo en el servidor.",
     sigModalSub: "Firma con tu dedo dentro del recuadro", sigBtnSign: "Firmar", sigReady: "Firma Lista ✓", sigSavedHint: "Opcional (Se guarda)", sigClientHint: "Firmar en pantalla",
     sigCancel: "Cancelar", sigClear: "Borrar", sigSave: "Guardar Firma",
     pdfEngineErr: "No se pudo cargar el motor PDF. Verifica tu conexión a internet e intenta de nuevo.",
     convertedToast: "Datos copiados a nuevo borrador listo para revisar.",
+    newDraftAutoToast: "Nuevo cliente o plantilla detectado: se inició un borrador nuevo.",
+    useSampleBtn: "Usar Este Ejemplo en Editor",
+    backToLiveBtn: "Ver Mi Documento",
+    sampleLoadedToast: "Ejemplo cargado en el editor. Personalízalo a tu gusto.",
+    pageOfTpl: "Pág. {P} de {T}",
     emailDesktopHint: "PDF descargado en tu equipo. Adjúntalo al correo que se acaba de abrir.",
     ownerUnlockedMsg: "Modo Dueño Activado: Tienes descargas y marca blanca ilimitadas.",
     pdfViralFooter: "Documento Oficial generado con Mr. Invoice Pro - Crea tus Estimados, Facturas y Contratos en: mrinvoicepro.com",
@@ -1485,31 +1602,42 @@ const I18N = {
     sampleBtn: "Live Preview & Official Sample", sec1: "Party Details & Numbering",
     compPh: "Apex Construction & Remodeling LLC", phonePh: "(305) 555-0199",
     docNum: "Document Number (#)", phone: "Phone / License / ID",
+    issueDate: "Issue Date", dueDate: "Valid Until / Due Date (Optional)", dueShort: "Due",
     clientPh: "Name - Address - Phone", logo: "Upload Business Logo (Optional)",
     sec2: "Description, Goods, Measurements or Services", addLine: "Add Another Line Item",
     sec3: "Taxes, Signatures, Terms & Send PDF", disc: "Discount", subtotalLbl: "SUBTOTAL",
-    tax: "Taxes / Fees", dep: "Deposit / Paid",
+    tax: "Taxes / Fees", ret: "Retainage / Withholding (Optional)", retRowLbl: "RETAINAGE",
+    dep: "Deposit / Paid",
     notes: "Notes, Warranty or Special Terms", attach: "Attach Photo, ID or Doc on 2nd Page",
     attachChk: "Include image on 2nd page of PDF", page2PreviewLbl: "Attached 2nd Page in PDF",
-    balLbl: "BALANCE DUE:", settledLbl: "TOTAL SETTLED:",
+    balLbl: "BALANCE DUE:", settledLbl: "TOTAL SETTLED:", recHeadlineLbl: "AMOUNT RECEIVED:",
     histTitle: "Paid Documents Record", histClear: "Clear",
     histSearch: "Search by client, doc # or date...", openBtn: "Open", pdfBtn: "PDF", toInvBtn: "→ Invoice", toRecBtn: "→ Receipt",
-    qty: "Quantity", price: "Unit Price", itemLbl: "Item #", descPh: "Detailed description (e.g. Vehicle/VIN, Property, Services or Materials)...",
+    qty: "Quantity", price: "Unit Price", qtyShort: "Qty", unitPriceShort: "Unit Price", totalColShort: "Amount",
+    itemLbl: "Item #", descPh: "Detailed description (e.g. Vehicle/VIN, Property, Services or Materials)...",
     waPaid: "Send Official PDF via WhatsApp / Share", emailPaid: "Send Official PDF via Email", dlPaid: "Download / Save PDF to Phone",
     waLock: "Unlock Watermark-Free Official PDF ($1.99)",
     proPassBtn: "Unlimited Pro Pass • White-Label PDFs ($9.99/mo)",
     notePaid: "Pro Pass Active: 100% White-Label PDFs, unlimited downloads & sharing",
-    noteDocUnlocked: "Document Unlocked: Edit typos, download & share freely without paying again",
+    noteDocUnlocked: "Document Unlocked: Edit typos, download & share without paying again",
     noteCredit: "$1.99 Credit Ready: Activates when you download or share your official PDF",
     noteLock: "1-Tap Checkout with Apple Pay, Google Pay or Card • Includes logo & e-signatures",
     restoreLink: "Already paid or installed the App? Restore Purchase / Pro Pass",
     restTitle: "Restore Purchase or Pro Pass",
-    restMsg: "If you installed the App to Home Screen or switched browsers, paste your Stripe receipt/session ID (e.g. cs_live_... or sub_...):",
-    restCancel: "Close", restOk: "Activate", restSuccess: "Purchase verified and restored on this device.", restInvalid: "Please enter a valid Stripe receipt ID (e.g. cs_live_..., pi_... or sub_...).",
+    restMsg: "Enter the email address used during Stripe checkout to verify and restore your access:",
+    restPh: "email@example.com",
+    restCancel: "Close", restOk: "Verify", restChecking: "Verifying...",
+    restSuccess: "Purchase verified and restored on this device.",
+    restInvalid: "Could not verify an active purchase with that email on the server.",
     sigModalSub: "Sign with your finger inside the box", sigBtnSign: "Sign", sigReady: "Signed ✓", sigSavedHint: "Optional (Auto-saved)", sigClientHint: "Sign on screen",
     sigCancel: "Cancel", sigClear: "Clear", sigSave: "Save Signature",
     pdfEngineErr: "PDF engine could not load. Please check your internet connection and try again.",
     convertedToast: "Copied into a new draft ready for review.",
+    newDraftAutoToast: "New client or template detected: started a fresh draft.",
+    useSampleBtn: "Load Sample into Editor",
+    backToLiveBtn: "View My Live Doc",
+    sampleLoadedToast: "Sample loaded into editor. Customize as needed.",
+    pageOfTpl: "Page {P} of {T}",
     emailDesktopHint: "PDF downloaded to your device. Please attach it to the email draft just opened.",
     ownerUnlockedMsg: "Owner Mode Activated: Unlimited white-label downloads.",
     pdfViralFooter: "Official Document generated with Mr. Invoice Pro - Create Estimates, Invoices & Contracts at: mrinvoicepro.com",
@@ -1553,16 +1681,19 @@ const I18N = {
     sampleBtn: "Aperçu en Direct & Exemple Officiel", sec1: "Coordonnées des Parties et Numéro",
     compPh: "Entreprise Générale Bâtiment SARL", phonePh: "+33 1 40 00 00 00",
     docNum: "Numéro du Document (#)", phone: "Téléphone / Licence / SIRET",
+    issueDate: "Date d'Émission", dueDate: "Valable Jusqu'au / Échéance (Optionnel)", dueShort: "Échéance",
     clientPh: "Nom - Adresse - Téléphone", logo: "Télécharger le Logo de l'Entreprise (Optionnel)",
     sec2: "Description, Biens, Mesures ou Services", addLine: "Ajouter une Autre Ligne",
     sec3: "Taxes, Signatures, Conditions et Envoi PDF", disc: "Remise", subtotalLbl: "SOUS-TOTAL",
-    tax: "Taxes / TVA", dep: "Acompte / Payé",
+    tax: "Taxes / TVA", ret: "Retenue de Garantie (Optionnel)", retRowLbl: "RETENUE DE GARANTIE",
+    dep: "Acompte / Payé",
     notes: "Notes, Garantie ou Conditions Particulières", attach: "Joindre Photo, Pièce d'Identité ou Doc en 2e Page",
     attachChk: "Inclure l'image sur la 2e page du PDF", page2PreviewLbl: "2e Page Jointe au PDF",
-    balLbl: "SOLDE À PAYER :", settledLbl: "TOTAL RÉGLÉ :",
+    balLbl: "SOLDE À PAYER :", settledLbl: "TOTAL RÉGLÉ :", recHeadlineLbl: "MONTANT REÇU :",
     histTitle: "Historique des Documents Payés", histClear: "Effacer",
     histSearch: "Rechercher par client, n° ou date...", openBtn: "Ouvrir", pdfBtn: "PDF", toInvBtn: "→ Facture", toRecBtn: "→ Reçu",
-    qty: "Quantité", price: "Prix Unitaire", itemLbl: "Ligne #", descPh: "Description détaillée (ex. Véhicule/VIN, Bien, Travaux ou Matériaux)...",
+    qty: "Quantité", price: "Prix Unitaire", qtyShort: "Qté", unitPriceShort: "P.U.", totalColShort: "Montant",
+    itemLbl: "Ligne #", descPh: "Description détaillée (ex. Véhicule/VIN, Bien, Travaux ou Matériaux)...",
     waPaid: "Envoyer le PDF Officiel par WhatsApp / Partager", emailPaid: "Envoyer le PDF Officiel par E-mail", dlPaid: "Télécharger / Enregistrer le PDF",
     waLock: "Débloquer le PDF Officiel Sans Filigrane ($1.99)",
     proPassBtn: "Pass Pro Illimité • Marque Blanche ($9.99/mois)",
@@ -1572,12 +1703,20 @@ const I18N = {
     noteLock: "Paiement rapide Apple Pay, Google Pay ou Carte • Logo et signatures inclus",
     restoreLink: "Déjà payé ou installé l'App ? Restaurer l'achat / Pass Pro",
     restTitle: "Restaurer un Achat ou Pass Pro",
-    restMsg: "Collez ici votre identifiant de reçu Stripe (ex. cs_live_... ou sub_...) :",
-    restCancel: "Fermer", restOk: "Activer", restSuccess: "Achat vérifié et restauré.", restInvalid: "Code reçu Stripe invalide.",
+    restMsg: "Entrez l'adresse e-mail utilisée lors du paiement Stripe pour vérifier et restaurer votre accès :",
+    restPh: "email@exemple.fr",
+    restCancel: "Fermer", restOk: "Vérifier", restChecking: "Vérification...",
+    restSuccess: "Achat vérifié et restauré.",
+    restInvalid: "Aucun achat actif vérifié avec cet e-mail sur le serveur.",
     sigModalSub: "Signez avec votre doigt dans le cadre", sigBtnSign: "Signer", sigReady: "Signé ✓", sigSavedHint: "Optionnel (Sauvegardé)", sigClientHint: "Signer à l'écran",
     sigCancel: "Annuler", sigClear: "Effacer", sigSave: "Enregistrer",
     pdfEngineErr: "Impossible de charger le moteur PDF. Vérifiez votre connexion.",
     convertedToast: "Copié dans un nouveau brouillon.",
+    newDraftAutoToast: "Nouveau client ou modèle détecté : nouveau brouillon créé.",
+    useSampleBtn: "Charger l'Exemple dans l'Éditeur",
+    backToLiveBtn: "Voir Mon Document",
+    sampleLoadedToast: "Exemple chargé dans l'éditeur.",
+    pageOfTpl: "Page {P} sur {T}",
     emailDesktopHint: "PDF téléchargé. Veuillez le joindre à l'e-mail qui vient de s'ouvrir.",
     ownerUnlockedMsg: "Mode Propriétaire Activé.",
     pdfViralFooter: "Document Officiel généré avec Mr. Invoice Pro - Créez vos Devis, Factures et Contrats sur : mrinvoicepro.com",
@@ -1621,16 +1760,19 @@ const I18N = {
     sampleBtn: "Podgląd na Żywo i Wzór PDF", sec1: "Dane Stron i Numeracja",
     compPh: "Firma Budowlano-Remontowa Sp. z o.o.", phonePh: "+48 600 000 000",
     docNum: "Numer Dokumentu (#)", phone: "Telefon / NIP / Licencja",
+    issueDate: "Data Wystawienia", dueDate: "Ważny Do / Termin Płatności (Opcj.)", dueShort: "Termin",
     clientPh: "Nazwa - Adres - Telefon", logo: "Wgraj Logo Swojej Firmy (Opcjonalnie)",
     sec2: "Opis, Towary, Wymiary lub Usługi", addLine: "Dodaj Kolejną Pozycję",
     sec3: "Podatki, Podpisy, Warunki i Wysyłka PDF", disc: "Rabat", subtotalLbl: "SUMA CZĘŚCIOWA",
-    tax: "Podatek / VAT", dep: "Zaliczka / Wpłacono",
+    tax: "Podatek / VAT", ret: "Kaucja / Potrącenie (Opcjonalnie)", retRowLbl: "KAUCJA / POTRĄCENIE",
+    dep: "Zaliczka / Wpłacono",
     notes: "Uwagi, Gwarancja lub Warunki Szczególne", attach: "Załącz Zdjęcie, Dowód lub Dokument na 2. Stronie",
     attachChk: "Dołącz obraz na 2. stronie pliku PDF", page2PreviewLbl: "Załączona 2. Strona w PDF",
-    balLbl: "DO ZAPŁATY:", settledLbl: "CAŁKOWITA KWOTA:",
+    balLbl: "DO ZAPŁATY:", settledLbl: "CAŁKOWITA KWOTA:", recHeadlineLbl: "OTRZYMANA KWOTA:",
     histTitle: "Historia Opłaconych Dokumentów", histClear: "Usuń",
     histSearch: "Szukaj klienta, numeru lub daty...", openBtn: "Otwórz", pdfBtn: "PDF", toInvBtn: "→ Faktura", toRecBtn: "→ Pokwitowanie",
-    qty: "Ilość", price: "Cena Jednostkowa", itemLbl: "Pozycja #", descPh: "Szczegółowy opis (np. Pojazd/VIN, Nieruchomość, Usługi lub Materiały)...",
+    qty: "Ilość", price: "Cena Jednostkowa", qtyShort: "Ilość", unitPriceShort: "Cena Jedn.", totalColShort: "Kwota",
+    itemLbl: "Pozycja #", descPh: "Szczegółowy opis (np. Pojazd/VIN, Nieruchomość, Usługi lub Materiały)...",
     waPaid: "Wyślij Oficjalny PDF przez WhatsApp / Udostępnij", emailPaid: "Wyślij Oficjalny PDF przez E-mail", dlPaid: "Pobierz / Zapisz PDF na Telefonie",
     waLock: "Odblokuj Oficjalny PDF Bez Znaku Wodnego ($1.99)",
     proPassBtn: "Pakiet Pro Bez Limitu • White-Label ($9.99/mies.)",
@@ -1640,12 +1782,20 @@ const I18N = {
     noteLock: "Szybka płatność Apple Pay, Google Pay lub Kartą • Z logo i podpisem",
     restoreLink: "Już zapłaciłeś lub zainstalowałeś aplikację? Przywróć Zakup / Pro",
     restTitle: "Przywróć Zakup lub Pakiet Pro",
-    restMsg: "Wklej identyfikator płatności Stripe z wiadomości e-mail (np. cs_live_... lub sub_...):",
-    restCancel: "Zamknij", restOk: "Aktywuj", restSuccess: "Zakup zweryfikowany i przywrócony.", restInvalid: "Wprowadź poprawny kod potwierdzenia Stripe.",
+    restMsg: "Wpisz adres e-mail użyty podczas płatności w Stripe, aby zweryfikować i przywrócić dostęp:",
+    restPh: "email@przyklad.pl",
+    restCancel: "Zamknij", restOk: "Weryfikuj", restChecking: "Weryfikacja...",
+    restSuccess: "Zakup zweryfikowany i przywrócony.",
+    restInvalid: "Nie udało się zweryfikować aktywnego zakupu dla tego adresu e-mail.",
     sigModalSub: "Podpisz palcem w polu poniżej", sigBtnSign: "Podpisz", sigReady: "Podpisano ✓", sigSavedHint: "Opcjonalnie (Zapisany)", sigClientHint: "Podpis na ekranie",
     sigCancel: "Anuluj", sigClear: "Wyczyść", sigSave: "Zapisz Podpis",
     pdfEngineErr: "Nie udało się załadować generatora PDF. Sprawdź połączenie.",
     convertedToast: "Skopiowano do nowego dokumentu.",
+    newDraftAutoToast: "Wykryto nowego klienta lub szablon: utworzono nowy szkic.",
+    useSampleBtn: "Wczytaj Wzór do Edytora",
+    backToLiveBtn: "Zobacz Mój Dokument",
+    sampleLoadedToast: "Wzór wczytany do edytora.",
+    pageOfTpl: "Strona {P} z {T}",
     emailDesktopHint: "Plik PDF pobrany. Załącz go do otwartej wiadomości e-mail.",
     ownerUnlockedMsg: "Tryb Właściciela Aktywny.",
     pdfViralFooter: "Oficjalny dokument wygenerowany w Mr. Invoice Pro - Tworz kosztorysy, faktury i umowy na: mrinvoicepro.com",
@@ -1689,16 +1839,19 @@ const I18N = {
     sampleBtn: "Prévia ao Vivo e Exemplo Oficial", sec1: "Dados das Partes e Numeração",
     compPh: "Construtora & Reformas Pro Ltda", phonePh: "(11) 99000-0000",
     docNum: "Número do Documento (#)", phone: "Telefone / CNPJ / CPF / ID",
+    issueDate: "Data de Emissão", dueDate: "Válido Até / Vencimento (Opcional)", dueShort: "Venc.",
     clientPh: "Nome - Endereço - Telefone", logo: "Envie o Logotipo da sua Empresa (Opcional)",
     sec2: "Descrição, Bens, Medidas ou Serviços", addLine: "Adicionar Outra Linha / Item",
     sec3: "Impostos, Assinaturas, Condições e Envio PDF", disc: "Desconto", subtotalLbl: "SUBTOTAL",
-    tax: "Impostos / Taxas", dep: "Sinal / Pago",
+    tax: "Impostos / Taxas", ret: "Retenção / Caução (Opcional)", retRowLbl: "RETENÇÃO",
+    dep: "Sinal / Pago",
     notes: "Observações, Garantia ou Condições Especiais", attach: "Anexar Foto, RG/CNH ou Doc na 2ª Página",
     attachChk: "Incluir imagem na 2ª página do PDF", page2PreviewLbl: "2ª Página Anexada no PDF",
-    balLbl: "SALDO PENDENTE:", settledLbl: "TOTAL QUITADO:",
+    balLbl: "SALDO PENDENTE:", settledLbl: "TOTAL QUITADO:", recHeadlineLbl: "VALOR RECEBIDO:",
     histTitle: "Histórico de Documentos Pagos", histClear: "Limpar",
     histSearch: "Buscar por cliente, nº do doc ou data...", openBtn: "Abrir", pdfBtn: "PDF", toInvBtn: "→ Fatura", toRecBtn: "→ Recibo",
-    qty: "Quantidade", price: "Preço Unitário", itemLbl: "Item #", descPh: "Descrição detalhada (ex. Veículo/Chassi, Imóvel, Serviços ou Materiais)...",
+    qty: "Quantidade", price: "Preço Unitário", qtyShort: "Qtd.", unitPriceShort: "P. Unit.", totalColShort: "Total",
+    itemLbl: "Item #", descPh: "Descrição detalhada (ex. Veículo/Chassi, Imóvel, Serviços ou Materiais)...",
     waPaid: "Enviar PDF Oficial pelo WhatsApp / Compartilhar", emailPaid: "Enviar PDF Oficial por E-mail", dlPaid: "Baixar / Salvar PDF no Celular",
     waLock: "Desbloquear PDF Oficial Sem Marca d'Água ($1.99)",
     proPassBtn: "Passe Pro Ilimitado • PDF Marca Branca ($9.99/mês)",
@@ -1708,12 +1861,20 @@ const I18N = {
     noteLock: "Pagamento rápido com Apple Pay, Google Pay ou Cartão • Inclui logo e assinatura",
     restoreLink: "Já pagou ou instalou o App? Recuperar Compra / Passe Pro",
     restTitle: "Recuperar Compra ou Passe Pro",
-    restMsg: "Se instalou o App na tela inicial ou trocou de navegador, cole o ID do recibo Stripe (ex. cs_live_... ou sub_...):",
-    restCancel: "Fechar", restOk: "Ativar", restSuccess: "Compra verificada e restaurada!", restInvalid: "Insira um código de recibo válido da Stripe.",
+    restMsg: "Insira o e-mail utilizado no pagamento na Stripe para verificar e restaurar seu acesso:",
+    restPh: "email@exemplo.com",
+    restCancel: "Fechar", restOk: "Verificar", restChecking: "Verificando...",
+    restSuccess: "Compra verificada e restaurada!",
+    restInvalid: "Não foi possível verificar uma compra ativa com esse e-mail.",
     sigModalSub: "Assine com o dedo dentro do quadro", sigBtnSign: "Assinar", sigReady: "Assinado ✓", sigSavedHint: "Opcional (Salva auto.)", sigClientHint: "Assinar na tela",
     sigCancel: "Cancelar", sigClear: "Limpar", sigSave: "Salvar Assinatura",
     pdfEngineErr: "Não foi possível carregar o motor PDF. Verifique sua conexão.",
     convertedToast: "Dados copiados para um novo rascunho.",
+    newDraftAutoToast: "Novo cliente ou modelo detectado: novo rascunho iniciado.",
+    useSampleBtn: "Carregar Exemplo no Editor",
+    backToLiveBtn: "Ver Meu Documento",
+    sampleLoadedToast: "Exemplo carregado no editor.",
+    pageOfTpl: "Pág. {P} de {T}",
     emailDesktopHint: "PDF baixado no seu dispositivo. Anexe-o ao e-mail que acabou de abrir.",
     ownerUnlockedMsg: "Modo Proprietário Ativado.",
     pdfViralFooter: "Documento Oficial gerado com Mr. Invoice Pro - Crie Orçamentos, Faturas e Contratos em: mrinvoicepro.com",
@@ -1735,7 +1896,6 @@ const I18N = {
     }
   }
 };
-
 const SAMPLES_I18N = {
   es: {
     quote: {
@@ -2047,57 +2207,103 @@ function getLocalizedSampleData(activeType) {
   const raw = langPack[activeType] || fallbackPack[activeType] || SAMPLES_I18N.en.quote;
   const mult = (CURRENCIES[currentCurr] && CURRENCIES[currentCurr].sampleMult) || 1;
   return {
-    comp: raw.comp, phone: raw.phone, docNum: raw.docNum, date: raw.date, client: raw.client,
-    rows: raw.rows.map(r => [r[0], r[1], roundMoney((Number(r[2]) || 0) * mult)]),
+    comp: raw.comp, phone: raw.phone, docNum: raw.docNum, date: raw.date, dueDate: '', client: raw.client,
+    rows: raw.rows.map(r => {
+      const unitAmt = roundMoney((Number(r[2]) || 0) * mult);
+      return [r[0], r[1], 1, unitAmt, unitAmt];
+    }),
+    hasMultiQty: false,
     disc: 0, discLabelExtra: '',
-    tax: roundMoney((Number(raw.tax) || 0) * mult),
+    tax: roundMoney((Number(raw.tax) || 0) * mult), taxLabelExtra: '',
+    ret: 0, retLabelExtra: '',
     dep: roundMoney((Number(raw.dep) || 0) * mult),
-    notes: raw.notes, taxLabelExtra: ''
+    notes: raw.notes
   };
 }
+
+function loadSampleDataIntoBuilder() {
+  const L = I18N[currentLang] || I18N.es;
+  const activeType = document.getElementById('qb-doctype')?.value || 'quote';
+  const sample = getLocalizedSampleData(activeType);
+
+  loadedRecordDate = '';
+  currentDraftId = createNewDraftId();
+
+  const compEl = document.getElementById('qb-comp');
+  const phoneEl = document.getElementById('qb-phone');
+  if (compEl && !compEl.value.trim()) compEl.value = sample.comp;
+  if (phoneEl && !phoneEl.value.trim()) phoneEl.value = sample.phone;
+
+  const clientEl = document.getElementById('qb-client');
+  if (clientEl) clientEl.value = sample.client;
+
+  const dateEl = document.getElementById('qb-date');
+  if (dateEl && !dateEl.value) dateEl.value = getTodayIsoDate();
+
+  customLineItems = sample.rows.map(r => ({
+    desc: String(r[0] || '').replace(/^\d+\.\s*/, '') + (r[1] ? ' — ' + r[1] : ''),
+    qty: '1',
+    price: String(r[4] || 0)
+  }));
+
+  const discEl = document.getElementById('qb-disc'); if (discEl) discEl.value = '0';
+  const retEl = document.getElementById('qb-ret'); if (retEl) retEl.value = '0';
+  const taxModeEl = document.getElementById('qb-tax-mode'); if (taxModeEl) taxModeEl.value = 'amt';
+  const taxEl = document.getElementById('qb-tax'); if (taxEl) taxEl.value = String(sample.tax || 0);
+  const depEl = document.getElementById('qb-dep'); if (depEl) depEl.value = String(sample.dep || 0);
+  const notesEl = document.getElementById('qb-notes'); if (notesEl) notesEl.value = sample.notes || '';
+
+  dismissModalCleanly();
+  renderCustomLines();
+  recalcMasterTotals();
+  updatePayButtonState();
+  persistDraftSilently(false);
+  showExecutiveToast(L.sampleLoadedToast, 3400);
+}
+
 const urlParams = new URLSearchParams(window.location.search);
 
 function createNewDraftId() {
   return 'dr_' + Date.now().toString(36) + '_' + Math.random().toString(36).substring(2, 7);
 }
 
-let currentDraftId = localStorage.getItem('mcp_current_draft_id') || createNewDraftId();
-try { localStorage.setItem('mcp_current_draft_id', currentDraftId); } catch (e) {}
+let currentDraftId = safeGetStorage('mcp_current_draft_id') || createNewDraftId();
+safeSetStorage('mcp_current_draft_id', currentDraftId);
 
 (function processStripeReturnParams() {
   const stripeSid = (urlParams.get('sid') || urlParams.get('session_id') || '').trim();
   const hasValidStripeSid = /^(cs_(live|test)_[a-zA-Z0-9]{16,}|(pi|sub|in)_[a-zA-Z0-9]{14,})$/.test(stripeSid);
-  const intent = localStorage.getItem('mcp_pending_stripe_intent') || '';
-  const intentTs = parseInt(localStorage.getItem('mcp_pending_stripe_ts') || '0', 10) || 0;
+  const intent = safeGetStorage('mcp_pending_stripe_intent', '');
+  const intentTs = parseInt(safeGetStorage('mcp_pending_stripe_ts', '0'), 10) || 0;
   const elapsedMs = Date.now() - intentTs;
-  const timingPlausible = intentTs > 0 && elapsedMs >= 4000 && elapsedMs <= 30 * 60 * 1000;
+  const timingPlausible = intentTs > 0 && elapsedMs >= 4000 && elapsedMs <= 45 * 60 * 1000;
 
   const rawSingleParam = urlParams.get('paid') === 'true' || urlParams.get('checkout_ok') === '1';
   const rawProParam = urlParams.get('pro') === 'true' || urlParams.get('pro_ok') === '1';
 
   if (rawProParam && (hasValidStripeSid || (intent === 'pro' && timingPlausible))) {
-    localStorage.setItem('mcp_pro_pass_active', 'true');
-    if (stripeSid) localStorage.setItem('mcp_last_credited_sid', stripeSid);
-    localStorage.removeItem('mcp_pending_stripe_intent');
-    localStorage.removeItem('mcp_pending_stripe_ts');
+    safeSetStorage('mcp_pro_pass_active', 'true');
+    if (stripeSid) safeSetStorage('mcp_last_credited_sid', stripeSid);
+    safeRemoveStorage('mcp_pending_stripe_intent');
+    safeRemoveStorage('mcp_pending_stripe_ts');
   } else if (rawSingleParam && (hasValidStripeSid || (intent === 'single' && timingPlausible))) {
-    const lastSid = localStorage.getItem('mcp_last_credited_sid') || '';
+    const lastSid = safeGetStorage('mcp_last_credited_sid', '');
     if (!stripeSid || stripeSid !== lastSid) {
-      const prevCredits = Math.max(0, parseInt(localStorage.getItem('mcp_paid_credits') || '0', 10) || 0);
-      localStorage.setItem('mcp_paid_credits', String(prevCredits + 1));
-      if (stripeSid) localStorage.setItem('mcp_last_credited_sid', stripeSid);
+      const prevCredits = Math.max(0, parseInt(safeGetStorage('mcp_paid_credits', '0'), 10) || 0);
+      safeSetStorage('mcp_paid_credits', String(prevCredits + 1));
+      if (stripeSid) safeSetStorage('mcp_last_credited_sid', stripeSid);
     }
-    localStorage.removeItem('mcp_pending_stripe_intent');
-    localStorage.removeItem('mcp_pending_stripe_ts');
+    safeRemoveStorage('mcp_pending_stripe_intent');
+    safeRemoveStorage('mcp_pending_stripe_ts');
   }
 
   const urlType = urlParams.get('type') || urlParams.get('doc');
   if (urlType && I18N.es.types[urlType]) {
-    try { localStorage.setItem('mcp_active_doctype', urlType); } catch (e) {}
+    safeSetStorage('mcp_active_doctype', urlType);
   }
   const urlLang = urlParams.get('lang');
   if (urlLang && I18N[urlLang]) {
-    try { localStorage.setItem('mcp_lang', urlLang); } catch (e) {}
+    safeSetStorage('mcp_lang', urlLang);
   }
 
   if (rawSingleParam || rawProParam || stripeSid) {
@@ -2105,9 +2311,9 @@ try { localStorage.setItem('mcp_current_draft_id', currentDraftId); } catch (e) 
   }
 })();
 
-let currentLang = localStorage.getItem('mcp_lang') || 'es';
+let currentLang = safeGetStorage('mcp_lang', 'es');
 if (!I18N[currentLang]) currentLang = 'es';
-let currentCurr = localStorage.getItem('mcp_currency') || 'USD';
+let currentCurr = safeGetStorage('mcp_currency', 'USD');
 if (!CURRENCIES[currentCurr]) currentCurr = 'USD';
 
 let uploadedLogoData = '';
@@ -2121,31 +2327,128 @@ let autoSaveTimer = null;
 let pendingBizSave = false;
 let loadedRecordDate = '';
 
+function normalizeIdentityText(str) {
+  const raw = String(str || '').toLowerCase();
+  const deaccented = raw.normalize ? raw.normalize('NFD').replace(/[\u0300-\u036f]/g, '') : raw;
+  return deaccented.replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function isSameClientIdentity(lockedNorm, currentRaw) {
+  const curNorm = normalizeIdentityText(currentRaw);
+  if (!lockedNorm) return true;
+  if (!curNorm) return false;
+  if (lockedNorm === curNorm) return true;
+  if (curNorm.includes(lockedNorm) || lockedNorm.includes(curNorm)) return true;
+
+  const lockWords = lockedNorm.split(' ').filter(w => w.length >= 3);
+  const curWords = curNorm.split(' ').filter(w => w.length >= 3);
+  if (lockWords.length === 0 || curWords.length === 0) {
+    return lockedNorm.slice(0, 4) === curNorm.slice(0, 4);
+  }
+  for (let i = 0; i < lockWords.length; i++) {
+    for (let j = 0; j < curWords.length; j++) {
+      if (lockWords[i] === curWords[j]) return true;
+      if (lockWords[i].length >= 4 && curWords[j].length >= 4 && lockWords[i].slice(0, 4) === curWords[j].slice(0, 4)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+function getDraftLocksMap() {
+  try {
+    const map = JSON.parse(safeGetStorage('mcp_unlocked_draft_locks', '{}'));
+    return (map && typeof map === 'object' && !Array.isArray(map)) ? map : {};
+  } catch (e) { return {}; }
+}
+
+function saveDraftLocksMap(mapObj) {
+  const keys = Object.keys(mapObj);
+  if (keys.length > 150) {
+    keys.sort((a, b) => (mapObj[b]?.ts || 0) - (mapObj[a]?.ts || 0));
+    const trimmed = {};
+    keys.slice(0, 150).forEach(k => { trimmed[k] = mapObj[k]; });
+    safeSetStorage('mcp_unlocked_draft_locks', JSON.stringify(trimmed));
+    return;
+  }
+  safeSetStorage('mcp_unlocked_draft_locks', JSON.stringify(mapObj));
+}
+
 function getUnlockedDraftIds() {
   try {
-    const arr = JSON.parse(localStorage.getItem('mcp_unlocked_draft_ids') || '[]');
+    const arr = JSON.parse(safeGetStorage('mcp_unlocked_draft_ids', '[]'));
     return Array.isArray(arr) ? arr : [];
   } catch (e) { return []; }
 }
 
+function matchesDraftLock(lockEntry) {
+  if (!lockEntry) return false;
+  const curDocType = document.getElementById('qb-doctype')?.value || 'quote';
+  if (lockEntry.docType && curDocType !== lockEntry.docType) return false;
+
+  const curClient = (document.getElementById('qb-client')?.value || '').trim();
+  if (!isSameClientIdentity(lockEntry.clientNorm, curClient)) return false;
+
+  const curDocNum = (document.getElementById('qb-docnum')?.value || '').trim();
+  if (lockEntry.docNum && curDocNum && curDocNum !== lockEntry.docNum) {
+    const withinGraceWindow = (Date.now() - (lockEntry.ts || 0)) < 30 * 60 * 1000;
+    if (!withinGraceWindow) return false;
+  }
+  return true;
+}
+
 function isCurrentDocUnlocked() {
-  return getUnlockedDraftIds().includes(currentDraftId);
+  const locks = getDraftLocksMap();
+  if (locks[currentDraftId]) {
+    return matchesDraftLock(locks[currentDraftId]);
+  }
+  if (getUnlockedDraftIds().includes(currentDraftId)) {
+    markCurrentDocUnlocked();
+    return true;
+  }
+  return false;
 }
 
 function markCurrentDocUnlocked() {
   const list = getUnlockedDraftIds().filter(id => id !== currentDraftId);
   list.unshift(currentDraftId);
   if (list.length > 150) list.length = 150;
-  try { localStorage.setItem('mcp_unlocked_draft_ids', JSON.stringify(list)); } catch (e) {}
+  safeSetStorage('mcp_unlocked_draft_ids', JSON.stringify(list));
+
+  const locks = getDraftLocksMap();
+  const prevLock = locks[currentDraftId];
+  const curDocType = document.getElementById('qb-doctype')?.value || 'quote';
+  const curClientNorm = normalizeIdentityText(document.getElementById('qb-client')?.value || '');
+  const curDocNum = (document.getElementById('qb-docnum')?.value || '').trim();
+
+  locks[currentDraftId] = {
+    docType: prevLock?.docType || curDocType,
+    clientNorm: prevLock?.clientNorm || curClientNorm,
+    docNum: prevLock?.docNum || curDocNum,
+    ts: prevLock?.ts || Date.now()
+  };
+  saveDraftLocksMap(locks);
+}
+
+function ensureDistinctDraftForNewDocument() {
+  const locks = getDraftLocksMap();
+  const existingLock = locks[currentDraftId];
+  if (existingLock && !matchesDraftLock(existingLock)) {
+    currentDraftId = createNewDraftId();
+    safeSetStorage('mcp_current_draft_id', currentDraftId);
+    return true;
+  }
+  return false;
 }
 
 function getPaidCreditsCount() {
-  return Math.max(0, parseInt(localStorage.getItem('mcp_paid_credits') || '0', 10) || 0);
+  return Math.max(0, parseInt(safeGetStorage('mcp_paid_credits', '0'), 10) || 0);
 }
 
 function hasUnlimitedAccess() {
-  return localStorage.getItem('mcp_pro_pass_active') === 'true' ||
-         localStorage.getItem('mcp_owner_device_unlocked') === 'true';
+  return safeGetStorage('mcp_pro_pass_active') === 'true' ||
+         safeGetStorage('mcp_owner_device_unlocked') === 'true';
 }
 
 function checkIsPaidUser() {
@@ -2153,10 +2456,11 @@ function checkIsPaidUser() {
 }
 
 function claimSingleCreditForCurrentDoc() {
+  ensureDistinctDraftForNewDocument();
   if (hasUnlimitedAccess() || isCurrentDocUnlocked()) return true;
   const credits = getPaidCreditsCount();
   if (credits > 0) {
-    localStorage.setItem('mcp_paid_credits', String(credits - 1));
+    safeSetStorage('mcp_paid_credits', String(credits - 1));
     markCurrentDocUnlocked();
     isPaidUser = checkIsPaidUser();
     return true;
@@ -2243,7 +2547,7 @@ window.addEventListener('popstate', function(e) {
     const prevDoc = docHistoryStack[docHistoryStack.length - 1];
     const inp = document.getElementById('qb-doctype');
     if (inp) inp.value = prevDoc;
-    try { localStorage.setItem('mcp_active_doctype', prevDoc); } catch (err) {}
+    safeSetStorage('mcp_active_doctype', prevDoc);
     syncActiveDocTypeUI();
     recalcMasterTotals();
     updatePayButtonState();
@@ -2301,9 +2605,9 @@ function persistDraftSilently(shouldUpdateBizProfile) {
     const compVal = (document.getElementById('qb-comp')?.value || '').trim();
     const phoneVal = (document.getElementById('qb-phone')?.value || '').trim();
     let existingBiz = null;
-    try { existingBiz = JSON.parse(localStorage.getItem('mcp_biz_profile') || 'null'); } catch (e) {}
+    try { existingBiz = JSON.parse(safeGetStorage('mcp_biz_profile', 'null')); } catch (e) {}
     if (docType !== 'billsale' || !existingBiz || !existingBiz.comp) {
-      try { localStorage.setItem('mcp_biz_profile', JSON.stringify({ comp: compVal, phone: phoneVal })); } catch (e) {}
+      safeSetStorage('mcp_biz_profile', JSON.stringify({ comp: compVal, phone: phoneVal }));
     }
   }
 
@@ -2314,9 +2618,9 @@ function persistDraftSilently(shouldUpdateBizProfile) {
     else if (el.type !== 'file') inputs[el.id] = el.value;
   });
 
-  try { localStorage.setItem('mcp_current_draft_id', currentDraftId); } catch (e) {}
-  try { localStorage.setItem('mcp_custom_lines', JSON.stringify(customLineItems)); } catch (e) {}
-  try { localStorage.setItem('mcp_checkout_state', JSON.stringify({ lang: currentLang, curr: currentCurr, inputs: inputs })); } catch (e) {}
+  safeSetStorage('mcp_current_draft_id', currentDraftId);
+  safeSetStorage('mcp_custom_lines', JSON.stringify(customLineItems));
+  safeSetStorage('mcp_checkout_state', JSON.stringify({ lang: currentLang, curr: currentCurr, inputs: inputs }));
 }
 
 function onBuilderUserEdit(isBizField) {
@@ -2330,9 +2634,9 @@ function rememberRecentClient(clientStr) {
   const clean = String(clientStr || '').trim();
   if (clean.length < 3) return;
   let list = [];
-  try { list = JSON.parse(localStorage.getItem('mcp_recent_clients') || '[]'); } catch (e) {}
+  try { list = JSON.parse(safeGetStorage('mcp_recent_clients', '[]')); } catch (e) {}
   list = [clean, ...list.filter(c => c.toLowerCase() !== clean.toLowerCase())].slice(0, 20);
-  try { localStorage.setItem('mcp_recent_clients', JSON.stringify(list)); } catch (e) {}
+  safeSetStorage('mcp_recent_clients', JSON.stringify(list));
   renderRecentClientsDatalist();
 }
 
@@ -2340,7 +2644,7 @@ function renderRecentClientsDatalist() {
   const dl = document.getElementById('recentClientsDatalist');
   if (!dl) return;
   let list = [];
-  try { list = JSON.parse(localStorage.getItem('mcp_recent_clients') || '[]'); } catch (e) {}
+  try { list = JSON.parse(safeGetStorage('mcp_recent_clients', '[]')); } catch (e) {}
   dl.innerHTML = list.map(c => '<option value="' + escapeHtml(c) + '"></option>').join('');
 }
 
@@ -2396,33 +2700,61 @@ async function verifyAndRestorePurchase() {
     return;
   }
 
-  const isSubCode = /^(sub|in)_[a-zA-Z0-9]{14,}$/.test(raw);
-  const isSingleCode = /^(pi|ch|py)_[a-zA-Z0-9]{14,}$/.test(raw) || /^cs_(live|test)_[a-zA-Z0-9]{20,}$/.test(raw);
-
-  if (!isSubCode && !isSingleCode) {
+  const isEmail = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(raw);
+  const isCheckoutSession = /^cs_(live|test)_[a-zA-Z0-9]{24,}$/.test(raw);
+  if (!isEmail && !isCheckoutSession) {
     showExecutiveToast(L.restInvalid, 3800);
     return;
   }
 
-  let usedCodes = [];
-  try { usedCodes = JSON.parse(localStorage.getItem('mcp_restored_codes') || '[]'); } catch (e) {}
-
-  if (isSubCode) {
-    localStorage.setItem('mcp_pro_pass_active', 'true');
-  } else if (!usedCodes.includes(raw)) {
-    usedCodes.push(raw);
-    try { localStorage.setItem('mcp_restored_codes', JSON.stringify(usedCodes)); } catch (e) {}
-    const prev = getPaidCreditsCount();
-    localStorage.setItem('mcp_paid_credits', String(prev + 1));
+  const okBtn = document.getElementById('ui-rest-ok');
+  const prevBtnTxt = okBtn ? okBtn.innerText : L.restOk;
+  if (okBtn) {
+    okBtn.disabled = true;
+    okBtn.innerText = L.restChecking || '...';
   }
 
-  isPaidUser = checkIsPaidUser();
-  updatePayButtonState();
-  syncLockVisualState();
-  dismissModalCleanly();
-  showExecutiveToast(L.restSuccess, 4000);
-}
+  try {
+    const resp = await fetch(STRIPE_VERIFY_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: raw.toLowerCase() })
+    });
 
+    if (!resp.ok) throw new Error('VERIFY_FAILED');
+    const data = await resp.json();
+    if (!data || !data.ok) throw new Error('NOT_FOUND');
+
+    let usedTokens = [];
+    try { usedTokens = JSON.parse(safeGetStorage('mcp_restored_codes', '[]')); } catch (e) {}
+
+    if (data.plan === 'pro') {
+      safeSetStorage('mcp_pro_pass_active', 'true');
+    } else if (data.plan === 'single' && data.paymentId) {
+      if (!usedTokens.includes(data.paymentId)) {
+        usedTokens.push(data.paymentId);
+        safeSetStorage('mcp_restored_codes', JSON.stringify(usedTokens));
+        const prev = getPaidCreditsCount();
+        safeSetStorage('mcp_paid_credits', String(prev + (Number(data.credits) || 1)));
+      }
+    } else {
+      throw new Error('NO_ACTIVE_ENTITLEMENT');
+    }
+
+    isPaidUser = checkIsPaidUser();
+    updatePayButtonState();
+    syncLockVisualState();
+    dismissModalCleanly();
+    showExecutiveToast(L.restSuccess, 4000);
+  } catch (err) {
+    showExecutiveToast(L.restInvalid, 4200);
+  } finally {
+    if (okBtn) {
+      okBtn.disabled = false;
+      okBtn.innerText = prevBtnTxt;
+    }
+  }
+}
 let activeSigRole = 'client';
 let sigIsDrawing = false;
 let sigHasStrokes = false;
@@ -2521,10 +2853,10 @@ function saveSigPadCanvas() {
   const dataUrl = canvas.toDataURL('image/png');
   if (activeSigRole === 'issuer') {
     savedIssuerSig = dataUrl;
-    try { localStorage.setItem('mcp_issuer_sig', savedIssuerSig); } catch (e) {}
+    safeSetStorage('mcp_issuer_sig', savedIssuerSig);
   } else {
     clientSigData = dataUrl;
-    try { localStorage.setItem('mcp_client_sig', clientSigData); } catch (e) {}
+    safeSetStorage('mcp_client_sig', clientSigData);
   }
   syncSignatureCardsUI();
   scheduleAutoSave(false);
@@ -2534,10 +2866,10 @@ function saveSigPadCanvas() {
 function removeSavedSignature(role) {
   if (role === 'issuer') {
     savedIssuerSig = '';
-    localStorage.removeItem('mcp_issuer_sig');
+    safeRemoveStorage('mcp_issuer_sig');
   } else {
     clientSigData = '';
-    localStorage.removeItem('mcp_client_sig');
+    safeRemoveStorage('mcp_client_sig');
   }
   syncSignatureCardsUI();
   scheduleAutoSave(false);
@@ -2573,65 +2905,82 @@ function syncSignatureCardsUI() {
 }
 
 function removeBlackBoxFromBrandIcons() {
-  if (cleanMascotLogoDataUrl) {
+  const cachedClean = cleanMascotLogoDataUrl || safeGetStorage('mcp_clean_mascot_v18', '');
+  if (cachedClean) {
+    cleanMascotLogoDataUrl = cachedClean;
     document.querySelectorAll('.brand-mascot-img').forEach(im => { im.src = cleanMascotLogoDataUrl; });
     return;
   }
+
   const firstImg = document.querySelector('.brand-mascot-img');
   const srcToLoad = firstImg ? firstImg.getAttribute('src') : '1793842789444.jpg';
-  const probe = new Image();
-  probe.crossOrigin = 'anonymous';
-  probe.onload = function() {
-    try {
-      const w = probe.naturalWidth, h = probe.naturalHeight;
-      if (!w || !h) return;
-      const c = document.createElement('canvas');
-      c.width = w; c.height = h;
-      const ctx = c.getContext('2d');
-      ctx.drawImage(probe, 0, 0);
-      const imgData = ctx.getImageData(0, 0, w, h);
-      const d = imgData.data;
-      const visited = new Uint8Array(w * h);
-      const stack = [];
+  if (/\.(png|webp|svg)(\?.*)?$/i.test(srcToLoad)) {
+    cleanMascotLogoDataUrl = srcToLoad;
+    return;
+  }
 
-      function pushIfExteriorDark(x, y) {
-        if (x < 0 || y < 0 || x >= w || y >= h) return;
-        const idx = y * w + x;
-        if (visited[idx]) return;
-        const p = idx * 4;
-        if (Math.max(d[p], d[p + 1], d[p + 2]) < 46) {
-          visited[idx] = 1;
-          stack.push(idx);
-        }
-      }
-      for (let x = 0; x < w; x++) { pushIfExteriorDark(x, 0); pushIfExteriorDark(x, h - 1); }
-      for (let y = 0; y < h; y++) { pushIfExteriorDark(0, y); pushIfExteriorDark(w - 1, y); }
+  const runCleaner = function() {
+    const probe = new Image();
+    probe.crossOrigin = 'anonymous';
+    probe.onload = function() {
+      try {
+        const w = probe.naturalWidth, h = probe.naturalHeight;
+        if (!w || !h) return;
+        const c = document.createElement('canvas');
+        c.width = w; c.height = h;
+        const ctx = c.getContext('2d');
+        ctx.drawImage(probe, 0, 0);
+        const imgData = ctx.getImageData(0, 0, w, h);
+        const d = imgData.data;
+        const visited = new Uint8Array(w * h);
+        const stack = [];
 
-      while (stack.length > 0) {
-        const idx = stack.pop();
-        d[idx * 4 + 3] = 0;
-        const x = idx % w, y = (idx / w) | 0;
-        pushIfExteriorDark(x + 1, y); pushIfExteriorDark(x - 1, y);
-        pushIfExteriorDark(x, y + 1); pushIfExteriorDark(x, y - 1);
-      }
-
-      for (let y = 1; y < h - 1; y++) {
-        for (let x = 1; x < w - 1; x++) {
+        function pushIfExteriorDark(x, y) {
+          if (x < 0 || y < 0 || x >= w || y >= h) return;
           const idx = y * w + x;
-          if (visited[idx]) continue;
-          if (visited[idx - 1] || visited[idx + 1] || visited[idx - w] || visited[idx + w]) {
-            const p = idx * 4;
-            const lum = (d[p] + d[p + 1] + d[p + 2]) / 3;
-            if (lum < 85) d[p + 3] = Math.round((lum / 85) * 200);
+          if (visited[idx]) return;
+          const p = idx * 4;
+          if (Math.max(d[p], d[p + 1], d[p + 2]) < 46) {
+            visited[idx] = 1;
+            stack.push(idx);
           }
         }
-      }
-      ctx.putImageData(imgData, 0, 0);
-      cleanMascotLogoDataUrl = c.toDataURL('image/png');
-      document.querySelectorAll('.brand-mascot-img').forEach(im => { im.src = cleanMascotLogoDataUrl; });
-    } catch (e) {}
+        for (let x = 0; x < w; x++) { pushIfExteriorDark(x, 0); pushIfExteriorDark(x, h - 1); }
+        for (let y = 0; y < h; y++) { pushIfExteriorDark(0, y); pushIfExteriorDark(w - 1, y); }
+
+        while (stack.length > 0) {
+          const idx = stack.pop();
+          d[idx * 4 + 3] = 0;
+          const x = idx % w, y = (idx / w) | 0;
+          pushIfExteriorDark(x + 1, y); pushIfExteriorDark(x - 1, y);
+          pushIfExteriorDark(x, y + 1); pushIfExteriorDark(x, y - 1);
+        }
+
+        for (let y = 1; y < h - 1; y++) {
+          for (let x = 1; x < w - 1; x++) {
+            const idx = y * w + x;
+            if (visited[idx]) continue;
+            if (visited[idx - 1] || visited[idx + 1] || visited[idx - w] || visited[idx + w]) {
+              const p = idx * 4;
+              const lum = (d[p] + d[p + 1] + d[p + 2]) / 3;
+              if (lum < 85) d[p + 3] = Math.round((lum / 85) * 200);
+            }
+          }
+        }
+        ctx.putImageData(imgData, 0, 0);
+        cleanMascotLogoDataUrl = c.toDataURL('image/png');
+        safeSetStorage('mcp_clean_mascot_v18', cleanMascotLogoDataUrl);
+        document.querySelectorAll('.brand-mascot-img').forEach(im => { im.src = cleanMascotLogoDataUrl; });
+      } catch (e) {}
+    };
+    probe.src = srcToLoad;
   };
-  probe.src = srcToLoad;
+
+  if (window.requestIdleCallback) {
+    window.requestIdleCallback(runCleaner, { timeout: 600 });
+  } else {
+    setTimeout(runCleaner, 60);
+  }
 }
 
 function openSuiteDrawer() {
@@ -2643,7 +2992,7 @@ function selectDocTypeFromSuite(docKey) {
   const inp = document.getElementById('qb-doctype');
   const prevKey = inp ? inp.value : 'quote';
   if (inp) inp.value = docKey;
-  try { localStorage.setItem('mcp_active_doctype', docKey); } catch (e) {}
+  safeSetStorage('mcp_active_doctype', docKey);
 
   hideAllModalsDOM();
   if (!isCurrentDocUnlocked()) loadedRecordDate = '';
@@ -2716,7 +3065,7 @@ function isAppAlreadyInstalled() {
   if (window.matchMedia('(display-mode: fullscreen)').matches) return true;
   if (window.navigator.standalone === true) return true;
   if (document.referrer.includes('android-app://')) return true;
-  if (localStorage.getItem('mcp_pwa_installed') === 'true') return true;
+  if (safeGetStorage('mcp_pwa_installed') === 'true') return true;
   return false;
 }
 
@@ -2725,20 +3074,20 @@ function syncInstallButtonVisibility() {
   if (btn) btn.style.display = isAppAlreadyInstalled() ? 'none' : 'inline-flex';
 }
 window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; syncInstallButtonVisibility(); });
-window.addEventListener('appinstalled', () => { localStorage.setItem('mcp_pwa_installed', 'true'); deferredPrompt = null; syncInstallButtonVisibility(); });
+window.addEventListener('appinstalled', () => { safeSetStorage('mcp_pwa_installed', 'true'); deferredPrompt = null; syncInstallButtonVisibility(); });
 if (navigator.getInstalledRelatedApps) {
   navigator.getInstalledRelatedApps().then(apps => {
-    if (apps && apps.length > 0) { localStorage.setItem('mcp_pwa_installed', 'true'); syncInstallButtonVisibility(); }
+    if (apps && apps.length > 0) { safeSetStorage('mcp_pwa_installed', 'true'); syncInstallButtonVisibility(); }
   }).catch(() => {});
 }
 
-function markAppInstalledAndHide() { localStorage.setItem('mcp_pwa_installed', 'true'); dismissModalCleanly(); syncInstallButtonVisibility(); }
+function markAppInstalledAndHide() { safeSetStorage('mcp_pwa_installed', 'true'); dismissModalCleanly(); syncInstallButtonVisibility(); }
 function installPWA() {
   const L = I18N[currentLang] || I18N.es;
   if (deferredPrompt) {
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then((c) => {
-      if (c.outcome === 'accepted') { localStorage.setItem('mcp_pwa_installed', 'true'); syncInstallButtonVisibility(); }
+      if (c.outcome === 'accepted') { safeSetStorage('mcp_pwa_installed', 'true'); syncInstallButtonVisibility(); }
       deferredPrompt = null;
     });
     return;
@@ -2755,7 +3104,7 @@ function installPWA() {
 
 function activateOwnerSuccess() {
   const L = I18N[currentLang] || I18N.es;
-  localStorage.setItem('mcp_owner_device_unlocked', 'true');
+  safeSetStorage('mcp_owner_device_unlocked', 'true');
   isPaidUser = checkIsPaidUser();
   const docInput = document.getElementById('qb-docnum');
   if (docInput) docInput.value = '2026-0101';
@@ -2779,10 +3128,11 @@ async function checkSecretOwnerCode(val) {
 }
 
 function deactivateOwnerMode() {
-  localStorage.removeItem('mcp_owner_device_unlocked');
-  localStorage.removeItem('mcp_pro_pass_active');
-  localStorage.removeItem('mcp_paid_credits');
-  localStorage.removeItem('mcp_unlocked_draft_ids');
+  safeRemoveStorage('mcp_owner_device_unlocked');
+  safeRemoveStorage('mcp_pro_pass_active');
+  safeRemoveStorage('mcp_paid_credits');
+  safeRemoveStorage('mcp_unlocked_draft_ids');
+  safeRemoveStorage('mcp_unlocked_draft_locks');
   isPaidUser = checkIsPaidUser();
   syncLockVisualState();
   updatePayButtonState();
@@ -2814,7 +3164,7 @@ function getDocMeta(docType) {
 
 function changeLang(val) {
   currentLang = I18N[val] ? val : 'es';
-  localStorage.setItem('mcp_lang', currentLang);
+  safeSetStorage('mcp_lang', currentLang);
   applyLanguageUI();
   scheduleAutoSave(false);
   const modal = document.getElementById('docPreviewModal');
@@ -2826,10 +3176,11 @@ function changeLang(val) {
 
 function changeCurrency(val) {
   currentCurr = CURRENCIES[val] ? val : 'USD';
-  localStorage.setItem('mcp_currency', currentCurr);
+  safeSetStorage('mcp_currency', currentCurr);
   const sym = getCurrObj().sym;
   const optAmt = document.getElementById('qb-tax-opt-amt'); if (optAmt) optAmt.innerText = sym;
   const optDisc = document.getElementById('qb-disc-opt-amt'); if (optDisc) optDisc.innerText = sym;
+  const optRet = document.getElementById('qb-ret-opt-amt'); if (optRet) optRet.innerText = sym;
   const depLbl = document.getElementById('ui-lbl-dep');
   const L = I18N[currentLang] || I18N.es;
   if (depLbl) depLbl.innerText = L.dep + ' (' + sym + ')';
@@ -2853,12 +3204,14 @@ function applyLanguageUI() {
   const sym = getCurrObj().sym;
   const optAmt = document.getElementById('qb-tax-opt-amt'); if (optAmt) optAmt.innerText = sym;
   const optDisc = document.getElementById('qb-disc-opt-amt'); if (optDisc) optDisc.innerText = sym;
+  const optRet = document.getElementById('qb-ret-opt-amt'); if (optRet) optRet.innerText = sym;
 
   const mapTxt = {
     'ui-suite-title': L.suiteTitle, 'ui-back-hint': L.backHint,
     'ui-live-tab': L.liveTab, 'ui-install-btn': L.installBtn, 'ui-ios-sub': L.iosSub,
     'ui-ios-done': L.iosDone, 'ui-att-ok': L.attOk, 'ui-sub': L.sub, 'ui-lbl-docnum': L.docNum,
-    'lbl-phone': L.phone, 'ui-lbl-disc': L.disc, 'ui-lbl-tax': L.tax,
+    'lbl-phone': L.phone, 'ui-lbl-date': L.issueDate, 'ui-lbl-duedate': L.dueDate,
+    'ui-lbl-disc': L.disc, 'ui-lbl-tax': L.tax, 'ui-lbl-ret': L.ret,
     'ui-lbl-dep': L.dep + ' (' + sym + ')', 'ui-lbl-notes': L.notes,
     'ui-lbl-attach-chk': L.attachChk, 'ui-restore-link': L.restoreLink,
     'ui-rest-title': L.restTitle, 'ui-rest-msg': L.restMsg, 'ui-rest-cancel': L.restCancel, 'ui-rest-ok': L.restOk,
@@ -2866,6 +3219,9 @@ function applyLanguageUI() {
     'ui-btn-sign1': L.sigBtnSign, 'ui-btn-sign2': L.sigBtnSign
   };
   Object.keys(mapTxt).forEach(id => { const el = document.getElementById(id); if (el) el.innerText = mapTxt[id]; });
+
+  const restInp = document.getElementById('restoreCodeInput');
+  if (restInp && L.restPh) restInp.placeholder = L.restPh;
 
   const iosS1 = document.getElementById('ui-ios-s1'); if (iosS1) iosS1.innerHTML = L.iosS1;
   const iosS2 = document.getElementById('ui-ios-s2'); if (iosS2) iosS2.innerHTML = L.iosS2;
@@ -3006,29 +3362,29 @@ async function handleLogoUpload(input) {
   try {
     uploadedLogoData = await compressImageFile(file, 500, 0.86, true);
     showIdentifiedLogoPicture(uploadedLogoData);
-    try { localStorage.setItem('mcp_company_logo', uploadedLogoData); } catch (e) {}
+    safeSetStorage('mcp_company_logo', uploadedLogoData);
   } catch (err) {}
 }
 
 async function handleHwQuoteUpload(input) {
   const file = input.files && input.files[0]; if (!file) return;
   try {
-    uploadedHwQuoteImg = await compressImageFile(file, 1400, 0.76, false);
+    uploadedHwQuoteImg = await compressImageFile(file, 1200, 0.72, false);
     showIdentifiedHwPicture(uploadedHwQuoteImg);
     const chk = document.getElementById('qb-hw-print-attach'); if (chk) chk.checked = true;
-    try { localStorage.setItem('mcp_hw_quote_img', uploadedHwQuoteImg); } catch (e) {}
+    safeSetStorage('mcp_hw_quote_img', uploadedHwQuoteImg);
     scheduleAutoSave(false);
   } catch (err) {}
 }
 
 function clearLogoPicture() {
-  uploadedLogoData = ''; localStorage.removeItem('mcp_company_logo');
+  uploadedLogoData = ''; safeRemoveStorage('mcp_company_logo');
   const inp = document.getElementById('qb-logo-input'); if (inp) inp.value = '';
   const wrap = document.getElementById('logoIdentifiedBox'); if (wrap) wrap.style.display = 'none';
 }
 
 function clearHwAttachment() {
-  uploadedHwQuoteImg = ''; localStorage.removeItem('mcp_hw_quote_img');
+  uploadedHwQuoteImg = ''; safeRemoveStorage('mcp_hw_quote_img');
   const inp = document.getElementById('qb-hw-input'); if (inp) inp.value = '';
   const chk = document.getElementById('qb-hw-print-attach'); if (chk) chk.checked = false;
   const wrap = document.getElementById('hwIdentifiedBox'); if (wrap) wrap.style.display = 'none';
@@ -3043,7 +3399,7 @@ function resetBuilderToZero() {
   removeSavedSignature('client');
 
   try {
-    const biz = JSON.parse(localStorage.getItem('mcp_biz_profile') || 'null');
+    const biz = JSON.parse(safeGetStorage('mcp_biz_profile', 'null'));
     if (biz) {
       const compEl = document.getElementById('qb-comp');
       const phoneEl = document.getElementById('qb-phone');
@@ -3052,8 +3408,10 @@ function resetBuilderToZero() {
     }
   } catch (e) {}
 
-  ['qb-disc', 'qb-tax', 'qb-dep'].forEach(id => { const el = document.getElementById(id); if (el) el.value = '0'; });
-  ['qb-client', 'qb-notes'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  ['qb-disc', 'qb-tax', 'qb-ret', 'qb-dep'].forEach(id => { const el = document.getElementById(id); if (el) el.value = '0'; });
+  ['qb-client', 'qb-notes', 'qb-duedate'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  const dateEl = document.getElementById('qb-date');
+  if (dateEl) dateEl.value = getTodayIsoDate();
 
   const docEl = document.getElementById('qb-docnum');
   if (docEl) docEl.value = incrementDocNumberString(docEl.value);
@@ -3063,14 +3421,18 @@ function resetBuilderToZero() {
   updatePayButtonState();
   persistDraftSilently(false);
 }
+
 function computeTotalsSnapshot() {
   syncCustomLinesFromDOM();
   let subtotal = 0;
+  let hasMultiQty = false;
   const lineSubtotals = [];
+
   customLineItems.forEach((it, idx) => {
     const q = parseFloat(it.qty);
     const qtyVal = isNaN(q) ? 1 : q;
     const p = parseFloat(it.price) || 0;
+    if (qtyVal !== 1 && (p !== 0 || it.desc.trim() !== '')) hasMultiQty = true;
     const lineSub = roundMoney(qtyVal * p);
     lineSubtotals.push(lineSub);
     subtotal = roundMoney(subtotal + lineSub);
@@ -3098,27 +3460,59 @@ function computeTotalsSnapshot() {
     : roundMoney(rawTaxInput);
   const taxLabelSuffix = (taxMode === 'pct' && rawTaxInput > 0) ? (' (' + rawTaxInput + '%)') : '';
 
+  const grossTotal = roundMoney(Math.max(0, netSubtotal + computedTax));
+
+  const rawRetInput = Math.max(0, parseFloat(document.getElementById('qb-ret')?.value) || 0);
+  const retMode = document.getElementById('qb-ret-mode')?.value || 'amt';
+  const rawRetVal = retMode === 'pct'
+    ? roundMoney(netSubtotal * (Math.min(100, rawRetInput) / 100))
+    : roundMoney(rawRetInput);
+  const computedRet = roundMoney(Math.min(grossTotal, rawRetVal));
+  const retLabelSuffix = (retMode === 'pct' && rawRetInput > 0) ? (' (' + rawRetInput + '%)') : '';
+
+  const grandTotal = grossTotal;
+  const netPayableTotal = roundMoney(Math.max(0, grossTotal - computedRet));
   const dep = roundMoney(Math.max(0, parseFloat(document.getElementById('qb-dep')?.value) || 0));
-  const grandTotal = roundMoney(Math.max(0, netSubtotal + computedTax));
-  const balance = roundMoney(Math.max(0, grandTotal - dep));
 
   const docType = document.getElementById('qb-doctype')?.value || 'quote';
-  const isSettledFull = (grandTotal > 0 && balance === 0) || (docType === 'receipt' && dep === 0 && grandTotal > 0);
-  const displayHeadlineAmt = (SETTLEMENT_DOC_TYPES.includes(docType) && isSettledFull) || isSettledFull
-    ? grandTotal
-    : balance;
+  let effectivePaid = dep;
+  let balance = roundMoney(Math.max(0, netPayableTotal - dep));
+  let isSettledFull = false;
+  let displayHeadlineAmt = balance;
+  let headlineType = 'balance';
+
+  if (docType === 'receipt') {
+    effectivePaid = dep > 0 ? dep : netPayableTotal;
+    balance = roundMoney(Math.max(0, netPayableTotal - effectivePaid));
+    isSettledFull = (netPayableTotal > 0 && balance === 0);
+    displayHeadlineAmt = effectivePaid;
+    headlineType = 'receipt';
+  } else {
+    isSettledFull = (netPayableTotal > 0 && balance === 0 && dep > 0);
+    if (isSettledFull) {
+      displayHeadlineAmt = netPayableTotal;
+      headlineType = 'settled';
+    } else if (SETTLEMENT_DOC_TYPES.includes(docType) && dep === 0) {
+      displayHeadlineAmt = netPayableTotal;
+      headlineType = 'settlement_doc';
+    }
+  }
 
   return {
-    subtotal, lineSubtotals,
+    subtotal, hasMultiQty, lineSubtotals,
     rawDiscInput, discMode, computedDisc, discLabelSuffix, netSubtotal,
     rawTaxInput, taxMode, computedTax, taxLabelSuffix,
-    dep, grandTotal, balance, isSettledFull, displayHeadlineAmt
+    rawRetInput, retMode, computedRet, retLabelSuffix,
+    grandTotal, netPayableTotal, dep, effectivePaid, balance,
+    isSettledFull, displayHeadlineAmt, headlineType
   };
 }
 
 function recalcMasterTotals() {
   const snap = computeTotalsSnapshot();
   const L = I18N[currentLang] || I18N.es;
+  const docType = document.getElementById('qb-doctype')?.value || 'quote';
+  const meta = getDocMeta(docType);
 
   const discHintEl = document.getElementById('discComputedHint');
   if (discHintEl) {
@@ -3134,18 +3528,33 @@ function recalcMasterTotals() {
       : '';
   }
 
+  const retHintEl = document.getElementById('retComputedHint');
+  if (retHintEl) {
+    retHintEl.innerText = (snap.retMode === 'pct' && snap.rawRetInput > 0)
+      ? ('-' + formatUSD(snap.computedRet))
+      : '';
+  }
+
   const balLblEl = document.getElementById('ui-bal-lbl');
   if (balLblEl) {
-    balLblEl.innerText = snap.isSettledFull ? L.settledLbl : L.balLbl;
+    if (snap.headlineType === 'receipt') balLblEl.innerText = L.recHeadlineLbl;
+    else if (snap.headlineType === 'settled') balLblEl.innerText = L.settledLbl;
+    else if (snap.headlineType === 'settlement_doc') balLblEl.innerText = meta.totalLabel + ':';
+    else balLblEl.innerText = L.balLbl;
   }
 
   const sumLine = document.getElementById('contractorSummaryLine');
   const bigTot = document.getElementById('contractorBigTotal');
   if (sumLine) {
-    if (snap.isSettledFull && snap.grandTotal > 0) {
+    if (snap.headlineType === 'receipt') {
+      sumLine.innerText = 'Total: ' + formatUSD(snap.netPayableTotal) + ' | ' + L.remBal + ': ' + formatUSD(snap.balance);
+    } else if (snap.isSettledFull && snap.netPayableTotal > 0) {
       sumLine.innerText = L.remBal + ': ' + formatUSD(0);
     } else {
-      sumLine.innerText = 'Total: ' + formatUSD(snap.grandTotal) + (snap.dep > 0 ? (' | -' + formatUSD(snap.dep)) : '');
+      let parts = ['Total: ' + formatUSD(snap.grandTotal)];
+      if (snap.computedRet > 0) parts.push('-' + formatUSD(snap.computedRet));
+      if (snap.dep > 0) parts.push('-' + formatUSD(snap.dep));
+      sumLine.innerText = parts.join(' | ');
     }
   }
   if (bigTot) bigTot.innerText = formatUSD(snap.displayHeadlineAmt);
@@ -3191,7 +3600,7 @@ function updatePayButtonState() {
 
 function syncLockVisualState() {
   const keyEl = document.getElementById('ownerKeyBtn');
-  const unlocked = localStorage.getItem('mcp_owner_device_unlocked') === 'true';
+  const unlocked = safeGetStorage('mcp_owner_device_unlocked') === 'true';
   if (keyEl) keyEl.style.display = unlocked ? 'inline-block' : 'none';
 }
 
@@ -3251,18 +3660,21 @@ function renderModalSheet(mode) {
       const sub = snap.lineSubtotals[idx] !== undefined ? snap.lineSubtotals[idx] : roundMoney(qtyVal * p);
       if (sub !== 0 || it.desc.trim() !== '') {
         const titleLine = (idx + 1) + '. ' + (it.desc.trim() || '-');
-        const subLine = (qtyVal !== 1 && p !== 0) ? (L.qty + ': ' + qtyVal + ' × ' + formatUSD(p)) : '';
-        liveRows.push([titleLine, subLine, sub]);
+        liveRows.push([titleLine, '', qtyVal, p, sub]);
       }
     });
-    if (liveRows.length === 0) liveRows.push(['1. ---', '', 0]);
+    if (liveRows.length === 0) liveRows.push(['1. ---', '', 1, 0, 0]);
 
     data = {
       comp: compVal, phone: phoneVal, docNum: docNumVal,
-      date: getFormattedDate(loadedRecordDate), client: clientVal,
+      date: getFormattedDate(loadedRecordDate),
+      dueDate: getFormattedDueDate(),
+      client: clientVal,
       rows: liveRows,
+      hasMultiQty: snap.hasMultiQty,
       disc: snap.computedDisc, discLabelExtra: snap.discLabelSuffix,
       tax: snap.computedTax, taxLabelExtra: snap.taxLabelSuffix,
+      ret: snap.computedRet, retLabelExtra: snap.retLabelSuffix,
       dep: snap.dep, notes: notesVal
     };
   } else {
@@ -3270,27 +3682,38 @@ function renderModalSheet(mode) {
   }
 
   let rawSubtotal = 0;
+  const colSpanCount = data.hasMultiQty ? 3 : 1;
   const rowsHtml = data.rows.map(r => {
-    const amt = roundMoney(Number(r[2]) || 0);
+    const qtyVal = Number(r[2]) || 1;
+    const unitAmt = roundMoney(Number(r[3]) || 0);
+    const amt = roundMoney(Number(r[4]) || 0);
     rawSubtotal = roundMoney(rawSubtotal + amt);
     const amtCell = amt !== 0 ? escapeHtml(formatUSD(amt)) : '—';
+    const extraCols = data.hasMultiQty
+      ? '<td class="num-col" style="vertical-align:top;">' + escapeHtml(String(qtyVal)) + '</td>' +
+        '<td class="num-col" style="vertical-align:top;">' + (unitAmt !== 0 ? escapeHtml(formatUSD(unitAmt)) : '—') + '</td>'
+      : '';
     return '<tr>' +
       '<td><div style="font-weight:800;color:#0f172a;margin-bottom:2px;">' + escapeHtml(r[0]) + '</div>' +
       (r[1] ? '<div style="font-size:0.74rem;color:#475569;line-height:1.35;">' + escapeHtml(r[1]) + '</div>' : '') + '</td>' +
+      extraCols +
       '<td style="vertical-align:top;white-space:nowrap;">' + amtCell + '</td>' +
     '</tr>';
   }).join('');
 
   const discVal = roundMoney(data.disc || 0);
   const taxVal = roundMoney(data.tax || 0);
+  const retVal = roundMoney(data.ret || 0);
   const netSubtotal = roundMoney(Math.max(0, rawSubtotal - discVal));
   const grandTotal = roundMoney(Math.max(0, netSubtotal + taxVal));
+  const netPayable = roundMoney(Math.max(0, grandTotal - retVal));
   const showBreakdownSubtotal = (discVal > 0 || taxVal > 0);
 
   const isReceiptAutoPaid = (activeType === 'receipt' && (!data.dep || data.dep <= 0));
-  const effectivePaid = isReceiptAutoPaid ? grandTotal : roundMoney(data.dep || 0);
-  const remBalance = roundMoney(Math.max(0, grandTotal - effectivePaid));
+  const effectivePaid = isReceiptAutoPaid ? netPayable : roundMoney(data.dep || 0);
+  const remBalance = roundMoney(Math.max(0, netPayable - effectivePaid));
   const showPaidRows = effectivePaid > 0 || activeType === 'receipt';
+  const showRemBalanceRow = showPaidRows || retVal > 0;
   const logoSrcForModal = (isLive && uploadedLogoData) ? uploadedLogoData : (cleanMascotLogoDataUrl || '1793842789444.jpg');
 
   const attachCheck = document.getElementById('qb-hw-print-attach')?.checked;
@@ -3313,37 +3736,43 @@ function renderModalSheet(mode) {
     ? ''
     : '<div class="lux-viral-footer"><svg class="ico-stroke-sm" style="width:12px;height:12px;margin-right:4px;vertical-align:-2px;"><use href="#ico-shield"></use></svg>' + escapeHtml(L.pdfViralFooter) + '</div>';
 
+  const theadHtml = data.hasMultiQty
+    ? '<thead><tr><th>' + escapeHtml(L.sec2) + '</th><th class="num-col">' + escapeHtml(L.qtyShort) + '</th><th class="num-col">' + escapeHtml(L.unitPriceShort) + '</th><th>' + escapeHtml(currentCurr) + '</th></tr></thead>'
+    : '<thead><tr><th>' + escapeHtml(L.sec2) + '</th><th>' + escapeHtml(currentCurr) + '</th></tr></thead>';
+
   paper.innerHTML =
     wmHtml +
     '<div class="lux-header">' +
       '<div class="lux-brand">' +
         '<div class="lux-logo-box"><img src="' + logoSrcForModal + '" alt="Logo"></div>' +
-        '<div>' +
+        '<div style="min-width:0;">' +
           '<div style="font-size:0.7rem;font-weight:800;color:#64748b;text-transform:uppercase;">' + escapeHtml(meta.party1) + '</div>' +
-          '<div style="font-weight:900;font-size:1.05rem;color:#0f172a;">' + escapeHtml(data.comp) + '</div>' +
-          (data.phone ? '<div style="font-size:0.74rem;color:#475569;">' + escapeHtml(data.phone) + '</div>' : '') +
+          '<div style="font-weight:900;font-size:1.05rem;color:#0f172a;word-break:break-word;">' + escapeHtml(data.comp) + '</div>' +
+          (data.phone ? '<div style="font-size:0.74rem;color:#475569;word-break:break-word;">' + escapeHtml(data.phone) + '</div>' : '') +
         '</div>' +
       '</div>' +
       '<div class="lux-badge-box">' +
         '<div style="font-weight:900;font-size:0.86rem;color:#0f172a;">' + escapeHtml(meta.badge) + '</div>' +
         '<div style="color:#b45309;font-weight:900;font-size:0.86rem;margin:2px 0;">' + escapeHtml(meta.prefix + data.docNum) + '</div>' +
         '<div style="font-size:0.73rem;color:#64748b;font-weight:700;">' + escapeHtml(L.dateLbl + ': ' + data.date) + '</div>' +
+        (data.dueDate ? '<div style="font-size:0.71rem;color:#b45309;font-weight:800;margin-top:1px;">' + escapeHtml(L.dueShort + ': ' + data.dueDate) + '</div>' : '') +
       '</div>' +
     '</div>' +
     '<div style="background:#f8fafc;border:1px solid #cbd5e1;padding:0.55rem 0.75rem;border-radius:6px;font-size:0.8rem;margin-bottom:0.65rem;">' +
       '<div style="font-size:0.7rem;font-weight:800;color:#64748b;">' + escapeHtml(meta.party2) + '</div>' +
-      '<div style="font-weight:800;color:#0f172a;margin-top:2px;">' + escapeHtml(data.client) + '</div>' +
+      '<div style="font-weight:800;color:#0f172a;margin-top:2px;word-break:break-word;">' + escapeHtml(data.client) + '</div>' +
     '</div>' +
     '<table class="lux-table">' +
-      '<thead><tr><th>' + escapeHtml(L.sec2) + '</th><th>' + escapeHtml(currentCurr) + '</th></tr></thead>' +
+      theadHtml +
       '<tbody>' +
         rowsHtml +
-        (showBreakdownSubtotal ? '<tr style="background:#f8fafc;"><td style="text-align:right;font-weight:800;color:#334155;">' + escapeHtml(L.subtotalLbl) + '</td><td>' + escapeHtml(formatUSD(rawSubtotal)) + '</td></tr>' : '') +
-        (discVal > 0 ? '<tr><td style="text-align:right;font-weight:700;color:#be123c;">' + escapeHtml(L.disc + (data.discLabelExtra || '')) + '</td><td style="color:#be123c;">-' + escapeHtml(formatUSD(discVal)) + '</td></tr>' : '') +
-        (taxVal > 0 ? '<tr><td style="text-align:right;font-weight:700;color:#475569;">' + escapeHtml(L.tax + (data.taxLabelExtra || '')) + '</td><td>' + escapeHtml(formatUSD(taxVal)) + '</td></tr>' : '') +
-        '<tr class="lux-tot-row"><td>' + escapeHtml(meta.totalLabel + ' (' + currentCurr + ')') + '</td><td>' + escapeHtml(formatUSD(grandTotal)) + '</td></tr>' +
-        (showPaidRows ? '<tr><td style="color:#065f46;font-weight:800;">' + escapeHtml(L.paidAmt) + '</td><td style="color:#065f46;">-' + escapeHtml(formatUSD(effectivePaid)) + '</td></tr>' : '') +
-        (showPaidRows ? '<tr style="background:#dcfce7;font-weight:900;"><td style="color:#065f46;">' + escapeHtml(L.remBal) + '</td><td style="color:#065f46;font-size:0.92rem;">' + escapeHtml(formatUSD(remBalance)) + '</td></tr>' : '') +
+        (showBreakdownSubtotal ? '<tr style="background:#f8fafc;"><td colspan="' + colSpanCount + '" style="text-align:right;font-weight:800;color:#334155;">' + escapeHtml(L.subtotalLbl) + '</td><td>' + escapeHtml(formatUSD(rawSubtotal)) + '</td></tr>' : '') +
+        (discVal > 0 ? '<tr><td colspan="' + colSpanCount + '" style="text-align:right;font-weight:700;color:#be123c;">' + escapeHtml(L.disc + (data.discLabelExtra || '')) + '</td><td style="color:#be123c;">-' + escapeHtml(formatUSD(discVal)) + '</td></tr>' : '') +
+        (taxVal > 0 ? '<tr><td colspan="' + colSpanCount + '" style="text-align:right;font-weight:700;color:#475569;">' + escapeHtml(L.tax + (data.taxLabelExtra || '')) + '</td><td>' + escapeHtml(formatUSD(taxVal)) + '</td></tr>' : '') +
+        '<tr class="lux-tot-row"><td colspan="' + colSpanCount + '">' + escapeHtml(meta.totalLabel + ' (' + currentCurr + ')') + '</td><td>' + escapeHtml(formatUSD(grandTotal)) + '</td></tr>' +
+        (retVal > 0 ? '<tr><td colspan="' + colSpanCount + '" style="text-align:right;font-weight:800;color:#b45309;">' + escapeHtml(L.retRowLbl + (data.retLabelExtra || '')) + '</td><td style="color:#b45309;">-' + escapeHtml(formatUSD(retVal)) + '</td></tr>' : '') +
+        (showPaidRows ? '<tr><td colspan="' + colSpanCount + '" style="color:#065f46;font-weight:800;">' + escapeHtml(L.paidAmt) + '</td><td style="color:#065f46;">-' + escapeHtml(formatUSD(effectivePaid)) + '</td></tr>' : '') +
+        (showRemBalanceRow ? '<tr style="background:#dcfce7;font-weight:900;"><td colspan="' + colSpanCount + '" style="color:#065f46;">' + escapeHtml(L.remBal) + '</td><td style="color:#065f46;font-size:0.92rem;">' + escapeHtml(formatUSD(remBalance)) + '</td></tr>' : '') +
       '</tbody>' +
     '</table>' +
     (data.notes ? '<div style="background:#f8fafc;border:1px solid #cbd5e1;border-left:3px solid #0f172a;padding:0.55rem 0.75rem;border-radius:6px;font-size:0.75rem;color:#1e293b;line-height:1.4;margin-top:0.6rem;"><strong>' + escapeHtml(L.notes) + ':</strong> ' + escapeHtml(data.notes) + '</div>' : '') +
@@ -3363,14 +3792,27 @@ function renderModalSheet(mode) {
     footerBrandHtml;
 
   if (ctaBox) {
-    const unlockedNow = checkIsPaidUser();
-    const clickHandler = unlockedNow ? 'handleFinalDownloadClick()' : 'handleWhatsAppQuoteClick()';
-    ctaBox.innerHTML = '<button type="button" class="wa-master-btn" style="margin-top:0;" onclick="' + clickHandler + '">' +
-      svgIco(unlockedNow ? 'ico-download' : 'ico-lock', 'ico-stroke') +
-      '<span>' + escapeHtml(unlockedNow ? L.dlPaid : L.waLock) + '</span></button>';
+    if (!isLive) {
+      ctaBox.innerHTML =
+        '<div class="preview-cta-dual">' +
+          '<button type="button" class="preview-secondary-btn" onclick="renderModalSheet(\'live\')">' +
+            svgIco('ico-doc', 'ico-stroke-sm') +
+            '<span>' + escapeHtml(L.backToLiveBtn) + '</span>' +
+          '</button>' +
+          '<button type="button" class="wa-master-btn" style="margin-top:0;" onclick="loadSampleDataIntoBuilder()">' +
+            svgIco('ico-edit', 'ico-stroke-sm') +
+            '<span>' + escapeHtml(L.useSampleBtn) + '</span>' +
+          '</button>' +
+        '</div>';
+    } else {
+      const unlockedNow = checkIsPaidUser();
+      const clickHandler = unlockedNow ? 'handleFinalDownloadClick()' : 'handleWhatsAppQuoteClick()';
+      ctaBox.innerHTML = '<button type="button" class="wa-master-btn" style="margin-top:0;" onclick="' + clickHandler + '">' +
+        svgIco(unlockedNow ? 'ico-download' : 'ico-lock', 'ico-stroke') +
+        '<span>' + escapeHtml(unlockedNow ? L.dlPaid : L.waLock) + '</span></button>';
+    }
   }
 }
-
 function savePaidDocumentToRecord(preserveDateStr) {
   const snap = computeTotalsSnapshot();
   const docType = document.getElementById('qb-doctype')?.value || 'quote';
@@ -3382,10 +3824,20 @@ function savePaidDocumentToRecord(preserveDateStr) {
   rememberRecentClient(clientName);
 
   let hist = [];
-  try { hist = JSON.parse(localStorage.getItem('mcp_calc_history') || '[]'); } catch (e) {}
+  try { hist = JSON.parse(safeGetStorage('mcp_calc_history', '[]')); } catch (e) {}
+
+  const existingDraftIdx = hist.findIndex(h => h.draftId === currentDraftId);
+  if (existingDraftIdx >= 0) {
+    const prevRec = hist[existingDraftIdx];
+    if (prevRec.docType !== docType || !isSameClientIdentity(normalizeIdentityText(prevRec.client), clientName)) {
+      currentDraftId = createNewDraftId();
+      safeSetStorage('mcp_current_draft_id', currentDraftId);
+    }
+  }
+
   const existingIdx = hist.findIndex(h => h.draftId === currentDraftId || (h.docType === docType && h.docNum === docNum && h.client === clientName));
   const existingEntry = existingIdx >= 0 ? hist[existingIdx] : null;
-  const time = preserveDateStr || loadedRecordDate || (existingEntry && existingEntry.time) || getFormattedDate();
+  const time = getFormattedDate(preserveDateStr || loadedRecordDate) || (existingEntry && existingEntry.time) || getFormattedDate();
   if (existingIdx >= 0) hist.splice(existingIdx, 1);
 
   const inputs = {};
@@ -3396,14 +3848,14 @@ function savePaidDocumentToRecord(preserveDateStr) {
   });
 
   const attachChecked = !!document.getElementById('qb-hw-print-attach')?.checked;
-  const hwImgToStore = (attachChecked && uploadedHwQuoteImg && uploadedHwQuoteImg.length < 280000) ? uploadedHwQuoteImg : '';
+  const hwImgToStore = (attachChecked && uploadedHwQuoteImg && uploadedHwQuoteImg.length < 550000) ? uploadedHwQuoteImg : '';
 
   const recordEntry = {
     id: Date.now(),
     draftId: currentDraftId,
     docType: docType, docNum: docNum, client: clientName,
     label: meta.badge + ' (' + meta.prefix + docNum + '): ' + clientName,
-    res: totalTxt, grandTotal: snap.grandTotal,
+    res: totalTxt, grandTotal: snap.netPayableTotal,
     time: time, lang: currentLang, curr: currentCurr,
     inputs: inputs, lines: JSON.parse(JSON.stringify(customLineItems)),
     clientSig: clientSigData || '',
@@ -3412,26 +3864,61 @@ function savePaidDocumentToRecord(preserveDateStr) {
 
   hist.unshift(recordEntry);
   if (hist.length > 50) hist = hist.slice(0, 50);
-  try {
-    localStorage.setItem('mcp_calc_history', JSON.stringify(hist));
-  } catch (e) {
+
+  if (!safeSetStorage('mcp_calc_history', JSON.stringify(hist))) {
     recordEntry.hwImg = '';
-    try { localStorage.setItem('mcp_calc_history', JSON.stringify(hist)); } catch (e2) {}
+    safeSetStorage('mcp_calc_history', JSON.stringify(hist));
   }
   renderHistory();
 }
 
+function resetMissingOptionalInputs(inputsMap) {
+  const defaults = {
+    'qb-disc': '0', 'qb-disc-mode': 'amt',
+    'qb-tax': '0', 'qb-tax-mode': 'amt',
+    'qb-ret': '0', 'qb-ret-mode': 'amt',
+    'qb-dep': '0', 'qb-duedate': '', 'qb-notes': ''
+  };
+  Object.keys(defaults).forEach(id => {
+    if (!inputsMap || inputsMap[id] === undefined) {
+      const el = document.getElementById(id);
+      if (el) el.value = defaults[id];
+    }
+  });
+}
+
+function syncAttachmentFromRecordItem(item) {
+  if (item && item.hwImg) {
+    uploadedHwQuoteImg = item.hwImg;
+    safeSetStorage('mcp_hw_quote_img', uploadedHwQuoteImg);
+    showIdentifiedHwPicture(uploadedHwQuoteImg);
+  } else {
+    uploadedHwQuoteImg = '';
+    safeRemoveStorage('mcp_hw_quote_img');
+    const hwInp = document.getElementById('qb-hw-input'); if (hwInp) hwInp.value = '';
+    const hwChk = document.getElementById('qb-hw-print-attach'); if (hwChk) hwChk.checked = false;
+    const hwWrap = document.getElementById('hwIdentifiedBox'); if (hwWrap) hwWrap.style.display = 'none';
+  }
+}
+
 function loadInvoiceFromRecord(id, autoDownloadPDF) {
   let hist = [];
-  try { hist = JSON.parse(localStorage.getItem('mcp_calc_history') || '[]'); } catch (e) {}
+  try { hist = JSON.parse(safeGetStorage('mcp_calc_history', '[]')); } catch (e) {}
   const item = hist.find(h => h.id === id);
   if (!item) return;
 
-  loadedRecordDate = item.time || '';
+  loadedRecordDate = (item.inputs && item.inputs['qb-date']) ? '' : (item.time || '');
   currentDraftId = item.draftId || ('dr_hist_' + item.id);
   if (item.curr && CURRENCIES[item.curr]) currentCurr = item.curr;
   if (item.lang && I18N[item.lang]) currentLang = item.lang;
   if (item.lines && Array.isArray(item.lines)) customLineItems = JSON.parse(JSON.stringify(item.lines));
+
+  resetMissingOptionalInputs(item.inputs);
+  if (!item.inputs || item.inputs['qb-date'] === undefined) {
+    const dEl = document.getElementById('qb-date');
+    if (dEl) dEl.value = '';
+  }
+
   if (item.inputs) {
     Object.keys(item.inputs).forEach(k => {
       const el = document.getElementById(k);
@@ -3440,16 +3927,12 @@ function loadInvoiceFromRecord(id, autoDownloadPDF) {
       else el.value = item.inputs[k];
     });
   }
-  clientSigData = item.clientSig || '';
-  try {
-    if (clientSigData) localStorage.setItem('mcp_client_sig', clientSigData);
-    else localStorage.removeItem('mcp_client_sig');
-  } catch (e) {}
 
-  if (item.hwImg) {
-    uploadedHwQuoteImg = item.hwImg;
-    showIdentifiedHwPicture(uploadedHwQuoteImg);
-  }
+  clientSigData = item.clientSig || '';
+  if (clientSigData) safeSetStorage('mcp_client_sig', clientSigData);
+  else safeRemoveStorage('mcp_client_sig');
+
+  syncAttachmentFromRecordItem(item);
 
   applyLanguageUI();
   markCurrentDocUnlocked();
@@ -3457,7 +3940,7 @@ function loadInvoiceFromRecord(id, autoDownloadPDF) {
   persistDraftSilently(false);
 
   if (autoDownloadPDF) {
-    processOfficialPDF('download', true, item.time || '');
+    processOfficialPDF('download', true, loadedRecordDate);
   } else {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -3465,7 +3948,7 @@ function loadInvoiceFromRecord(id, autoDownloadPDF) {
 
 function convertRecordToDoc(id, targetType) {
   let hist = [];
-  try { hist = JSON.parse(localStorage.getItem('mcp_calc_history') || '[]'); } catch (e) {}
+  try { hist = JSON.parse(safeGetStorage('mcp_calc_history', '[]')); } catch (e) {}
   const item = hist.find(h => h.id === id);
   if (!item) return;
 
@@ -3475,6 +3958,8 @@ function convertRecordToDoc(id, targetType) {
 
   if (item.curr && CURRENCIES[item.curr]) currentCurr = item.curr;
   if (item.lines && Array.isArray(item.lines)) customLineItems = JSON.parse(JSON.stringify(item.lines));
+
+  resetMissingOptionalInputs(item.inputs);
   if (item.inputs) {
     Object.keys(item.inputs).forEach(k => {
       const el = document.getElementById(k);
@@ -3484,9 +3969,12 @@ function convertRecordToDoc(id, targetType) {
     });
   }
 
+  const dateEl = document.getElementById('qb-date');
+  if (dateEl) dateEl.value = getTodayIsoDate();
+
   const dtEl = document.getElementById('qb-doctype');
   if (dtEl) dtEl.value = targetType;
-  try { localStorage.setItem('mcp_active_doctype', targetType); } catch (e) {}
+  safeSetStorage('mcp_active_doctype', targetType);
 
   const docEl = document.getElementById('qb-docnum');
   if (docEl) docEl.value = incrementDocNumberString(docEl.value);
@@ -3499,7 +3987,8 @@ function convertRecordToDoc(id, targetType) {
   }
 
   clientSigData = '';
-  localStorage.removeItem('mcp_client_sig');
+  safeRemoveStorage('mcp_client_sig');
+  syncAttachmentFromRecordItem(item);
 
   applyLanguageUI();
   persistDraftSilently(false);
@@ -3513,7 +4002,7 @@ function renderHistory() {
   const L = I18N[currentLang] || I18N.es;
   const query = (document.getElementById('histSearchInput')?.value || '').toLowerCase().trim();
   let hist = [];
-  try { hist = JSON.parse(localStorage.getItem('mcp_calc_history') || '[]'); } catch (e) {}
+  try { hist = JSON.parse(safeGetStorage('mcp_calc_history', '[]')); } catch (e) {}
 
   if (query) {
     hist = hist.filter(item =>
@@ -3544,12 +4033,12 @@ function renderHistory() {
   }).join('');
 }
 
-function clearCalcHistory() { localStorage.removeItem('mcp_calc_history'); renderHistory(); }
+function clearCalcHistory() { safeRemoveStorage('mcp_calc_history'); renderHistory(); }
 
 function saveAllBuilderState() {
   persistDraftSilently(false);
-  if (uploadedLogoData) { try { localStorage.setItem('mcp_company_logo', uploadedLogoData); } catch (e) {} }
-  if (uploadedHwQuoteImg) { try { localStorage.setItem('mcp_hw_quote_img', uploadedHwQuoteImg); } catch (e) {} }
+  if (uploadedLogoData) safeSetStorage('mcp_company_logo', uploadedLogoData);
+  if (uploadedHwQuoteImg) safeSetStorage('mcp_hw_quote_img', uploadedHwQuoteImg);
 }
 
 function ensureJsPdfLoaded() {
@@ -3563,15 +4052,70 @@ function ensureJsPdfLoaded() {
   });
 }
 
-function drawPdfPageFooter(doc, footerText) {
-  if (hasUnlimitedAccess()) return;
-  doc.setDrawColor(203, 213, 225);
-  doc.setLineWidth(0.25);
-  doc.line(14, 268, 202, 268);
-  doc.setFont('helvetica', 'bolditalic');
-  doc.setFontSize(7.5);
+function addContinuationPage(doc, meta, docNum, comp) {
+  doc.addPage();
+  doc.setFillColor(15, 23, 42);
+  doc.rect(0, 0, 215.9, 5, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8);
   doc.setTextColor(100, 116, 139);
-  doc.text(pdfSafeText(footerText), 108, 272.5, { align: 'center' });
+  doc.text(pdfSafeText(comp).substring(0, 55), 14, 12.5);
+  doc.setTextColor(15, 23, 42);
+  doc.text(pdfSafeText(meta.badge + ' • ' + meta.prefix + docNum), 202, 12.5, { align: 'right' });
+  doc.setDrawColor(203, 213, 225);
+  doc.setLineWidth(0.3);
+  doc.line(14, 15.5, 202, 15.5);
+  return 21;
+}
+
+function drawAllPdfFooters(doc, L) {
+  const totalPages = doc.getNumberOfPages();
+  const unlimited = hasUnlimitedAccess();
+  for (let p = 1; p <= totalPages; p++) {
+    doc.setPage(p);
+    const pageStr = pdfSafeText((L.pageOfTpl || 'Pag. {P} de {T}').replace('{P}', String(p)).replace('{T}', String(totalPages)));
+    if (unlimited) {
+      if (totalPages > 1) {
+        doc.setDrawColor(203, 213, 225);
+        doc.setLineWidth(0.25);
+        doc.line(14, 268, 202, 268);
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(7.5);
+        doc.setTextColor(100, 116, 139);
+        doc.text(pageStr, 202, 272.5, { align: 'right' });
+      }
+    } else {
+      doc.setDrawColor(203, 213, 225);
+      doc.setLineWidth(0.25);
+      doc.line(14, 268, 202, 268);
+      doc.setFont('helvetica', 'bolditalic');
+      doc.setFontSize(7.2);
+      doc.setTextColor(100, 116, 139);
+      if (totalPages > 1) {
+        doc.text(pdfSafeText(L.pdfViralFooter), 14, 272.5);
+        doc.setFont('helvetica', 'bold');
+        doc.text(pageStr, 202, 272.5, { align: 'right' });
+      } else {
+        doc.text(pdfSafeText(L.pdfViralFooter), 108, 272.5, { align: 'center' });
+      }
+    }
+  }
+}
+
+async function drawProportionalSignature(doc, sigDataUrl, centerX, baselineY) {
+  if (!sigDataUrl) return;
+  try {
+    const dims = await getImageNaturalDims(sigDataUrl);
+    const maxW = 54, maxH = 15;
+    let sw = 44, sh = 13.5;
+    if (dims && dims.w && dims.h) {
+      const ratio = Math.min(maxW / dims.w, maxH / dims.h);
+      sw = dims.w * ratio;
+      sh = dims.h * ratio;
+    }
+    const fmt = sigDataUrl.startsWith('data:image/jpeg') ? 'JPEG' : 'PNG';
+    doc.addImage(sigDataUrl, fmt, centerX - (sw / 2), baselineY - sh - 0.8, sw, sh);
+  } catch (e) {}
 }
 
 async function buildPureVectorPDF(overrideDateStr) {
@@ -3588,6 +4132,7 @@ async function buildPureVectorPDF(overrideDateStr) {
   const client = document.getElementById('qb-client')?.value.trim() || 'Client';
   const notes = document.getElementById('qb-notes')?.value.trim() || '';
   const dateStr = getFormattedDate(overrideDateStr || loadedRecordDate);
+  const dueDateStr = getFormattedDueDate();
 
   doc.setFillColor(15, 23, 42);
   doc.rect(0, 0, 215.9, 6, 'F');
@@ -3625,168 +4170,261 @@ async function buildPureVectorPDF(overrideDateStr) {
   const maxCompWidth = 122 - leftX;
   doc.setTextColor(15, 23, 42);
   const cleanComp = pdfSafeText(comp);
-  doc.setFontSize(cleanComp.length > 34 ? 10 : 11.8);
+  doc.setFontSize(cleanComp.length > 34 ? 10 : 11.5);
   const compLines = doc.splitTextToSize(cleanComp, maxCompWidth).slice(0, 2);
-  doc.text(compLines, leftX, 20);
+  doc.text(compLines, leftX, 19.8);
 
-  const phoneY = compLines.length > 1 ? 29.2 : 26;
+  let headerBottomY = 34;
   if (phone) {
+    const phoneStartY = compLines.length > 1 ? 28.8 : 25.2;
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(8.5);
+    doc.setFontSize(8.3);
     doc.setTextColor(71, 85, 105);
-    doc.text(pdfSafeText(phone).substring(0, 54), leftX, phoneY);
+    const phoneLines = doc.splitTextToSize(pdfSafeText(phone), maxCompWidth).slice(0, 2);
+    doc.text(phoneLines, leftX, phoneStartY);
+    headerBottomY = Math.max(headerBottomY, phoneStartY + (phoneLines.length - 1) * 3.9 + 2);
   }
 
+  const badgeBoxH = dueDateStr ? 26 : 22;
   doc.setFillColor(248, 250, 252);
   doc.setDrawColor(203, 213, 225);
-  doc.roundedRect(126, 11, 76, 22, 2, 2, 'FD');
+  doc.roundedRect(126, 11, 76, badgeBoxH, 2, 2, 'FD');
   doc.setFillColor(234, 179, 8);
-  doc.rect(200, 11, 2, 22, 'F');
+  doc.rect(200, 11, 2, badgeBoxH, 'F');
 
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(8.4);
   doc.setTextColor(15, 23, 42);
-  doc.text(pdfSafeText(meta.badge), 197, 17.5, { align: 'right' });
+  doc.text(pdfSafeText(meta.badge), 197, 17, { align: 'right' });
 
   doc.setFontSize(9.5);
   doc.setTextColor(180, 83, 9);
-  doc.text(pdfSafeText(meta.prefix + docNum), 197, 23.5, { align: 'right' });
+  doc.text(pdfSafeText(meta.prefix + docNum), 197, 22.6, { align: 'right' });
 
   doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8.2);
+  doc.setFontSize(8);
   doc.setTextColor(100, 116, 139);
-  doc.text(pdfSafeText(L.dateLbl + ': ' + dateStr), 197, 29.5, { align: 'right' });
+  doc.text(pdfSafeText(L.dateLbl + ': ' + dateStr), 197, 28, { align: 'right' });
 
+  if (dueDateStr) {
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(7.8);
+    doc.setTextColor(180, 83, 9);
+    doc.text(pdfSafeText(L.dueShort + ': ' + dueDateStr), 197, 33.2, { align: 'right' });
+    headerBottomY = Math.max(headerBottomY, 37);
+  }
+
+  const dividerY = Math.max(37, headerBottomY + 2.5);
   doc.setDrawColor(15, 23, 42);
   doc.setLineWidth(0.7);
-  doc.line(14, 37, 202, 37);
+  doc.line(14, dividerY, 202, dividerY);
 
+  const clientBoxY = dividerY + 4;
   const clientLines = doc.splitTextToSize(pdfSafeText(client), 180);
   const clientBoxH = Math.max(15, 8 + clientLines.length * 4.5);
   doc.setFillColor(248, 250, 252);
   doc.setDrawColor(203, 213, 225);
   doc.setLineWidth(0.3);
-  doc.roundedRect(14, 41, 188, clientBoxH, 2, 2, 'FD');
+  doc.roundedRect(14, clientBoxY, 188, clientBoxH, 2, 2, 'FD');
 
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(8);
   doc.setTextColor(100, 116, 139);
-  doc.text(pdfSafeText(meta.party2), 18, 46.5);
+  doc.text(pdfSafeText(meta.party2), 18, clientBoxY + 5.5);
 
   doc.setFontSize(9.6);
   doc.setTextColor(15, 23, 42);
-  doc.text(clientLines, 18, 52);
+  doc.text(clientLines, 18, clientBoxY + 11);
 
-  let y = 41 + clientBoxH + 6;
-  doc.setFillColor(15, 23, 42);
-  doc.rect(14, y, 188, 9, 'F');
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(9.2);
-  doc.setTextColor(255, 255, 255);
-  doc.text(pdfSafeText(L.sec2), 18, y + 6);
-  doc.text(pdfSafeText(currentCurr), 198, y + 6, { align: 'right' });
-  y += 9;
+  let y = clientBoxY + clientBoxH + 6;
+  const multiCols = snap.hasMultiQty;
 
+  function drawTableHeaderBar(yPos) {
+    doc.setFillColor(15, 23, 42);
+    doc.rect(14, yPos, 188, 9, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8.8);
+    doc.setTextColor(255, 255, 255);
+    doc.text(pdfSafeText(L.sec2), 17, yPos + 6);
+    if (multiCols) {
+      doc.text(pdfSafeText(L.qtyShort), 129.5, yPos + 6, { align: 'right' });
+      doc.text(pdfSafeText(L.unitPriceShort), 161.5, yPos + 6, { align: 'right' });
+    }
+    doc.text(pdfSafeText(currentCurr), 198.5, yPos + 6, { align: 'right' });
+    return yPos + 9;
+  }
+
+  y = drawTableHeaderBar(y);
+
+  let renderedRowsCount = 0;
   customLineItems.forEach((it, idx) => {
     const q = parseFloat(it.qty);
     const qtyVal = isNaN(q) ? 1 : q;
     const p = parseFloat(it.price) || 0;
     const lineTotal = snap.lineSubtotals[idx] !== undefined ? snap.lineSubtotals[idx] : roundMoney(qtyVal * p);
     if (lineTotal !== 0 || it.desc.trim() !== '') {
-      const rawDesc = pdfSafeText((idx + 1) + '. ' + (it.desc.trim() || '-') + ((qtyVal !== 1 && p !== 0) ? ' (' + qtyVal + ' x ' + formatPDFCurr(p) + ')' : ''));
+      renderedRowsCount++;
+      const rawDesc = pdfSafeText((idx + 1) + '. ' + (it.desc.trim() || '-'));
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(9);
-      const splitDesc = doc.splitTextToSize(rawDesc, 136);
+      const wrapW = multiCols ? 94 : 136;
+      const splitDesc = doc.splitTextToSize(rawDesc, wrapW);
       const rowH = Math.max(9, splitDesc.length * 4.8 + 4);
-      if (y + rowH > 256) { drawPdfPageFooter(doc, L.pdfViralFooter); doc.addPage(); y = 20; }
+
+      if (y + rowH > 258) {
+        y = addContinuationPage(doc, meta, docNum, comp);
+        y = drawTableHeaderBar(y);
+      }
+
       doc.setDrawColor(203, 213, 225);
       doc.setLineWidth(0.3);
-      doc.rect(14, y, 142, rowH);
-      doc.rect(156, y, 46, rowH);
+      if (multiCols) {
+        doc.rect(14, y, 100, rowH);
+        doc.rect(114, y, 18, rowH);
+        doc.rect(132, y, 32, rowH);
+        doc.rect(164, y, 38, rowH);
+      } else {
+        doc.rect(14, y, 142, rowH);
+        doc.rect(156, y, 46, rowH);
+      }
+
       doc.setTextColor(15, 23, 42);
       doc.setFont('helvetica', 'normal');
       doc.text(splitDesc, 17, y + 5.8);
+
+      if (multiCols) {
+        doc.text(pdfSafeText(String(qtyVal)), 129.5, y + 5.8, { align: 'right' });
+        doc.text(p !== 0 ? pdfSafeText(formatPDFCurr(p)) : '-', 161.5, y + 5.8, { align: 'right' });
+      }
+
       doc.setFont('helvetica', 'bold');
       if (lineTotal < 0) doc.setTextColor(190, 18, 60);
-      doc.text(lineTotal !== 0 ? pdfSafeText(formatPDFCurr(lineTotal)) : '-', 198, y + 5.8, { align: 'right' });
+      doc.text(lineTotal !== 0 ? pdfSafeText(formatPDFCurr(lineTotal)) : '-', 198.5, y + 5.8, { align: 'right' });
       doc.setTextColor(15, 23, 42);
       y += rowH;
     }
   });
 
-  if (y + 38 > 260) { drawPdfPageFooter(doc, L.pdfViralFooter); doc.addPage(); y = 20; }
+  if (renderedRowsCount === 0) {
+    doc.setDrawColor(203, 213, 225);
+    doc.setLineWidth(0.3);
+    doc.rect(14, y, 142, 9);
+    doc.rect(156, y, 46, 9);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(100, 116, 139);
+    doc.text('1. ---', 17, y + 5.8);
+    doc.text('-', 198.5, y + 5.8, { align: 'right' });
+    y += 9;
+  }
 
-  if (snap.computedDisc > 0 || snap.computedTax > 0) {
+  const showSubRow = (snap.computedDisc > 0 || snap.computedTax > 0);
+  const showPaidRow = (snap.dep > 0 || docType === 'receipt');
+  const showRemBalRow = (showPaidRow || snap.computedRet > 0);
+
+  let totalsBlockH = 10;
+  if (showSubRow) totalsBlockH += 8.5;
+  if (snap.computedDisc > 0) totalsBlockH += 8.5;
+  if (snap.computedTax > 0) totalsBlockH += 8.5;
+  if (snap.computedRet > 0) totalsBlockH += 8.5;
+  if (showPaidRow) totalsBlockH += 8.5;
+  if (showRemBalRow) totalsBlockH += 10;
+
+  if (y + totalsBlockH > 258) {
+    y = addContinuationPage(doc, meta, docNum, comp);
+  }
+
+  const totSplitX = multiCols ? 164 : 156;
+  const totLblW = totSplitX - 14;
+  const totValW = 202 - totSplitX;
+
+  if (showSubRow) {
     doc.setFillColor(248, 250, 252);
     doc.setDrawColor(203, 213, 225);
-    doc.rect(14, y, 142, 8.5, 'FD');
-    doc.rect(156, y, 46, 8.5, 'FD');
+    doc.rect(14, y, totLblW, 8.5, 'FD');
+    doc.rect(totSplitX, y, totValW, 8.5, 'FD');
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(8.8);
     doc.setTextColor(51, 65, 85);
-    doc.text(pdfSafeText(L.subtotalLbl), 152, y + 5.8, { align: 'right' });
+    doc.text(pdfSafeText(L.subtotalLbl), totSplitX - 3.5, y + 5.8, { align: 'right' });
     doc.setTextColor(15, 23, 42);
-    doc.text(pdfSafeText(formatPDFCurr(snap.subtotal)), 198, y + 5.8, { align: 'right' });
+    doc.text(pdfSafeText(formatPDFCurr(snap.subtotal)), 198.5, y + 5.8, { align: 'right' });
     y += 8.5;
   }
 
   if (snap.computedDisc > 0) {
     doc.setDrawColor(203, 213, 225);
-    doc.rect(14, y, 142, 8.5);
-    doc.rect(156, y, 46, 8.5);
+    doc.rect(14, y, totLblW, 8.5);
+    doc.rect(totSplitX, y, totValW, 8.5);
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(8.8);
     doc.setTextColor(190, 18, 60);
-    doc.text(pdfSafeText(L.disc + snap.discLabelSuffix), 152, y + 5.8, { align: 'right' });
-    doc.text(pdfSafeText('-' + formatPDFCurr(snap.computedDisc)), 198, y + 5.8, { align: 'right' });
+    doc.text(pdfSafeText(L.disc + snap.discLabelSuffix), totSplitX - 3.5, y + 5.8, { align: 'right' });
+    doc.text(pdfSafeText('-' + formatPDFCurr(snap.computedDisc)), 198.5, y + 5.8, { align: 'right' });
     y += 8.5;
   }
 
   if (snap.computedTax > 0) {
     doc.setDrawColor(203, 213, 225);
-    doc.rect(14, y, 142, 8.5);
-    doc.rect(156, y, 46, 8.5);
+    doc.rect(14, y, totLblW, 8.5);
+    doc.rect(totSplitX, y, totValW, 8.5);
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(8.8);
     doc.setTextColor(51, 65, 85);
-    doc.text(pdfSafeText(L.tax + snap.taxLabelSuffix), 152, y + 5.8, { align: 'right' });
+    doc.text(pdfSafeText(L.tax + snap.taxLabelSuffix), totSplitX - 3.5, y + 5.8, { align: 'right' });
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(15, 23, 42);
-    doc.text(pdfSafeText(formatPDFCurr(snap.computedTax)), 198, y + 5.8, { align: 'right' });
+    doc.text(pdfSafeText(formatPDFCurr(snap.computedTax)), 198.5, y + 5.8, { align: 'right' });
     y += 8.5;
   }
 
   doc.setFillColor(254, 243, 199);
   doc.setDrawColor(203, 213, 225);
-  doc.rect(14, y, 142, 10, 'FD');
-  doc.rect(156, y, 46, 10, 'FD');
+  doc.rect(14, y, totLblW, 10, 'FD');
+  doc.rect(totSplitX, y, totValW, 10, 'FD');
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(9.8);
+  doc.setFontSize(9.6);
   doc.setTextColor(15, 23, 42);
   doc.text(pdfSafeText(meta.totalLabel + ' (' + currentCurr + ')'), 17, y + 6.8);
-  doc.text(pdfSafeText(formatPDFCurr(snap.grandTotal)), 198, y + 6.8, { align: 'right' });
+  doc.text(pdfSafeText(formatPDFCurr(snap.grandTotal)), 198.5, y + 6.8, { align: 'right' });
   y += 10;
 
-  if (snap.dep > 0 || docType === 'receipt') {
-    if (y + 20 > 260) { drawPdfPageFooter(doc, L.pdfViralFooter); doc.addPage(); y = 20; }
-    const paidDisplayAmt = snap.dep > 0 ? snap.dep : snap.grandTotal;
-    const remDisplayAmt = snap.dep > 0 ? snap.balance : 0;
+  if (snap.computedRet > 0) {
+    doc.setFillColor(255, 251, 235);
+    doc.setDrawColor(203, 213, 225);
+    doc.rect(14, y, totLblW, 8.5, 'FD');
+    doc.rect(totSplitX, y, totValW, 8.5, 'FD');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8.8);
+    doc.setTextColor(180, 83, 9);
+    doc.text(pdfSafeText(L.retRowLbl + snap.retLabelSuffix), totSplitX - 3.5, y + 5.8, { align: 'right' });
+    doc.text(pdfSafeText('-' + formatPDFCurr(snap.computedRet)), 198.5, y + 5.8, { align: 'right' });
+    y += 8.5;
+  }
 
+  if (showPaidRow) {
     doc.setFillColor(255, 255, 255);
-    doc.rect(14, y, 142, 8.5, 'FD');
-    doc.rect(156, y, 46, 8.5, 'FD');
+    doc.setDrawColor(203, 213, 225);
+    doc.rect(14, y, totLblW, 8.5, 'FD');
+    doc.rect(totSplitX, y, totValW, 8.5, 'FD');
+    doc.setFont('helvetica', 'bold');
     doc.setTextColor(6, 95, 70);
     doc.setFontSize(9);
     doc.text(pdfSafeText(L.paidAmt), 17, y + 5.8);
-    doc.text(pdfSafeText('-' + formatPDFCurr(paidDisplayAmt)), 198, y + 5.8, { align: 'right' });
+    doc.text(pdfSafeText('-' + formatPDFCurr(snap.effectivePaid)), 198.5, y + 5.8, { align: 'right' });
     y += 8.5;
+  }
 
+  if (showRemBalRow) {
     doc.setFillColor(220, 252, 231);
-    doc.rect(14, y, 142, 10, 'FD');
-    doc.rect(156, y, 46, 10, 'FD');
-    doc.setFontSize(9.8);
+    doc.setDrawColor(203, 213, 225);
+    doc.rect(14, y, totLblW, 10, 'FD');
+    doc.rect(totSplitX, y, totValW, 10, 'FD');
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(6, 95, 70);
+    doc.setFontSize(9.6);
     doc.text(pdfSafeText(L.remBal), 17, y + 6.8);
-    doc.text(pdfSafeText(formatPDFCurr(remDisplayAmt)), 198, y + 6.8, { align: 'right' });
+    doc.text(pdfSafeText(formatPDFCurr(snap.balance)), 198.5, y + 6.8, { align: 'right' });
     y += 10;
   }
 
@@ -3795,7 +4433,11 @@ async function buildPureVectorPDF(overrideDateStr) {
     doc.setFontSize(8.5);
     const splitNotes = doc.splitTextToSize(pdfSafeText(L.notes + ': ' + notes), 180);
     const notesH = splitNotes.length * 4.6 + 6;
-    if (y + 4 + notesH > 260) { drawPdfPageFooter(doc, L.pdfViralFooter); doc.addPage(); y = 20; } else { y += 4; }
+    if (y + 4 + notesH > 258) {
+      y = addContinuationPage(doc, meta, docNum, comp);
+    } else {
+      y += 4;
+    }
     doc.setFillColor(248, 250, 252);
     doc.setDrawColor(203, 213, 225);
     doc.roundedRect(14, y, 188, notesH, 1.5, 1.5, 'FD');
@@ -3809,8 +4451,12 @@ async function buildPureVectorPDF(overrideDateStr) {
   doc.setFontSize(8);
   const splitLegal = doc.splitTextToSize(pdfSafeText(meta.legalClause), 180);
   const hasAnySignature = !!(clientSigData || savedIssuerSig);
-  const boxH = Math.max(hasAnySignature ? 46 : 38, (hasAnySignature ? 30 : 24) + splitLegal.length * 4.2 + (meta.showAcceptChecks ? 6 : 0));
-  if (y + boxH > 262) { drawPdfPageFooter(doc, L.pdfViralFooter); doc.addPage(); y = 20; }
+  const boxH = Math.max(hasAnySignature ? 49 : 39, (hasAnySignature ? 33 : 24) + splitLegal.length * 4.2 + (meta.showAcceptChecks ? 6 : 0));
+
+  if (y + boxH > 260) {
+    y = addContinuationPage(doc, meta, docNum, comp);
+  }
+
   doc.setDrawColor(15, 23, 42);
   doc.setLineWidth(0.35);
   doc.roundedRect(14, y, 188, boxH, 2, 2);
@@ -3836,12 +4482,9 @@ async function buildPureVectorPDF(overrideDateStr) {
 
   const sigY = y + boxH - 6.5;
 
-  if (clientSigData) {
-    try { doc.addImage(clientSigData, 'PNG', 22, sigY - 13.5, 44, 12.5); } catch (e) {}
-  }
-  if (savedIssuerSig) {
-    try { doc.addImage(savedIssuerSig, 'PNG', 94, sigY - 13.5, 44, 12.5); } catch (e) {}
-  }
+  await drawProportionalSignature(doc, clientSigData, 50, sigY);
+  await drawProportionalSignature(doc, savedIssuerSig, 122, sigY);
+
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(8.5);
   doc.setTextColor(15, 23, 42);
@@ -3856,19 +4499,10 @@ async function buildPureVectorPDF(overrideDateStr) {
   doc.text(pdfSafeText(meta.sig2), 90, sigY + 4);
   doc.text(pdfSafeText(L.dateLbl), 162, sigY + 4);
 
-  drawPdfPageFooter(doc, L.pdfViralFooter);
-
   const attachCheck = document.getElementById('qb-hw-print-attach')?.checked;
   if (attachCheck && uploadedHwQuoteImg) {
     try {
-      doc.addPage();
-      doc.setFillColor(15, 23, 42);
-      doc.rect(0, 0, 215.9, 6, 'F');
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(9.5);
-      doc.setTextColor(15, 23, 42);
-      doc.text(pdfSafeText(meta.badge + ' - ' + meta.prefix + docNum), 14, 15);
-
+      const attY = addContinuationPage(doc, meta, docNum, comp);
       const attDims = await getImageNaturalDims(uploadedHwQuoteImg);
       const maxW = 186, maxH = 236;
       let drawW = maxW, drawH = 180;
@@ -3876,10 +4510,11 @@ async function buildPureVectorPDF(overrideDateStr) {
         const ratio = Math.min(maxW / attDims.w, maxH / attDims.h);
         drawW = attDims.w * ratio; drawH = attDims.h * ratio;
       }
-      doc.addImage(uploadedHwQuoteImg, uploadedHwQuoteImg.startsWith('data:image/png') ? 'PNG' : 'JPEG', 14 + (maxW - drawW) / 2, 22, drawW, drawH);
-      drawPdfPageFooter(doc, L.pdfViralFooter);
+      doc.addImage(uploadedHwQuoteImg, uploadedHwQuoteImg.startsWith('data:image/png') ? 'PNG' : 'JPEG', 14 + (maxW - drawW) / 2, attY + 2, drawW, drawH);
     } catch (e) {}
   }
+
+  drawAllPdfFooters(doc, L);
 
   const cleanNum = docNum.replace(/[^a-zA-Z0-9_-]/g, '') || '0101';
   const fileName = meta.filePrefix + cleanNum + '.pdf';
@@ -3952,15 +4587,18 @@ async function processOfficialPDF(actionMode, isHistoryReprint, overrideDateStr)
 }
 
 function redirectToStripeCheckout(intentType, targetUrl) {
+  ensureDistinctDraftForNewDocument();
   saveAllBuilderState();
-  localStorage.setItem('mcp_pending_stripe_intent', intentType);
-  localStorage.setItem('mcp_pending_stripe_ts', String(Date.now()));
+  safeSetStorage('mcp_pending_stripe_intent', intentType);
+  safeSetStorage('mcp_pending_stripe_ts', String(Date.now()));
   closeModalForRedirect();
   window.location.href = targetUrl;
 }
 
 function handleWhatsAppQuoteClick() {
+  ensureDistinctDraftForNewDocument();
   if (!checkIsPaidUser()) {
+    updatePayButtonState();
     redirectToStripeCheckout('single', STRIPE_SINGLE_URL);
     return;
   }
@@ -3970,7 +4608,9 @@ function handleWhatsAppQuoteClick() {
 }
 
 function handleEmailQuoteClick() {
+  ensureDistinctDraftForNewDocument();
   if (!checkIsPaidUser()) {
+    updatePayButtonState();
     redirectToStripeCheckout('single', STRIPE_SINGLE_URL);
     return;
   }
@@ -3980,7 +4620,9 @@ function handleEmailQuoteClick() {
 }
 
 function handleFinalDownloadClick() {
+  ensureDistinctDraftForNewDocument();
   if (!checkIsPaidUser()) {
+    updatePayButtonState();
     redirectToStripeCheckout('single', STRIPE_SINGLE_URL);
     return;
   }
@@ -3994,28 +4636,28 @@ function handleProPassClick() {
 }
 
 function restoreStateOnLoad() {
-  const savedDocType = localStorage.getItem('mcp_active_doctype');
+  const savedDocType = safeGetStorage('mcp_active_doctype');
   if (savedDocType && I18N.es.types[savedDocType]) {
     const dtInp = document.getElementById('qb-doctype');
     if (dtInp) dtInp.value = savedDocType;
   }
 
-  uploadedLogoData = localStorage.getItem('mcp_company_logo') || '';
+  uploadedLogoData = safeGetStorage('mcp_company_logo', '');
   if (uploadedLogoData) showIdentifiedLogoPicture(uploadedLogoData);
 
-  uploadedHwQuoteImg = localStorage.getItem('mcp_hw_quote_img') || '';
+  uploadedHwQuoteImg = safeGetStorage('mcp_hw_quote_img', '');
   if (uploadedHwQuoteImg) showIdentifiedHwPicture(uploadedHwQuoteImg);
 
-  savedIssuerSig = localStorage.getItem('mcp_issuer_sig') || '';
-  clientSigData = localStorage.getItem('mcp_client_sig') || '';
+  savedIssuerSig = safeGetStorage('mcp_issuer_sig', '');
+  clientSigData = safeGetStorage('mcp_client_sig', '');
 
   try {
-    const savedLines = JSON.parse(localStorage.getItem('mcp_custom_lines') || '[]');
+    const savedLines = JSON.parse(safeGetStorage('mcp_custom_lines', '[]'));
     if (Array.isArray(savedLines) && savedLines.length > 0) customLineItems = savedLines;
   } catch (e) {}
 
   try {
-    const st = JSON.parse(localStorage.getItem('mcp_checkout_state') || 'null');
+    const st = JSON.parse(safeGetStorage('mcp_checkout_state', 'null'));
     if (st) {
       if (st.lang && I18N[st.lang] && !urlParams.get('lang')) currentLang = st.lang;
       if (st.curr && CURRENCIES[st.curr]) currentCurr = st.curr;
@@ -4031,8 +4673,13 @@ function restoreStateOnLoad() {
     }
   } catch (e) {}
 
+  const dateEl = document.getElementById('qb-date');
+  if (dateEl && !dateEl.value) {
+    dateEl.value = getTodayIsoDate();
+  }
+
   try {
-    const biz = JSON.parse(localStorage.getItem('mcp_biz_profile') || 'null');
+    const biz = JSON.parse(safeGetStorage('mcp_biz_profile', 'null'));
     if (biz) {
       const compEl = document.getElementById('qb-comp');
       const phoneEl = document.getElementById('qb-phone');
