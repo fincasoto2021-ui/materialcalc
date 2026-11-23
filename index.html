@@ -4829,6 +4829,168 @@ c.textContent='Copiado!';
 setTimeout(function(){c.textContent='Copiar texto';},1500);
 }
 </script>
+<style>
+#mip-fab{position:fixed;bottom:20px;right:16px;padding:12px 18px;
+background:#0b0f19;color:#fbbf24;border:1.5px solid #f59e0b;
+border-radius:99px;font-weight:900;font-size:14px;
+box-shadow:0 8px 22px rgba(0,0,0,.35);z-index:9998;
+display:flex;align-items:center;gap:6px;cursor:pointer}
+#mip-box{display:none;position:fixed;bottom:78px;right:16px;
+width:325px;max-width:92vw;background:#fff;color:#0f172a;
+border:1.5px solid #cbd5e1;border-radius:18px;padding:14px;
+box-shadow:0 18px 40px rgba(0,0,0,.3);z-index:9999}
+#mip-mic{width:100%;margin-top:10px;padding:12px;border:0;
+border-radius:12px;font-weight:900;font-size:14px;color:#fff;
+background:#059669;cursor:pointer}
+#mip-mic.rec{background:#dc2626}
+#mip-in{width:100%;box-sizing:border-box;padding:9px;margin-top:8px;
+border:1px solid #cbd5e1;border-radius:10px;font-size:14px}
+#mip-go{width:100%;margin-top:8px;padding:11px;border:0;
+border-radius:11px;font-weight:900;font-size:14px;color:#fff;
+background:#2563eb;cursor:pointer}
+#mip-st{display:none;margin-top:8px;padding:8px;border-radius:9px;
+background:#f1f5f9;font-size:12.5px;font-weight:700;color:#334155}
+</style>
+<div id="mip-box">
+<div style="display:flex;justify-content:space-between;align-items:center">
+<b>🎤 Dictar Documento IA</b>
+<span onclick="mipAI()" style="cursor:pointer;padding:4px 8px;font-weight:900">✕</span>
+</div>
+<button type="button" id="mip-mic" onclick="mipMic()">
+🎙️ Tocar y Hablar
+</button>
+<textarea id="mip-in" rows="3"
+placeholder="Díctale o escribe: Estimado a Juan Pérez por empañetar y pintar exterior en $2400 con $1000 de depósito..."></textarea>
+<button type="button" id="mip-go" onclick="mipFill()">
+✨ Llenar Documento Automático
+</button>
+<div id="mip-st"></div>
+</div>
+<button type="button" id="mip-fab" onclick="mipAI()">🎤 Voz IA</button>
+<script>
+var mipRec=null,mipListening=false;
+function mipAI(){
+var b=document.getElementById('mip-box');
+b.style.display=b.style.display==='block'?'none':'block';
+}
+function mipStatus(t,err){
+var s=document.getElementById('mip-st');
+s.style.display=t?'block':'none';
+s.style.color=err?'#be123c':'#065f46';
+s.textContent=t||'';
+}
+function mipMic(){
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+var btn=document.getElementById('mip-mic');
+if(!SR){
+mipStatus('Usa el micrófono del teclado de tu teléfono.',true);
+document.getElementById('mip-in').focus();
+return;
+}
+if(mipListening&&mipRec){mipRec.stop();return;}
+mipRec=new SR();
+var lg=(typeof currentLang!=='undefined'&&currentLang)?currentLang:'es';
+mipRec.lang=lg==='en'?'en-US':lg==='pt'?'pt-BR':lg==='fr'?'fr-FR':lg==='pl'?'pl-PL':'es-PR';
+mipRec.interimResults=false;
+mipRec.continuous=false;
+mipListening=true;
+btn.className='rec';
+btn.textContent='🔴 Escuchando... (Toca al terminar)';
+mipStatus('Habla claro: cliente, trabajos, montos, depósito...',false);
+mipRec.onresult=function(e){
+var txt='';
+for(var i=0;i<e.results.length;i++){txt+=e.results[i][0].transcript+' ';}
+var inp=document.getElementById('mip-in');
+inp.value=(inp.value?inp.value+' ':'')+txt.trim();
+};
+mipRec.onerror=function(e){
+mipStatus('Micrófono: '+e.error,true);
+};
+mipRec.onend=function(){
+mipListening=false;
+btn.className='';
+btn.textContent='🎙️ Tocar y Hablar';
+if(document.getElementById('mip-in').value.trim()){
+mipFill();
+}
+};
+mipRec.start();
+}
+async function mipFill(){
+var q=document.getElementById('mip-in').value.trim();
+if(!q){mipStatus('Primero dicta o escribe los datos.',true);return;}
+var g=document.getElementById('mip-go');
+g.disabled=true;
+g.textContent=' redactando y llenando...';
+mipStatus('Generando alcance profesional y montos...',false);
+var lg=(typeof currentLang!=='undefined'&&currentLang)?currentLang:'es';
+var sys='Eres el motor experto de Mr. Invoice Pro. '+
+'Convierte la instruccion del usuario en un documento comercial completo en idioma "'+lg+'". '+
+'Redacta descripciones tecnicas profesionales y claras para cada partida. '+
+'Devuelve SOLO JSON valido con esta estructura exacta: '+
+'{"docType":"quote|invoice|receipt|contract|billsale|lease|waiver|promissory|change|workorder|po|delivery" o "",'+
+'"client":"nombre, direccion o telefono si lo mencionan o vacio",'+
+'"items":[{"desc":"alcance detallado profesional sin numero inicial","qty":1,"price":0}],'+
+'"taxPct":0,"taxAmt":0,"discAmt":0,"dep":0,'+
+'"notes":"garantia, tiempo de entrega o condiciones profesionales"}';
+try{
+var r=await fetch('https://mrinvoiceprocom.fincasoto2021.workers.dev',{
+method:'POST',
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({system:sys,prompt:q,json:true})
+});
+var d=await r.json();
+if(!d.ok||!d.text)throw new Error(d.error||'Sin datos de IA');
+var raw=d.text.replace(/^```json\s*/i,'').replace(/```\s*$/,'').trim();
+var obj=JSON.parse(raw);
+if(obj.docType&&window.I18N&&I18N.es.types[obj.docType]){
+var dt=document.getElementById('qb-doctype');
+if(dt){dt.value=obj.docType;safeSetStorage('mcp_active_doctype',obj.docType);syncActiveDocTypeUI();}
+}
+if(obj.client){
+var cl=document.getElementById('qb-client');
+if(cl)cl.value=obj.client;
+}
+if(Array.isArray(obj.items)&&obj.items.length>0){
+customLineItems=obj.items.map(function(it){
+return{
+desc:String(it.desc||''),
+qty:String(it.qty||1),
+price:String(it.price!==undefined?it.price:'')
+};
+});
+renderCustomLines();
+}
+if(Number(obj.discAmt)>0){
+document.getElementById('qb-disc-mode').value='amt';
+document.getElementById('qb-disc').value=String(obj.discAmt);
+}
+if(Number(obj.taxPct)>0){
+document.getElementById('qb-tax-mode').value='pct';
+document.getElementById('qb-tax').value=String(obj.taxPct);
+}else if(Number(obj.taxAmt)>0){
+document.getElementById('qb-tax-mode').value='amt';
+document.getElementById('qb-tax').value=String(obj.taxAmt);
+}
+if(Number(obj.dep)>0){
+document.getElementById('qb-dep').value=String(obj.dep);
+}
+if(obj.notes){
+document.getElementById('qb-notes').value=obj.notes;
+}
+onBuilderUserEdit(false);
+mipStatus('¡Listo! Revisa tu documento abajo.',false);
+setTimeout(function(){
+document.getElementById('mip-box').style.display='none';
+if(typeof showExecutiveToast==='function')showExecutiveToast('✨ Documento redactado y llenado por IA',3200);
+},700);
+}catch(e){
+mipStatus('Error: '+e.message,true);
+}
+g.disabled=false;
+g.textContent='✨ Llenar Documento Automático';
+}
+</script>
 
 </body>
 </html>
