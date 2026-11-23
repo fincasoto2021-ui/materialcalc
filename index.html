@@ -4767,5 +4767,68 @@ window.addEventListener('DOMContentLoaded', function() {
   initSeamlessBackStack();
 });
 </script>
+<style>
+#mip-fab{position:fixed;bottom:20px;right:16px;padding:12px 16px;
+background:#2563eb;color:#fff;border:0;border-radius:99px;
+font-weight:700;box-shadow:0 6px 18px rgba(0,0,0,.3);z-index:9998}
+#mip-box{display:none;position:fixed;bottom:76px;right:16px;
+width:310px;max-width:90vw;background:#fff;color:#0f172a;
+border:1px solid #cbd5e1;border-radius:14px;padding:14px;
+box-shadow:0 12px 30px rgba(0,0,0,.25);z-index:9999}
+#mip-in{width:100%;box-sizing:border-box;padding:8px;margin-top:8px;
+border:1px solid #cbd5e1;border-radius:8px;font-size:14px}
+#mip-go,#mip-cp{width:100%;margin-top:8px;padding:10px;border:0;
+border-radius:8px;font-weight:700;color:#fff;background:#2563eb}
+#mip-out{display:none;white-space:pre-wrap;max-height:170px;
+overflow:auto;background:#f1f5f9;padding:8px;margin-top:8px;
+border-radius:8px;font-size:13px;color:#1e293b}
+</style>
+<div id="mip-box">
+<div style="display:flex;justify-content:space-between">
+<b>✨ Asistente IA</b><span onclick="mipAI()">✕</span>
+</div>
+<textarea id="mip-in" rows="3"
+placeholder="Ej: Redacta alcance o estimado para..."></textarea>
+<button type="button" id="mip-go" onclick="mipAsk()">Generar IA</button>
+<div id="mip-out"></div>
+<button type="button" id="mip-cp" onclick="mipCp()"
+style="display:none;background:#0f172a">Copiar texto</button>
+</div>
+<button type="button" id="mip-fab" onclick="mipAI()">✨ IA</button>
+<script>
+function mipAI(){
+var b=document.getElementById('mip-box');
+b.style.display=b.style.display==='block'?'none':'block';
+}
+async function mipAsk(){
+var q=document.getElementById('mip-in').value.trim();
+if(!q)return;
+var g=document.getElementById('mip-go'),
+o=document.getElementById('mip-out'),
+c=document.getElementById('mip-cp');
+g.textContent='Pensando...';g.disabled=true;
+try{
+var r=await fetch(
+'https://mrinvoiceprocom.fincasoto2021.workers.dev',
+{method:'POST',headers:{'Content-Type':'application/json'},
+body:JSON.stringify({
+system:'Experto de Mr. Invoice Pro. Redacta alcances de trabajo, '+
+'estimados, facturas y clausulas claras y profesionales.',
+prompt:q})});
+var d=await r.json();
+o.textContent=d.text||d.error||'Sin respuesta';
+o.style.display='block';c.style.display='block';
+}catch(e){o.textContent='Error de red';o.style.display='block';}
+g.textContent='Generar IA';g.disabled=false;
+}
+function mipCp(){
+navigator.clipboard.writeText(
+document.getElementById('mip-out').textContent);
+var c=document.getElementById('mip-cp');
+c.textContent='Copiado!';
+setTimeout(function(){c.textContent='Copiar texto';},1500);
+}
+</script>
+
 </body>
 </html>
