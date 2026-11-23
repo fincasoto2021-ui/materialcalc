@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mr-invoice-pro-v19';
+const CACHE_NAME = 'mr-invoice-pro-v20';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -46,17 +46,20 @@ self.addEventListener('fetch', (event) => {
   if (url.protocol !== 'http:' && url.protocol !== 'https:') return;
 
   if (
+    url.pathname === '/widget.js' ||
     url.pathname.startsWith('/api/') ||
+    url.hostname.includes('workers.dev') ||
     url.hostname.includes('goatcounter.com') ||
     url.hostname.includes('zgo.at') ||
     url.hostname.includes('stripe.com')
   ) {
+    event.respondWith(fetch(req, { cache: 'no-store' }));
     return;
   }
 
   if (req.mode === 'navigate' || url.pathname === '/' || url.pathname.endsWith('.html')) {
     event.respondWith(
-      fetch(req)
+      fetch(req, { cache: 'no-store' })
         .then((networkRes) => {
           if (networkRes && networkRes.status === 200 && url.origin === self.location.origin) {
             const copyIndex = networkRes.clone();
