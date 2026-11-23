@@ -4528,6 +4528,366 @@ g.textContent='✨ Llenar Documento Automático';
   };
 })();
 </script>
+<style id="mip-turbo-style">
+#mip-fab,#mip-box{display:none!important;visibility:hidden!important;pointer-events:none!important}
+#mip-help-btn{position:fixed;bottom:20px;right:16px;padding:11px 18px;background:linear-gradient(135deg,#059669 0%,#047857 100%);color:#ffffff;border:1px solid rgba(255,255,255,0.3);border-radius:999px;font-weight:800;font-size:13.5px;letter-spacing:0.2px;box-shadow:0 8px 24px rgba(5,150,105,0.38);z-index:10010;display:flex;align-items:center;gap:8px;cursor:pointer;transition:transform .14s ease}
+#mip-help-btn:active{transform:scale(0.96)}
+#mip-help-dot{width:7px;height:7px;border-radius:50%;background:#a7f3d0;box-shadow:0 0 0 3px rgba(167,243,208,0.28)}
+#mip-help-panel{display:none;position:fixed;bottom:76px;right:16px;width:348px;max-width:93vw;background:#ffffff;color:#0f172a;border:1px solid rgba(15,23,42,0.12);border-radius:22px;padding:16px;box-shadow:0 22px 48px rgba(15,23,42,0.26);z-index:10011}
+#mip-help-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid #f1f5f9}
+#mip-help-title{display:flex;align-items:center;gap:8px;font-weight:900;font-size:14px;color:#0b0f19}
+#mip-help-ico{width:28px;height:28px;border-radius:8px;background:#ecfdf5;color:#059669;display:flex;align-items:center;justify-content:center}
+#mip-help-close{cursor:pointer;width:28px;height:28px;border-radius:50%;background:#f1f5f9;color:#475569;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;border:0}
+#mip-help-text{width:100%;box-sizing:border-box;padding:10px 11px;margin-top:11px;border:1px solid #cbd5e1;border-radius:13px;font-size:13.5px;line-height:1.4;background:#f8fafc;color:#0f172a;resize:none}
+#mip-help-text:focus{background:#fff;border-color:#059669;outline:none}
+#mip-bar{display:flex;align-items:center;gap:8px;margin-top:10px}
+#mip-trash{display:none;width:44px;height:46px;border-radius:13px;border:1px solid #fecdd3;background:#fff1f2;color:#be123c;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+#mip-rec{flex:1;height:46px;padding:0 14px;border:0;border-radius:999px;font-weight:800;font-size:13.5px;color:#fff;background:#059669;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 12px rgba(5,150,105,0.24)}
+#mip-rec.rec{background:#dc2626;box-shadow:0 4px 14px rgba(220,38,38,0.32)}
+#mip-rec.paused{background:#d97706;box-shadow:0 4px 14px rgba(217,119,6,0.3)}
+#mip-send{width:46px;height:46px;border-radius:50%;border:0;background:#0b0f19;color:#ffffff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;box-shadow:0 4px 12px rgba(15,23,42,0.22);transition:opacity .15s ease,transform .12s ease}
+#mip-send:disabled{opacity:0.32;cursor:default;box-shadow:none}
+#mip-send.ready{background:#2563eb;box-shadow:0 6px 16px rgba(37,99,235,0.35)}
+#mip-send:active{transform:scale(0.94)}
+#mip-help-hint{font-size:11.5px;color:#64748b;margin-top:8px;text-align:center;line-height:1.35}
+#mip-help-status{display:none;margin-top:8px;padding:9px 10px;border-radius:10px;background:#f1f5f9;font-size:12px;font-weight:700;line-height:1.35;text-align:center}
+</style>
+<script>
+(function() {
+  var WORKER = "https://mrinvoiceprocom.fincasoto2021.workers.dev";
+  document.querySelectorAll("#mip-box,#mip-fab,#mip-help-style,#mip-help-panel,#mip-help-btn").forEach(function(el) {
+    el.remove();
+  });
+
+  var micSvg = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>';
+  var pauseSvg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4.5" height="16" rx="1.2"/><rect x="13.5" y="4" width="4.5" height="16" rx="1.2"/></svg>';
+  var sendSvg = '<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';
+  var trashSvg = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>';
+  var helpSvg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>';
+
+  var box = document.createElement("div");
+  box.id = "mip-help-panel";
+  box.innerHTML =
+    '<div id="mip-help-head">' +
+      '<div id="mip-help-title"><span id="mip-help-ico">' + micSvg + '</span><span>Help • Grabadora Turbo IA</span></div>' +
+      '<button type="button" id="mip-help-close">X</button>' +
+    '</div>' +
+    '<textarea id="mip-help-text" rows="2" placeholder="Opcional: escribe aquí o usa el botón Grabar abajo..."></textarea>' +
+    '<div id="mip-bar">' +
+      '<button type="button" id="mip-trash" title="Descartar">' + trashSvg + '</button>' +
+      '<button type="button" id="mip-rec">' + micSvg + '<span>Grabar Voz</span></button>' +
+      '<button type="button" id="mip-send" disabled title="Enviar">' + sendSvg + '</button>' +
+    '</div>' +
+    '<div id="mip-help-hint">Pausa y continúa cuantas veces quieras, y toca el botón azul de enviar al terminar.</div>' +
+    '<div id="mip-help-status"></div>';
+  document.body.appendChild(box);
+
+  var fab = document.createElement("button");
+  fab.type = "button";
+  fab.id = "mip-help-btn";
+  fab.innerHTML = '<span id="mip-help-dot"></span>' + helpSvg + '<span>Help</span>';
+  document.body.appendChild(fab);
+
+  var recBtn = document.getElementById("mip-rec");
+  var sendBtn = document.getElementById("mip-send");
+  var trashBtn = document.getElementById("mip-trash");
+  var inp = document.getElementById("mip-help-text");
+
+  var mr = null, stream = null, chunks = [], recMime = "audio/webm";
+  var state = "idle", secs = 0, timer = null, sendAfterStop = false;
+
+  function fmtTime(t) {
+    var m = Math.floor(t / 60), s = t % 60;
+    return m + ":" + (s < 10 ? "0" : "") + s;
+  }
+
+  function setStatus(msg, isErr) {
+    var s = document.getElementById("mip-help-status");
+    s.style.display = msg ? "block" : "none";
+    s.style.color = isErr ? "#be123c" : "#065f46";
+    s.textContent = msg || "";
+  }
+
+  function syncSendBtn() {
+    var hasContent = state === "recording" || state === "paused" || chunks.length > 0 || inp.value.trim().length > 0;
+    sendBtn.disabled = (state === "sending") || !hasContent;
+    sendBtn.className = (!sendBtn.disabled && hasContent) ? "ready" : "";
+  }
+
+  inp.addEventListener("input", syncSendBtn);
+
+  function releaseMic() {
+    if (timer) { clearInterval(timer); timer = null; }
+    if (stream) {
+      try { stream.getTracks().forEach(function(t) { t.stop(); }); } catch (e) {}
+      stream = null;
+    }
+  }
+
+  function resetAllUI() {
+    releaseMic();
+    mr = null;
+    chunks = [];
+    secs = 0;
+    state = "idle";
+    sendAfterStop = false;
+    recBtn.disabled = false;
+    recBtn.className = "";
+    recBtn.innerHTML = micSvg + '<span>Grabar Voz</span>';
+    trashBtn.style.display = "none";
+    syncSendBtn();
+  }
+
+  fab.onclick = function() {
+    if (box.style.display === "block") {
+      if (state === "recording" || state === "paused") {
+        sendAfterStop = false;
+        if (mr && mr.state !== "inactive") { try { mr.stop(); } catch (e) {} }
+        resetAllUI();
+      }
+      box.style.display = "none";
+    } else {
+      box.style.display = "block";
+    }
+  };
+  document.getElementById("mip-help-close").onclick = fab.onclick;
+
+  function applyDocData(obj) {
+    var validTypes = ["quote","invoice","receipt","contract","billsale","lease","waiver","promissory","change","workorder","po","delivery"];
+    if (obj.docType && validTypes.indexOf(obj.docType) !== -1) {
+      var dt = document.getElementById("qb-doctype");
+      if (dt) {
+        dt.value = obj.docType;
+        if (typeof safeSetStorage === "function") safeSetStorage("mcp_active_doctype", obj.docType);
+        if (typeof syncActiveDocTypeUI === "function") syncActiveDocTypeUI();
+      }
+    }
+    if (obj.issuer && String(obj.issuer).trim()) {
+      var compEl = document.getElementById("qb-comp");
+      if (compEl) compEl.value = String(obj.issuer).trim();
+    }
+    if (obj.phone && String(obj.phone).trim()) {
+      var phEl = document.getElementById("qb-phone");
+      if (phEl) phEl.value = String(obj.phone).trim();
+    }
+    if (obj.client) {
+      var cliEl = document.getElementById("qb-client");
+      if (cliEl) cliEl.value = String(obj.client).trim();
+    }
+    if (Array.isArray(obj.items) && obj.items.length > 0 && typeof renderCustomLines === "function") {
+      customLineItems = obj.items.map(function(it) {
+        return { desc: String(it.desc || ""), qty: String(it.qty || 1), price: String(it.price !== undefined ? it.price : "") };
+      });
+      renderCustomLines();
+    }
+    document.getElementById("qb-disc-mode").value = "amt";
+    document.getElementById("qb-disc").value = String(Number(obj.discAmt) || 0);
+    if (Number(obj.taxPct) > 0) {
+      document.getElementById("qb-tax-mode").value = "pct";
+      document.getElementById("qb-tax").value = String(obj.taxPct);
+    } else {
+      document.getElementById("qb-tax-mode").value = "amt";
+      document.getElementById("qb-tax").value = String(Number(obj.taxAmt) || 0);
+    }
+    document.getElementById("qb-ret-mode").value = "pct";
+    document.getElementById("qb-ret").value = String(Number(obj.retPct) || 0);
+    document.getElementById("qb-dep").value = String(Number(obj.dep) || 0);
+    if (obj.notes) document.getElementById("qb-notes").value = String(obj.notes);
+    if (typeof onBuilderUserEdit === "function") onBuilderUserEdit(false);
+    inp.value = "";
+    resetAllUI();
+    box.style.display = "none";
+    setStatus("", false);
+    if (typeof showExecutiveToast === "function") showExecutiveToast("Documento completado con éxito", 3000);
+  }
+
+  function blobToBase64(blob) {
+    return new Promise(function(resolve, reject) {
+      var reader = new FileReader();
+      reader.onloadend = function() {
+        var res = String(reader.result || "");
+        var comma = res.indexOf(",");
+        resolve(comma !== -1 ? res.slice(comma + 1) : res);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  async function sendToTurboWorker(audioB64, mimeStr, extraText) {
+    state = "sending";
+    recBtn.disabled = true;
+    sendBtn.disabled = true;
+    trashBtn.style.display = "none";
+    setStatus("Procesando en modo Turbo...", false);
+
+    var lg = (typeof currentLang !== "undefined" && currentLang) ? currentLang : "es";
+    var sys = 'Eres el redactor experto de Mr. Invoice Pro en Puerto Rico y EE.UU. Escucha el audio y/o lee la nota del usuario y conviértelo en un documento comercial impecable en idioma "' + lg + '". Si el usuario duda, hace pausas o corrige un monto/nombre mientras habla, usa únicamente su dato corregido final e ignora muletillas. Redacta descripciones profesionales claras para cada partida técnica (construcción, servicios, ventas, etc.). Devuelve SOLO JSON válido exacto: {"docType":"quote|invoice|receipt|contract|billsale|lease|waiver|promissory|change|workorder|po|delivery","issuer":"","phone":"","client":"","items":[{"desc":"","qty":1,"price":0}],"taxPct":0,"taxAmt":0,"discAmt":0,"retPct":0,"dep":0,"notes":""}';
+
+    var payload = { system: sys };
+    if (audioB64) {
+      payload.audioBase64 = audioB64;
+      payload.mimeType = mimeStr || "audio/webm";
+    }
+    if (extraText) payload.prompt = extraText;
+
+    try {
+      var r = await fetch(WORKER + "?t=" + Date.now(), {
+        method: "POST",
+        mode: "cors",
+        cache: "no-store",
+        headers: { "Content-Type": "text/plain;charset=UTF-8" },
+        body: JSON.stringify(payload)
+      });
+      var d = await r.json();
+      if (!d || !d.ok || !d.text) throw new Error((d && d.error) ? d.error : "Respuesta vacía");
+      var i1 = d.text.indexOf("{"), i2 = d.text.lastIndexOf("}");
+      if (i1 === -1 || i2 === -1) throw new Error("Formato inválido");
+      applyDocData(JSON.parse(d.text.slice(i1, i2 + 1)));
+    } catch (err) {
+      resetAllUI();
+      setStatus("No se pudo procesar (" + String(err.message || "intenta de nuevo") + ").", true);
+    }
+  }
+
+  function startTimer() {
+    if (timer) clearInterval(timer);
+    timer = setInterval(function() {
+      secs++;
+      if (state === "recording") {
+        recBtn.innerHTML = pauseSvg + '<span>Parar (' + fmtTime(secs) + ')</span>';
+      }
+    }, 1000);
+  }
+
+  async function beginRecording() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || typeof MediaRecorder === "undefined") {
+      inp.focus();
+      setStatus("Usa el cuadro de texto arriba.", true);
+      return;
+    }
+    try {
+      stream = await navigator.mediaDevices.getUserMedia({
+        audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }
+      });
+      var candidates = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4", "audio/ogg;codecs=opus"];
+      recMime = "";
+      for (var i = 0; i < candidates.length; i++) {
+        if (MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(candidates[i])) {
+          recMime = candidates[i];
+          break;
+        }
+      }
+      chunks = [];
+      try {
+        mr = recMime
+          ? new MediaRecorder(stream, { mimeType: recMime, audioBitsPerSecond: 24000 })
+          : new MediaRecorder(stream, { audioBitsPerSecond: 24000 });
+      } catch (e1) {
+        mr = new MediaRecorder(stream);
+      }
+      recMime = mr.mimeType || recMime || "audio/webm";
+
+      mr.ondataavailable = function(ev) {
+        if (ev.data && ev.data.size > 0) chunks.push(ev.data);
+      };
+
+      mr.onstop = async function() {
+        releaseMic();
+        if (!sendAfterStop) {
+          resetAllUI();
+          return;
+        }
+        sendAfterStop = false;
+        var blob = new Blob(chunks, { type: recMime });
+        chunks = [];
+        if (blob.size < 400 && !inp.value.trim()) {
+          resetAllUI();
+          setStatus("No se captó audio. Intenta de nuevo.", true);
+          return;
+        }
+        try {
+          var b64 = blob.size >= 400 ? await blobToBase64(blob) : "";
+          await sendToTurboWorker(b64, recMime, inp.value.trim());
+        } catch (err) {
+          resetAllUI();
+          setStatus("Error al procesar el audio.", true);
+        }
+      };
+
+      mr.start(250);
+      secs = 0;
+      state = "recording";
+      recBtn.className = "rec";
+      recBtn.innerHTML = pauseSvg + '<span>Parar (0:00)</span>';
+      trashBtn.style.display = "flex";
+      syncSendBtn();
+      setStatus("Grabando sin cortes... Toca Parar para pausar.", false);
+      startTimer();
+    } catch (err) {
+      resetAllUI();
+      setStatus("Permite el acceso al micrófono en tu navegador.", true);
+    }
+  }
+
+  recBtn.onclick = function() {
+    if (state === "sending") return;
+    if (state === "idle") {
+      beginRecording();
+      return;
+    }
+    if (state === "recording") {
+      if (mr && mr.state === "recording" && typeof mr.pause === "function") {
+        mr.pause();
+        if (timer) { clearInterval(timer); timer = null; }
+        state = "paused";
+        recBtn.className = "paused";
+        recBtn.innerHTML = micSvg + '<span>Continuar (' + fmtTime(secs) + ')</span>';
+        syncSendBtn();
+        setStatus("En pausa (" + fmtTime(secs) + "). Toca Continuar o envía con el botón azul.", false);
+      }
+      return;
+    }
+    if (state === "paused") {
+      if (mr && mr.state === "paused" && typeof mr.resume === "function") {
+        mr.resume();
+        state = "recording";
+        recBtn.className = "rec";
+        recBtn.innerHTML = pauseSvg + '<span>Parar (' + fmtTime(secs) + ')</span>';
+        syncSendBtn();
+        setStatus("Grabando... Toca Parar para pausar.", false);
+        startTimer();
+      }
+    }
+  };
+
+  trashBtn.onclick = function() {
+    sendAfterStop = false;
+    if (mr && mr.state !== "inactive") {
+      try { mr.stop(); } catch (e) { resetAllUI(); }
+    } else {
+      resetAllUI();
+    }
+    setStatus("Grabación descartada.", false);
+  };
+
+  sendBtn.onclick = function() {
+    if (state === "sending") return;
+    if (state === "recording" || state === "paused") {
+      sendAfterStop = true;
+      if (timer) { clearInterval(timer); timer = null; }
+      if (mr && mr.state !== "inactive") {
+        try { mr.requestData(); } catch (e) {}
+        try { mr.stop(); } catch (e) { resetAllUI(); }
+      }
+      return;
+    }
+    var txt = inp.value.trim();
+    if (txt) sendToTurboWorker("", "", txt);
+  };
+})();
+</script>
 </body>
 </html>
+
 
