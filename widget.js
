@@ -1,9 +1,13 @@
 (function() {
   var WORKER = "https://mrinvoiceprocom.fincasoto2021.workers.dev";
-  ["mip-ai-style", "mip-box", "mip-fab"].forEach(function(id) {
-    var old = document.getElementById(id);
-    if (old) old.remove();
-  });
+
+  function killLegacyWidget() {
+    ["mip-box", "mip-fab", "mip-help-style", "mip-help-panel", "mip-help-btn"].forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.remove();
+    });
+  }
+  killLegacyWidget();
 
   function localBackupExtract(rawText) {
     var txt = String(rawText || "").trim().replace(/(\d+(?:[.,]\d+)?)\s*mil\b/gi, function(_, n) {
@@ -55,63 +59,66 @@
   }
 
   var st = document.createElement("style");
-  st.id = "mip-ai-style";
+  st.id = "mip-help-style";
   st.textContent =
-    "#mip-fab{position:fixed;bottom:20px;right:16px;padding:11px 18px;background:linear-gradient(135deg,#059669 0%,#047857 100%);color:#ffffff;border:1px solid rgba(255,255,255,0.28);border-radius:999px;font-weight:800;font-size:13.5px;letter-spacing:0.2px;box-shadow:0 8px 24px rgba(5,150,105,0.36);z-index:9998;display:flex;align-items:center;gap:8px;cursor:pointer}" +
-    "#mip-fab-dot{width:7px;height:7px;border-radius:50%;background:#a7f3d0;box-shadow:0 0 0 3px rgba(167,243,208,0.25)}" +
-    "#mip-box{display:none;position:fixed;bottom:76px;right:16px;width:336px;max-width:92vw;background:#ffffff;color:#0f172a;border:1px solid rgba(15,23,42,0.12);border-radius:20px;padding:16px;box-shadow:0 22px 48px rgba(15,23,42,0.22);z-index:9999}" +
-    "#mip-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid #f1f5f9}" +
-    "#mip-title-wrap{display:flex;align-items:center;gap:8px;font-weight:900;font-size:14px;color:#0b0f19}" +
-    "#mip-badge-ico{width:28px;height:28px;border-radius:8px;background:#ecfdf5;color:#059669;display:flex;align-items:center;justify-content:center}" +
-    "#mip-close{cursor:pointer;width:28px;height:28px;border-radius:50%;background:#f1f5f9;color:#475569;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;border:0}" +
-    "#mip-rec-btn{width:100%;margin-top:12px;padding:13px 14px;border:0;border-radius:12px;font-weight:800;font-size:14px;color:#fff;background:#059669;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}" +
-    "#mip-rec-btn.on{background:#dc2626}" +
-    "#mip-cancel-btn{display:none;width:100%;margin-top:6px;padding:8px;border:1px solid #fecdd3;border-radius:10px;font-weight:800;font-size:12px;color:#be123c;background:#fff1f2;cursor:pointer}" +
-    "#mip-hint{font-size:11.5px;color:#64748b;margin-top:7px;text-align:center;line-height:1.35}" +
-    "#mip-in{width:100%;box-sizing:border-box;padding:10px;margin-top:10px;border:1px solid #cbd5e1;border-radius:11px;font-size:13.5px;background:#f8fafc;color:#0f172a}" +
-    "#mip-go{width:100%;margin-top:8px;padding:11px;border:0;border-radius:11px;font-weight:800;font-size:13.5px;color:#fff;background:#0b0f19;cursor:pointer}" +
-    "#mip-st{display:none;margin-top:8px;padding:9px 10px;border-radius:10px;background:#f1f5f9;font-size:12px;font-weight:700}";
+    "#mip-fab,#mip-box{display:none!important;visibility:hidden!important;pointer-events:none!important}" +
+    "#mip-help-btn{position:fixed;bottom:20px;right:16px;padding:11px 18px;background:linear-gradient(135deg,#059669 0%,#047857 100%);color:#ffffff;border:1px solid rgba(255,255,255,0.3);border-radius:999px;font-weight:800;font-size:13.5px;letter-spacing:0.2px;box-shadow:0 8px 24px rgba(5,150,105,0.38);z-index:10010;display:flex;align-items:center;gap:8px;cursor:pointer;transition:transform .14s ease}" +
+    "#mip-help-btn:active{transform:scale(0.96)}" +
+    "#mip-help-dot{width:7px;height:7px;border-radius:50%;background:#a7f3d0;box-shadow:0 0 0 3px rgba(167,243,208,0.28)}" +
+    "#mip-help-panel{display:none;position:fixed;bottom:76px;right:16px;width:338px;max-width:92vw;background:#ffffff;color:#0f172a;border:1px solid rgba(15,23,42,0.12);border-radius:20px;padding:16px;box-shadow:0 22px 48px rgba(15,23,42,0.24);z-index:10011}" +
+    "#mip-help-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid #f1f5f9}" +
+    "#mip-help-title{display:flex;align-items:center;gap:8px;font-weight:900;font-size:14px;color:#0b0f19}" +
+    "#mip-help-ico{width:28px;height:28px;border-radius:8px;background:#ecfdf5;color:#059669;display:flex;align-items:center;justify-content:center}" +
+    "#mip-help-close{cursor:pointer;width:28px;height:28px;border-radius:50%;background:#f1f5f9;color:#475569;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;border:0}" +
+    "#mip-help-rec{width:100%;margin-top:12px;padding:13px 14px;border:0;border-radius:12px;font-weight:800;font-size:14px;color:#fff;background:#059669;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 12px rgba(5,150,105,0.22)}" +
+    "#mip-help-rec.on{background:#dc2626;box-shadow:0 4px 14px rgba(220,38,38,0.3)}" +
+    "#mip-help-cancel{display:none;width:100%;margin-top:6px;padding:8px;border:1px solid #fecdd3;border-radius:10px;font-weight:800;font-size:12px;color:#be123c;background:#fff1f2;cursor:pointer}" +
+    "#mip-help-hint{font-size:11.5px;color:#64748b;margin-top:7px;text-align:center;line-height:1.35}" +
+    "#mip-help-text{width:100%;box-sizing:border-box;padding:10px;margin-top:10px;border:1px solid #cbd5e1;border-radius:11px;font-size:13.5px;line-height:1.4;background:#f8fafc;color:#0f172a}" +
+    "#mip-help-text:focus{background:#fff;border-color:#059669;outline:none}" +
+    "#mip-help-submit{width:100%;margin-top:8px;padding:11px;border:0;border-radius:11px;font-weight:800;font-size:13.5px;color:#fff;background:#0b0f19;cursor:pointer}" +
+    "#mip-help-status{display:none;margin-top:8px;padding:9px 10px;border-radius:10px;background:#f1f5f9;font-size:12px;font-weight:700;line-height:1.35}";
   document.head.appendChild(st);
 
   var micSvg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>';
   var helpSvg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>';
 
   var box = document.createElement("div");
-  box.id = "mip-box";
+  box.id = "mip-help-panel";
   box.innerHTML =
-    '<div id="mip-head">' +
-      '<div id="mip-title-wrap"><span id="mip-badge-ico">' + micSvg + '</span><span>Smart Help • Dictado</span></div>' +
-      '<button type="button" id="mip-close">✕</button>' +
+    '<div id="mip-help-head">' +
+      '<div id="mip-help-title"><span id="mip-help-ico">' + micSvg + '</span><span>Help • Dictado Inteligente</span></div>' +
+      '<button type="button" id="mip-help-close">✕</button>' +
     '</div>' +
-    '<button type="button" id="mip-rec-btn">' + micSvg + '<span>Hablar para Llenar</span></button>' +
-    '<button type="button" id="mip-cancel-btn">Cancelar dictado</button>' +
-    '<div id="mip-hint">Haz todas las pausas que quieras. No se corta hasta tocar Terminar.</div>' +
-    '<textarea id="mip-in" rows="3" placeholder="Aquí verás tu dictado o puedes escribirlo directo..."></textarea>' +
-    '<button type="button" id="mip-go">Completar Documento Ahora</button>' +
-    '<div id="mip-st"></div>';
+    '<button type="button" id="mip-help-rec">' + micSvg + '<span>Hablar para Llenar</span></button>' +
+    '<button type="button" id="mip-help-cancel">Cancelar dictado</button>' +
+    '<div id="mip-help-hint">Haz todas las pausas que necesites. No se envía hasta tocar Terminar.</div>' +
+    '<textarea id="mip-help-text" rows="3" placeholder="Aquí verás tu dictado en vivo o puedes escribirlo directo..."></textarea>' +
+    '<button type="button" id="mip-help-submit">Completar Documento Ahora</button>' +
+    '<div id="mip-help-status"></div>';
   document.body.appendChild(box);
 
   var fab = document.createElement("button");
   fab.type = "button";
-  fab.id = "mip-fab";
-  fab.innerHTML = '<span id="mip-fab-dot"></span>' + helpSvg + '<span>Help</span>';
+  fab.id = "mip-help-btn";
+  fab.innerHTML = '<span id="mip-help-dot"></span>' + helpSvg + '<span>Help</span>';
   document.body.appendChild(fab);
 
-  var recBtn = document.getElementById("mip-rec-btn");
-  var cancelBtn = document.getElementById("mip-cancel-btn");
-  var goBtn = document.getElementById("mip-go");
-  var inp = document.getElementById("mip-in");
+  var recBtn = document.getElementById("mip-help-rec");
+  var cancelBtn = document.getElementById("mip-help-cancel");
+  var goBtn = document.getElementById("mip-help-submit");
+  var inp = document.getElementById("mip-help-text");
   var sr = null, wantListening = false, submitOnStop = false, committedText = "", timer = null, secs = 0;
 
   function setStatus(msg, isErr) {
-    var s = document.getElementById("mip-st");
+    var s = document.getElementById("mip-help-status");
     s.style.display = msg ? "block" : "none";
     s.style.color = isErr ? "#be123c" : "#065f46";
     s.textContent = msg || "";
   }
 
   fab.onclick = function() { box.style.display = box.style.display === "block" ? "none" : "block"; };
-  document.getElementById("mip-close").onclick = fab.onclick;
+  document.getElementById("mip-help-close").onclick = fab.onclick;
 
   function resetRecUI() {
     if (timer) { clearInterval(timer); timer = null; }
@@ -130,8 +137,14 @@
         if (typeof syncActiveDocTypeUI === "function") syncActiveDocTypeUI();
       }
     }
-    if (obj.issuer && String(obj.issuer).trim()) document.getElementById("qb-comp").value = String(obj.issuer).trim();
-    if (obj.client) document.getElementById("qb-client").value = String(obj.client).trim();
+    if (obj.issuer && String(obj.issuer).trim()) {
+      var compEl = document.getElementById("qb-comp");
+      if (compEl) compEl.value = String(obj.issuer).trim();
+    }
+    if (obj.client) {
+      var cliEl = document.getElementById("qb-client");
+      if (cliEl) cliEl.value = String(obj.client).trim();
+    }
     if (Array.isArray(obj.items) && obj.items.length > 0 && typeof renderCustomLines === "function") {
       customLineItems = obj.items.map(function(it) {
         return { desc: String(it.desc || ""), qty: String(it.qty || 1), price: String(it.price !== undefined ? it.price : "") };
@@ -162,9 +175,9 @@
   async function sendText(promptTxt) {
     recBtn.disabled = true;
     goBtn.disabled = true;
-    setStatus("Redactando y llenando campos...", false);
+    setStatus("Redactando alcance profesional y llenando campos...", false);
     var lg = (typeof currentLang !== "undefined" && currentLang) ? currentLang : "es";
-    var sys = 'Convierte la instruccion en un documento comercial en idioma "' + lg + '". Si se corrige hablando, usa su correccion final. Devuelve SOLO JSON valido: {"docType":"quote|invoice|receipt|contract|billsale|lease|waiver|promissory|change|workorder|po|delivery","issuer":"","client":"","items":[{"desc":"","qty":1,"price":0}],"taxPct":0,"taxAmt":0,"discAmt":0,"retPct":0,"dep":0,"notes":""}';
+    var sys = 'Eres el redactor experto de Mr. Invoice Pro. Convierte la instruccion del usuario en un documento comercial impecable en idioma "' + lg + '". Si se corrige hablando, usa su correccion final. Si da pocos detalles tecnicos, redacta una descripcion profesional acorde al trabajo o monto. Devuelve SOLO JSON valido: {"docType":"quote|invoice|receipt|contract|billsale|lease|waiver|promissory|change|workorder|po|delivery","issuer":"","client":"","items":[{"desc":"","qty":1,"price":0}],"taxPct":0,"taxAmt":0,"discAmt":0,"retPct":0,"dep":0,"notes":""}';
     try {
       var r = await fetch(WORKER + "?t=" + Date.now(), {
         method: "POST", mode: "cors", cache: "no-store",
@@ -195,13 +208,25 @@
       inp.value = (committedText ? committedText + " " : "") + seg.trim();
     };
     sr.onerror = function(e) {
-      if (e.error === "not-allowed") { wantListening = false; resetRecUI(); setStatus("Permite el micrófono.", true); }
+      if (e.error === "not-allowed" || e.error === "service-not-allowed") {
+        wantListening = false;
+        resetRecUI();
+        setStatus("Permite el acceso al micrófono en tu navegador.", true);
+      }
     };
     sr.onend = function() {
       committedText = inp.value.trim();
-      if (wantListening) { try { startSpeechLoop(); } catch (err) {} return; }
+      if (wantListening) {
+        setTimeout(function() {
+          if (wantListening) { try { startSpeechLoop(); } catch (err) {} }
+        }, 120);
+        return;
+      }
       resetRecUI();
-      if (submitOnStop && committedText) { submitOnStop = false; sendText(committedText); }
+      if (submitOnStop && committedText) {
+        submitOnStop = false;
+        sendText(committedText);
+      }
     };
     sr.start();
   }
@@ -228,7 +253,7 @@
       var m = Math.floor(secs / 60), s = secs % 60;
       recBtn.innerHTML = '<span>⏹ Terminar y Llenar (' + m + ':' + (s < 10 ? '0' : '') + s + ')</span>';
     }, 1000);
-    startSpeechLoop();
+    try { startSpeechLoop(); } catch (e) { wantListening = false; resetRecUI(); }
   };
 
   cancelBtn.onclick = function() {
