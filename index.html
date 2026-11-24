@@ -437,7 +437,6 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
     </button>
   </div>
 </div>
-
 <div class="container">
   <div class="builder-card">
     <input type="hidden" id="qb-doctype" value="quote">
@@ -1249,7 +1248,6 @@ const I18N = {
     }
   }
 };
-
 const SAMPLES_I18N = {
   es: {
     quote: {
@@ -1277,7 +1275,7 @@ const SAMPLES_I18N = {
       comp: "SOLUCIONES SOLARES & ENERGÍA DEL CARIBE LLC", phone: "EIN: 66-0847120 • Tel: (787) 555-0311",
       docNum: "2026-0419", date: "20/11/2026", client: "María E. Pérez Rosado — Carr. 135 Km 12.4, Adjuntas, PR • Tel: (787) 555-8210",
       rows: [
-        ["1. Pago Inicial / Depósito de Separación — Sistema Solar 10kW + Batería", "Abono oficial del 50% para orden de paneles monocristalinos e inversor híbrido.", 6500],
+        ["1. Pago Inicial / Depósito de Separación — Sistema Solar 10kW + Batería", "Abono oficial del 50% para orden de paneles monocristristalinos e inversor híbrido.", 6500],
         ["2. Método de Pago Verificado", "Transferencia Bancaria / Cheque Oficial #004812 acreditado en cuenta comercial.", 0]
       ],
       tax: 0, dep: 6500.00, notes: "CONSTANCIA DE PAGO: Este recibo acredita el abono recibido en la fecha indicada. Liquidación pendiente al completar la instalación."
@@ -2298,7 +2296,6 @@ function syncSignatureCardsUI() {
   if (stCli) stCli.innerText = clientSigData ? L.sigReady : L.sigClientHint;
   if (clrCli) clrCli.style.display = clientSigData ? 'inline-flex' : 'none';
 }
-
 function removeBlackBoxFromBrandIcons() {
   const cachedClean = cleanMascotLogoDataUrl || safeGetStorage('mcp_clean_mascot_v18', '');
   if (cachedClean) {
@@ -4115,449 +4112,705 @@ window.addEventListener('DOMContentLoaded', function() {
   initSeamlessBackStack();
 });
 </script>
-<style>
-#mip-fab{position:fixed;bottom:20px;right:16px;padding:12px 18px;
-background:#0b0f19;color:#fbbf24;border:1.5px solid #f59e0b;
-border-radius:99px;font-weight:900;font-size:14px;
-box-shadow:0 8px 22px rgba(0,0,0,.35);z-index:9998;
-display:flex;align-items:center;gap:6px;cursor:pointer}
-#mip-box{display:none;position:fixed;bottom:78px;right:16px;
-width:325px;max-width:92vw;background:#fff;color:#0f172a;
-border:1.5px solid #cbd5e1;border-radius:18px;padding:14px;
-box-shadow:0 18px 40px rgba(0,0,0,.3);z-index:9999}
-#mip-mic{width:100%;margin-top:10px;padding:12px;border:0;
-border-radius:12px;font-weight:900;font-size:14px;color:#fff;
-background:#059669;cursor:pointer}
-#mip-mic.rec{background:#dc2626}
-#mip-in{width:100%;box-sizing:border-box;padding:9px;margin-top:8px;
-border:1px solid #cbd5e1;border-radius:10px;font-size:14px}
-#mip-go{width:100%;margin-top:8px;padding:11px;border:0;
-border-radius:11px;font-weight:900;font-size:14px;color:#fff;
-background:#2563eb;cursor:pointer}
-#mip-st{display:none;margin-top:8px;padding:8px;border-radius:9px;
-background:#f1f5f9;font-size:12.5px;font-weight:700;color:#334155}
-</style>
-<div id="mip-box">
-<div style="display:flex;justify-content:space-between;align-items:center">
-<b>🎤 Dictar Documento IA</b>
-<span onclick="mipAI()" style="cursor:pointer;padding:4px 8px;font-weight:900">✕</span>
-</div>
-<button type="button" id="mip-mic" onclick="mipMic()">🎙️ Tocar y Hablar</button>
-<textarea id="mip-in" rows="3"
-placeholder="Díctale: Estimado a Juan Pérez por pintar exterior en $2400 con $1000 de depósito..."></textarea>
-<button type="button" id="mip-go" onclick="mipFill()">✨ Llenar Documento Automático</button>
-<div id="mip-st"></div>
-</div>
-<button type="button" id="mip-fab" onclick="mipAI()">🎤 Voz IA</button>
-<script>
-var mipRec=null,mipListening=false,mipBase='';
-function mipAI(){
-var b=document.getElementById('mip-box');
-b.style.display=b.style.display==='block'?'none':'block';
-}
-function mipStatus(t,err){
-var s=document.getElementById('mip-st');
-s.style.display=t?'block':'none';
-s.style.color=err?'#be123c':'#065f46';
-s.textContent=t||'';
-}
-function mipMic(){
-var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-var btn=document.getElementById('mip-mic');
-if(!SR){
-mipStatus('Usa el micrófono del teclado de tu teléfono.',true);
-document.getElementById('mip-in').focus();
-return;
-}
-if(mipListening&&mipRec){mipRec.stop();return;}
-mipRec=new SR();
-var lg=(typeof currentLang!=='undefined'&&currentLang)?currentLang:'es';
-mipRec.lang=lg==='en'?'en-US':lg==='pt'?'pt-BR':lg==='fr'?'fr-FR':lg==='pl'?'pl-PL':'es-PR';
-mipRec.interimResults=true;
-mipRec.continuous=false;
-mipBase=document.getElementById('mip-in').value.trim();
-mipListening=true;
-btn.className='rec';
-btn.textContent='🔴 Escuchando... (Toca al terminar)';
-mipStatus('Habla claro: cliente, trabajos, montos, depósito...',false);
-mipRec.onresult=function(e){
-var txt='';
-for(var i=0;i<e.results.length;i++){txt+=e.results[i][0].transcript;}
-document.getElementById('mip-in').value=(mipBase?mipBase+' ':'')+txt.trim();
-};
-mipRec.onerror=function(e){mipStatus('Micrófono: '+e.error,true);};
-mipRec.onend=function(){
-mipListening=false;
-btn.className='';
-btn.textContent='🎙️ Tocar y Hablar';
-if(document.getElementById('mip-in').value.trim())mipFill();
-};
-mipRec.start();
-}
-async function mipFill(){
-var q=document.getElementById('mip-in').value.trim();
-if(!q){mipStatus('Primero dicta o escribe los datos.',true);return;}
-var g=document.getElementById('mip-go');
-g.disabled=true;
-g.textContent='⏳ Redactando y llenando...';
-mipStatus('Generando alcance profesional y montos...',false);
-var lg=(typeof currentLang!=='undefined'&&currentLang)?currentLang:'es';
-var sys='Eres el motor experto de Mr. Invoice Pro. '+
-'Convierte el dictado del usuario en un documento comercial completo en idioma "'+lg+'". '+
-'Redacta descripciones tecnicas profesionales y detalladas para cada partida. '+
-'Devuelve SOLO un objeto JSON valido con estas llaves exactas: '+
-'{"docType":"quote",'+
-'"client":"",'+
-'"items":[{"desc":"","qty":1,"price":0}],'+
-'"taxPct":0,"taxAmt":0,"discAmt":0,"retPct":0,"dep":0,'+
-'"notes":""}. '+
-'En docType usa solo uno de: quote, invoice, receipt, contract, billsale, lease, waiver, promissory, change, workorder, po, delivery (o "" si no se menciona).';
-try{
-var r=await fetch('https://mrinvoiceprocom.fincasoto2021.workers.dev',{
-method:'POST',
-headers:{'Content-Type':'application/json'},
-body:JSON.stringify({system:sys,prompt:q,json:true})
-});
-var d=await r.json();
-if(!d.ok||!d.text)throw new Error(d.error||'Sin datos de IA');
-var raw=d.text.replace(/^```json\s*/i,'').replace(/```\s*$/,'').trim();
-var obj=JSON.parse(raw);
-if(obj.docType&&window.I18N&&I18N.es.types[obj.docType]){
-var dt=document.getElementById('qb-doctype');
-if(dt){dt.value=obj.docType;safeSetStorage('mcp_active_doctype',obj.docType);syncActiveDocTypeUI();}
-}
-if(obj.client)document.getElementById('qb-client').value=obj.client;
-if(Array.isArray(obj.items)&&obj.items.length>0){
-customLineItems=obj.items.map(function(it){
-return{desc:String(it.desc||''),qty:String(it.qty||1),price:String(it.price!==undefined?it.price:'')};
-});
-renderCustomLines();
-}
-document.getElementById('qb-disc-mode').value='amt';
-document.getElementById('qb-disc').value=String(Number(obj.discAmt)||0);
-if(Number(obj.taxPct)>0){
-document.getElementById('qb-tax-mode').value='pct';
-document.getElementById('qb-tax').value=String(obj.taxPct);
-}else{
-document.getElementById('qb-tax-mode').value='amt';
-document.getElementById('qb-tax').value=String(Number(obj.taxAmt)||0);
-}
-if(Number(obj.retPct)>0){
-document.getElementById('qb-ret-mode').value='pct';
-document.getElementById('qb-ret').value=String(obj.retPct);
-}
-document.getElementById('qb-dep').value=String(Number(obj.dep)||0);
-if(obj.notes)document.getElementById('qb-notes').value=obj.notes;
-onBuilderUserEdit(false);
-document.getElementById('mip-in').value='';
-mipStatus('¡Listo! Revisa tu documento abajo.',false);
-setTimeout(function(){
-document.getElementById('mip-box').style.display='none';
-if(typeof showExecutiveToast==='function')showExecutiveToast('✨ Documento redactado y llenado por IA',3200);
-},600);
-}catch(e){
-mipStatus('Error: '+e.message,true);
-}
-g.disabled=false;
-g.textContent='✨ Llenar Documento Automático';
-}
-</script>
-<style id="mip-help-style">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style id="mip-biz-pro-style">
 #mip-fab,#mip-box{display:none!important;visibility:hidden!important;pointer-events:none!important}
-#mip-help-btn{position:fixed;bottom:20px;right:16px;padding:11px 18px;background:linear-gradient(135deg,#059669 0%,#047857 100%);color:#ffffff;border:1px solid rgba(255,255,255,0.3);border-radius:999px;font-weight:800;font-size:13.5px;letter-spacing:0.2px;box-shadow:0 8px 24px rgba(5,150,105,0.38);z-index:10010;display:flex;align-items:center;gap:8px;cursor:pointer;transition:transform .14s ease}
-#mip-help-btn:active{transform:scale(0.96)}
-#mip-help-dot{width:7px;height:7px;border-radius:50%;background:#a7f3d0;box-shadow:0 0 0 3px rgba(167,243,208,0.28)}
-#mip-help-panel{display:none;position:fixed;bottom:76px;right:16px;width:338px;max-width:92vw;background:#ffffff;color:#0f172a;border:1px solid rgba(15,23,42,0.12);border-radius:20px;padding:16px;box-shadow:0 22px 48px rgba(15,23,42,0.24);z-index:10011}
-#mip-help-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid #f1f5f9}
-#mip-help-title{display:flex;align-items:center;gap:8px;font-weight:900;font-size:14px;color:#0b0f19}
-#mip-help-ico{width:28px;height:28px;border-radius:8px;background:#ecfdf5;color:#059669;display:flex;align-items:center;justify-content:center}
-#mip-help-close{cursor:pointer;width:28px;height:28px;border-radius:50%;background:#f1f5f9;color:#475569;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;border:0}
-#mip-help-rec{width:100%;margin-top:12px;padding:13px 14px;border:0;border-radius:12px;font-weight:800;font-size:14px;color:#fff;background:#059669;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 12px rgba(5,150,105,0.22)}
-#mip-help-rec.on{background:#dc2626;box-shadow:0 4px 14px rgba(220,38,38,0.3)}
-#mip-help-cancel{display:none;width:100%;margin-top:6px;padding:8px;border:1px solid #fecdd3;border-radius:10px;font-weight:800;font-size:12px;color:#be123c;background:#fff1f2;cursor:pointer}
-#mip-help-hint{font-size:11.5px;color:#64748b;margin-top:7px;text-align:center;line-height:1.35}
-#mip-help-text{width:100%;box-sizing:border-box;padding:10px;margin-top:10px;border:1px solid #cbd5e1;border-radius:11px;font-size:13.5px;line-height:1.4;background:#f8fafc;color:#0f172a}
-#mip-help-text:focus{background:#fff;border-color:#059669;outline:none}
-#mip-help-submit{width:100%;margin-top:8px;padding:11px;border:0;border-radius:11px;font-weight:800;font-size:13.5px;color:#fff;background:#0b0f19;cursor:pointer}
-#mip-help-status{display:none;margin-top:8px;padding:9px 10px;border-radius:10px;background:#f1f5f9;font-size:12px;font-weight:700;line-height:1.35}
+.mip-top-biz-btn{background:#fffbeb;color:#b45309;border:1.5px solid #f59e0b;padding:0.34rem 0.68rem;border-radius:999px;font-weight:900;font-size:0.72rem;cursor:pointer;display:inline-flex;align-items:center;gap:0.32rem;transition:all .15s ease;white-space:nowrap}
+.mip-top-biz-btn.ready{background:#ecfdf5;color:#065f46;border-color:#34d399}
+.mip-top-biz-btn:active{transform:scale(0.96)}
+.mip-biz-summary-pill{display:none;align-items:center;justify-content:space-between;gap:0.6rem;background:#ffffff;border:1.5px solid #a7f3d0;border-radius:13px;padding:0.62rem 0.82rem;margin-bottom:0.75rem;box-shadow:0 2px 8px rgba(5,150,105,0.08)}
+.mip-biz-sum-left{display:flex;align-items:center;gap:0.6rem;min-width:0;flex:1}
+.mip-biz-sum-logo{width:38px;height:38px;border-radius:8px;object-fit:contain;background:#f8fafc;border:1px solid #cbd5e1;padding:2px;display:none;flex-shrink:0}
+.mip-biz-sum-name{font-size:0.84rem;font-weight:900;color:#0f172a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mip-biz-sum-sub{font-size:0.7rem;color:#059669;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mip-biz-sum-actions{display:flex;gap:0.35rem;flex-shrink:0}
+.mip-biz-mini-btn{background:#f1f5f9;color:#0f172a;border:1px solid #cbd5e1;border-radius:8px;padding:0.36rem 0.6rem;font-size:0.71rem;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:0.28rem}
+.mip-biz-mini-btn.qr{background:#0b0f19;color:#fbbf24;border-color:#0b0f19}
+.mip-biz-hidden{display:none!important}
+.mip-biz-overlay{position:fixed;inset:0;background:rgba(9,13,22,0.74);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);display:none;justify-content:center;align-items:flex-start;padding:0.9rem;padding-top:max(0.9rem,env(safe-area-inset-top));z-index:10022;overflow-y:auto}
+.mip-biz-card-modal{width:100%;max-width:440px;background:#ffffff;border-radius:22px;border:1px solid rgba(15,23,42,0.14);padding:1.15rem;margin:auto 0;box-shadow:0 24px 55px rgba(0,0,0,0.35)}
+.mip-biz-tabs{display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;background:#f1f5f9;padding:0.3rem;border-radius:12px;margin:0.75rem 0 0.9rem}
+.mip-biz-tab{border:0;background:transparent;color:#475569;padding:0.52rem;border-radius:9px;font-size:0.78rem;font-weight:900;cursor:pointer}
+.mip-biz-tab.active{background:#0b0f19;color:#fbbf24;box-shadow:0 2px 8px rgba(0,0,0,0.18)}
+.mip-qr-stage{background:linear-gradient(145deg,#0b0f19 0%,#1e293b 100%);color:#fff;border-radius:18px;padding:1.1rem;text-align:center;border:1px solid rgba(251,191,36,0.35)}
+#mipQrCanvasBox{background:#ffffff;padding:12px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;margin:0.65rem auto;min-width:184px;min-height:184px}
+#mipQrCanvasBox img,#mipQrCanvasBox canvas{display:block!important;margin:0 auto!important}
+.mip-vis-card{width:100%;max-width:410px;background:#ffffff;border-radius:24px;overflow:hidden;margin:auto 0;box-shadow:0 28px 60px rgba(0,0,0,0.48);border:1px solid rgba(255,255,255,0.2)}
+.mip-vis-top{background:linear-gradient(145deg,#0b0f19 0%,#1e293b 100%);color:#fff;padding:1.5rem 1.25rem 1.25rem;text-align:center;border-bottom:3px solid #f59e0b}
+.mip-vis-monogram{width:68px;height:68px;border-radius:18px;background:rgba(251,191,36,0.12);border:2px solid #fbbf24;color:#fbbf24;font-size:1.35rem;font-weight:900;letter-spacing:1px;display:flex;align-items:center;justify-content:center;margin:0 auto 0.7rem;box-shadow:0 8px 20px rgba(0,0,0,0.3)}
+.mip-vis-logo{width:68px;height:68px;border-radius:18px;background:#fff;object-fit:contain;padding:5px;margin:0 auto 0.7rem;display:none;box-shadow:0 8px 20px rgba(0,0,0,0.3)}
+.mip-vis-body{padding:1.2rem}
+.mip-vis-row{background:#f8fafc;border:1px solid #e2e8f0;border-radius:11px;padding:0.6rem 0.8rem;margin-bottom:0.5rem;font-size:0.84rem;color:#0f172a;font-weight:700;word-break:break-word}
+.mip-vis-row small{display:block;font-size:0.65rem;color:#64748b;text-transform:uppercase;font-weight:900;margin-bottom:2px}
+.mip-vis-save{width:100%;background:#059669;color:#fff;border:0;border-radius:14px;padding:0.92rem;font-size:0.95rem;font-weight:900;cursor:pointer;box-shadow:0 8px 20px rgba(5,150,105,0.32);margin-top:0.4rem}
+.mip-vis-acts{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-top:0.55rem}
+.mip-vis-act{background:#f1f5f9;color:#0f172a;border:1px solid #cbd5e1;border-radius:12px;padding:0.68rem;font-size:0.8rem;font-weight:800;text-align:center;text-decoration:none;display:inline-block}
 </style>
 <script>
 (function() {
+  if (!document.body) return;
   var WORKER = "https://mrinvoiceprocom.fincasoto2021.workers.dev";
-  ["mip-box", "mip-fab", "mip-help-panel", "mip-help-btn"].forEach(function(id) {
-    var el = document.getElementById(id);
-    if (el) el.remove();
-  });
 
-  function localBackupExtract(rawText) {
-    var txt = String(rawText || "").trim().replace(/(\d+(?:[.,]\d+)?)\s*mil\b/gi, function(_, n) {
-      return String(Math.round(parseFloat(n.replace(",", ".")) * 1000));
-    });
-    var docType = "quote";
-    if (/\b(factura|invoice|facturar|cobro)\b/i.test(txt)) docType = "invoice";
-    else if (/\b(recibo|receipt|abono recibido)\b/i.test(txt)) docType = "receipt";
-    else if (/\b(compraventa|bill of sale)\b/i.test(txt)) docType = "billsale";
-    else if (/\b(alquiler|renta|lease)\b/i.test(txt)) docType = "lease";
-    else if (/\b(contrato|contract)\b/i.test(txt)) docType = "contract";
-    else if (/\b(relevo|waiver)\b/i.test(txt)) docType = "waiver";
-    else if (/\b(pagar[eé]|promissory)\b/i.test(txt)) docType = "promissory";
-    else if (/\b(orden de cambio|change order|adicional)\b/i.test(txt)) docType = "change";
-    else if (/\b(orden de trabajo|work order)\b/i.test(txt)) docType = "workorder";
-    else if (/\b(orden de compra|purchase order)\b/i.test(txt)) docType = "po";
-    else if (/\b(conduce|delivery)\b/i.test(txt)) docType = "delivery";
-
-    var issuer = "";
-    var issM = txt.match(/\b(?:de parte de|emitid[oa] por)\s+([^,.]+?)(?=\s+(?:por|para|de\s+\$?\d|con|en\s+\$?\d)|$)/i);
-    if (issM) issuer = issM[1].trim();
-
-    var client = "";
-    var cliM = txt.match(/\b(?:para(?:\s+que)?|cliente|a favor de|(?:presupuesto|estimado|cotizaci[oó]n|factura|recibo|contrato)\s+(?:de|para|a))\s+([^,.$0-9]+?)(?=\s+(?:de parte de|por|de\s+\$?\d|\d|factura|con|en\s+\$?\d)|$)/i);
-    if (cliM) client = cliM[1].trim();
-
-    var dep = 0;
-    var depM = txt.match(/(?:dep[oó]sito|pronto|adelanto|abono)\s*(?:de)?\s*\$?\s*(\d[\d,]*(?:\.\d+)?)|\$?\s*(\d[\d,]*(?:\.\d+)?)\s*de\s*(?:dep[oó]sito|pronto|adelanto|abono)/i);
-    if (depM) dep = parseFloat((depM[1] || depM[2] || "0").replace(/,/g, "")) || 0;
-
-    var taxPct = /\bcon ivu\b/i.test(txt) ? 11.5 : 0;
-    var taxM = txt.match(/(\d+(?:\.\d+)?)\s*%\s*(?:de\s*)?(?:ivu|tax|impuestos?)|(?:ivu|tax|impuestos?)\s*(?:de\s*)?(\d+(?:\.\d+)?)\s*%/i);
-    if (taxM) taxPct = parseFloat(taxM[1] || taxM[2]) || 0;
-
-    var nums = [], rgx = /\$?\s*(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?)/g, m;
-    while ((m = rgx.exec(txt)) !== null) {
-      var v = parseFloat(m[1].replace(/,/g, ""));
-      if (v > 0 && v !== taxPct && v !== dep) nums.push(v);
-    }
-    return {
-      docType: docType,
-      issuer: issuer,
-      client: client,
-      items: [{ desc: "Servicios profesionales y suministro según alcance acordado.", qty: 1, price: nums[0] || dep || 0 }],
-      taxPct: taxPct, taxAmt: 0, discAmt: 0, retPct: 0,
-      dep: docType === "receipt" ? 0 : dep,
-      notes: "Condiciones y alcance acordados entre las partes."
-    };
-  }
-
-  var micSvg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>';
-  var helpSvg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>';
-
-  var box = document.createElement("div");
-  box.id = "mip-help-panel";
-  box.innerHTML =
-    '<div id="mip-help-head">' +
-      '<div id="mip-help-title"><span id="mip-help-ico">' + micSvg + '</span><span>Help • Dictado Inteligente</span></div>' +
-      '<button type="button" id="mip-help-close">X</button>' +
-    '</div>' +
-    '<button type="button" id="mip-help-rec">' + micSvg + '<span>Hablar para Llenar</span></button>' +
-    '<button type="button" id="mip-help-cancel">Cancelar dictado</button>' +
-    '<div id="mip-help-hint">Haz todas las pausas que necesites. No se envía hasta tocar Terminar.</div>' +
-    '<textarea id="mip-help-text" rows="3" placeholder="Aquí verás tu dictado en vivo o puedes escribirlo directo..."></textarea>' +
-    '<button type="button" id="mip-help-submit">Completar Documento Ahora</button>' +
-    '<div id="mip-help-status"></div>';
-  document.body.appendChild(box);
-
-  var fab = document.createElement("button");
-  fab.type = "button";
-  fab.id = "mip-help-btn";
-  fab.innerHTML = '<span id="mip-help-dot"></span>' + helpSvg + '<span>Help</span>';
-  document.body.appendChild(fab);
-
-  var recBtn = document.getElementById("mip-help-rec");
-  var cancelBtn = document.getElementById("mip-help-cancel");
-  var goBtn = document.getElementById("mip-help-submit");
-  var inp = document.getElementById("mip-help-text");
-  var sr = null, wantListening = false, submitOnStop = false, committedText = "", timer = null, secs = 0;
-
-  function setStatus(msg, isErr) {
-    var s = document.getElementById("mip-help-status");
-    s.style.display = msg ? "block" : "none";
-    s.style.color = isErr ? "#be123c" : "#065f46";
-    s.textContent = msg || "";
-  }
-
-  fab.onclick = function() { box.style.display = box.style.display === "block" ? "none" : "block"; };
-  document.getElementById("mip-help-close").onclick = fab.onclick;
-
-  function resetRecUI() {
-    if (timer) { clearInterval(timer); timer = null; }
-    recBtn.className = "";
-    recBtn.innerHTML = micSvg + '<span>Hablar para Llenar</span>';
-    cancelBtn.style.display = "none";
-  }
-
-  function applyDocData(obj) {
-    var validTypes = ["quote","invoice","receipt","contract","billsale","lease","waiver","promissory","change","workorder","po","delivery"];
-    if (obj.docType && validTypes.indexOf(obj.docType) !== -1) {
-      var dt = document.getElementById("qb-doctype");
-      if (dt) {
-        dt.value = obj.docType;
-        if (typeof safeSetStorage === "function") safeSetStorage("mcp_active_doctype", obj.docType);
-        if (typeof syncActiveDocTypeUI === "function") syncActiveDocTypeUI();
-      }
-    }
-    if (obj.issuer && String(obj.issuer).trim()) {
-      var compEl = document.getElementById("qb-comp");
-      if (compEl) compEl.value = String(obj.issuer).trim();
-    }
-    if (obj.client) {
-      var cliEl = document.getElementById("qb-client");
-      if (cliEl) cliEl.value = String(obj.client).trim();
-    }
-    if (Array.isArray(obj.items) && obj.items.length > 0 && typeof renderCustomLines === "function") {
-      customLineItems = obj.items.map(function(it) {
-        return { desc: String(it.desc || ""), qty: String(it.qty || 1), price: String(it.price !== undefined ? it.price : "") };
-      });
-      renderCustomLines();
-    }
-    document.getElementById("qb-disc-mode").value = "amt";
-    document.getElementById("qb-disc").value = String(Number(obj.discAmt) || 0);
-    if (Number(obj.taxPct) > 0) {
-      document.getElementById("qb-tax-mode").value = "pct";
-      document.getElementById("qb-tax").value = String(obj.taxPct);
-    } else {
-      document.getElementById("qb-tax-mode").value = "amt";
-      document.getElementById("qb-tax").value = String(Number(obj.taxAmt) || 0);
-    }
-    document.getElementById("qb-ret-mode").value = "pct";
-    document.getElementById("qb-ret").value = String(Number(obj.retPct) || 0);
-    document.getElementById("qb-dep").value = String(Number(obj.dep) || 0);
-    if (obj.notes) document.getElementById("qb-notes").value = String(obj.notes);
-    if (typeof onBuilderUserEdit === "function") onBuilderUserEdit(false);
-    inp.value = "";
-    committedText = "";
-    box.style.display = "none";
-    setStatus("", false);
-    if (typeof showExecutiveToast === "function") showExecutiveToast("Documento completado con éxito", 3200);
-  }
-
-  async function sendText(promptTxt) {
-    recBtn.disabled = true;
-    goBtn.disabled = true;
-    setStatus("Redactando alcance profesional y llenando campos...", false);
-    var lg = (typeof currentLang !== "undefined" && currentLang) ? currentLang : "es";
-    var sys = 'Eres el redactor experto de Mr. Invoice Pro. Convierte la instruccion del usuario en un documento comercial impecable en idioma "' + lg + '". Si se corrige hablando, usa su correccion final. Si da pocos detalles tecnicos, redacta una descripcion profesional acorde al trabajo o monto. Devuelve SOLO JSON valido: {"docType":"quote|invoice|receipt|contract|billsale|lease|waiver|promissory|change|workorder|po|delivery","issuer":"","client":"","items":[{"desc":"","qty":1,"price":0}],"taxPct":0,"taxAmt":0,"discAmt":0,"retPct":0,"dep":0,"notes":""}';
-    try {
-      var r = await fetch(WORKER + "?t=" + Date.now(), {
-        method: "POST", mode: "cors", cache: "no-store",
-        headers: { "Content-Type": "text/plain;charset=UTF-8" },
-        body: JSON.stringify({ system: sys, prompt: promptTxt })
-      });
-      var d = await r.json();
-      if (!d || !d.ok || !d.text) throw new Error("Fallback");
-      var i1 = d.text.indexOf("{"), i2 = d.text.lastIndexOf("}");
-      applyDocData(JSON.parse(d.text.slice(i1, i2 + 1)));
-    } catch (e) {
-      applyDocData(localBackupExtract(promptTxt));
-    }
-    recBtn.disabled = false;
-    goBtn.disabled = false;
-  }
-
-  function startSpeechLoop() {
-    var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    sr = new SR();
-    var lg = (typeof currentLang !== "undefined" && currentLang) ? currentLang : "es";
-    sr.lang = lg === "en" ? "en-US" : lg === "pt" ? "pt-BR" : lg === "fr" ? "fr-FR" : lg === "pl" ? "pl-PL" : "es-PR";
-    sr.interimResults = true;
-    sr.continuous = false;
-    sr.onresult = function(e) {
-      var seg = "";
-      for (var i = 0; i < e.results.length; i++) seg += e.results[i][0].transcript;
-      inp.value = (committedText ? committedText + " " : "") + seg.trim();
-    };
-    sr.onerror = function(e) {
-      if (e.error === "not-allowed" || e.error === "service-not-allowed") {
-        wantListening = false;
-        resetRecUI();
-        setStatus("Permite el acceso al micrófono en tu navegador.", true);
-      }
-    };
-    sr.onend = function() {
-      committedText = inp.value.trim();
-      if (wantListening) {
-        setTimeout(function() {
-          if (wantListening) { try { startSpeechLoop(); } catch (err) {} }
-        }, 120);
-        return;
-      }
-      resetRecUI();
-      if (submitOnStop && committedText) {
-        submitOnStop = false;
-        sendText(committedText);
-      }
-    };
-    sr.start();
-  }
-
-  recBtn.onclick = function() {
-    var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if (!SR) { inp.focus(); setStatus("Usa el micrófono de tu teclado.", false); return; }
-    if (wantListening) {
-      wantListening = false;
-      submitOnStop = true;
-      if (sr) { try { sr.stop(); } catch (e) {} }
-      return;
-    }
-    committedText = inp.value.trim();
-    wantListening = true;
-    submitOnStop = false;
-    secs = 0;
-    recBtn.className = "on";
-    recBtn.innerHTML = '<span>[■] Terminar y Llenar (0:00)</span>';
-    cancelBtn.style.display = "block";
-    setStatus("Escuchando... Haz todas las pausas que necesites.", false);
-    timer = setInterval(function() {
-      secs++;
-      var m = Math.floor(secs / 60), s = secs % 60;
-      recBtn.innerHTML = '<span>[■] Terminar y Llenar (' + m + ':' + (s < 10 ? '0' : '') + s + ')</span>';
-    }, 1000);
-    try { startSpeechLoop(); } catch (e) { wantListening = false; resetRecUI(); }
-  };
-
-  cancelBtn.onclick = function() {
-    wantListening = false; submitOnStop = false; inp.value = ""; committedText = "";
-    if (sr) { try { sr.stop(); } catch (e) {} }
-    resetRecUI(); setStatus("", false);
-  };
-
-  goBtn.onclick = function() {
-    if (wantListening) { wantListening = false; submitOnStop = true; if (sr) { try { sr.stop(); } catch (e) {} } return; }
-    var q = inp.value.trim();
-    if (!q) { setStatus("Habla o escribe los datos primero.", true); return; }
-    sendText(q);
-  };
-})();
-</script>
-<style id="mip-turbo-style">
-#mip-fab,#mip-box{display:none!important;visibility:hidden!important;pointer-events:none!important}
-#mip-help-btn{position:fixed;bottom:20px;right:16px;padding:11px 18px;background:linear-gradient(135deg,#059669 0%,#047857 100%);color:#ffffff;border:1px solid rgba(255,255,255,0.3);border-radius:999px;font-weight:800;font-size:13.5px;letter-spacing:0.2px;box-shadow:0 8px 24px rgba(5,150,105,0.38);z-index:10010;display:flex;align-items:center;gap:8px;cursor:pointer;transition:transform .14s ease}
-#mip-help-btn:active{transform:scale(0.96)}
-#mip-help-dot{width:7px;height:7px;border-radius:50%;background:#a7f3d0;box-shadow:0 0 0 3px rgba(167,243,208,0.28)}
-#mip-help-panel{display:none;position:fixed;bottom:76px;right:16px;width:348px;max-width:93vw;background:#ffffff;color:#0f172a;border:1px solid rgba(15,23,42,0.12);border-radius:22px;padding:16px;box-shadow:0 22px 48px rgba(15,23,42,0.26);z-index:10011}
-#mip-help-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid #f1f5f9}
-#mip-help-title{display:flex;align-items:center;gap:8px;font-weight:900;font-size:14px;color:#0b0f19}
-#mip-help-ico{width:28px;height:28px;border-radius:8px;background:#ecfdf5;color:#059669;display:flex;align-items:center;justify-content:center}
-#mip-help-close{cursor:pointer;width:28px;height:28px;border-radius:50%;background:#f1f5f9;color:#475569;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;border:0}
-#mip-help-text{width:100%;box-sizing:border-box;padding:10px 11px;margin-top:11px;border:1px solid #cbd5e1;border-radius:13px;font-size:13.5px;line-height:1.4;background:#f8fafc;color:#0f172a;resize:none}
-#mip-help-text:focus{background:#fff;border-color:#059669;outline:none}
-#mip-bar{display:flex;align-items:center;gap:8px;margin-top:10px}
-#mip-trash{display:none;width:44px;height:46px;border-radius:13px;border:1px solid #fecdd3;background:#fff1f2;color:#be123c;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
-#mip-rec{flex:1;height:46px;padding:0 14px;border:0;border-radius:999px;font-weight:800;font-size:13.5px;color:#fff;background:#059669;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 12px rgba(5,150,105,0.24)}
-#mip-rec.rec{background:#dc2626;box-shadow:0 4px 14px rgba(220,38,38,0.32)}
-#mip-rec.paused{background:#d97706;box-shadow:0 4px 14px rgba(217,119,6,0.3)}
-#mip-send{width:46px;height:46px;border-radius:50%;border:0;background:#0b0f19;color:#ffffff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;box-shadow:0 4px 12px rgba(15,23,42,0.22);transition:opacity .15s ease,transform .12s ease}
-#mip-send:disabled{opacity:0.32;cursor:default;box-shadow:none}
-#mip-send.ready{background:#2563eb;box-shadow:0 6px 16px rgba(37,99,235,0.35)}
-#mip-send:active{transform:scale(0.94)}
-#mip-help-hint{font-size:11.5px;color:#64748b;margin-top:8px;text-align:center;line-height:1.35}
-#mip-help-status{display:none;margin-top:8px;padding:9px 10px;border-radius:10px;background:#f1f5f9;font-size:12px;font-weight:700;line-height:1.35;text-align:center}
-</style>
-<script>
-(function() {
-  var WORKER = "https://mrinvoiceprocom.fincasoto2021.workers.dev";
-  document.querySelectorAll("#mip-box,#mip-fab,#mip-help-style,#mip-help-panel,#mip-help-btn").forEach(function(el) {
+  document.querySelectorAll("#mip-box,#mip-fab,#mip-help-style,#mip-turbo-style,#mip-turbo-v2-style,#mip-help-panel,#mip-help-btn,#mipBizModal,#mipVisitorModal,#mipTopBizBtn,#mipBizSummaryPill").forEach(function(el) {
     el.remove();
   });
+
+  function escH(s) {
+    return String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+  }
+
+  function getInitials(s) {
+    var words = String(s || "").trim().split(/\s+/).filter(Boolean);
+    if (!words.length) return "PRO";
+    if (/^[A-Z0-9]{2,4}$/.test(words[0])) return words[0];
+    if (words.length === 1) return words[0].slice(0, 3).toUpperCase();
+    return (words[0][0] + words[1][0]).toUpperCase();
+  }
+
+  var BIZ_I18N = {
+    es: {
+      bizBtn: "Mi Negocio", bizSavedTag: "Perfil Fijo Activo • Datos Protegidos",
+      editBtn: "Editar", qrBtn: "QR",
+      tabProfile: "Datos Fijos", tabQr: "Tarjeta QR",
+      modalTitle: "Mi Negocio y Tarjeta Digital",
+      lblComp: "Nombre de tu Compañía / Negocio", phComp: "Ej. ASD Building Solutions LLC",
+      lblOwner: "Tu Nombre / Cargo o Especialidad", phOwner: "Ej. Contratista General",
+      lblPhone: "Teléfono / WhatsApp", phPhone: "(787) 000-0000",
+      lblEmail: "Email / Web (Opcional)", phEmail: "contacto@tunegocio.com",
+      lblLic: "Licencia / Registro / Ciudad (Opcional)", phLic: "Lic. # / Ciudad",
+      logoBtn: "Subir / Cambiar Logo", sigBtn: "Guardar Mi Firma Fija",
+      saveBiz: "Guardar y Fijar Mi Negocio", savedToast: "Negocio guardado y protegido",
+      unlockOnce: "Editar emisor solo en este documento",
+      qrSub: "Pídele a tu cliente que apunte su cámara al QR para abrir tu tarjeta y guardarte en sus Contactos.",
+      shareCard: "Compartir Mi Tarjeta Digital", copyLink: "Copiar Enlace", previewCard: "Ver Tarjeta",
+      linkCopied: "Enlace de tarjeta copiado",
+      fillFirst: "Guarda primero el nombre y teléfono de tu negocio en Datos Fijos.",
+      visSave: "📲 Guardar en Contactos", visCall: "📞 Llamar", visWa: "💬 WhatsApp", visClose: "Cerrar Tarjeta",
+      visFooter: "Tarjeta Digital Oficial • Creada con Mr. Invoice Pro",
+      helpTitle: "Help • Grabadora Turbo IA",
+      helpPh: "Opcional: escribe aquí o usa el botón Grabar abajo...",
+      recIdle: "Grabar Voz", recStop: "Parar", recCont: "Continuar",
+      helpHint: "Pausa y continúa cuantas veces quieras, y toca el botón azul de enviar al terminar.",
+      stRec: "Grabando sin cortes... Toca Parar para pausar.",
+      stPause: "En pausa ({T}). Toca Continuar o envía con el botón azul.",
+      stSend: "Procesando en modo Turbo...", stDisc: "Grabación descartada.",
+      stNoAud: "No se captó audio. Intenta de nuevo.", stMic: "Permite el acceso al micrófono en tu navegador.",
+      stErr: "No se pudo procesar ({E})."
+    },
+    en: {
+      bizBtn: "My Business", bizSavedTag: "Locked Profile • Protected Info",
+      editBtn: "Edit", qrBtn: "QR",
+      tabProfile: "Business Info", tabQr: "QR Card",
+      modalTitle: "My Business & Digital Card",
+      lblComp: "Company / Business Name", phComp: "e.g. Apex Construction LLC",
+      lblOwner: "Your Name / Title or Trade", phOwner: "e.g. General Contractor",
+      lblPhone: "Phone / WhatsApp", phPhone: "(305) 555-0199",
+      lblEmail: "Email / Website (Optional)", phEmail: "info@yourcompany.com",
+      lblLic: "License / ID / City (Optional)", phLic: "Lic # / City, State",
+      logoBtn: "Upload / Change Logo", sigBtn: "Save Default Signature",
+      saveBiz: "Save & Lock My Business", savedToast: "Business profile saved & locked",
+      unlockOnce: "Override issuer for this document only",
+      qrSub: "Have your client scan this QR with their camera to open your card and save your contact.",
+      shareCard: "Share My Digital Card", copyLink: "Copy Link", previewCard: "Preview Card",
+      linkCopied: "Card link copied",
+      fillFirst: "Save your business name and phone in Business Info first.",
+      visSave: "📲 Save to Contacts", visCall: "📞 Call", visWa: "💬 WhatsApp", visClose: "Close Card",
+      visFooter: "Official Digital Card • Powered by Mr. Invoice Pro",
+      helpTitle: "Help • Turbo AI Recorder",
+      helpPh: "Optional: type notes here or tap Record below...",
+      recIdle: "Record Voice", recStop: "Pause", recCont: "Resume",
+      helpHint: "Pause and resume as many times as needed, then tap the blue send button.",
+      stRec: "Recording smoothly... Tap Pause anytime.",
+      stPause: "Paused ({T}). Tap Resume or tap the blue send button.",
+      stSend: "Processing in Turbo mode...", stDisc: "Recording discarded.",
+      stNoAud: "No audio captured. Please try again.", stMic: "Please allow microphone access in your browser.",
+      stErr: "Could not process ({E})."
+    },
+    fr: {
+      bizBtn: "Mon Entreprise", bizSavedTag: "Profil Verrouillé • Données Protégées",
+      editBtn: "Modifier", qrBtn: "QR",
+      tabProfile: "Mes Infos", tabQr: "Carte QR",
+      modalTitle: "Mon Entreprise & Carte QR",
+      lblComp: "Nom de l'Entreprise", phComp: "Ex. Atelier Bâtiment SARL",
+      lblOwner: "Votre Nom / Fonction", phOwner: "Ex. Entrepreneur Général",
+      lblPhone: "Téléphone / WhatsApp", phPhone: "+33 6 00 00 00 00",
+      lblEmail: "E-mail / Site Web (Optionnel)", phEmail: "contact@entreprise.fr",
+      lblLic: "SIRET / Licence / Ville (Optionnel)", phLic: "SIRET / Ville",
+      logoBtn: "Logo de l'Entreprise", sigBtn: "Ma Signature Fixe",
+      saveBiz: "Enregistrer Mon Entreprise", savedToast: "Profil enregistré et protégé",
+      unlockOnce: "Modifier l'émetteur pour ce document",
+      qrSub: "Faites scanner ce QR par votre client pour afficher votre carte et l'ajouter à ses contacts.",
+      shareCard: "Partager Ma Carte", copyLink: "Copier Lien", previewCard: "Voir Carte",
+      linkCopied: "Lien copié",
+      fillFirst: "Enregistrez d'abord le nom et le téléphone de votre entreprise.",
+      visSave: "📲 Ajouter aux Contacts", visCall: "📞 Appeler", visWa: "💬 WhatsApp", visClose: "Fermer",
+      visFooter: "Carte Numérique Officielle • Mr. Invoice Pro",
+      helpTitle: "Help • Enregistreur Turbo IA",
+      helpPh: "Optionnel : écrivez ici ou appuyez sur Enregistrer...",
+      recIdle: "Enregistrer Voix", recStop: "Pause", recCont: "Reprendre",
+      helpHint: "Mettez en pause et reprenez librement, puis appuyez sur le bouton bleu d'envoi.",
+      stRec: "Enregistrement... Appuyez sur Pause si besoin.",
+      stPause: "En pause ({T}). Reprenez ou envoyez avec le bouton bleu.",
+      stSend: "Traitement Turbo en cours...", stDisc: "Enregistrement effacé.",
+      stNoAud: "Aucun son détecté. Réessayez.", stMic: "Autorisez l'accès au microphone.",
+      stErr: "Erreur de traitement ({E})."
+    },
+    pl: {
+      bizBtn: "Moja Firma", bizSavedTag: "Stały Profil • Dane Chronione",
+      editBtn: "Edytuj", qrBtn: "QR",
+      tabProfile: "Dane Firmy", tabQr: "Wizytówka QR",
+      modalTitle: "Moja Firma i Wizytówka QR",
+      lblComp: "Nazwa Firmy", phComp: "Np. Bud-Max Sp. z o.o.",
+      lblOwner: "Imię i Nazwisko / Stanowisko", phOwner: "Np. Generalny Wykonawca",
+      lblPhone: "Telefon / WhatsApp", phPhone: "+48 600 000 000",
+      lblEmail: "E-mail / Strona (Opcjonalnie)", phEmail: "biuro@firma.pl",
+      lblLic: "NIP / Licencja / Miasto (Opcj.)", phLic: "NIP / Miasto",
+      logoBtn: "Wgraj / Zmień Logo", sigBtn: "Zapisz Stały Podpis",
+      saveBiz: "Zapisz i Zablokuj Moją Firmę", savedToast: "Profil firmy zapisany",
+      unlockOnce: "Zmień wystawcę tylko w tym dokumencie",
+      qrSub: "Niech klient zeskanuje kod QR aparatem, aby otworzyć wizytówkę i zapisać kontakt.",
+      shareCard: "Udostępnij Wizytówkę", copyLink: "Kopiuj Link", previewCard: "Podgląd",
+      linkCopied: "Skopiowano link",
+      fillFirst: "Najpierw zapisz nazwę firmy i telefon w zakładce Dane Firmy.",
+      visSave: "📲 Zapisz w Kontaktach", visCall: "📞 Zadzwoń", visWa: "💬 WhatsApp", visClose: "Zamknij",
+      visFooter: "Oficjalna Wizytówka Cyfrowa • Mr. Invoice Pro",
+      helpTitle: "Help • Dyktafon Turbo AI",
+      helpPh: "Opcjonalnie: wpisz tekst tutaj lub kliknij Nagraj poniżej...",
+      recIdle: "Nagraj Głos", recStop: "Pauza", recCont: "Wznów",
+      helpHint: "Zatrzymuj i wznawiaj dowolną ilość razy, a na koniec kliknij niebieski przycisk wyślij.",
+      stRec: "Nagrywanie... Kliknij Pauza, aby wstrzymać.",
+      stPause: "Wstrzymano ({T}). Kliknij Wznów lub wyślij niebieskim przyciskiem.",
+      stSend: "Przetwarzanie w trybie Turbo...", stDisc: "Nagranie odrzucone.",
+      stNoAud: "Nie wykryto dźwięku. Spróbuj ponownie.", stMic: "Zezwól przeglądarce na dostęp do mikrofonu.",
+      stErr: "Nie udało się przetworzyć ({E})."
+    },
+    pt: {
+      bizBtn: "Meu Negócio", bizSavedTag: "Perfil Fixo • Dados Protegidos",
+      editBtn: "Editar", qrBtn: "QR",
+      tabProfile: "Meus Dados", tabQr: "Cartão QR",
+      modalTitle: "Meu Negócio e Cartão QR",
+      lblComp: "Nome da Empresa / Negócio", phComp: "Ex. Construtora Pro Ltda",
+      lblOwner: "Seu Nome / Cargo ou Especialidade", phOwner: "Ex. Empreiteiro Geral",
+      lblPhone: "Telefone / WhatsApp", phPhone: "(11) 99000-0000",
+      lblEmail: "E-mail / Site (Opcional)", phEmail: "contato@empresa.com",
+      lblLic: "CNPJ / CPF / Cidade (Opcional)", phLic: "CNPJ / Cidade",
+      logoBtn: "Enviar / Trocar Logo", sigBtn: "Salvar Minha Assinatura",
+      saveBiz: "Salvar e Fixar Meu Negócio", savedToast: "Negócio salvo e protegido",
+      unlockOnce: "Editar emissor apenas neste documento",
+      qrSub: "Peça ao cliente para apontar a câmera para o QR para abrir seu cartão e salvar nos Contatos.",
+      shareCard: "Compartilhar Meu Cartão", copyLink: "Copiar Link", previewCard: "Ver Cartão",
+      linkCopied: "Link copiado",
+      fillFirst: "Salve primeiro o nome e telefone da empresa na aba Meus Dados.",
+      visSave: "📲 Salvar nos Contatos", visCall: "📞 Ligar", visWa: "💬 WhatsApp", visClose: "Fechar",
+      visFooter: "Cartão Digital Oficial • Mr. Invoice Pro",
+      helpTitle: "Help • Gravador Turbo IA",
+      helpPh: "Opcional: digite aqui ou toque em Gravar abaixo...",
+      recIdle: "Gravar Voz", recStop: "Pausar", recCont: "Continuar",
+      helpHint: "Pause e continue quantas vezes quiser e toque no botão azul para enviar.",
+      stRec: "Gravando sem cortes... Toque em Pausar se precisar.",
+      stPause: "Em pausa ({T}). Toque em Continuar ou envie no botão azul.",
+      stSend: "Processando no modo Turbo...", stDisc: "Gravação descartada.",
+      stNoAud: "Nenhum áudio captado. Tente novamente.", stMic: "Permita o acesso ao microfone no navegador.",
+      stErr: "Não foi possível processar ({E})."
+    }
+  };
+
+  function getBL() {
+    var lg = (typeof currentLang !== "undefined" && BIZ_I18N[currentLang]) ? currentLang : "es";
+    return BIZ_I18N[lg];
+  }
+
+  var helpCss = document.createElement("style");
+  helpCss.id = "mip-turbo-v2-style";
+  helpCss.textContent =
+    "#mip-help-btn{position:fixed;bottom:20px;right:16px;padding:11px 18px;background:linear-gradient(135deg,#059669 0%,#047857 100%);color:#ffffff;border:1px solid rgba(255,255,255,0.3);border-radius:999px;font-weight:800;font-size:13.5px;letter-spacing:0.2px;box-shadow:0 8px 24px rgba(5,150,105,0.38);z-index:10010;display:flex;align-items:center;gap:8px;cursor:pointer;transition:transform .14s ease}" +
+    "#mip-help-btn:active{transform:scale(0.96)}" +
+    "#mip-help-dot{width:7px;height:7px;border-radius:50%;background:#a7f3d0;box-shadow:0 0 0 3px rgba(167,243,208,0.28)}" +
+    "#mip-help-panel{display:none;position:fixed;bottom:76px;right:16px;width:348px;max-width:93vw;background:#ffffff;color:#0f172a;border:1px solid rgba(15,23,42,0.12);border-radius:22px;padding:16px;box-shadow:0 22px 48px rgba(15,23,42,0.26);z-index:10011}" +
+    "#mip-help-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid #f1f5f9}" +
+    "#mip-help-title{display:flex;align-items:center;gap:8px;font-weight:900;font-size:14px;color:#0b0f19}" +
+    "#mip-help-ico{width:28px;height:28px;border-radius:8px;background:#ecfdf5;color:#059669;display:flex;align-items:center;justify-content:center}" +
+    "#mip-help-close{cursor:pointer;width:28px;height:28px;border-radius:50%;background:#f1f5f9;color:#475569;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;border:0}" +
+    "#mip-help-text{width:100%;box-sizing:border-box;padding:10px 11px;margin-top:11px;border:1px solid #cbd5e1;border-radius:13px;font-size:13.5px;line-height:1.4;background:#f8fafc;color:#0f172a;resize:none}" +
+    "#mip-help-text:focus{background:#fff;border-color:#059669;outline:none}" +
+    "#mip-bar{display:flex;align-items:center;gap:8px;margin-top:10px}" +
+    "#mip-trash{display:none;width:44px;height:46px;border-radius:13px;border:1px solid #fecdd3;background:#fff1f2;color:#be123c;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}" +
+    "#mip-rec{flex:1;height:46px;padding:0 14px;border:0;border-radius:999px;font-weight:800;font-size:13.5px;color:#fff;background:#059669;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 12px rgba(5,150,105,0.24)}" +
+    "#mip-rec.rec{background:#dc2626;box-shadow:0 4px 14px rgba(220,38,38,0.32)}" +
+    "#mip-rec.paused{background:#d97706;box-shadow:0 4px 14px rgba(217,119,6,0.3)}" +
+    "#mip-send{width:46px;height:46px;border-radius:50%;border:0;background:#0b0f19;color:#ffffff;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;box-shadow:0 4px 12px rgba(15,23,42,0.22);transition:opacity .15s ease,transform .12s ease}" +
+    "#mip-send:disabled{opacity:0.32;cursor:default;box-shadow:none}" +
+    "#mip-send.ready{background:#2563eb;box-shadow:0 6px 16px rgba(37,99,235,0.35)}" +
+    "#mip-send:active{transform:scale(0.94)}" +
+    "#mip-help-hint{font-size:11.5px;color:#64748b;margin-top:8px;text-align:center;line-height:1.35}" +
+    "#mip-help-status{display:none;margin-top:8px;padding:9px 10px;border-radius:10px;background:#f1f5f9;font-size:12px;font-weight:700;line-height:1.35;text-align:center}";
+  document.head.appendChild(helpCss);
+
+  var tempUnlockOnce = false;
+
+  function loadBizVault() {
+    try {
+      var v = JSON.parse(localStorage.getItem("mcp_biz_vault_v1") || "null");
+      if (v && typeof v === "object") return v;
+    } catch (e) {}
+    try {
+      var old = JSON.parse(localStorage.getItem("mcp_biz_profile") || "null");
+      if (old && old.comp && !/^mr\.?\s*invoice\s*pro$/i.test(String(old.comp).trim())) {
+        return { comp: old.comp || "", owner: "", phone: old.phone || "", email: "", lic: "", locked: true };
+      }
+    } catch (e2) {}
+    return { comp: "", owner: "", phone: "", email: "", lic: "", locked: false };
+  }
+
+  function saveBizVault(v) {
+    var compClean = String(v.comp || "").trim();
+    var ownerClean = String(v.owner || "").trim();
+    var mainTitle = compClean || ownerClean;
+    var clean = {
+      comp: compClean,
+      owner: ownerClean,
+      phone: String(v.phone || "").trim(),
+      email: String(v.email || "").trim(),
+      lic: String(v.lic || "").trim(),
+      locked: Boolean(mainTitle)
+    };
+    try {
+      localStorage.setItem("mcp_biz_vault_v1", JSON.stringify(clean));
+      var combinedSub = [clean.lic, clean.phone, clean.email].filter(Boolean).join(" • ");
+      localStorage.setItem("mcp_biz_profile", JSON.stringify({ comp: mainTitle, phone: combinedSub }));
+    } catch (e) {}
+    return clean;
+  }
+
+  function encodeCardPayload(v) {
+    var mini = {
+      c: String(v.comp || "").slice(0, 80),
+      o: String(v.owner || "").slice(0, 60),
+      p: String(v.phone || "").slice(0, 40),
+      e: String(v.email || "").slice(0, 70),
+      l: String(v.lic || "").slice(0, 70)
+    };
+    var json = JSON.stringify(mini);
+    var b64 = btoa(unescape(encodeURIComponent(json)));
+    return b64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  }
+
+  function decodeCardPayload(token) {
+    try {
+      var b64 = String(token || "").replace(/-/g, "+").replace(/_/g, "/");
+      while (b64.length % 4) b64 += "=";
+      var json = decodeURIComponent(escape(atob(b64)));
+      var o = JSON.parse(json);
+      if (o && (o.c || o.p || o.o)) return o;
+    } catch (e) {}
+    return null;
+  }
+
+  function buildCardUrl(v) {
+    return "https://mrinvoicepro.com/?bcard=" + encodeCardPayload(v);
+  }
+
+  function triggerVCardDownload(card) {
+    var comp = String(card.c || "").trim();
+    var owner = String(card.o || "").trim();
+    var phone = String(card.p || "").trim();
+    var email = String(card.e || "").trim();
+    var lic = String(card.l || "").trim();
+    var fn = comp ? (owner ? comp + " - " + owner : comp) : (owner || "Contacto");
+    var lines = [
+      "BEGIN:VCARD",
+      "VERSION:3.0",
+      "FN;CHARSET=UTF-8:" + fn.replace(/[\r\n]/g, " "),
+      "N;CHARSET=UTF-8:" + (owner || comp).replace(/[\r\n;]/g, " ") + ";;;;"
+    ];
+    if (comp) lines.push("ORG;CHARSET=UTF-8:" + comp.replace(/[\r\n;]/g, " "));
+    if (owner && comp) lines.push("TITLE;CHARSET=UTF-8:" + owner.replace(/[\r\n;]/g, " "));
+    if (phone) lines.push("TEL;TYPE=CELL,VOICE:" + phone.replace(/[^\d+]/g, ""));
+    if (email && email.indexOf("@") !== -1) lines.push("EMAIL;TYPE=INTERNET:" + email.trim());
+    else if (email) lines.push("URL:" + (email.indexOf("http") === 0 ? email.trim() : "https://" + email.trim()));
+    if (lic) lines.push("NOTE;CHARSET=UTF-8:" + lic.replace(/[\r\n]/g, " "));
+    lines.push("URL:https://mrinvoicepro.com");
+    lines.push("END:VCARD");
+    var vcf = lines.join("\r\n");
+
+    if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+      window.location.href = "data:text/vcard;charset=utf-8," + encodeURIComponent(vcf);
+      return;
+    }
+    var blob = new Blob([vcf], { type: "text/vcard;charset=utf-8" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = ((comp || owner || "contacto").replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 32) || "contacto") + ".vcf";
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function() {
+      if (a.parentNode) a.parentNode.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 1500);
+  }
+
+  var bizSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>';
+  var qrSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3z"/><path d="M18 18h3v3h-3z"/><path d="M18 14h3"/><path d="M14 18v3"/></svg>';
+
+  var topActions = document.querySelector(".top-actions");
+  var topBizBtn = document.createElement("button");
+  topBizBtn.type = "button";
+  topBizBtn.id = "mipTopBizBtn";
+  topBizBtn.className = "mip-top-biz-btn";
+  topBizBtn.innerHTML = bizSvg + '<span id="mipTopBizTxt">Mi Negocio</span>';
+  if (topActions) topActions.insertBefore(topBizBtn, topActions.firstChild);
+
+  var sec1Title = document.getElementById("ui-sec1");
+  var summaryPill = document.createElement("div");
+  summaryPill.id = "mipBizSummaryPill";
+  summaryPill.className = "mip-biz-summary-pill";
+  summaryPill.innerHTML =
+    '<div class="mip-biz-sum-left">' +
+      '<img id="mipSumLogo" class="mip-biz-sum-logo" alt="Logo">' +
+      '<div style="min-width:0;">' +
+        '<div class="mip-biz-sum-name" id="mipSumName">---</div>' +
+        '<div class="mip-biz-sum-sub" id="mipSumSub">---</div>' +
+      </div>' +
+    '</div>' +
+    '<div class="mip-biz-sum-actions">' +
+      '<button type="button" class="mip-biz-mini-btn" id="mipSumEditBtn">Editar</button>' +
+      '<button type="button" class="mip-biz-mini-btn qr" id="mipSumQrBtn">' + qrSvg + '<span id="mipSumQrTxt">QR</span></button>' +
+    '</div>';
+  if (sec1Title && sec1Title.parentNode) {
+    sec1Title.parentNode.insertBefore(summaryPill, sec1Title.nextSibling);
+  }
+
+  var bizModal = document.createElement("div");
+  bizModal.id = "mipBizModal";
+  bizModal.className = "mip-biz-overlay";
+  bizModal.innerHTML =
+    '<div class="mip-biz-card-modal">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+        '<div style="font-size:0.98rem;font-weight:900;color:#0f172a;display:flex;align-items:center;gap:0.45rem;">' + bizSvg + '<span id="mipBizModalTitle">Mi Negocio y Tarjeta Digital</span></div>' +
+        '<button type="button" id="mipBizCloseBtn" style="width:30px;height:30px;border-radius:50%;border:0;background:#f1f5f9;font-weight:900;cursor:pointer;">X</button>' +
+      '</div>' +
+      '<div class="mip-biz-tabs">' +
+        '<button type="button" class="mip-biz-tab active" id="mipTabBtnInfo">Datos Fijos</button>' +
+        '<button type="button" class="mip-biz-tab" id="mipTabBtnQr">Tarjeta QR</button>' +
+      '</div>' +
+      '<div id="mipPaneInfo">' +
+        '<div style="margin-bottom:0.55rem;"><label id="mipLblComp">Nombre de tu Compañía / Negocio</label><input type="text" id="mipInpComp"></div>' +
+        '<div style="margin-bottom:0.55rem;"><label id="mipLblOwner">Tu Nombre / Cargo o Especialidad</label><input type="text" id="mipInpOwner"></div>' +
+        '<div style="margin-bottom:0.55rem;"><label id="mipLblPhone">Teléfono / WhatsApp</label><input type="tel" id="mipInpPhone"></div>' +
+        '<div style="margin-bottom:0.55rem;"><label id="mipLblEmail">Email / Web (Opcional)</label><input type="text" id="mipInpEmail"></div>' +
+        '<div style="margin-bottom:0.65rem;"><label id="mipLblLic">Licencia / Registro / Ciudad (Opcional)</label><input type="text" id="mipInpLic"></div>' +
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-bottom:0.75rem;">' +
+          '<button type="button" id="mipModalLogoBtn" class="mip-biz-mini-btn" style="padding:0.62rem;">Subir / Cambiar Logo</button>' +
+          '<button type="button" id="mipModalSigBtn" class="mip-biz-mini-btn" style="padding:0.62rem;">Guardar Mi Firma Fija</button>' +
+        '</div>' +
+        '<button type="button" id="mipSaveBizBtn" class="wa-master-btn" style="margin-top:0;">Guardar y Fijar Mi Negocio</button>' +
+        '<button type="button" id="mipUnlockOnceBtn" style="display:block;margin:0.6rem auto 0;background:transparent;border:0;color:#64748b;font-size:0.73rem;font-weight:800;text-decoration:underline;cursor:pointer;">Editar emisor solo en este documento</button>' +
+      '</div>' +
+      '<div id="mipPaneQr" style="display:none;">' +
+        '<div class="mip-qr-stage">' +
+          '<div id="mipQrCompTitle" style="font-size:1.02rem;font-weight:900;color:#fbbf24;">---</div>' +
+          '<div id="mipQrOwnerSub" style="font-size:0.76rem;color:#cbd5e1;margin-top:2px;"></div>' +
+          '<div id="mipQrCanvasBox"></div>' +
+          '<div id="mipQrHintTxt" style="font-size:0.73rem;color:#e2e8f0;line-height:1.4;margin-top:0.35rem;"></div>' +
+        '</div>' +
+        '<button type="button" id="mipShareCardBtn" class="wa-master-btn" style="margin-top:0.75rem;">Compartir Mi Tarjeta Digital</button>' +
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-top:0.45rem;">' +
+          '<button type="button" id="mipCopyCardBtn" class="preview-secondary-btn">Copiar Enlace</button>' +
+          '<button type="button" id="mipPreviewCardBtn" class="preview-secondary-btn">Ver Tarjeta</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(bizModal);
+
+  var visModal = document.createElement("div");
+  visModal.id = "mipVisitorModal";
+  visModal.className = "mip-biz-overlay";
+  visModal.innerHTML =
+    '<div class="mip-vis-card">' +
+      '<div class="mip-vis-top">' +
+        '<div id="mipVisMono" class="mip-vis-monogram">PRO</div>' +
+        '<img id="mipVisLogo" class="mip-vis-logo" alt="Logo">' +
+        '<div id="mipVisComp" style="font-size:1.18rem;font-weight:900;line-height:1.2;"></div>' +
+        '<div id="mipVisOwner" style="font-size:0.84rem;color:#fbbf24;font-weight:800;margin-top:4px;"></div>' +
+      '</div>' +
+      '<div class="mip-vis-body">' +
+        '<div id="mipVisRows"></div>' +
+        '<button type="button" id="mipVisSaveBtn" class="mip-vis-save">📲 Guardar en Contactos</button>' +
+        '<div class="mip-vis-acts" id="mipVisActs"></div>' +
+        '<div id="mipVisFooter" style="text-align:center;font-size:0.69rem;color:#64748b;font-weight:800;margin-top:0.85rem;"></div>' +
+        '<button type="button" id="mipVisCloseBtn" style="display:block;margin:0.5rem auto 0;background:transparent;border:0;color:#475569;font-size:0.76rem;font-weight:800;text-decoration:underline;cursor:pointer;">Cerrar</button>' +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(visModal);
+
+  function showVisitorCardModal(card, isOwnPreview, autoDownloadAndroid) {
+    var BL = getBL();
+    var mainName = card.c || card.o || "Contacto Oficial";
+    document.getElementById("mipVisComp").textContent = mainName;
+    document.getElementById("mipVisOwner").textContent = (card.c && card.o) ? card.o : "";
+
+    var visLogo = document.getElementById("mipVisLogo");
+    var visMono = document.getElementById("mipVisMono");
+    var ownLogo = "";
+    if (isOwnPreview) {
+      try { ownLogo = localStorage.getItem("mcp_company_logo") || ""; } catch (e) {}
+    }
+    if (ownLogo) {
+      visLogo.src = ownLogo;
+      visLogo.style.display = "block";
+      visMono.style.display = "none";
+    } else {
+      visLogo.style.display = "none";
+      visMono.textContent = getInitials(mainName);
+      visMono.style.display = "flex";
+    }
+
+    var rowsHtml = "";
+    if (card.p) rowsHtml += '<div class="mip-vis-row"><small>' + escH(BL.lblPhone) + '</small>' + escH(card.p) + '</div>';
+    if (card.e) rowsHtml += '<div class="mip-vis-row"><small>' + escH(BL.lblEmail) + '</small>' + escH(card.e) + '</div>';
+    if (card.l) rowsHtml += '<div class="mip-vis-row"><small>' + escH(BL.lblLic) + '</small>' + escH(card.l) + '</div>';
+    document.getElementById("mipVisRows").innerHTML = rowsHtml;
+
+    var cleanDigits = String(card.p || "").replace(/[^\d+]/g, "");
+    var waDigits = String(card.p || "").replace(/\D/g, "");
+    if (waDigits.length === 10) waDigits = "1" + waDigits;
+    var actsHtml = "";
+    if (cleanDigits) {
+      actsHtml += '<a class="mip-vis-act" href="tel:' + cleanDigits + '">' + escH(BL.visCall) + '</a>';
+      actsHtml += '<a class="mip-vis-act" target="_blank" rel="noopener" href="https://wa.me/' + waDigits + '">' + escH(BL.visWa) + '</a>';
+    }
+    document.getElementById("mipVisActs").innerHTML = actsHtml;
+
+    var saveBtn = document.getElementById("mipVisSaveBtn");
+    saveBtn.textContent = BL.visSave;
+    saveBtn.onclick = function() { triggerVCardDownload(card); };
+
+    document.getElementById("mipVisFooter").textContent = BL.visFooter;
+    var closeVis = document.getElementById("mipVisCloseBtn");
+    closeVis.textContent = BL.visClose;
+    closeVis.onclick = function() {
+      visModal.style.display = "none";
+      if (!isOwnPreview) {
+        try { window.history.replaceState({}, document.title, window.location.pathname); } catch (e) {}
+      }
+    };
+
+    visModal.style.display = "flex";
+    if (autoDownloadAndroid && !/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+      setTimeout(function() { triggerVCardDownload(card); }, 750);
+    }
+  }
+
+  function applyBizProtectionToForm() {
+    var v = loadBizVault();
+    var BL = getBL();
+    var compInput = document.getElementById("qb-comp");
+    var phoneInput = document.getElementById("qb-phone");
+    var compWrap = compInput ? compInput.parentElement : null;
+    var phoneWrap = phoneInput ? phoneInput.parentElement : null;
+    var logoBox = document.getElementById("qb-logo-input") ? document.getElementById("qb-logo-input").closest(".logo-upload-box") : null;
+    var mainTitle = v.comp || v.owner || "";
+
+    if (compInput && /^mr\.?\s*invoice\s*pro$/i.test(String(compInput.value || "").trim())) {
+      compInput.value = mainTitle;
+    }
+
+    var isLockedActive = Boolean(v.locked && mainTitle && !tempUnlockOnce);
+
+    if (isLockedActive) {
+      var combinedSub = [v.lic, v.phone, v.email].filter(Boolean).join(" • ");
+      if (compInput) compInput.value = mainTitle;
+      if (phoneInput) phoneInput.value = combinedSub;
+
+      if (compWrap) compWrap.classList.add("mip-biz-hidden");
+      if (phoneWrap) phoneWrap.classList.add("mip-biz-hidden");
+      if (logoBox) logoBox.classList.add("mip-biz-hidden");
+
+      summaryPill.style.display = "flex";
+      topBizBtn.classList.add("ready");
+      document.getElementById("mipSumName").textContent = mainTitle;
+      document.getElementById("mipSumSub").textContent = combinedSub || BL.bizSavedTag;
+
+      var sumLogo = document.getElementById("mipSumLogo");
+      var savedLogo = "";
+      try { savedLogo = localStorage.getItem("mcp_company_logo") || ""; } catch (e) {}
+      if (sumLogo && savedLogo) {
+        sumLogo.src = savedLogo;
+        sumLogo.style.display = "block";
+      } else if (sumLogo) {
+        sumLogo.style.display = "none";
+      }
+    } else {
+      if (compWrap) compWrap.classList.remove("mip-biz-hidden");
+      if (phoneWrap) phoneWrap.classList.remove("mip-biz-hidden");
+      if (logoBox) logoBox.classList.remove("mip-biz-hidden");
+      summaryPill.style.display = "none";
+      topBizBtn.classList.toggle("ready", Boolean(mainTitle));
+    }
+  }
+
+  function renderBizQrCode() {
+    var v = loadBizVault();
+    var BL = getBL();
+    var qrBox = document.getElementById("mipQrCanvasBox");
+    var titleEl = document.getElementById("mipQrCompTitle");
+    var subEl = document.getElementById("mipQrOwnerSub");
+    var hintEl = document.getElementById("mipQrHintTxt");
+    if (!qrBox) return;
+
+    qrBox.innerHTML = "";
+    if (!v.comp && !v.owner && !v.phone) {
+      titleEl.textContent = BL.bizBtn;
+      subEl.textContent = "";
+      qrBox.innerHTML = '<div style="color:#0f172a;font-size:0.78rem;font-weight:800;padding:1rem;max-width:190px;">' + escH(BL.fillFirst) + '</div>';
+      hintEl.textContent = "";
+      return;
+    }
+
+    titleEl.textContent = v.comp || v.owner || "---";
+    subEl.textContent = [v.owner, v.phone].filter(Boolean).join(" • ");
+    hintEl.textContent = BL.qrSub;
+
+    var cardUrl = buildCardUrl(v);
+    if (typeof QRCode !== "undefined") {
+      new QRCode(qrBox, {
+        text: cardUrl,
+        width: 180,
+        height: 180,
+        colorDark: "#0b0f19",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    } else {
+      var img = document.createElement("img");
+      img.width = 180;
+      img.height = 180;
+      img.alt = "QR";
+      img.src = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(cardUrl);
+      qrBox.appendChild(img);
+    }
+  }
+
+  function switchBizTab(mode) {
+    var isQr = (mode === "qr");
+    document.getElementById("mipTabBtnInfo").classList.toggle("active", !isQr);
+    document.getElementById("mipTabBtnQr").classList.toggle("active", isQr);
+    document.getElementById("mipPaneInfo").style.display = isQr ? "none" : "block";
+    document.getElementById("mipPaneQr").style.display = isQr ? "block" : "none";
+    if (isQr) renderBizQrCode();
+  }
+
+  function openBizModal(defaultTab) {
+    var v = loadBizVault();
+    var curComp = (document.getElementById("qb-comp") && document.getElementById("qb-comp").value || "").trim();
+    var curPhone = (document.getElementById("qb-phone") && document.getElementById("qb-phone").value || "").trim();
+    if (/^mr\.?\s*invoice\s*pro$/i.test(curComp)) curComp = "";
+
+    document.getElementById("mipInpComp").value = v.comp || curComp;
+    document.getElementById("mipInpOwner").value = v.owner || "";
+    document.getElementById("mipInpPhone").value = v.phone || (!v.comp ? curPhone : "");
+    document.getElementById("mipInpEmail").value = v.email || "";
+    document.getElementById("mipInpLic").value = v.lic || "";
+
+    bizModal.style.display = "flex";
+    switchBizTab(defaultTab === "qr" ? "qr" : "info");
+  }
+
+  topBizBtn.onclick = function() {
+    var v = loadBizVault();
+    openBizModal((v.comp || v.owner) ? "qr" : "info");
+  };
+  document.getElementById("mipSumEditBtn").onclick = function() { openBizModal("info"); };
+  document.getElementById("mipSumQrBtn").onclick = function() { openBizModal("qr"); };
+  document.getElementById("mipBizCloseBtn").onclick = function() { bizModal.style.display = "none"; };
+  bizModal.onclick = function(ev) { if (ev.target === bizModal) bizModal.style.display = "none"; };
+  visModal.onclick = function(ev) { if (ev.target === visModal) visModal.style.display = "none"; };
+  document.getElementById("mipTabBtnInfo").onclick = function() { switchBizTab("info"); };
+  document.getElementById("mipTabBtnQr").onclick = function() { switchBizTab("qr"); };
+
+  document.getElementById("mipModalLogoBtn").onclick = function() {
+    var fileInp = document.getElementById("qb-logo-input");
+    if (fileInp) fileInp.click();
+  };
+  var origLogoInp = document.getElementById("qb-logo-input");
+  if (origLogoInp) {
+    origLogoInp.addEventListener("change", function() {
+      setTimeout(applyBizProtectionToForm, 450);
+    });
+  }
+
+  document.getElementById("mipModalSigBtn").onclick = function() {
+    bizModal.style.display = "none";
+    if (typeof openSignatureModal === "function") openSignatureModal("issuer");
+  };
+
+  document.getElementById("mipSaveBizBtn").onclick = function() {
+    var BL = getBL();
+    var saved = saveBizVault({
+      comp: document.getElementById("mipInpComp").value,
+      owner: document.getElementById("mipInpOwner").value,
+      phone: document.getElementById("mipInpPhone").value,
+      email: document.getElementById("mipInpEmail").value,
+      lic: document.getElementById("mipInpLic").value
+    });
+    tempUnlockOnce = false;
+    applyBizProtectionToForm();
+    if (typeof onBuilderUserEdit === "function") onBuilderUserEdit(true);
+    if (saved.comp || saved.owner || saved.phone) {
+      switchBizTab("qr");
+    } else {
+      bizModal.style.display = "none";
+    }
+    if (typeof showExecutiveToast === "function") showExecutiveToast(BL.savedToast, 3000);
+  };
+
+  document.getElementById("mipUnlockOnceBtn").onclick = function() {
+    tempUnlockOnce = true;
+    bizModal.style.display = "none";
+    applyBizProtectionToForm();
+  };
+
+  document.getElementById("mipShareCardBtn").onclick = async function() {
+    var v = loadBizVault();
+    var BL = getBL();
+    if (!v.comp && !v.owner && !v.phone) { switchBizTab("info"); return; }
+    var url = buildCardUrl(v);
+    var titleTxt = (v.comp || v.owner || "Contacto") + " — Tarjeta Oficial";
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: titleTxt, text: titleTxt, url: url });
+        return;
+      } catch (e) {}
+    }
+    try { await navigator.clipboard.writeText(url); } catch (e2) {}
+    if (typeof showExecutiveToast === "function") showExecutiveToast(BL.linkCopied, 3000);
+  };
+
+  document.getElementById("mipCopyCardBtn").onclick = async function() {
+    var v = loadBizVault();
+    var BL = getBL();
+    if (!v.comp && !v.owner && !v.phone) { switchBizTab("info"); return; }
+    var url = buildCardUrl(v);
+    try { await navigator.clipboard.writeText(url); } catch (e) {}
+    if (typeof showExecutiveToast === "function") showExecutiveToast(BL.linkCopied, 3000);
+  };
+
+  document.getElementById("mipPreviewCardBtn").onclick = function() {
+    var v = loadBizVault();
+    if (!v.comp && !v.owner && !v.phone) { switchBizTab("info"); return; }
+    bizModal.style.display = "none";
+    showVisitorCardModal({ c: v.comp, o: v.owner, p: v.phone, e: v.email, l: v.lic }, true, false);
+  };
+
+  (function checkVisitorQrCardOnOpen() {
+    var params = new URLSearchParams(window.location.search);
+    var token = params.get("bcard");
+    if (!token) return;
+    var card = decodeCardPayload(token);
+    if (!card) return;
+    showVisitorCardModal(card, false, true);
+  })();
 
   var micSvg = '<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>';
   var pauseSvg = '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4.5" height="16" rx="1.2"/><rect x="13.5" y="4" width="4.5" height="16" rx="1.2"/></svg>';
@@ -4569,16 +4822,16 @@ g.textContent='✨ Llenar Documento Automático';
   box.id = "mip-help-panel";
   box.innerHTML =
     '<div id="mip-help-head">' +
-      '<div id="mip-help-title"><span id="mip-help-ico">' + micSvg + '</span><span>Help • Grabadora Turbo IA</span></div>' +
+      '<div id="mip-help-title"><span id="mip-help-ico">' + micSvg + '</span><span id="mipHelpTitleTxt">Help • Grabadora Turbo IA</span></div>' +
       '<button type="button" id="mip-help-close">X</button>' +
     '</div>' +
-    '<textarea id="mip-help-text" rows="2" placeholder="Opcional: escribe aquí o usa el botón Grabar abajo..."></textarea>' +
+    '<textarea id="mip-help-text" rows="2" placeholder=""></textarea>' +
     '<div id="mip-bar">' +
       '<button type="button" id="mip-trash" title="Descartar">' + trashSvg + '</button>' +
       '<button type="button" id="mip-rec">' + micSvg + '<span>Grabar Voz</span></button>' +
       '<button type="button" id="mip-send" disabled title="Enviar">' + sendSvg + '</button>' +
     '</div>' +
-    '<div id="mip-help-hint">Pausa y continúa cuantas veces quieras, y toca el botón azul de enviar al terminar.</div>' +
+    '<div id="mip-help-hint"></div>' +
     '<div id="mip-help-status"></div>';
   document.body.appendChild(box);
 
@@ -4625,6 +4878,7 @@ g.textContent='✨ Llenar Documento Automático';
   }
 
   function resetAllUI() {
+    var BL = getBL();
     releaseMic();
     mr = null;
     chunks = [];
@@ -4633,9 +4887,47 @@ g.textContent='✨ Llenar Documento Automático';
     sendAfterStop = false;
     recBtn.disabled = false;
     recBtn.className = "";
-    recBtn.innerHTML = micSvg + '<span>Grabar Voz</span>';
+    recBtn.innerHTML = micSvg + '<span>' + escH(BL.recIdle) + '</span>';
     trashBtn.style.display = "none";
     syncSendBtn();
+  }
+
+  function syncBizAndRecorderI18n() {
+    var BL = getBL();
+    var map = {
+      "mipTopBizTxt": BL.bizBtn,
+      "mipSumEditBtn": BL.editBtn,
+      "mipSumQrTxt": BL.qrBtn,
+      "mipBizModalTitle": BL.modalTitle,
+      "mipTabBtnInfo": BL.tabProfile,
+      "mipTabBtnQr": BL.tabQr,
+      "mipLblComp": BL.lblComp,
+      "mipLblOwner": BL.lblOwner,
+      "mipLblPhone": BL.lblPhone,
+      "mipLblEmail": BL.lblEmail,
+      "mipLblLic": BL.lblLic,
+      "mipModalLogoBtn": BL.logoBtn,
+      "mipModalSigBtn": BL.sigBtn,
+      "mipSaveBizBtn": BL.saveBiz,
+      "mipUnlockOnceBtn": BL.unlockOnce,
+      "mipShareCardBtn": BL.shareCard,
+      "mipCopyCardBtn": BL.copyLink,
+      "mipPreviewCardBtn": BL.previewCard,
+      "mipHelpTitleTxt": BL.helpTitle,
+      "mip-help-hint": BL.helpHint
+    };
+    Object.keys(map).forEach(function(id) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = map[id];
+    });
+    document.getElementById("mipInpComp").placeholder = BL.phComp;
+    document.getElementById("mipInpOwner").placeholder = BL.phOwner;
+    document.getElementById("mipInpPhone").placeholder = BL.phPhone;
+    document.getElementById("mipInpEmail").placeholder = BL.phEmail;
+    document.getElementById("mipInpLic").placeholder = BL.phLic;
+    inp.placeholder = BL.helpPh;
+    if (state === "idle") recBtn.innerHTML = micSvg + '<span>' + escH(BL.recIdle) + '</span>';
+    applyBizProtectionToForm();
   }
 
   fab.onclick = function() {
@@ -4647,12 +4939,14 @@ g.textContent='✨ Llenar Documento Automático';
       }
       box.style.display = "none";
     } else {
+      syncBizAndRecorderI18n();
       box.style.display = "block";
     }
   };
   document.getElementById("mip-help-close").onclick = fab.onclick;
 
   function applyDocData(obj) {
+    var v = loadBizVault();
     var validTypes = ["quote","invoice","receipt","contract","billsale","lease","waiver","promissory","change","workorder","po","delivery"];
     if (obj.docType && validTypes.indexOf(obj.docType) !== -1) {
       var dt = document.getElementById("qb-doctype");
@@ -4662,14 +4956,22 @@ g.textContent='✨ Llenar Documento Automático';
         if (typeof syncActiveDocTypeUI === "function") syncActiveDocTypeUI();
       }
     }
-    if (obj.issuer && String(obj.issuer).trim()) {
-      var compEl = document.getElementById("qb-comp");
-      if (compEl) compEl.value = String(obj.issuer).trim();
+
+    var isLockedBiz = Boolean(v.locked && (v.comp || v.owner) && !tempUnlockOnce);
+    if (!isLockedBiz) {
+      var iss = String(obj.issuer || "").trim();
+      if (iss && !/^mr\.?\s*invoice\s*pro$/i.test(iss)) {
+        var compEl = document.getElementById("qb-comp");
+        if (compEl) compEl.value = iss;
+      }
+      if (obj.phone && String(obj.phone).trim()) {
+        var phEl = document.getElementById("qb-phone");
+        if (phEl) phEl.value = String(obj.phone).trim();
+      }
+    } else {
+      applyBizProtectionToForm();
     }
-    if (obj.phone && String(obj.phone).trim()) {
-      var phEl = document.getElementById("qb-phone");
-      if (phEl) phEl.value = String(obj.phone).trim();
-    }
+
     if (obj.client) {
       var cliEl = document.getElementById("qb-client");
       if (cliEl) cliEl.value = String(obj.client).trim();
@@ -4693,12 +4995,13 @@ g.textContent='✨ Llenar Documento Automático';
     document.getElementById("qb-ret").value = String(Number(obj.retPct) || 0);
     document.getElementById("qb-dep").value = String(Number(obj.dep) || 0);
     if (obj.notes) document.getElementById("qb-notes").value = String(obj.notes);
+
     if (typeof onBuilderUserEdit === "function") onBuilderUserEdit(false);
     inp.value = "";
     resetAllUI();
     box.style.display = "none";
     setStatus("", false);
-    if (typeof showExecutiveToast === "function") showExecutiveToast("Documento completado con éxito", 3000);
+    if (typeof showExecutiveToast === "function") showExecutiveToast("✨ OK", 2600);
   }
 
   function blobToBase64(blob) {
@@ -4715,14 +5018,15 @@ g.textContent='✨ Llenar Documento Automático';
   }
 
   async function sendToTurboWorker(audioB64, mimeStr, extraText) {
+    var BL = getBL();
     state = "sending";
     recBtn.disabled = true;
     sendBtn.disabled = true;
     trashBtn.style.display = "none";
-    setStatus("Procesando en modo Turbo...", false);
+    setStatus(BL.stSend, false);
 
     var lg = (typeof currentLang !== "undefined" && currentLang) ? currentLang : "es";
-    var sys = 'Eres el redactor experto de Mr. Invoice Pro en Puerto Rico y EE.UU. Escucha el audio y/o lee la nota del usuario y conviértelo en un documento comercial impecable en idioma "' + lg + '". Si el usuario duda, hace pausas o corrige un monto/nombre mientras habla, usa únicamente su dato corregido final e ignora muletillas. Redacta descripciones profesionales claras para cada partida técnica (construcción, servicios, ventas, etc.). Devuelve SOLO JSON válido exacto: {"docType":"quote|invoice|receipt|contract|billsale|lease|waiver|promissory|change|workorder|po|delivery","issuer":"","phone":"","client":"","items":[{"desc":"","qty":1,"price":0}],"taxPct":0,"taxAmt":0,"discAmt":0,"retPct":0,"dep":0,"notes":""}';
+    var sys = 'Eres un asistente experto redactando documentos comerciales en idioma "' + lg + '". Escucha el audio y/o lee la nota del usuario. Si se corrige mientras habla, usa solo el dato corregido final. PROHIBIDO poner "Mr. Invoice Pro" como nombre de empresa (issuer); deja issuer="" a menos que el usuario dicte explícitamente el nombre de su propio negocio. Redacta descripciones profesionales claras para cada partida. Devuelve SOLO JSON válido exacto: {"docType":"quote|invoice|receipt|contract|billsale|lease|waiver|promissory|change|workorder|po|delivery","issuer":"","phone":"","client":"","items":[{"desc":"","qty":1,"price":0}],"taxPct":0,"taxAmt":0,"discAmt":0,"retPct":0,"dep":0,"notes":""}';
 
     var payload = { system: sys };
     if (audioB64) {
@@ -4740,13 +5044,13 @@ g.textContent='✨ Llenar Documento Automático';
         body: JSON.stringify(payload)
       });
       var d = await r.json();
-      if (!d || !d.ok || !d.text) throw new Error((d && d.error) ? d.error : "Respuesta vacía");
+      if (!d || !d.ok || !d.text) throw new Error((d && d.error) ? d.error : "Empty");
       var i1 = d.text.indexOf("{"), i2 = d.text.lastIndexOf("}");
-      if (i1 === -1 || i2 === -1) throw new Error("Formato inválido");
+      if (i1 === -1 || i2 === -1) throw new Error("JSON");
       applyDocData(JSON.parse(d.text.slice(i1, i2 + 1)));
     } catch (err) {
       resetAllUI();
-      setStatus("No se pudo procesar (" + String(err.message || "intenta de nuevo") + ").", true);
+      setStatus(BL.stErr.replace("{E}", String(err.message || "Error")), true);
     }
   }
 
@@ -4755,15 +5059,16 @@ g.textContent='✨ Llenar Documento Automático';
     timer = setInterval(function() {
       secs++;
       if (state === "recording") {
-        recBtn.innerHTML = pauseSvg + '<span>Parar (' + fmtTime(secs) + ')</span>';
+        recBtn.innerHTML = pauseSvg + '<span>' + escH(getBL().recStop) + ' (' + fmtTime(secs) + ')</span>';
       }
     }, 1000);
   }
 
   async function beginRecording() {
+    var BL = getBL();
     if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia || typeof MediaRecorder === "undefined") {
       inp.focus();
-      setStatus("Usa el cuadro de texto arriba.", true);
+      setStatus(BL.stMic, true);
       return;
     }
     try {
@@ -4803,7 +5108,7 @@ g.textContent='✨ Llenar Documento Automático';
         chunks = [];
         if (blob.size < 400 && !inp.value.trim()) {
           resetAllUI();
-          setStatus("No se captó audio. Intenta de nuevo.", true);
+          setStatus(getBL().stNoAud, true);
           return;
         }
         try {
@@ -4811,7 +5116,7 @@ g.textContent='✨ Llenar Documento Automático';
           await sendToTurboWorker(b64, recMime, inp.value.trim());
         } catch (err) {
           resetAllUI();
-          setStatus("Error al procesar el audio.", true);
+          setStatus(getBL().stErr.replace("{E}", "Audio"), true);
         }
       };
 
@@ -4819,18 +5124,19 @@ g.textContent='✨ Llenar Documento Automático';
       secs = 0;
       state = "recording";
       recBtn.className = "rec";
-      recBtn.innerHTML = pauseSvg + '<span>Parar (0:00)</span>';
+      recBtn.innerHTML = pauseSvg + '<span>' + escH(BL.recStop) + ' (0:00)</span>';
       trashBtn.style.display = "flex";
       syncSendBtn();
-      setStatus("Grabando sin cortes... Toca Parar para pausar.", false);
+      setStatus(BL.stRec, false);
       startTimer();
     } catch (err) {
       resetAllUI();
-      setStatus("Permite el acceso al micrófono en tu navegador.", true);
+      setStatus(BL.stMic, true);
     }
   }
 
   recBtn.onclick = function() {
+    var BL = getBL();
     if (state === "sending") return;
     if (state === "idle") {
       beginRecording();
@@ -4842,9 +5148,9 @@ g.textContent='✨ Llenar Documento Automático';
         if (timer) { clearInterval(timer); timer = null; }
         state = "paused";
         recBtn.className = "paused";
-        recBtn.innerHTML = micSvg + '<span>Continuar (' + fmtTime(secs) + ')</span>';
+        recBtn.innerHTML = micSvg + '<span>' + escH(BL.recCont) + ' (' + fmtTime(secs) + ')</span>';
         syncSendBtn();
-        setStatus("En pausa (" + fmtTime(secs) + "). Toca Continuar o envía con el botón azul.", false);
+        setStatus(BL.stPause.replace("{T}", fmtTime(secs)), false);
       }
       return;
     }
@@ -4853,9 +5159,9 @@ g.textContent='✨ Llenar Documento Automático';
         mr.resume();
         state = "recording";
         recBtn.className = "rec";
-        recBtn.innerHTML = pauseSvg + '<span>Parar (' + fmtTime(secs) + ')</span>';
+        recBtn.innerHTML = pauseSvg + '<span>' + escH(BL.recStop) + ' (' + fmtTime(secs) + ')</span>';
         syncSendBtn();
-        setStatus("Grabando... Toca Parar para pausar.", false);
+        setStatus(BL.stRec, false);
         startTimer();
       }
     }
@@ -4868,7 +5174,7 @@ g.textContent='✨ Llenar Documento Automático';
     } else {
       resetAllUI();
     }
-    setStatus("Grabación descartada.", false);
+    setStatus(getBL().stDisc, false);
   };
 
   sendBtn.onclick = function() {
@@ -4885,6 +5191,39 @@ g.textContent='✨ Llenar Documento Automático';
     var txt = inp.value.trim();
     if (txt) sendToTurboWorker("", "", txt);
   };
+
+  var origApplyLang = window.applyLanguageUI;
+  if (typeof origApplyLang === "function") {
+    window.applyLanguageUI = function() {
+      origApplyLang();
+      syncBizAndRecorderI18n();
+      if (bizModal.style.display === "flex" && document.getElementById("mipPaneQr").style.display === "block") {
+        renderBizQrCode();
+      }
+    };
+  }
+
+  var origSyncDoc = window.syncActiveDocTypeUI;
+  if (typeof origSyncDoc === "function") {
+    window.syncActiveDocTypeUI = function() {
+      origSyncDoc();
+      applyBizProtectionToForm();
+    };
+  }
+
+  var origResetZero = window.resetBuilderToZero;
+  if (typeof origResetZero === "function") {
+    window.resetBuilderToZero = function() {
+      tempUnlockOnce = false;
+      origResetZero();
+      applyBizProtectionToForm();
+    };
+  }
+
+  window.addEventListener("DOMContentLoaded", function() {
+    setTimeout(syncBizAndRecorderI18n, 80);
+  });
+  setTimeout(syncBizAndRecorderI18n, 150);
 })();
 </script>
 </body>
