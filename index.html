@@ -9,13 +9,13 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Mr. Invoice Pro">
 <title>Mr. Invoice Pro | Official PDF Suite</title>
-<meta name="description" content="Generador profesional de cotizaciones, estimados, facturas, notas de proyectos y contratos legales en PDF con firma digital.">
+<meta name="description" content="Suite ejecutiva de estimados, facturas, notas técnicas de proyectos y contratos legales en PDF con firma digital.">
 <link rel="canonical" href="https://mrinvoicepro.com/">
 <meta property="og:url" content="https://mrinvoicepro.com/">
 <meta property="og:title" content="Mr. Invoice Pro | Official PDF Suite">
-<meta property="og:description" content="Generador profesional de cotizaciones, estimados, facturas y contratos legales en PDF con firma digital.">
+<meta property="og:description" content="Suite ejecutiva de estimados, facturas, notas técnicas de proyectos y contratos legales en PDF con firma digital.">
 <meta property="og:type" content="website">
-<link rel="manifest" href="/manifest.json?v=20">
+<link rel="manifest" href="/manifest.json?v=21">
 <meta name="theme-color" content="#ffffff">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
@@ -29,19 +29,19 @@ if ('serviceWorker' in navigator) {
 <script data-goatcounter="https://mrinvoicepro.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 <style>
 :root {
-  --bg-page: #f4f6f9;
+  --bg-page: #f3f5f8;
   --surface-card: #ffffff;
   --surface-subtle: #f8fafc;
   --surface-pill: #f1f5f9;
   --line-fine: rgba(15, 23, 42, 0.08);
-  --line-mid: rgba(15, 23, 42, 0.13);
-  --obsidian: #0b0f19;
-  --obsidian-soft: #1e293b;
-  --accent: #d97706;
-  --accent-bright: #fbbf24;
-  --emerald: #059669;
-  --emerald-bright: #34d399;
-  --text-dark: #090d16;
+  --line-mid: rgba(15, 23, 42, 0.14);
+  --obsidian: #0f172a;
+  --obsidian-deep: #090d16;
+  --slate-exec: #1e293b;
+  --accent: #b45309;
+  --accent-bright: #f59e0b;
+  --emerald: #047857;
+  --text-dark: #0f172a;
   --text-mid: #334155;
   --text-muted: #64748b;
 }
@@ -50,7 +50,7 @@ html, * {
   margin: 0;
   padding: 0;
   -webkit-tap-highlight-color: transparent;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", Roboto, sans-serif;
 }
 body {
   background-color: var(--bg-page);
@@ -62,398 +62,412 @@ body {
 @media print {
   body * { display: none !important; }
   body::after {
-    content: "Mr. Invoice Pro — Vista previa protegida. Descargue el archivo PDF oficial desde la aplicación.";
+    content: "Mr. Invoice Pro — Vista previa protegida. Descargue el archivo PDF oficial desde el sistema.";
     display: block !important;
     padding: 3rem 1.5rem;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 800;
     text-align: center;
     color: #0f172a;
   }
 }
-.ico-stroke { width: 19px; height: 19px; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; flex-shrink: 0; display: inline-block; vertical-align: middle; }
-.ico-stroke-sm { width: 15px; height: 15px; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; flex-shrink: 0; display: inline-block; vertical-align: middle; }
+.ico-stroke { width: 18px; height: 18px; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; flex-shrink: 0; display: inline-block; vertical-align: middle; }
+.ico-stroke-sm { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; fill: none; flex-shrink: 0; display: inline-block; vertical-align: middle; }
 .ico-gold { color: var(--accent); }
 .ico-gold-bright { color: var(--accent-bright); }
 .ico-emerald { color: var(--emerald); }
-.sheet-grab-pill { width: 40px; height: 4px; border-radius: 999px; background: #cbd5e1; margin: 0 auto 0.55rem; }
+.sheet-grab-pill { width: 38px; height: 4px; border-radius: 999px; background: #cbd5e1; margin: 0 auto 0.5rem; }
 
-/* CABECERA CENTRADA SIN MUÑEQUITO + BARRA INFERIOR ALINEADA */
+/* CABECERA CENTRADA Y BARRA EJECUTIVA SECUNDARIA */
 header {
   position: sticky; top: 0; z-index: 60;
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--line-mid);
-  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
-  padding: 0.62rem 0.9rem 0.55rem;
+  box-shadow: 0 2px 12px rgba(15, 23, 42, 0.04);
+  padding: 0.6rem 0.9rem 0.52rem;
   padding-left: max(0.9rem, env(safe-area-inset-left));
   padding-right: max(0.9rem, env(safe-area-inset-right));
 }
 .header-inner { max-width: 760px; margin: 0 auto; }
 .top-bar-centered {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
 }
-.logo-main { font-size: 1.32rem; font-weight: 900; letter-spacing: -0.025em; color: var(--text-dark); line-height: 1.1; }
+.logo-main { font-size: 1.3rem; font-weight: 900; letter-spacing: -0.025em; color: var(--obsidian-deep); line-height: 1.1; }
 .logo-main span { color: var(--accent); }
-.logo-sub { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1.25px; color: var(--text-muted); font-weight: 800; margin-top: 2px; }
+.logo-sub { font-size: 0.58rem; text-transform: uppercase; letter-spacing: 1.35px; color: var(--text-muted); font-weight: 800; margin-top: 2px; }
 
 .sub-control-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.42rem;
-  margin-top: 0.52rem;
-  padding-top: 0.48rem;
-  border-top: 1px solid var(--line-fine);
-  overflow-x: auto;
-  scrollbar-width: none;
+  display: flex; justify-content: space-between; align-items: center; gap: 0.4rem;
+  margin-top: 0.5rem; padding-top: 0.46rem; border-top: 1px solid var(--line-fine);
+  overflow-x: auto; scrollbar-width: none;
 }
 .sub-control-bar::-webkit-scrollbar { display: none; }
 
 .active-doc-chip {
   background: var(--surface-pill); border: 1px solid var(--line-mid); color: var(--text-dark);
-  padding: 0.36rem 0.62rem; border-radius: 999px; font-size: 0.73rem; font-weight: 800;
+  padding: 0.34rem 0.58rem; border-radius: 7px; font-size: 0.72rem; font-weight: 800;
   cursor: pointer; display: inline-flex; align-items: center; gap: 0.36rem;
-  min-width: 0; max-width: 46%; flex-shrink: 1;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
-  transition: background 0.15s ease, transform 0.12s ease;
+  min-width: 0; max-width: 46%; flex-shrink: 1; transition: background 0.14s ease;
 }
 .active-doc-chip:hover { background: #e2e8f0; }
-.active-doc-chip:active { transform: scale(0.97); }
-.chip-code { background: var(--obsidian); color: var(--accent-bright); font-size: 0.61rem; font-weight: 900; padding: 2px 6px; border-radius: 999px; letter-spacing: 0.5px; flex-shrink: 0; }
+.chip-code { background: var(--obsidian); color: #fbbf24; font-size: 0.6rem; font-weight: 900; padding: 2px 6px; border-radius: 4px; letter-spacing: 0.5px; flex-shrink: 0; }
 .chip-label-top { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-.top-actions { display: flex; gap: 0.34rem; align-items: center; margin-left: auto; flex-shrink: 0; }
+.top-actions { display: flex; gap: 0.32rem; align-items: center; margin-left: auto; flex-shrink: 0; }
 .lang-select, .curr-select, .install-top-btn, .mip-top-biz-btn {
   background: var(--surface-pill); color: var(--text-dark); border: 1px solid var(--line-mid);
-  padding: 0.34rem 0.58rem; border-radius: 999px; font-weight: 800; font-size: 0.71rem;
-  cursor: pointer; width: auto; white-space: nowrap; transition: all 0.15s ease;
+  padding: 0.34rem 0.56rem; border-radius: 7px; font-weight: 800; font-size: 0.7rem;
+  cursor: pointer; width: auto; white-space: nowrap; transition: all 0.14s ease;
 }
-.curr-select { border-color: #a7f3d0; background: #ecfdf5; color: var(--emerald); }
+.curr-select { border-color: #cbd5e1; background: #f8fafc; color: var(--obsidian); }
 .install-top-btn { background: var(--obsidian); color: #fff; border-color: var(--obsidian); display: inline-flex; align-items: center; gap: 0.28rem; }
-.mip-top-biz-btn { background: #fffbeb; color: #b45309; border: 1.5px solid #f59e0b; font-weight: 900; display: inline-flex; align-items: center; gap: 0.3rem; }
-.mip-top-biz-btn.ready { background: #ecfdf5; color: #065f46; border-color: #34d399; }
+.mip-top-biz-btn { background: #ffffff; color: var(--obsidian); border: 1px solid #94a3b8; font-weight: 800; display: inline-flex; align-items: center; gap: 0.3rem; }
+.mip-top-biz-btn.ready { background: #0f172a; color: #f8fafc; border-color: #0f172a; }
 @media all and (display-mode: standalone), all and (display-mode: fullscreen), all and (display-mode: minimal-ui) { #installPwaBtn { display: none !important; } }
 
 /* MONOGRAMA EJECUTIVO */
 .exec-monogram {
-  width: 52px; height: 52px; border-radius: 12px;
-  background: linear-gradient(145deg, #0b0f19 0%, #1e293b 100%);
-  border: 1.5px solid #f59e0b; color: #fbbf24;
-  font-weight: 900; font-size: 1.05rem; letter-spacing: 0.8px;
+  width: 50px; height: 50px; border-radius: 8px;
+  background: #0f172a; border: 1.5px solid #b45309; color: #fbbf24;
+  font-weight: 900; font-size: 1rem; letter-spacing: 0.8px;
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
 
-/* DRAWER Y MODALES BASE */
-.suite-drawer-overlay { position: fixed; inset: 0; background: rgba(9, 13, 22, 0.62); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: none; justify-content: flex-end; z-index: 10025; }
-.suite-drawer-panel { width: 90%; max-width: 410px; height: 100%; background: #ffffff; display: flex; flex-direction: column; box-shadow: -12px 0 40px rgba(0, 0, 0, 0.28); animation: slideInRight 0.2s cubic-bezier(0.16, 1, 0.3, 1); }
+/* PANEL DE PLANTILLAS Y MODALES GENERALES */
+.suite-drawer-overlay { position: fixed; inset: 0; background: rgba(9, 13, 22, 0.62); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); display: none; justify-content: flex-end; z-index: 10025; }
+.suite-drawer-panel { width: 90%; max-width: 400px; height: 100%; background: #ffffff; display: flex; flex-direction: column; box-shadow: -12px 0 40px rgba(0, 0, 0, 0.3); animation: slideInRight 0.18s ease-out; }
 @keyframes slideInRight { from { transform: translateX(100%); } to { transform: translateX(0); } }
-.suite-drawer-head { padding: 1.05rem 1.15rem 0.95rem; padding-top: max(1.05rem, env(safe-area-inset-top)); background: var(--obsidian); color: #ffffff; border-bottom: 2px solid var(--accent); }
-.suite-back-hint { font-size: 0.68rem; color: #94a3b8; margin-top: 4px; font-weight: 600; }
-.suite-drawer-body { padding: 1rem; overflow-y: auto; flex: 1; background: #f8fafc; }
-.suite-cat-label { font-size: 0.68rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1.1px; color: var(--text-muted); margin: 0.85rem 0 0.45rem; display: flex; align-items: center; gap: 0.4rem; }
+.suite-drawer-head { padding: 1rem 1.1rem 0.9rem; padding-top: max(1rem, env(safe-area-inset-top)); background: var(--obsidian-deep); color: #ffffff; border-bottom: 1px solid #334155; }
+.suite-back-hint { font-size: 0.67rem; color: #94a3b8; margin-top: 4px; font-weight: 600; }
+.suite-drawer-body { padding: 0.95rem; overflow-y: auto; flex: 1; background: #f8fafc; }
+.suite-cat-label { font-size: 0.66rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin: 0.85rem 0 0.42rem; }
 .suite-cat-label:first-child { margin-top: 0.1rem; }
-.suite-grid { display: grid; grid-template-columns: 1fr; gap: 0.45rem; }
-.suite-item-btn { width: 100%; background: #ffffff; border: 1px solid var(--line-mid); border-radius: 12px; padding: 0.7rem 0.85rem; display: flex; align-items: center; justify-content: space-between; gap: 0.65rem; cursor: pointer; text-align: left; transition: all 0.14s ease; }
-.suite-item-btn:hover { border-color: #94a3b8; transform: translateY(-1px); }
-.suite-item-btn.active { background: #fffbeb; border: 1.5px solid var(--accent); box-shadow: 0 4px 12px rgba(217, 119, 6, 0.1); }
-.suite-item-left { display: flex; align-items: center; gap: 0.65rem; min-width: 0; }
-.suite-ico-box { width: 34px; height: 34px; border-radius: 9px; background: var(--surface-pill); color: var(--obsidian); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.suite-item-btn.active .suite-ico-box { background: var(--obsidian); color: var(--accent-bright); }
-.suite-item-title { font-size: 0.83rem; font-weight: 800; color: var(--text-dark); }
-.suite-item-code { font-size: 0.65rem; font-weight: 900; color: var(--text-muted); background: var(--surface-pill); padding: 2px 7px; border-radius: 6px; flex-shrink: 0; }
-.suite-item-btn.active .suite-item-code { background: var(--emerald); color: #ffffff; }
+.suite-grid { display: grid; grid-template-columns: 1fr; gap: 0.4rem; }
+.suite-item-btn { width: 100%; background: #ffffff; border: 1px solid var(--line-mid); border-radius: 8px; padding: 0.65rem 0.8rem; display: flex; align-items: center; justify-content: space-between; gap: 0.6rem; cursor: pointer; text-align: left; }
+.suite-item-btn.active { background: #f8fafc; border: 1.5px solid var(--obsidian); }
+.suite-item-left { display: flex; align-items: center; gap: 0.6rem; min-width: 0; }
+.suite-ico-box { width: 32px; height: 32px; border-radius: 6px; background: var(--surface-pill); color: var(--obsidian); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.suite-item-btn.active .suite-ico-box { background: var(--obsidian); color: #fbbf24; }
+.suite-item-title { font-size: 0.81rem; font-weight: 800; color: var(--text-dark); }
+.suite-item-code { font-size: 0.63rem; font-weight: 900; color: var(--text-muted); background: var(--surface-pill); padding: 2px 6px; border-radius: 4px; flex-shrink: 0; font-family: ui-monospace, monospace; }
+.suite-item-btn.active .suite-item-code { background: var(--obsidian); color: #ffffff; }
 
-.confirm-modal-overlay { position: fixed; inset: 0; background: rgba(9, 13, 22, 0.68); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: none; justify-content: center; align-items: center; z-index: 10030; padding: 1.1rem; overflow-y: auto; }
-.confirm-modal-card { width: 100%; max-width: 395px; background: #ffffff; border-radius: 20px; border: 1px solid var(--line-mid); padding: 1.35rem 1.25rem 1.2rem; box-shadow: 0 24px 50px rgba(0, 0, 0, 0.32); text-align: center; animation: popInSoft 0.16s ease-out; margin: auto; }
-@keyframes popInSoft { from { transform: scale(0.94); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-.confirm-icon-ring { width: 46px; height: 46px; border-radius: 50%; background: #fef2f2; border: 1px solid #fecdd3; color: #e11d48; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.75rem; }
-.confirm-title { font-size: 1rem; font-weight: 900; color: var(--text-dark); margin-bottom: 0.4rem; }
-.confirm-msg { font-size: 0.82rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 1.1rem; }
-.confirm-btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
-.confirm-btn-no { background: var(--surface-pill); color: var(--text-dark); border: 1px solid var(--line-mid); padding: 0.78rem; border-radius: 12px; font-size: 0.85rem; font-weight: 800; cursor: pointer; }
-.confirm-btn-yes { background: #e11d48; color: #ffffff; border: 1px solid #be123c; padding: 0.78rem; border-radius: 12px; font-size: 0.85rem; font-weight: 800; cursor: pointer; box-shadow: 0 6px 14px rgba(225, 29, 72, 0.25); }
-.confirm-btn-yes:disabled { opacity: 0.6; cursor: wait; }
+.confirm-modal-overlay { position: fixed; inset: 0; background: rgba(9, 13, 22, 0.68); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 10030; padding: 1rem; overflow-y: auto; }
+.confirm-modal-card { width: 100%; max-width: 390px; background: #ffffff; border-radius: 12px; border: 1px solid var(--line-mid); padding: 1.25rem; box-shadow: 0 24px 50px rgba(0, 0, 0, 0.35); text-align: center; margin: auto; }
+.confirm-icon-ring { width: 42px; height: 42px; border-radius: 8px; background: #f8fafc; border: 1px solid #cbd5e1; color: var(--obsidian); display: flex; align-items: center; justify-content: center; margin: 0 auto 0.7rem; }
+.confirm-title { font-size: 0.96rem; font-weight: 900; color: var(--text-dark); margin-bottom: 0.35rem; }
+.confirm-msg { font-size: 0.8rem; color: var(--text-muted); line-height: 1.45; margin-bottom: 1rem; }
+.confirm-btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem; }
+.confirm-btn-no { background: var(--surface-pill); color: var(--text-dark); border: 1px solid var(--line-mid); padding: 0.72rem; border-radius: 8px; font-size: 0.82rem; font-weight: 800; cursor: pointer; }
+.confirm-btn-yes { background: #991b1b; color: #ffffff; border: 1px solid #7f1d1d; padding: 0.72rem; border-radius: 8px; font-size: 0.82rem; font-weight: 800; cursor: pointer; }
 
 /* FIRMAS E INSTALACIÓN */
-.sig-grid-boxes { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin-top: 0.75rem; }
+.sig-grid-boxes { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; margin-top: 0.75rem; }
 @media (max-width: 520px) { .sig-grid-boxes { grid-template-columns: 1fr; } }
-.sig-mini-card { background: #ffffff; border: 1px dashed #94a3b8; border-radius: 12px; padding: 0.65rem 0.75rem; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
-.sig-mini-card.signed { border-style: solid; border-color: #a7f3d0; background: #ecfdf5; }
+.sig-mini-card { background: #ffffff; border: 1px dashed #94a3b8; border-radius: 8px; padding: 0.6rem 0.72rem; display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+.sig-mini-card.signed { border-style: solid; border-color: #64748b; background: #f8fafc; }
 .sig-mini-left { display: flex; align-items: center; gap: 0.55rem; min-width: 0; flex: 1; }
-.sig-mini-thumb { height: 32px; max-width: 90px; object-fit: contain; background: #fff; border: 1px solid var(--line-mid); border-radius: 6px; padding: 2px 4px; display: none; }
+.sig-mini-thumb { height: 30px; max-width: 88px; object-fit: contain; background: #fff; border: 1px solid var(--line-mid); border-radius: 4px; padding: 2px 4px; display: none; }
 .sig-mini-card.signed .sig-mini-thumb { display: block; }
-.sig-open-btn { background: var(--obsidian); color: #ffffff; border: none; border-radius: 8px; padding: 0.38rem 0.68rem; font-size: 0.73rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 0.3rem; flex-shrink: 0; }
-.sig-canvas-wrap { border: 2px dashed #94a3b8; border-radius: 14px; background: #f8fafc; position: relative; margin-bottom: 0.85rem; overflow: hidden; touch-action: none; }
+.sig-open-btn { background: var(--obsidian); color: #ffffff; border: none; border-radius: 6px; padding: 0.38rem 0.65rem; font-size: 0.72rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 0.3rem; flex-shrink: 0; }
+.sig-canvas-wrap { border: 1.5px dashed #94a3b8; border-radius: 8px; background: #f8fafc; position: relative; margin-bottom: 0.8rem; overflow: hidden; touch-action: none; }
 #sigPadCanvas { width: 100%; height: 185px; display: block; cursor: crosshair; touch-action: none; }
 .sig-baseline { position: absolute; left: 16px; right: 16px; bottom: 34px; border-bottom: 1px dashed #cbd5e1; pointer-events: none; }
 
-.ios-install-sheet { position: fixed; inset: 0; background: rgba(9, 13, 22, 0.6); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); display: none; justify-content: center; align-items: flex-end; z-index: 10028; padding: 1rem; }
-.ios-sheet-card { width: 100%; max-width: 420px; background: #ffffff; border: 1px solid var(--line-mid); border-radius: 20px; padding: 0.85rem 1.25rem 1.25rem; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25); }
-.ios-sheet-head { display: flex; align-items: center; gap: 0.75rem; border-bottom: 1px solid var(--surface-pill); padding-bottom: 0.85rem; margin-bottom: 0.9rem; }
-.ios-step-row { display: flex; align-items: center; gap: 0.7rem; background: var(--surface-subtle); border: 1px solid var(--line-fine); padding: 0.75rem 0.85rem; border-radius: 12px; margin-bottom: 0.6rem; font-size: 0.83rem; line-height: 1.4; color: var(--text-mid); }
-.ios-step-num { background: var(--obsidian); color: #fff; font-weight: 900; width: 25px; height: 25px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.76rem; }
-.ios-done-btn { width: 100%; background: var(--obsidian); color: #fff; border: none; padding: 0.84rem; border-radius: 12px; font-weight: 800; font-size: 0.88rem; cursor: pointer; margin-top: 0.35rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem; }
+.ios-install-sheet { position: fixed; inset: 0; background: rgba(9, 13, 22, 0.62); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: flex-end; z-index: 10028; padding: 1rem; }
+.ios-sheet-card { width: 100%; max-width: 420px; background: #ffffff; border: 1px solid var(--line-mid); border-radius: 12px; padding: 0.85rem 1.2rem 1.2rem; box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3); }
+.ios-sheet-head { display: flex; align-items: center; gap: 0.75rem; border-bottom: 1px solid var(--surface-pill); padding-bottom: 0.8rem; margin-bottom: 0.85rem; }
+.ios-step-row { display: flex; align-items: center; gap: 0.7rem; background: var(--surface-subtle); border: 1px solid var(--line-fine); padding: 0.7rem 0.8rem; border-radius: 8px; margin-bottom: 0.55rem; font-size: 0.81rem; line-height: 1.4; color: var(--text-mid); }
+.ios-step-num { background: var(--obsidian); color: #fff; font-weight: 900; width: 24px; height: 24px; border-radius: 5px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.74rem; }
+.ios-done-btn { width: 100%; background: var(--obsidian); color: #fff; border: none; padding: 0.8rem; border-radius: 8px; font-weight: 800; font-size: 0.85rem; cursor: pointer; margin-top: 0.3rem; display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem; }
 
-/* CONSTRUCTOR PRINCIPAL */
-.container { max-width: 760px; margin: 1rem auto; padding: 0 0.9rem; padding-left: max(0.9rem, env(safe-area-inset-left)); padding-right: max(0.9rem, env(safe-area-inset-right)); }
-.builder-card { background: var(--surface-card); padding: 1.25rem; border-radius: 20px; border: 1px solid var(--line-mid); box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05); }
-.mb-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line-fine); padding-bottom: 0.85rem; margin-bottom: 0.9rem; flex-wrap: wrap; gap: 0.6rem; }
-.mb-header h2 { font-size: 1.04rem; color: var(--text-dark); font-weight: 900; letter-spacing: -0.015em; display: flex; align-items: center; gap: 0.5rem; }
-.reset-zero-btn { background: var(--surface-pill); color: var(--text-mid); border: 1px solid var(--line-mid); padding: 0.38rem 0.78rem; border-radius: 999px; font-size: 0.74rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 0.35rem; }
-.open-sample-btn { width: 100%; background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); color: var(--text-dark); border: 1.5px solid #cbd5e1; padding: 0.82rem 1rem; border-radius: 14px; font-size: 0.85rem; font-weight: 800; cursor: pointer; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; gap: 0.55rem; box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04); transition: all 0.15s ease; }
+/* CONSTRUCTOR DE DOCUMENTOS */
+.container { max-width: 760px; margin: 0.95rem auto; padding: 0 0.85rem; padding-left: max(0.85rem, env(safe-area-inset-left)); padding-right: max(0.85rem, env(safe-area-inset-right)); }
+.builder-card { background: var(--surface-card); padding: 1.15rem; border-radius: 12px; border: 1px solid var(--line-mid); box-shadow: 0 6px 22px rgba(15, 23, 42, 0.04); }
+.mb-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--line-fine); padding-bottom: 0.8rem; margin-bottom: 0.85rem; flex-wrap: wrap; gap: 0.55rem; }
+.mb-header h2 { font-size: 1rem; color: var(--text-dark); font-weight: 900; letter-spacing: -0.015em; display: flex; align-items: center; gap: 0.45rem; }
+.reset-zero-btn { background: var(--surface-pill); color: var(--text-mid); border: 1px solid var(--line-mid); padding: 0.36rem 0.72rem; border-radius: 6px; font-size: 0.73rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 0.32rem; }
+.open-sample-btn { width: 100%; background: #f8fafc; color: var(--text-dark); border: 1px solid #cbd5e1; padding: 0.76rem 1rem; border-radius: 8px; font-size: 0.82rem; font-weight: 800; cursor: pointer; margin-bottom: 0.95rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
 .open-sample-btn:hover { border-color: var(--obsidian); background: #ffffff; }
-.live-pulse-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--emerald); box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2); flex-shrink: 0; }
-.mb-section { background: var(--surface-subtle); border: 1px solid var(--line-fine); border-radius: 16px; padding: 1.05rem; margin-bottom: 0.95rem; }
-.mb-sec-title { font-size: 0.85rem; font-weight: 900; color: var(--text-dark); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem; }
-.sec-step-badge { display: inline-flex; align-items: center; justify-content: center; padding: 2px 8px; border-radius: 999px; font-size: 0.66rem; font-weight: 900; letter-spacing: 0.8px; background: var(--obsidian); color: var(--accent-bright); font-variant-numeric: tabular-nums; }
-.price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+.live-pulse-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--emerald); flex-shrink: 0; }
+.mb-section { background: var(--surface-subtle); border: 1px solid var(--line-fine); border-radius: 10px; padding: 0.95rem; margin-bottom: 0.9rem; }
+.mb-sec-title { font-size: 0.82rem; font-weight: 900; color: var(--text-dark); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.45rem; }
+.sec-step-badge { display: inline-flex; align-items: center; justify-content: center; padding: 2px 7px; border-radius: 4px; font-size: 0.65rem; font-weight: 900; letter-spacing: 0.6px; background: var(--obsidian); color: #fbbf24; font-family: ui-monospace, monospace; }
+.price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
 @media (max-width: 600px) { .price-grid { grid-template-columns: 1fr; } }
-label { display: block; font-size: 0.71rem; font-weight: 800; color: var(--text-mid); margin-bottom: 0.28rem; text-transform: uppercase; letter-spacing: 0.35px; }
-input, select, textarea { width: 100%; padding: 0.65rem 0.82rem; border: 1px solid #cbd5e1; border-radius: 11px; font-size: 0.88rem; font-weight: 500; background: #ffffff; color: var(--text-dark); outline: none; transition: border-color 0.16s ease, box-shadow 0.16s ease; }
-input[type="number"], input[type="date"] { font-variant-numeric: tabular-nums; font-weight: 700; min-height: 42px; }
+label { display: block; font-size: 0.69rem; font-weight: 800; color: var(--text-mid); margin-bottom: 0.26rem; text-transform: uppercase; letter-spacing: 0.35px; }
+input, select, textarea { width: 100%; padding: 0.6rem 0.76rem; border: 1px solid #cbd5e1; border-radius: 7px; font-size: 0.86rem; font-weight: 500; background: #ffffff; color: var(--text-dark); outline: none; transition: border-color 0.14s ease; }
+input[type="number"], input[type="date"] { font-variant-numeric: tabular-nums; font-weight: 700; min-height: 40px; }
 input::placeholder, textarea::placeholder { color: #94a3b8; font-weight: 400; }
-input:focus, select:focus, textarea:focus { border-color: var(--obsidian); box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08); }
-textarea { resize: vertical; min-height: 64px; line-height: 1.45; }
-.tax-input-combo { display: flex; gap: 0.4rem; align-items: stretch; }
-.tax-mode-select { width: 70px; flex-shrink: 0; padding: 0.6rem 0.4rem; font-weight: 900; font-size: 0.82rem; text-align: center; background: var(--surface-pill); border: 1px solid #cbd5e1; color: var(--text-dark); cursor: pointer; }
-.tax-calc-hint { font-size: 0.7rem; font-weight: 800; color: var(--emerald); margin-top: 0.24rem; min-height: 0.9rem; font-variant-numeric: tabular-nums; }
-.line-item-card { background: #ffffff; border: 1px solid var(--line-mid); border-radius: 13px; padding: 0.82rem; margin-bottom: 0.65rem; box-shadow: 0 2px 5px rgba(15, 23, 42, 0.02); }
-.line-item-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.45rem; font-size: 0.72rem; color: var(--text-dark); font-weight: 900; letter-spacing: 0.4px; text-transform: uppercase; }
-.line-top-right { display: flex; align-items: center; gap: 0.45rem; }
-.line-live-sub { font-size: 0.76rem; font-weight: 900; color: var(--emerald); background: #ecfdf5; border: 1px solid #a7f3d0; padding: 2px 8px; border-radius: 999px; font-variant-numeric: tabular-nums; }
-.line-live-sub.neg { color: #be123c; background: #fff1f2; border-color: #fecdd3; }
-.line-item-bottom { display: grid; grid-template-columns: 1fr 1.4fr; gap: 0.6rem; margin-top: 0.5rem; align-items: end; }
-.add-line-btn { width: 100%; background: #ffffff; color: var(--text-dark); border: 1.5px dashed #94a3b8; padding: 0.7rem; border-radius: 12px; font-size: 0.82rem; font-weight: 800; cursor: pointer; margin-top: 0.25rem; display: flex; align-items: center; justify-content: center; gap: 0.4rem; transition: all 0.15s ease; }
+input:focus, select:focus, textarea:focus { border-color: var(--obsidian); }
+textarea { resize: vertical; min-height: 60px; line-height: 1.42; }
+.tax-input-combo { display: flex; gap: 0.38rem; align-items: stretch; }
+.tax-mode-select { width: 68px; flex-shrink: 0; padding: 0.55rem 0.35rem; font-weight: 900; font-size: 0.8rem; text-align: center; background: var(--surface-pill); border: 1px solid #cbd5e1; color: var(--text-dark); cursor: pointer; }
+.tax-calc-hint { font-size: 0.69rem; font-weight: 800; color: var(--emerald); margin-top: 0.22rem; min-height: 0.85rem; font-variant-numeric: tabular-nums; }
+.line-item-card { background: #ffffff; border: 1px solid var(--line-mid); border-radius: 8px; padding: 0.75rem; margin-bottom: 0.6rem; }
+.line-item-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.42rem; font-size: 0.7rem; color: var(--text-dark); font-weight: 900; letter-spacing: 0.4px; text-transform: uppercase; }
+.line-top-right { display: flex; align-items: center; gap: 0.4rem; }
+.line-live-sub { font-size: 0.74rem; font-weight: 900; color: var(--obsidian); background: #f1f5f9; border: 1px solid #cbd5e1; padding: 2px 7px; border-radius: 4px; font-family: ui-monospace, monospace; }
+.line-live-sub.neg { color: #991b1b; background: #fef2f2; border-color: #fecaca; }
+.line-item-bottom { display: grid; grid-template-columns: 1fr 1.4fr; gap: 0.55rem; margin-top: 0.45rem; align-items: end; }
+.add-line-btn { width: 100%; background: #ffffff; color: var(--text-dark); border: 1px dashed #94a3b8; padding: 0.65rem; border-radius: 7px; font-size: 0.8rem; font-weight: 800; cursor: pointer; margin-top: 0.2rem; display: flex; align-items: center; justify-content: center; gap: 0.38rem; }
 .add-line-btn:hover { border-style: solid; border-color: var(--obsidian); background: var(--surface-pill); }
-.cart-remove { background: #fef2f2; color: #e11d48; border: 1px solid #fecdd3; border-radius: 7px; padding: 0.22rem 0.48rem; cursor: pointer; display: inline-flex; align-items: center; }
-.logo-upload-box { border: 1px dashed #cbd5e1; border-radius: 12px; padding: 0.78rem; text-align: center; margin-top: 0.7rem; background: #ffffff; }
-.logo-pic-badge { display: inline-flex; align-items: center; gap: 0.32rem; background: #fffbeb; border: 1px solid #f59e0b; color: #b45309; font-weight: 900; font-size: 0.64rem; letter-spacing: 0.8px; padding: 0.18rem 0.58rem; border-radius: 999px; margin-bottom: 0.38rem; text-transform: uppercase; }
-.logo-upload-box input[type="file"] { font-size: 0.75rem; color: var(--text-muted); border: none; padding: 0.2rem; background: transparent; }
-.logo-upload-box input[type="file"]::file-selector-button { background: var(--surface-pill); color: var(--text-dark); border: 1px solid var(--line-mid); border-radius: 8px; padding: 0.35rem 0.75rem; font-weight: 800; font-size: 0.73rem; cursor: pointer; margin-right: 0.55rem; }
-.logo-id-wrap { display: none; align-items: center; justify-content: space-between; gap: 0.6rem; margin-top: 0.5rem; background: #ecfdf5; padding: 0.45rem 0.7rem; border-radius: 10px; border: 1px solid #a7f3d0; }
-.logo-mini-thumb { width: 40px; height: 40px; object-fit: contain; background: #fff; border-radius: 7px; padding: 2px; border: 1px solid var(--line-mid); }
-.logo-status-msg { font-size: 0.75rem; color: var(--emerald); font-weight: 800; text-align: left; flex: 1; display: flex; align-items: center; gap: 0.35rem; }
-.contractor-numbers-bar { background: transparent; border: none; border-top: 1px solid var(--line-mid); border-bottom: 1px solid var(--line-fine); padding: 0.9rem 0.15rem; margin: 0.95rem 0 0.75rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; }
-.contractor-numbers-bar strong { font-size: 1.6rem; font-weight: 900; color: var(--emerald); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
-.wa-master-btn, .email-master-btn, .stripe-pay-btn, .pro-pass-btn, .preview-secondary-btn { width: 100%; border-radius: 13px; padding: 0.85rem 1rem; font-size: 0.9rem; font-weight: 800; letter-spacing: -0.01em; line-height: 1.35; cursor: pointer; transition: transform 0.12s ease, box-shadow 0.15s ease, opacity 0.15s ease; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.48rem; }
-.wa-master-btn:active, .email-master-btn:active, .stripe-pay-btn:active, .pro-pass-btn:active, .preview-secondary-btn:active { transform: scale(0.985); }
-.wa-master-btn { background: var(--emerald); color: #ffffff; border: 1px solid #047857; box-shadow: 0 6px 16px rgba(5, 150, 105, 0.22); margin-top: 0.25rem; }
-.wa-master-btn:hover { background: #047857; }
-.email-master-btn { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; margin-top: 0.5rem; display: none; }
-.stripe-pay-btn { background: var(--obsidian); color: #ffffff; border: 1px solid var(--obsidian); margin-top: 0.5rem; display: none; }
-.pro-pass-btn { background: #fffbeb; color: #92400e; border: 1.5px solid #f59e0b; margin-top: 0.55rem; }
-.preview-secondary-btn { background: var(--surface-pill); color: var(--text-dark); border: 1px solid var(--line-mid); font-size: 0.84rem; }
-.preview-cta-dual { display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem; }
+.cart-remove { background: #ffffff; color: #64748b; border: 1px solid #cbd5e1; border-radius: 5px; padding: 0.22rem 0.46rem; cursor: pointer; display: inline-flex; align-items: center; }
+.cart-remove:hover { color: #991b1b; border-color: #fca5a5; }
+.logo-upload-box { border: 1px dashed #cbd5e1; border-radius: 8px; padding: 0.72rem; text-align: center; margin-top: 0.65rem; background: #ffffff; }
+.logo-pic-badge { display: inline-flex; align-items: center; gap: 0.3rem; background: #f1f5f9; border: 1px solid #cbd5e1; color: #334155; font-weight: 900; font-size: 0.62rem; letter-spacing: 0.8px; padding: 0.16rem 0.5rem; border-radius: 4px; margin-bottom: 0.35rem; text-transform: uppercase; }
+.logo-upload-box input[type="file"] { font-size: 0.74rem; color: var(--text-muted); border: none; padding: 0.2rem; background: transparent; }
+.logo-upload-box input[type="file"]::file-selector-button { background: var(--surface-pill); color: var(--text-dark); border: 1px solid var(--line-mid); border-radius: 6px; padding: 0.32rem 0.7rem; font-weight: 800; font-size: 0.72rem; cursor: pointer; margin-right: 0.5rem; }
+.logo-id-wrap { display: none; align-items: center; justify-content: space-between; gap: 0.55rem; margin-top: 0.45rem; background: #f8fafc; padding: 0.42rem 0.65rem; border-radius: 6px; border: 1px solid #cbd5e1; }
+.logo-mini-thumb { width: 38px; height: 38px; object-fit: contain; background: #fff; border-radius: 5px; padding: 2px; border: 1px solid var(--line-mid); }
+.logo-status-msg { font-size: 0.74rem; color: var(--obsidian); font-weight: 800; text-align: left; flex: 1; display: flex; align-items: center; gap: 0.35rem; }
+.contractor-numbers-bar { border-top: 1px solid var(--line-mid); border-bottom: 1px solid var(--line-fine); padding: 0.85rem 0.1rem; margin: 0.9rem 0 0.7rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.55rem; }
+.contractor-numbers-bar strong { font-size: 1.52rem; font-weight: 900; color: var(--obsidian); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.wa-master-btn, .email-master-btn, .stripe-pay-btn, .pro-pass-btn, .preview-secondary-btn { width: 100%; border-radius: 8px; padding: 0.8rem 0.95rem; font-size: 0.86rem; font-weight: 800; letter-spacing: -0.01em; line-height: 1.35; cursor: pointer; text-align: center; display: flex; align-items: center; justify-content: center; gap: 0.45rem; }
+.wa-master-btn { background: var(--obsidian-deep); color: #ffffff; border: 1px solid var(--obsidian-deep); margin-top: 0.2rem; }
+.email-master-btn { background: #f8fafc; color: #1e293b; border: 1px solid #cbd5e1; margin-top: 0.45rem; display: none; }
+.stripe-pay-btn { background: var(--emerald); color: #ffffff; border: 1px solid #065f46; margin-top: 0.45rem; display: none; }
+.pro-pass-btn { background: #fffbeb; color: #92400e; border: 1px solid #f59e0b; margin-top: 0.5rem; }
+.preview-secondary-btn { background: var(--surface-pill); color: var(--text-dark); border: 1px solid var(--line-mid); font-size: 0.81rem; }
+.preview-cta-dual { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
 @media (max-width: 480px) { .preview-cta-dual { grid-template-columns: 1fr; } }
-.stripe-note { text-align: center; font-size: 0.73rem; color: var(--text-muted); margin-top: 0.6rem; line-height: 1.45; display: flex; align-items: center; justify-content: center; gap: 0.35rem; }
-.restore-purchase-link { display: block; margin: 0.55rem auto 0; background: transparent; border: none; color: #475569; font-size: 0.73rem; font-weight: 800; text-decoration: underline; cursor: pointer; }
+.stripe-note { text-align: center; font-size: 0.72rem; color: var(--text-muted); margin-top: 0.55rem; line-height: 1.42; display: flex; align-items: center; justify-content: center; gap: 0.35rem; }
+.restore-purchase-link { display: block; margin: 0.5rem auto 0; background: transparent; border: none; color: #475569; font-size: 0.72rem; font-weight: 800; text-decoration: underline; cursor: pointer; }
 
 /* HISTORIAL Y VISTA PREVIA */
-.history-card { background: var(--surface-card); padding: 1.2rem; border-radius: 20px; margin-top: 1.15rem; border: 1px solid var(--line-mid); box-shadow: 0 6px 20px rgba(15, 23, 42, 0.04); }
-.history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
-.history-header h3 { font-size: 0.92rem; color: var(--text-dark); font-weight: 900; display: flex; align-items: center; gap: 0.45rem; }
-.clear-btn { background: #fef2f2; border: 1px solid #fecdd3; color: #e11d48; padding: 0.28rem 0.68rem; border-radius: 999px; font-size: 0.72rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 0.3rem; }
-.hist-search-input { width: 100%; margin-bottom: 0.8rem; background: var(--surface-subtle); border: 1px solid var(--line-mid); padding: 0.58rem 0.78rem; border-radius: 10px; font-size: 0.83rem; }
-.history-list { list-style: none; font-size: 0.82rem; color: var(--text-mid); }
-.history-list li { padding: 0.72rem 0; border-bottom: 1px solid var(--surface-pill); display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.history-card { background: var(--surface-card); padding: 1.1rem; border-radius: 12px; margin-top: 1rem; border: 1px solid var(--line-mid); }
+.history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+.history-header h3 { font-size: 0.88rem; color: var(--text-dark); font-weight: 900; display: flex; align-items: center; gap: 0.4rem; }
+.clear-btn { background: #ffffff; border: 1px solid #cbd5e1; color: #64748b; padding: 0.26rem 0.62rem; border-radius: 6px; font-size: 0.7rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 0.28rem; }
+.hist-search-input { width: 100%; margin-bottom: 0.75rem; background: var(--surface-subtle); border: 1px solid var(--line-mid); padding: 0.55rem 0.75rem; border-radius: 7px; font-size: 0.81rem; }
+.history-list { list-style: none; font-size: 0.8rem; color: var(--text-mid); }
+.history-list li { padding: 0.68rem 0; border-bottom: 1px solid var(--surface-pill); display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
 .history-list li:last-child { border-bottom: none; }
-.hist-btn-group { display: flex; gap: 0.35rem; align-items: center; flex-wrap: wrap; }
-.hist-open-btn { background: var(--surface-pill); color: var(--text-dark); border: 1px solid var(--line-mid); padding: 0.34rem 0.62rem; border-radius: 8px; font-size: 0.73rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 0.28rem; }
-.hist-conv-btn { background: #fffbeb; color: #b45309; border: 1px solid #fde68a; padding: 0.34rem 0.62rem; border-radius: 8px; font-size: 0.73rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 0.28rem; }
-.hist-pdf-btn { background: #ecfdf5; color: var(--emerald); border: 1px solid #a7f3d0; padding: 0.34rem 0.62rem; border-radius: 8px; font-size: 0.73rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 0.28rem; }
+.hist-btn-group { display: flex; gap: 0.32rem; align-items: center; flex-wrap: wrap; }
+.hist-open-btn, .hist-conv-btn, .hist-pdf-btn { padding: 0.32rem 0.58rem; border-radius: 5px; font-size: 0.71rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 0.26rem; }
+.hist-open-btn { background: var(--surface-pill); color: var(--text-dark); border: 1px solid var(--line-mid); }
+.hist-conv-btn { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+.hist-pdf-btn { background: #0f172a; color: #ffffff; border: 1px solid #0f172a; }
 
-.doc-modal-overlay { position: fixed; inset: 0; background: rgba(5, 8, 15, 0.78); backdrop-filter: blur(7px); -webkit-backdrop-filter: blur(7px); display: none; justify-content: center; align-items: flex-start; padding: 0.85rem 0.65rem; padding-top: max(0.85rem, env(safe-area-inset-top)); z-index: 10025; overflow-y: auto; user-select: none; -webkit-user-select: none; }
+.doc-modal-overlay { position: fixed; inset: 0; background: rgba(5, 8, 15, 0.78); backdrop-filter: blur(6px); display: none; justify-content: center; align-items: flex-start; padding: 0.8rem 0.6rem; padding-top: max(0.8rem, env(safe-area-inset-top)); z-index: 10025; overflow-y: auto; user-select: none; -webkit-user-select: none; }
 .doc-modal-container { width: 100%; max-width: 730px; margin: 0 auto 2rem; }
-.doc-modal-topbar { background: #ffffff; border: 1px solid var(--line-mid); border-radius: 16px; padding: 0.55rem 0.65rem 0.6rem; margin-bottom: 0.75rem; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25); }
-.sample-switch-group { display: grid; grid-template-columns: 1fr 1.25fr; gap: 0.4rem; align-items: center; }
-.sample-type-btn { background: var(--surface-pill); color: var(--text-mid); border: 1px solid var(--line-mid); padding: 0.48rem 0.7rem; border-radius: 11px; font-size: 0.75rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem; min-width: 0; }
+.doc-modal-topbar { background: #ffffff; border: 1px solid var(--line-mid); border-radius: 10px; padding: 0.5rem 0.6rem 0.55rem; margin-bottom: 0.7rem; }
+.sample-switch-group { display: grid; grid-template-columns: 1fr 1.25fr; gap: 0.38rem; align-items: center; }
+.sample-type-btn { background: var(--surface-pill); color: var(--text-mid); border: 1px solid var(--line-mid); padding: 0.45rem 0.65rem; border-radius: 6px; font-size: 0.74rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem; min-width: 0; }
 .sample-type-btn span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sample-type-btn.live-tab { border-color: #a7f3d0; background: #ecfdf5; color: #065f46; }
 .sample-type-btn.active { background: var(--obsidian); color: #ffffff; border-color: var(--obsidian); }
-.luxury-paper-sheet { position: relative; overflow: hidden; background: #ffffff; color: #0f172a; border-radius: 12px; padding: 1.35rem; border-top: 5px solid #0f172a; box-shadow: 0 22px 55px rgba(0, 0, 0, 0.4); }
+.luxury-paper-sheet { position: relative; overflow: hidden; background: #ffffff; color: #0f172a; border-radius: 8px; padding: 1.3rem; border-top: 5px solid #0f172a; box-shadow: 0 22px 55px rgba(0, 0, 0, 0.42); }
 .wm-mesh-overlay { position: absolute; inset: 0; z-index: 6; pointer-events: none; background-repeat: repeat; background-size: 230px 135px; }
-.wm-diagonal-stamp { position: absolute; left: 50%; bottom: 82px; transform: translateX(-50%) rotate(-11deg); z-index: 7; pointer-events: none; border: 2.5px solid rgba(220, 38, 38, 0.55); background: rgba(255, 255, 255, 0.76); color: rgba(185, 28, 28, 0.86); padding: 0.42rem 1rem; border-radius: 8px; font-size: 0.75rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; text-align: center; white-space: nowrap; }
-@media (max-width: 480px) { .wm-diagonal-stamp { font-size: 0.62rem; padding: 0.35rem 0.65rem; white-space: normal; width: 88%; } }
-.preview-unlock-bar { margin-top: 0.75rem; background: #ffffff; border: 1px solid var(--line-mid); border-radius: 14px; padding: 0.65rem 0.85rem; text-align: center; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25); }
-.lux-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1.5px solid #0f172a; padding-bottom: 0.8rem; margin-bottom: 0.85rem; gap: 0.8rem; flex-wrap: wrap; }
-.lux-brand { display: flex; align-items: center; gap: 0.75rem; max-width: 62%; }
+.wm-diagonal-stamp { position: absolute; left: 50%; bottom: 82px; transform: translateX(-50%) rotate(-11deg); z-index: 7; pointer-events: none; border: 2px solid rgba(185, 28, 28, 0.55); background: rgba(255, 255, 255, 0.8); color: rgba(153, 27, 27, 0.88); padding: 0.4rem 0.95rem; border-radius: 5px; font-size: 0.72rem; font-weight: 900; letter-spacing: 0.9px; text-transform: uppercase; text-align: center; white-space: nowrap; }
+@media (max-width: 480px) { .wm-diagonal-stamp { font-size: 0.6rem; padding: 0.32rem 0.6rem; white-space: normal; width: 88%; } }
+.preview-unlock-bar { margin-top: 0.7rem; background: #ffffff; border: 1px solid var(--line-mid); border-radius: 10px; padding: 0.6rem 0.8rem; text-align: center; }
+.lux-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1.5px solid #0f172a; padding-bottom: 0.75rem; margin-bottom: 0.8rem; gap: 0.75rem; flex-wrap: wrap; }
+.lux-brand { display: flex; align-items: center; gap: 0.7rem; max-width: 62%; }
 @media (max-width: 520px) { .lux-brand { max-width: 100%; } }
-.lux-logo-box { width: 56px; height: 56px; background: #ffffff; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+.lux-logo-box { width: 54px; height: 54px; background: #ffffff; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
 .lux-logo-box img { width: 100%; height: 100%; object-fit: contain; }
-.lux-badge-box { background: #f8fafc; border: 1px solid #cbd5e1; border-right: 3px solid #eab308; padding: 0.5rem 0.8rem; border-radius: 8px; text-align: right; margin-left: auto; }
-.lux-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin: 0.75rem 0; font-variant-numeric: tabular-nums; }
-.lux-table th { background: #0f172a; color: #fff; padding: 0.45rem 0.65rem; text-align: left; }
-.lux-table td { border: 1px solid #cbd5e1; padding: 0.5rem 0.65rem; }
+.lux-badge-box { background: #f8fafc; border: 1px solid #cbd5e1; border-right: 3px solid #b45309; padding: 0.48rem 0.75rem; border-radius: 6px; text-align: right; margin-left: auto; }
+.lux-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin: 0.7rem 0; font-variant-numeric: tabular-nums; }
+.lux-table th { background: #0f172a; color: #fff; padding: 0.42rem 0.6rem; text-align: left; }
+.lux-table td { border: 1px solid #cbd5e1; padding: 0.48rem 0.6rem; }
 .lux-table th.num-col, .lux-table td.num-col { text-align: right; white-space: nowrap; }
 .lux-table td:last-child, .lux-table th:last-child { text-align: right; font-weight: 700; white-space: nowrap; }
 .lux-tot-row { background: #fef3c7; font-weight: 900; }
-.lux-sign-box { border: 1px solid #0f172a; border-radius: 8px; padding: 0.65rem 0.8rem; margin-top: 0.6rem; }
-.lux-signs { display: grid; grid-template-columns: 2fr 2fr 1fr; gap: 0.85rem; margin-top: 0.85rem; font-size: 0.74rem; align-items: end; }
-@media (max-width: 520px) { .lux-signs { grid-template-columns: 1fr; gap: 0.65rem; } }
-.lux-sig-slot { display: flex; flex-direction: column; justify-content: flex-end; min-height: 48px; }
-.lux-sig-img { max-height: 40px; max-width: 150px; object-fit: contain; margin-bottom: 2px; }
-.lux-sign-line { border-top: 1px solid #0f172a; padding-top: 0.28rem; font-weight: 700; display: flex; align-items: center; gap: 0.3rem; }
-.lux-page2-preview { margin-top: 1rem; padding-top: 0.85rem; border-top: 2px dashed #94a3b8; text-align: center; }
-.lux-page2-label { font-size: 0.72rem; font-weight: 900; color: #334155; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 0.5rem; }
-.lux-page2-img { max-width: 100%; max-height: 280px; object-fit: contain; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; padding: 4px; }
-.lux-viral-footer { text-align: center; font-size: 0.7rem; color: #64748b; margin-top: 0.85rem; padding-top: 0.45rem; border-top: 1px dashed #cbd5e1; font-weight: 700; }
+.lux-sign-box { border: 1px solid #0f172a; border-radius: 6px; padding: 0.62rem 0.75rem; margin-top: 0.6rem; }
+.lux-signs { display: grid; grid-template-columns: 2fr 2fr 1fr; gap: 0.8rem; margin-top: 0.8rem; font-size: 0.73rem; align-items: end; }
+@media (max-width: 520px) { .lux-signs { grid-template-columns: 1fr; gap: 0.6rem; } }
+.lux-sig-slot { display: flex; flex-direction: column; justify-content: flex-end; min-height: 46px; }
+.lux-sig-img { max-height: 38px; max-width: 145px; object-fit: contain; margin-bottom: 2px; }
+.lux-sign-line { border-top: 1px solid #0f172a; padding-top: 0.26rem; font-weight: 700; display: flex; align-items: center; gap: 0.3rem; }
+.lux-page2-preview { margin-top: 0.95rem; padding-top: 0.8rem; border-top: 1.5px dashed #94a3b8; text-align: center; }
+.lux-page2-label { font-size: 0.7rem; font-weight: 900; color: #334155; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 0.45rem; }
+.lux-page2-img { max-width: 100%; max-height: 270px; object-fit: contain; border-radius: 6px; border: 1px solid #cbd5e1; background: #f8fafc; padding: 4px; }
+.lux-viral-footer { text-align: center; font-size: 0.69rem; color: #64748b; margin-top: 0.8rem; padding-top: 0.42rem; border-top: 1px dashed #cbd5e1; font-weight: 700; }
 
 /* MI NEGOCIO Y TARJETA DE NEGOCIOS REAL (3.5" x 2") */
-.mip-biz-summary-pill { display: none; align-items: center; justify-content: space-between; gap: 0.6rem; background: #ffffff; border: 1.5px solid #a7f3d0; border-radius: 13px; padding: 0.62rem 0.82rem; margin-bottom: 0.75rem; box-shadow: 0 2px 8px rgba(5, 150, 105, 0.08); }
-.mip-biz-sum-left { display: flex; align-items: center; gap: 0.6rem; min-width: 0; flex: 1; }
-.mip-biz-sum-logo { width: 38px; height: 38px; border-radius: 8px; object-fit: contain; background: #f8fafc; border: 1px solid #cbd5e1; padding: 2px; display: none; flex-shrink: 0; }
-.mip-biz-sum-name { font-size: 0.84rem; font-weight: 900; color: #0f172a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.mip-biz-sum-sub { font-size: 0.7rem; color: #059669; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.mip-biz-sum-actions { display: flex; gap: 0.35rem; flex-shrink: 0; }
-.mip-biz-mini-btn { background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0.36rem 0.6rem; font-size: 0.71rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 0.28rem; }
-.mip-biz-mini-btn.qr { background: #0b0f19; color: #fbbf24; border-color: #0b0f19; }
+.mip-biz-summary-pill { display: none; align-items: center; justify-content: space-between; gap: 0.6rem; background: #ffffff; border: 1px solid #94a3b8; border-radius: 8px; padding: 0.58rem 0.75rem; margin-bottom: 0.7rem; }
+.mip-biz-sum-left { display: flex; align-items: center; gap: 0.58rem; min-width: 0; flex: 1; }
+.mip-biz-sum-logo { width: 36px; height: 36px; border-radius: 6px; object-fit: contain; background: #f8fafc; border: 1px solid #cbd5e1; padding: 2px; display: none; flex-shrink: 0; }
+.mip-biz-sum-name { font-size: 0.82rem; font-weight: 900; color: #0f172a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mip-biz-sum-sub { font-size: 0.69rem; color: #475569; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mip-biz-sum-actions { display: flex; gap: 0.32rem; flex-shrink: 0; }
+.mip-biz-mini-btn { background: #f8fafc; color: #0f172a; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.34rem 0.58rem; font-size: 0.7rem; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 0.28rem; }
+.mip-biz-mini-btn.qr { background: #0f172a; color: #fbbf24; border-color: #0f172a; }
 .mip-biz-hidden { display: none !important; }
 
-.mip-biz-overlay { position: fixed; inset: 0; background: rgba(6, 10, 18, 0.8); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: none; justify-content: center; align-items: center; padding: 1rem; z-index: 10026; overflow-y: auto; }
-.mip-biz-card-modal { width: 100%; max-width: 455px; background: #ffffff; border-radius: 22px; border: 1px solid rgba(15, 23, 42, 0.14); padding: 1.15rem; margin: auto; box-shadow: 0 24px 55px rgba(0, 0, 0, 0.4); }
-.mip-biz-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; background: #f1f5f9; padding: 0.3rem; border-radius: 12px; margin: 0.75rem 0 0.9rem; }
-.mip-biz-tab { border: 0; background: transparent; color: #475569; padding: 0.52rem; border-radius: 9px; font-size: 0.78rem; font-weight: 900; cursor: pointer; }
-.mip-biz-tab.active { background: #0b0f19; color: #fbbf24; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18); }
+.mip-biz-overlay { position: fixed; inset: 0; background: rgba(6, 10, 18, 0.8); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: none; justify-content: center; align-items: center; padding: 0.9rem; z-index: 10026; overflow-y: auto; }
+.mip-biz-card-modal { width: 100%; max-width: 450px; background: #ffffff; border-radius: 10px; border: 1px solid #334155; padding: 1.1rem; margin: auto; box-shadow: 0 24px 55px rgba(0, 0, 0, 0.45); }
+.mip-biz-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 0.35rem; background: #f1f5f9; padding: 0.26rem; border-radius: 7px; margin: 0.7rem 0 0.85rem; }
+.mip-biz-tab { border: 0; background: transparent; color: #475569; padding: 0.48rem; border-radius: 5px; font-size: 0.76rem; font-weight: 900; cursor: pointer; }
+.mip-biz-tab.active { background: #0f172a; color: #fbbf24; }
 
-/* TARJETA EJECUTIVA FÍSICA REAL */
 .real-bcard-stage { width: 100%; max-width: 440px; margin: auto; }
 .real-bcard-physical {
-  position: relative;
-  width: 100%;
-  min-height: 226px;
-  background: radial-gradient(circle at 88% 16%, rgba(251, 191, 36, 0.14) 0%, transparent 48%), linear-gradient(135deg, #0b0f19 0%, #162033 60%, #090d16 100%);
-  border: 1.5px solid rgba(251, 191, 36, 0.55);
-  border-radius: 16px;
-  padding: 1.2rem 1.25rem 1.05rem;
-  color: #ffffff;
-  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  overflow: hidden;
+  position: relative; width: 100%; min-height: 224px;
+  background: linear-gradient(135deg, #0b0f19 0%, #162033 60%, #090d16 100%);
+  border: 1px solid rgba(251, 191, 36, 0.55); border-radius: 10px;
+  padding: 1.15rem 1.2rem 1rem; color: #ffffff;
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.55);
+  display: flex; flex-direction: column; justify-content: space-between; overflow: hidden;
 }
 .real-bcard-physical::after {
-  content: "";
-  position: absolute; left: 0; right: 0; bottom: 0; height: 4px;
-  background: linear-gradient(90deg, #b45309 0%, #fbbf24 50%, #d97706 100%);
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px;
+  background: linear-gradient(90deg, #b45309 0%, #fbbf24 50%, #b45309 100%);
 }
-.real-bcard-top { display: flex; align-items: center; gap: 0.85rem; }
+.real-bcard-top { display: flex; align-items: center; gap: 0.82rem; }
 .real-bcard-logo-wrap {
-  width: 60px; height: 60px; border-radius: 13px; background: #ffffff;
-  padding: 5px; display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  width: 58px; height: 58px; border-radius: 8px; background: #ffffff;
+  padding: 5px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
 .real-bcard-logo-wrap img { width: 100%; height: 100%; object-fit: contain; }
 .real-bcard-seal {
-  width: 60px; height: 60px; border-radius: 13px;
-  background: linear-gradient(145deg, rgba(251, 191, 36, 0.18), rgba(180, 83, 9, 0.28));
-  border: 1.5px solid #fbbf24; color: #fbbf24;
-  font-size: 1.22rem; font-weight: 900; letter-spacing: 1px;
+  width: 58px; height: 58px; border-radius: 8px;
+  background: rgba(251, 191, 36, 0.12); border: 1.5px solid #fbbf24; color: #fbbf24;
+  font-size: 1.15rem; font-weight: 900; letter-spacing: 0.8px;
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
 .real-bcard-titles { min-width: 0; flex: 1; }
-.real-bcard-comp { font-size: 1.08rem; font-weight: 900; color: #ffffff; letter-spacing: -0.01em; line-height: 1.2; word-break: break-word; }
-.real-bcard-role { font-size: 0.76rem; font-weight: 800; color: #fbbf24; text-transform: uppercase; letter-spacing: 0.9px; margin-top: 3px; }
-.real-bcard-divider { height: 1px; background: linear-gradient(90deg, rgba(251, 191, 36, 0.45), rgba(255, 255, 255, 0.06)); margin: 0.8rem 0 0.68rem; }
-.real-bcard-bottom { display: flex; justify-content: space-between; align-items: flex-end; gap: 0.7rem; }
-.real-bcard-lines { display: flex; flex-direction: column; gap: 0.34rem; min-width: 0; flex: 1; }
-.real-bcard-line { display: flex; align-items: center; gap: 0.48rem; font-size: 0.79rem; color: #f1f5f9; font-weight: 600; word-break: break-word; }
-.real-bcard-ico { color: #fbbf24; font-size: 0.82rem; width: 16px; text-align: center; flex-shrink: 0; }
-.real-bcard-mini-qr { background: #ffffff; padding: 5px; border-radius: 8px; width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+.real-bcard-comp { font-size: 1.04rem; font-weight: 900; color: #ffffff; line-height: 1.2; word-break: break-word; }
+.real-bcard-role { font-size: 0.72rem; font-weight: 800; color: #fbbf24; text-transform: uppercase; letter-spacing: 0.9px; margin-top: 3px; }
+.real-bcard-divider { height: 1px; background: linear-gradient(90deg, rgba(251, 191, 36, 0.45), rgba(255, 255, 255, 0.06)); margin: 0.75rem 0 0.65rem; }
+.real-bcard-bottom { display: flex; justify-content: space-between; align-items: flex-end; gap: 0.65rem; }
+.real-bcard-lines { display: flex; flex-direction: column; gap: 0.32rem; min-width: 0; flex: 1; }
+.real-bcard-line { display: flex; align-items: center; gap: 0.45rem; font-size: 0.77rem; color: #e2e8f0; font-weight: 600; word-break: break-word; }
+.real-bcard-lbl { font-family: ui-monospace, monospace; font-size: 0.65rem; color: #fbbf24; font-weight: 800; width: 34px; flex-shrink: 0; }
+.real-bcard-mini-qr { background: #ffffff; padding: 5px; border-radius: 6px; width: 64px; height: 64px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .real-bcard-mini-qr canvas, .real-bcard-mini-qr img { width: 54px !important; height: 54px !important; display: block !important; }
-
-.real-bcard-actions-panel {
-  background: #ffffff; border-radius: 18px; padding: 1rem; margin-top: 0.8rem;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.38);
-}
-.mip-vis-acts { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.5rem; }
-.mip-vis-act { background: #f1f5f9; color: #0f172a; border: 1px solid #cbd5e1; border-radius: 12px; padding: 0.68rem; font-size: 0.8rem; font-weight: 800; text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 0.35rem; cursor: pointer; }
-
-#mipQrCanvasBox { background: #ffffff; padding: 12px; border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; margin: 0.65rem auto; min-width: 180px; min-height: 180px; }
+.real-bcard-actions-panel { background: #ffffff; border-radius: 10px; padding: 0.95rem; margin-top: 0.75rem; border: 1px solid #334155; }
+.mip-vis-acts { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem; margin-top: 0.45rem; }
+.mip-vis-act { background: #f8fafc; color: #0f172a; border: 1px solid #cbd5e1; border-radius: 7px; padding: 0.62rem; font-size: 0.78rem; font-weight: 800; text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 0.35rem; cursor: pointer; }
+#mipQrCanvasBox { background: #ffffff; padding: 12px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; margin: 0.6rem auto; min-width: 176px; min-height: 176px; }
 #mipQrCanvasBox img, #mipQrCanvasBox canvas { display: block !important; margin: 0 auto !important; }
 
-/* DOS BOTONES FLOTANTES GEMELOS (NOTAS ENCIMA DE HELP) */
+/* BOTONES FLOTANTES DISCRETOS EJECUTIVOS (NOTAS ENCIMA DE HELP) */
 .mip-fab-stack {
-  position: fixed;
-  right: max(14px, env(safe-area-inset-right));
-  bottom: max(18px, env(safe-area-inset-bottom));
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
-  z-index: 10012;
+  position: fixed; right: max(14px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom));
+  display: flex; flex-direction: column; align-items: flex-end; gap: 8px; z-index: 10012;
 }
 .mip-fab-pill {
-  min-width: 112px;
-  height: 44px;
-  padding: 0 17px;
-  border-radius: 999px;
-  font-weight: 800;
-  font-size: 13.5px;
-  letter-spacing: 0.2px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  cursor: pointer;
-  transition: transform 0.14s ease, box-shadow 0.14s ease;
+  min-width: 108px; height: 40px; padding: 0 15px; border-radius: 8px;
+  font-weight: 800; font-size: 12.8px; letter-spacing: 0.2px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+  cursor: pointer; transition: transform 0.12s ease;
 }
-.mip-fab-pill:active { transform: scale(0.95); }
+.mip-fab-pill:active { transform: scale(0.96); }
 .mip-fab-notes {
-  background: linear-gradient(135deg, #0b0f19 0%, #1e293b 100%);
-  color: #fbbf24;
-  border: 1.5px solid #f59e0b;
-  box-shadow: 0 8px 24px rgba(11, 15, 25, 0.42);
+  background: #111827; color: #f8fafc; border: 1px solid #374151;
+  box-shadow: 0 8px 22px rgba(9, 13, 22, 0.38);
 }
 .mip-fab-help {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.32);
-  box-shadow: 0 8px 24px rgba(5, 150, 105, 0.38);
+  background: #047857; color: #ffffff; border: 1px solid #065f46;
+  box-shadow: 0 8px 22px rgba(4, 120, 87, 0.32);
 }
-.mip-fab-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-.mip-fab-notes .mip-fab-dot { background: #fbbf24; box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.25); }
-.mip-fab-help .mip-fab-dot { background: #a7f3d0; box-shadow: 0 0 0 3px rgba(167, 243, 208, 0.28); }
 
-/* PANEL FLOTANTE GRABADORA HELP */
+/* PANEL FLOTANTE HELP */
 #mip-help-panel {
-  display: none; position: fixed; bottom: 126px; right: 14px;
-  width: 348px; max-width: 93vw; background: #ffffff; color: #0f172a;
-  border: 1px solid rgba(15, 23, 42, 0.14); border-radius: 22px; padding: 16px;
-  box-shadow: 0 22px 48px rgba(15, 23, 42, 0.28); z-index: 10020;
+  display: none; position: fixed; bottom: 112px; right: 14px;
+  width: 342px; max-width: 93vw; background: #ffffff; color: #0f172a;
+  border: 1px solid #334155; border-radius: 10px; padding: 14px;
+  box-shadow: 0 20px 45px rgba(15, 23, 42, 0.35); z-index: 10020;
 }
-.mip-rec-bar { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
-.mip-trash-btn { display: none; width: 42px; height: 44px; border-radius: 12px; border: 1px solid #fecdd3; background: #fff1f2; color: #be123c; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
-.mip-rec-main-btn { flex: 1; height: 44px; padding: 0 14px; border: 0; border-radius: 999px; font-weight: 800; font-size: 13.3px; color: #fff; background: #059669; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px; }
-.mip-rec-main-btn.rec { background: #dc2626; }
-.mip-rec-main-btn.paused { background: #d97706; }
-.mip-send-round-btn { width: 44px; height: 44px; border-radius: 50%; border: 0; background: #0b0f19; color: #ffffff; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
-.mip-send-round-btn:disabled { opacity: 0.32; cursor: default; }
-.mip-send-round-btn.ready { background: #2563eb; box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35); }
+.mip-rec-bar { display: flex; align-items: center; gap: 7px; margin-top: 9px; }
+.mip-trash-btn { display: none; width: 40px; height: 38px; border-radius: 6px; border: 1px solid #fecaca; background: #ffffff; color: #991b1b; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
+.mip-rec-main-btn { flex: 1; height: 38px; padding: 0 12px; border: 1px solid #111827; border-radius: 6px; font-weight: 800; font-size: 12.8px; color: #fff; background: #111827; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+.mip-rec-main-btn.rec { background: #991b1b; border-color: #7f1d1d; }
+.mip-rec-main-btn.paused { background: #92400e; border-color: #78350f; }
+.mip-send-round-btn { width: 40px; height: 38px; border-radius: 6px; border: 1px solid #111827; background: #111827; color: #ffffff; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0; }
+.mip-send-round-btn:disabled { opacity: 0.28; cursor: default; }
 
-/* MODAL NOTAS DE PROYECTOS (CARPETAS + VOZ + FOTOS INDEXEDDB) */
-.proj-notes-modal { width: 100%; max-width: 540px; background: #ffffff; border-radius: 22px; border: 1px solid var(--line-mid); overflow: hidden; margin: auto; box-shadow: 0 26px 60px rgba(0, 0, 0, 0.42); display: flex; flex-direction: column; max-height: 90vh; }
-.proj-notes-head { background: var(--obsidian); color: #ffffff; padding: 1rem 1.15rem; border-bottom: 2px solid var(--accent); display: flex; justify-content: space-between; align-items: center; }
-.proj-notes-body { padding: 1rem; overflow-y: auto; flex: 1; background: #f8fafc; }
-.proj-folder-bar { display: flex; gap: 0.45rem; margin-bottom: 0.85rem; }
-.proj-cat-box { background: #ffffff; border: 1px solid var(--line-mid); border-radius: 14px; padding: 0.8rem; margin-bottom: 0.7rem; }
-.proj-cat-head { font-size: 0.74rem; font-weight: 900; text-transform: uppercase; letter-spacing: 0.6px; color: var(--obsidian); margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; }
-.proj-item-row { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 0.42rem 0; border-bottom: 1px solid #f1f5f9; font-size: 0.83rem; }
-.proj-item-row:last-child { border-bottom: 0; }
-.proj-item-row.checked span { text-decoration: line-through; color: #94a3b8; }
-.proj-photos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-top: 0.45rem; }
-.proj-photo-card { position: relative; border-radius: 10px; overflow: hidden; border: 1px solid #cbd5e1; aspect-ratio: 1 / 1; background: #0f172a; }
+/* CUADERNO TÉCNICO PRIVADO (NOTAS DE PROYECTOS + FOTOS INDEXEDDB) */
+.proj-notes-modal {
+  width: 100%; max-width: 520px; background: #f8fafc; color: #0f172a;
+  border-radius: 8px; border: 1px solid #334155; overflow: hidden;
+  margin: auto; box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  display: flex; flex-direction: column; max-height: 90vh;
+}
+.proj-notes-head {
+  background: #111827; color: #f8fafc; padding: 0.8rem 1rem;
+  border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center;
+}
+.proj-priv-tag {
+  font-size: 0.6rem; color: #94a3b8; font-weight: 800; letter-spacing: 1px;
+  text-transform: uppercase; display: flex; align-items: center; gap: 5px; margin-bottom: 2px;
+}
+.proj-head-btn {
+  height: 28px; padding: 0 9px; border-radius: 5px; border: 1px solid #374151;
+  background: #1f2937; color: #cbd5e1; font-size: 0.68rem; font-weight: 800; cursor: pointer;
+}
+.proj-notes-body { padding: 0.85rem; overflow-y: auto; flex: 1; background: #f1f5f9; }
+.proj-bar-grid { display: grid; grid-template-columns: 1fr auto auto; gap: 0.4rem; margin-bottom: 0.68rem; }
+.proj-select-clean {
+  border-radius: 6px !important; border: 1px solid #cbd5e1 !important;
+  background: #ffffff !important; color: #0f172a !important;
+  font-size: 0.81rem !important; font-weight: 800 !important; padding: 0.48rem 0.62rem !important;
+  min-width: 0; text-overflow: ellipsis; height: 38px;
+}
+.proj-btn-flat {
+  border-radius: 6px; border: 1px solid #cbd5e1; background: #ffffff; color: #0f172a;
+  padding: 0 0.68rem; font-size: 0.73rem; font-weight: 800; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: 5px; height: 38px;
+}
+.proj-btn-flat.dark { background: #111827; color: #f8fafc; border-color: #111827; }
+.proj-btn-flat.danger { color: #991b1b; border-color: #fecaca; background: #ffffff; padding: 0 0.55rem; }
+.proj-sheet { background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; margin-bottom: 0.68rem; overflow: hidden; }
+.proj-sec-bar {
+  background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 0.4rem 0.72rem;
+  font-size: 0.65rem; font-weight: 900; letter-spacing: 0.9px; color: #475569;
+  text-transform: uppercase; display: flex; justify-content: space-between; align-items: center;
+}
+.proj-ledger-row {
+  display: flex; align-items: center; justify-content: space-between; gap: 0.55rem;
+  padding: 0.48rem 0.72rem; border-bottom: 1px solid #f1f5f9; font-size: 0.8rem;
+}
+.proj-ledger-row:last-child { border-bottom: 0; }
+.proj-ledger-row.checked .proj-ledger-txt { text-decoration: line-through; color: #94a3b8; }
+.proj-qty-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.72rem; font-weight: 800; background: #f1f5f9; color: #0f172a;
+  border: 1px solid #cbd5e1; padding: 2px 6px; border-radius: 4px; flex-shrink: 0;
+}
+.proj-row-del { border: 0; background: transparent; color: #94a3b8; font-size: 0.88rem; font-weight: 800; cursor: pointer; padding: 2px 5px; line-height: 1; }
+.proj-row-del:hover { color: #dc2626; }
+.proj-empty-line { padding: 0.75rem; font-size: 0.75rem; color: #64748b; text-align: center; }
+.proj-photos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.45rem; padding: 0.55rem 0.7rem 0.6rem; }
+.proj-photo-card { position: relative; border-radius: 5px; overflow: hidden; border: 1px solid #cbd5e1; aspect-ratio: 1 / 1; background: #0f172a; }
 .proj-photo-card img { width: 100%; height: 100%; object-fit: cover; cursor: pointer; }
-.proj-photo-del { position: absolute; top: 4px; right: 4px; width: 22px; height: 22px; border-radius: 50%; border: 0; background: rgba(225, 29, 72, 0.92); color: #fff; font-weight: 900; font-size: 11px; cursor: pointer; }
+.proj-photo-del { position: absolute; top: 4px; right: 4px; width: 20px; height: 20px; border-radius: 4px; border: 0; background: rgba(17, 24, 39, 0.88); color: #fff; font-weight: 900; font-size: 11px; cursor: pointer; }
 
-.mcp-toast { position: fixed; left: 50%; bottom: max(1.25rem, env(safe-area-inset-bottom)); transform: translateX(-50%) translateY(20px); background: var(--obsidian); color: #ffffff; border: 1px solid rgba(251, 191, 36, 0.45); padding: 0.72rem 1.1rem; border-radius: 14px; font-size: 0.8rem; font-weight: 800; line-height: 1.38; box-shadow: 0 14px 32px rgba(0, 0, 0, 0.32); z-index: 10040; max-width: 92%; text-align: center; opacity: 0; pointer-events: none; transition: opacity 0.22s ease, transform 0.22s ease; }
+.proj-dock { background: #ffffff; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0.58rem; margin-bottom: 0.68rem; }
+.proj-dock textarea { border-radius: 5px; border: 1px solid #cbd5e1; background: #f8fafc; min-height: 44px; padding: 0.45rem 0.62rem; font-size: 0.81rem; color: #0f172a; }
+.proj-dock-controls { display: flex; align-items: center; gap: 0.38rem; margin-top: 0.45rem; }
+.proj-rec-exec { flex: 1; height: 38px; border-radius: 5px; border: 1px solid #111827; background: #111827; color: #ffffff; font-size: 0.75rem; font-weight: 800; display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer; }
+.proj-rec-exec.rec { background: #991b1b; border-color: #7f1d1d; }
+.proj-rec-exec.paused { background: #92400e; border-color: #78350f; }
+.proj-send-exec { width: 40px; height: 38px; border-radius: 5px; border: 1px solid #111827; background: #111827; color: #ffffff; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+.proj-send-exec:disabled { opacity: 0.28; cursor: default; }
+.proj-export-strip { display: grid; grid-template-columns: 1.25fr 1fr 1fr; gap: 0.38rem; }
+@media (max-width: 420px) { .proj-export-strip { grid-template-columns: 1fr; } }
+
+/* MODO GRAFITO PRIVADO */
+.proj-notes-modal.proj-dark { background: #0f172a; color: #f1f5f9; border-color: #334155; }
+.proj-notes-modal.proj-dark .proj-notes-body { background: #0b0f19; }
+.proj-notes-modal.proj-dark .proj-sheet,
+.proj-notes-modal.proj-dark .proj-dock,
+.proj-notes-modal.proj-dark .proj-select-clean,
+.proj-notes-modal.proj-dark .proj-btn-flat { background: #161e2e !important; border-color: #2d3a4f !important; color: #f1f5f9 !important; }
+.proj-notes-modal.proj-dark .proj-sec-bar { background: #111827; border-color: #2d3a4f; color: #94a3b8; }
+.proj-notes-modal.proj-dark .proj-ledger-row { border-color: #1e293b; color: #e2e8f0; }
+.proj-notes-modal.proj-dark .proj-qty-code { background: #0b0f19; border-color: #334155; color: #fbbf24; }
+.proj-notes-modal.proj-dark .proj-dock textarea { background: #0b0f19; border-color: #2d3a4f; color: #f8fafc; }
+.proj-notes-modal.proj-dark .proj-btn-flat.dark,
+.proj-notes-modal.proj-dark .proj-rec-exec,
+.proj-notes-modal.proj-dark .proj-send-exec { background: #334155 !important; border-color: #475569 !important; color: #ffffff !important; }
+.proj-notes-modal.proj-dark .proj-rec-exec.rec { background: #991b1b !important; border-color: #b91c1c !important; }
+
+.mcp-toast { position: fixed; left: 50%; bottom: max(1.2rem, env(safe-area-inset-bottom)); transform: translateX(-50%) translateY(20px); background: #0f172a; color: #ffffff; border: 1px solid #334155; padding: 0.65rem 1rem; border-radius: 7px; font-size: 0.78rem; font-weight: 800; line-height: 1.35; box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35); z-index: 10040; max-width: 92%; text-align: center; opacity: 0; pointer-events: none; transition: opacity 0.2s ease, transform 0.2s ease; }
 .mcp-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margin-top: 2rem; }
+footer { text-align: center; font-size: 0.74rem; color: var(--text-muted); margin-top: 2rem; }
 </style>
 </head>
 <body>
@@ -486,6 +500,9 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
     <symbol id="ico-qr" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3z"/><path d="M18 18h3v3h-3z"/><path d="M18 14h3"/><path d="M14 18v3"/></symbol>
     <symbol id="ico-mic" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></symbol>
     <symbol id="ico-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="ico-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+    <symbol id="ico-userplus" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></symbol>
+    <symbol id="ico-card" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><circle cx="8" cy="11" r="2.2"/><path d="M5 17c.6-1.6 1.8-2.4 3-2.4s2.4.8 3 2.4"/><line x1="14" y1="9.5" x2="19" y2="9.5"/><line x1="14" y1="13.5" x2="18" y2="13.5"/></symbol>
   </defs>
 </svg>
 
@@ -499,7 +516,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
       <button type="button" class="active-doc-chip" onclick="openSuiteDrawer()">
         <span class="chip-code" id="headerActiveCode">EST</span>
         <span class="chip-label-top" id="headerActiveDocName">Estimado / Cotización Oficial</span>
-        <svg class="ico-stroke-sm" style="width:13px;height:13px;color:#64748b;flex-shrink:0;"><use href="#ico-chev"></use></svg>
+        <svg class="ico-stroke-sm" style="width:12px;height:12px;color:#64748b;flex-shrink:0;"><use href="#ico-chev"></use></svg>
       </button>
       <div class="top-actions">
         <button type="button" class="mip-top-biz-btn" id="mipTopBizBtn" onclick="openBizModalAuto()">
@@ -528,8 +545,8 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
 <div class="suite-drawer-overlay" id="suiteDrawerOverlay" onclick="if(event.target===this)dismissModalCleanly()">
   <div class="suite-drawer-panel" id="suiteDrawerPanel">
     <div class="suite-drawer-head">
-      <div style="font-size:0.65rem;color:#fbbf24;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;">MR. INVOICE PRO</div>
-      <div style="font-size:1.02rem;font-weight:900;margin-top:2px;" id="ui-suite-title">Suite Oficial de Documentos</div>
+      <div style="font-size:0.62rem;color:#fbbf24;font-weight:900;letter-spacing:1.2px;text-transform:uppercase;">MR. INVOICE PRO</div>
+      <div style="font-size:0.98rem;font-weight:900;margin-top:2px;" id="ui-suite-title">Suite Oficial de Documentos</div>
       <div class="suite-back-hint" id="ui-back-hint">Toca una plantilla o usa el botón Atrás para volver</div>
     </div>
     <div class="suite-drawer-body" id="suiteDrawerBody"></div>
@@ -545,7 +562,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
     <div class="confirm-msg" id="cfmMsg">Se limpiarán el cliente y los montos, conservando los datos, firma y logo de tu negocio.</div>
     <div class="confirm-btn-row">
       <button type="button" class="confirm-btn-no" id="cfmBtnNo" onclick="dismissModalCleanly()">No</button>
-      <button type="button" class="confirm-btn-yes" id="cfmBtnYes" onclick="executePendingConfirmAction()">Sí, limpiar</button>
+      <button type="button" class="confirm-btn-yes" id="cfmBtnYes" onclick="executePendingConfirmAction()">Sí, continuar</button>
     </div>
   </div>
 </div>
@@ -553,30 +570,30 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
 <div class="confirm-modal-overlay" id="sigPadModalOverlay" onclick="if(event.target===this)dismissModalCleanly()">
   <div class="confirm-modal-card" style="max-width:430px;">
     <div class="confirm-title" id="sigModalTitle">Firma Digital en Pantalla</div>
-    <div class="confirm-msg" style="margin-bottom:0.65rem;" id="sigModalSub">Firma con tu dedo o lápiz dentro del recuadro</div>
+    <div class="confirm-msg" style="margin-bottom:0.6rem;" id="sigModalSub">Firma con tu dedo dentro del recuadro</div>
     <div class="sig-canvas-wrap">
       <canvas id="sigPadCanvas"></canvas>
       <div class="sig-baseline"></div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:0.5rem;">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1.3fr;gap:0.45rem;">
       <button type="button" class="confirm-btn-no" onclick="dismissModalCleanly()" id="sigBtnCancel">Cancelar</button>
-      <button type="button" class="confirm-btn-no" style="color:#e11d48;border-color:#fecdd3;background:#fef2f2;" onclick="clearSigPadCanvas()" id="sigBtnClear">Borrar</button>
-      <button type="button" class="confirm-btn-yes" style="background:var(--emerald);border-color:#047857;box-shadow:none;" onclick="saveSigPadCanvas()" id="sigBtnSave">Guardar Firma</button>
+      <button type="button" class="confirm-btn-no" style="color:#991b1b;border-color:#fecaca;" onclick="clearSigPadCanvas()" id="sigBtnClear">Borrar</button>
+      <button type="button" class="confirm-btn-yes" style="background:var(--obsidian);border-color:var(--obsidian);" onclick="saveSigPadCanvas()" id="sigBtnSave">Guardar Firma</button>
     </div>
   </div>
 </div>
 
 <div class="confirm-modal-overlay" id="restoreModalOverlay" onclick="if(event.target===this)dismissModalCleanly()">
   <div class="confirm-modal-card" style="max-width:400px;">
-    <div class="confirm-icon-ring" style="background:#ecfdf5;border-color:#a7f3d0;color:#059669;">
+    <div class="confirm-icon-ring">
       <svg class="ico-stroke"><use href="#ico-shield"></use></svg>
     </div>
     <div class="confirm-title" id="ui-rest-title">Recuperar Compra o Pase Pro</div>
-    <div class="confirm-msg" id="ui-rest-msg">Si instalaste la App en tu inicio o cambiaste de navegador, ingresa el correo electrónico con el que pagaste en Stripe:</div>
-    <input type="text" id="restoreCodeInput" placeholder="correo@ejemplo.com" autocomplete="email" style="margin-bottom:0.85rem;text-align:center;font-weight:700;">
+    <div class="confirm-msg" id="ui-rest-msg">Ingresa el correo electrónico con el que realizaste tu compra en Stripe:</div>
+    <input type="text" id="restoreCodeInput" placeholder="correo@ejemplo.com" autocomplete="email" style="margin-bottom:0.8rem;text-align:center;font-weight:700;">
     <div class="confirm-btn-row">
       <button type="button" class="confirm-btn-no" onclick="dismissModalCleanly()" id="ui-rest-cancel">Cerrar</button>
-      <button type="button" class="confirm-btn-yes" style="background:var(--obsidian);border-color:var(--obsidian);box-shadow:none;" onclick="verifyAndRestorePurchase()" id="ui-rest-ok">Verificar</button>
+      <button type="button" class="confirm-btn-yes" style="background:var(--obsidian);border-color:var(--obsidian);" onclick="verifyAndRestorePurchase()" id="ui-rest-ok">Verificar</button>
     </div>
   </div>
 </div>
@@ -585,15 +602,15 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
   <div class="ios-sheet-card" id="iosSheetCard">
     <div class="sheet-grab-pill"></div>
     <div class="ios-sheet-head">
-      <div class="exec-monogram" style="width:44px;height:44px;font-size:0.95rem;">MIP</div>
+      <div class="exec-monogram" style="width:42px;height:42px;font-size:0.9rem;">MIP</div>
       <div>
-        <div style="font-weight:900;font-size:1rem;color:#050505;">Mr. Invoice Pro</div>
-        <div style="font-size:0.74rem;color:#d97706;font-weight:800;" id="ui-ios-sub">App Oficial para tu Teléfono</div>
+        <div style="font-weight:900;font-size:0.98rem;color:#0f172a;">Mr. Invoice Pro</div>
+        <div style="font-size:0.72rem;color:#b45309;font-weight:800;" id="ui-ios-sub">Aplicación Oficial</div>
       </div>
     </div>
     <div class="ios-step-row">
       <div class="ios-step-num">1</div>
-      <div id="ui-ios-s1">Toca los <strong>3 puntitos (•••)</strong> o el botón <strong>Compartir</strong> en la barra de tu navegador.</div>
+      <div id="ui-ios-s1">Toca el menú o el botón <strong>Compartir</strong> en la barra de tu navegador.</div>
     </div>
     <div class="ios-step-row">
       <div class="ios-step-num">2</div>
@@ -656,7 +673,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
           <input type="text" id="qb-docnum" value="2026-0101" oninput="checkSecretOwnerCode(this.value); onBuilderUserEdit(false)">
         </div>
       </div>
-      <div class="price-grid" style="margin-top:0.65rem;">
+      <div class="price-grid" style="margin-top:0.62rem;">
         <div id="wrap-qb-phone">
           <label id="lbl-phone">Teléfono / Licencia / ID</label>
           <input type="text" id="qb-phone" placeholder="(787) 000-0000" oninput="onBuilderUserEdit(true)">
@@ -667,7 +684,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
           <datalist id="recentClientsDatalist"></datalist>
         </div>
       </div>
-      <div class="price-grid" style="margin-top:0.65rem;">
+      <div class="price-grid" style="margin-top:0.62rem;">
         <div>
           <label id="ui-lbl-date">Fecha de Emisión</label>
           <input type="date" id="qb-date" oninput="onBuilderUserEdit(false)" onchange="onBuilderUserEdit(false)">
@@ -679,14 +696,14 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
       </div>
 
       <div class="logo-upload-box" id="wrap-qb-logo">
-        <div class="logo-pic-badge"><svg class="ico-stroke-sm" style="width:12px;height:12px;"><use href="#ico-camera"></use></svg><span>LOGO PICTURE</span></div>
-        <label style="color:#050505;font-size:0.76rem;text-transform:none;display:flex;align-items:center;justify-content:center;gap:0.38rem;" id="ui-lbl-logo">
+        <div class="logo-pic-badge"><svg class="ico-stroke-sm" style="width:12px;height:12px;"><use href="#ico-camera"></use></svg><span>LOGO CORPORATIVO</span></div>
+        <label style="color:#0f172a;font-size:0.75rem;text-transform:none;display:flex;align-items:center;justify-content:center;gap:0.35rem;" id="ui-lbl-logo">
           <svg class="ico-stroke-sm ico-gold"><use href="#ico-camera"></use></svg><span>Sube aquí el Logo de tu Negocio (Opcional)</span>
         </label>
         <input type="file" id="qb-logo-input" accept="image/*" onchange="handleLogoUpload(this)">
         <div id="logoIdentifiedBox" class="logo-id-wrap">
           <img id="logoMiniThumb" class="logo-mini-thumb" alt="Logo">
-          <div class="logo-status-msg"><svg class="ico-stroke-sm"><use href="#ico-check"></use></svg><span>Logo OK</span></div>
+          <div class="logo-status-msg"><svg class="ico-stroke-sm"><use href="#ico-check"></use></svg><span>Logo Registrado</span></div>
           <button type="button" class="cart-remove" onclick="clearLogoPicture()"><svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-x"></use></svg></button>
         </div>
       </div>
@@ -712,7 +729,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
             </select>
             <input type="number" step="any" id="qb-disc" value="0" oninput="onBuilderUserEdit(false)">
           </div>
-          <div class="tax-calc-hint" id="discComputedHint" style="color:#be123c;"></div>
+          <div class="tax-calc-hint" id="discComputedHint" style="color:#991b1b;"></div>
         </div>
         <div>
           <label id="ui-lbl-tax">Impuestos / Tax</label>
@@ -737,7 +754,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
             </select>
             <input type="number" step="any" id="qb-ret" value="0" oninput="onBuilderUserEdit(false)">
           </div>
-          <div class="tax-calc-hint" id="retComputedHint" style="color:#b45309;"></div>
+          <div class="tax-calc-hint" id="retComputedHint" style="color:#92400e;"></div>
         </div>
         <div>
           <label id="ui-lbl-dep">Depósito / Pagado ($)</label>
@@ -756,15 +773,15 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
           <div class="sig-mini-left">
             <img id="sigThumbIssuer" class="sig-mini-thumb" alt="Firma Emisor">
             <div style="min-width:0;">
-              <div style="font-size:0.72rem;font-weight:900;color:#0f172a;" id="ui-sig-issuer-lbl">Firma Autorizada / Emisor</div>
-              <div style="font-size:0.66rem;color:#64748b;" id="ui-sig-issuer-st">Opcional (Se guarda)</div>
+              <div style="font-size:0.71rem;font-weight:900;color:#0f172a;" id="ui-sig-issuer-lbl">Firma Autorizada / Emisor</div>
+              <div style="font-size:0.65rem;color:#64748b;" id="ui-sig-issuer-st">Opcional (Se guarda)</div>
             </div>
           </div>
           <div style="display:flex;gap:0.3rem;align-items:center;">
             <button type="button" class="sig-open-btn" onclick="openSignatureModal('issuer')">
-              <svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-edit"></use></svg><span id="ui-btn-sign1">Firmar</span>
+              <svg class="ico-stroke-sm" style="width:12px;height:12px;"><use href="#ico-edit"></use></svg><span id="ui-btn-sign1">Firmar</span>
             </button>
-            <button type="button" class="cart-remove" id="sigClearIssuerBtn" style="display:none;" onclick="removeSavedSignature('issuer')"><svg class="ico-stroke-sm" style="width:12px;height:13px;"><use href="#ico-x"></use></svg></button>
+            <button type="button" class="cart-remove" id="sigClearIssuerBtn" style="display:none;" onclick="removeSavedSignature('issuer')"><svg class="ico-stroke-sm" style="width:12px;height:12px;"><use href="#ico-x"></use></svg></button>
           </div>
         </div>
 
@@ -772,21 +789,21 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
           <div class="sig-mini-left">
             <img id="sigThumbClient" class="sig-mini-thumb" alt="Firma Cliente">
             <div style="min-width:0;">
-              <div style="font-size:0.72rem;font-weight:900;color:#0f172a;" id="ui-sig-client-lbl">Firma del Cliente</div>
-              <div style="font-size:0.66rem;color:#64748b;" id="ui-sig-client-st">Firmar en pantalla</div>
+              <div style="font-size:0.71rem;font-weight:900;color:#0f172a;" id="ui-sig-client-lbl">Firma del Cliente</div>
+              <div style="font-size:0.65rem;color:#64748b;" id="ui-sig-client-st">Firmar en pantalla</div>
             </div>
           </div>
           <div style="display:flex;gap:0.3rem;align-items:center;">
             <button type="button" class="sig-open-btn" onclick="openSignatureModal('client')">
-              <svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-edit"></use></svg><span id="ui-btn-sign2">Firmar</span>
+              <svg class="ico-stroke-sm" style="width:12px;height:12px;"><use href="#ico-edit"></use></svg><span id="ui-btn-sign2">Firmar</span>
             </button>
-            <button type="button" class="cart-remove" id="sigClearClientBtn" style="display:none;" onclick="removeSavedSignature('client')"><svg class="ico-stroke-sm" style="width:12px;height:13px;"><use href="#ico-x"></use></svg></button>
+            <button type="button" class="cart-remove" id="sigClearClientBtn" style="display:none;" onclick="removeSavedSignature('client')"><svg class="ico-stroke-sm" style="width:12px;height:12px;"><use href="#ico-x"></use></svg></button>
           </div>
         </div>
       </div>
 
       <div class="logo-upload-box">
-        <label style="color:#050505;font-size:0.76rem;text-transform:none;display:flex;align-items:center;justify-content:center;gap:0.38rem;" id="ui-lbl-attach">
+        <label style="color:#0f172a;font-size:0.75rem;text-transform:none;display:flex;align-items:center;justify-content:center;gap:0.35rem;" id="ui-lbl-attach">
           <svg class="ico-stroke-sm ico-gold"><use href="#ico-clip"></use></svg><span>Adjuntar Foto, ID o Documento en 2da Página (Opcional)</span>
         </label>
         <input type="file" id="qb-hw-input" accept="image/*" onchange="handleHwQuoteUpload(this)">
@@ -795,9 +812,9 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
           <div class="logo-status-msg"><svg class="ico-stroke-sm"><use href="#ico-check"></use></svg><span id="ui-att-ok">Imagen 2da Pág. Lista</span></div>
           <button type="button" class="cart-remove" onclick="clearHwAttachment()"><svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-x"></use></svg></button>
         </div>
-        <div style="margin-top:0.35rem;font-size:0.74rem;">
+        <div style="margin-top:0.35rem;font-size:0.73rem;">
           <label style="display:inline-flex;align-items:center;color:#334155;cursor:pointer;text-transform:none;">
-            <input type="checkbox" id="qb-hw-print-attach" onchange="scheduleAutoSave(false)" style="width:auto;margin-right:0.4rem;accent-color:#059669;">
+            <input type="checkbox" id="qb-hw-print-attach" onchange="scheduleAutoSave(false)" style="width:auto;margin-right:0.4rem;accent-color:#0f172a;">
             <span id="ui-lbl-attach-chk">Incluir imagen en 2da página del PDF</span>
           </label>
         </div>
@@ -805,8 +822,8 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
 
       <div class="contractor-numbers-bar">
         <div>
-          <div style="font-size:0.72rem;color:#64748b;font-weight:800;letter-spacing:1px;text-transform:uppercase;" id="ui-bal-lbl">BALANCE TOTAL:</div>
-          <div id="contractorSummaryLine" style="font-size:0.82rem;color:#334155;font-weight:700;margin-top:2px;font-variant-numeric:tabular-nums;">Total: $0.00</div>
+          <div style="font-size:0.7rem;color:#64748b;font-weight:800;letter-spacing:1px;text-transform:uppercase;" id="ui-bal-lbl">BALANCE TOTAL:</div>
+          <div id="contractorSummaryLine" style="font-size:0.8rem;color:#334155;font-weight:700;margin-top:2px;font-variant-numeric:tabular-nums;">Total: $0.00</div>
         </div>
         <strong id="contractorBigTotal">$0.00</strong>
       </div>
@@ -824,7 +841,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
     <div class="history-header">
       <h3 id="ui-hist-title"><svg class="ico-stroke ico-gold"><use href="#ico-doc"></use></svg><span>Récord de Documentos Pagados</span></h3>
       <button type="button" class="clear-btn" id="ui-hist-clear" onclick="askClearCalcHistory()">
-        <svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-trash"></use></svg><span>Borrar</span>
+        <svg class="ico-stroke-sm" style="width:12px;height:12px;"><use href="#ico-trash"></use></svg><span>Borrar</span>
       </button>
     </div>
     <input type="text" id="histSearchInput" class="hist-search-input" placeholder="Buscar cliente, # de factura o fecha..." oninput="renderHistory()">
@@ -840,7 +857,7 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
     <div class="doc-modal-topbar" id="docModalTopbar">
       <div class="sheet-grab-pill"></div>
       <div class="sample-switch-group">
-        <button type="button" class="sample-type-btn live-tab active" id="previewTabLiveBtn" onclick="renderModalSheet('live')">
+        <button type="button" class="sample-type-btn active" id="previewTabLiveBtn" onclick="renderModalSheet('live')">
           <span class="live-pulse-dot" style="width:6px;height:6px;"></span>
           <span id="ui-live-tab">Mi Documento</span>
         </button>
@@ -859,11 +876,11 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
 <div class="mip-biz-overlay" id="mipBizModal" onclick="if(event.target===this)dismissModalCleanly()">
   <div class="mip-biz-card-modal">
     <div style="display:flex;justify-content:space-between;align-items:center;">
-      <div style="font-size:0.98rem;font-weight:900;color:#0f172a;display:flex;align-items:center;gap:0.45rem;">
+      <div style="font-size:0.94rem;font-weight:900;color:#0f172a;display:flex;align-items:center;gap:0.42rem;">
         <svg class="ico-stroke-sm ico-gold"><use href="#ico-briefcase"></use></svg>
         <span id="mipBizModalTitle">Mi Negocio y Tarjeta Ejecutiva</span>
       </div>
-      <button type="button" onclick="dismissModalCleanly()" style="width:30px;height:30px;border-radius:50%;border:0;background:#f1f5f9;font-weight:900;cursor:pointer;">✕</button>
+      <button type="button" onclick="dismissModalCleanly()" style="width:28px;height:28px;border-radius:6px;border:1px solid #cbd5e1;background:#f8fafc;font-weight:900;cursor:pointer;">✕</button>
     </div>
     <div class="mip-biz-tabs">
       <button type="button" class="mip-biz-tab active" id="mipTabBtnInfo" onclick="switchBizTab('info')">Datos Fijos</button>
@@ -871,28 +888,31 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
     </div>
 
     <div id="mipPaneInfo">
-      <div style="margin-bottom:0.55rem;"><label id="mipLblComp">Nombre de tu Compañía / Negocio</label><input type="text" id="mipInpComp" placeholder="Ej. ASD Building Solutions LLC"></div>
-      <div style="margin-bottom:0.55rem;"><label id="mipLblOwner">Tu Nombre / Cargo o Especialidad</label><input type="text" id="mipInpOwner" placeholder="Ej. Contratista General"></div>
-      <div style="margin-bottom:0.55rem;"><label id="mipLblPhone">Teléfono / WhatsApp</label><input type="tel" id="mipInpPhone" placeholder="(787) 000-0000"></div>
-      <div style="margin-bottom:0.55rem;"><label id="mipLblEmail">Email o Página Web</label><input type="text" id="mipInpEmail" placeholder="contacto@tunegocio.com"></div>
-      <div style="margin-bottom:0.65rem;"><label id="mipLblLic">Ciudad / Licencia / Registro</label><input type="text" id="mipInpLic" placeholder="Adjuntas, PR • Lic. #"></div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-bottom:0.75rem;">
-        <button type="button" id="mipModalLogoBtn" class="mip-biz-mini-btn" style="padding:0.62rem;" onclick="document.getElementById('qb-logo-input').click()">Subir / Cambiar Logo</button>
-        <button type="button" id="mipModalSigBtn" class="mip-biz-mini-btn" style="padding:0.62rem;" onclick="openSignatureModal('issuer')">Guardar Mi Firma Fija</button>
+      <div style="margin-bottom:0.5rem;"><label id="mipLblComp">Nombre de tu Compañía / Negocio</label><input type="text" id="mipInpComp" placeholder="ASD Building Solutions LLC"></div>
+      <div style="margin-bottom:0.5rem;"><label id="mipLblOwner">Tu Nombre / Cargo o Especialidad</label><input type="text" id="mipInpOwner" placeholder="Contratista General"></div>
+      <div style="margin-bottom:0.5rem;"><label id="mipLblPhone">Teléfono / WhatsApp</label><input type="tel" id="mipInpPhone" placeholder="(787) 000-0000"></div>
+      <div style="margin-bottom:0.5rem;"><label id="mipLblEmail">Email o Página Web</label><input type="text" id="mipInpEmail" placeholder="contacto@tunegocio.com"></div>
+      <div style="margin-bottom:0.62rem;"><label id="mipLblLic">Ciudad / Licencia / Registro</label><input type="text" id="mipInpLic" placeholder="Adjuntas, PR • Lic. #"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.45rem;margin-bottom:0.7rem;">
+        <button type="button" id="mipModalLogoBtn" class="mip-biz-mini-btn" style="padding:0.58rem;" onclick="document.getElementById('qb-logo-input').click()">Subir / Cambiar Logo</button>
+        <button type="button" id="mipModalSigBtn" class="mip-biz-mini-btn" style="padding:0.58rem;" onclick="openSignatureModal('issuer')">Guardar Mi Firma Fija</button>
       </div>
       <button type="button" id="mipSaveBizBtn" class="wa-master-btn" style="margin-top:0;" onclick="saveBizFromModal()">Guardar y Fijar Mi Negocio</button>
-      <button type="button" id="mipUnlockOnceBtn" onclick="unlockIssuerOnce()" style="display:block;margin:0.6rem auto 0;background:transparent;border:0;color:#64748b;font-size:0.73rem;font-weight:800;text-decoration:underline;cursor:pointer;">Editar emisor solo en este documento</button>
+      <button type="button" id="mipUnlockOnceBtn" onclick="unlockIssuerOnce()" style="display:block;margin:0.55rem auto 0;background:transparent;border:0;color:#64748b;font-size:0.72rem;font-weight:800;text-decoration:underline;cursor:pointer;">Editar emisor solo en este documento</button>
     </div>
 
     <div id="mipPaneQr" style="display:none;">
-      <div style="background:linear-gradient(145deg,#0b0f19 0%,#1e293b 100%);color:#fff;border-radius:18px;padding:1rem;text-align:center;border:1px solid rgba(251,191,36,0.4);">
-        <div id="mipQrCompTitle" style="font-size:1rem;font-weight:900;color:#fbbf24;">---</div>
-        <div id="mipQrOwnerSub" style="font-size:0.75rem;color:#cbd5e1;margin-top:2px;"></div>
+      <div style="background:#0b0f19;color:#fff;border-radius:8px;padding:0.95rem;text-align:center;border:1px solid rgba(251,191,36,0.4);">
+        <div id="mipQrCompTitle" style="font-size:0.96rem;font-weight:900;color:#fbbf24;">---</div>
+        <div id="mipQrOwnerSub" style="font-size:0.73rem;color:#cbd5e1;margin-top:2px;"></div>
         <div id="mipQrCanvasBox"></div>
-        <div id="mipQrHintTxt" style="font-size:0.72rem;color:#e2e8f0;line-height:1.38;margin-top:0.25rem;">Apunta la cámara al QR para abrir tu Tarjeta de Negocios Real.</div>
+        <div id="mipQrHintTxt" style="font-size:0.7rem;color:#cbd5e1;line-height:1.38;margin-top:0.2rem;">Escanea el código QR para abrir tu Tarjeta de Negocios Real.</div>
       </div>
-      <button type="button" id="mipPreviewCardBtn" class="wa-master-btn" style="margin-top:0.7rem;background:var(--obsidian);border-color:#f59e0b;color:#fbbf24;" onclick="previewOwnRealCard()">🪪 Ver Tarjeta de Negocios Real</button>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.45rem;margin-top:0.45rem;">
+      <button type="button" id="mipPreviewCardBtn" class="wa-master-btn" style="margin-top:0.65rem;background:#0f172a;border-color:#b45309;color:#fbbf24;" onclick="previewOwnRealCard()">
+        <svg class="ico-stroke-sm"><use href="#ico-card"></use></svg>
+        <span id="mipPreviewCardTxt">Ver Tarjeta de Negocios Real</span>
+      </button>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.42rem;margin-top:0.42rem;">
         <button type="button" id="mipShareCardBtn" class="preview-secondary-btn" onclick="shareDigitalCardLink()">Compartir Link</button>
         <button type="button" id="mipPngCardBtn" class="preview-secondary-btn" onclick="downloadRealCardAsPng()">Descargar PNG</button>
       </div>
@@ -922,81 +942,106 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
     </div>
 
     <div class="real-bcard-actions-panel">
-      <button type="button" id="mipVisSaveBtn" class="wa-master-btn" style="margin-top:0;">📲 Guardar en Contactos</button>
+      <button type="button" id="mipVisSaveBtn" class="wa-master-btn" style="margin-top:0;">
+        <svg class="ico-stroke-sm"><use href="#ico-userplus"></use></svg>
+        <span id="mipVisSaveTxt">Guardar en Contactos</span>
+      </button>
       <div class="mip-vis-acts" id="mipVisActs"></div>
-      <button type="button" id="mipVisDownloadImgBtn" class="preview-secondary-btn" style="margin-top:0.5rem;" onclick="downloadRealCardAsPng()">🖼️ Descargar Imagen de Tarjeta (PNG)</button>
-      <div id="mipVisFooter" style="text-align:center;font-size:0.68rem;color:#64748b;font-weight:800;margin-top:0.75rem;">Tarjeta Ejecutiva Oficial • Mr. Invoice Pro</div>
-      <button type="button" id="mipVisCloseBtn" onclick="closeVisitorCardModal()" style="display:block;margin:0.45rem auto 0;background:transparent;border:0;color:#475569;font-size:0.76rem;font-weight:800;text-decoration:underline;cursor:pointer;">Cerrar Tarjeta</button>
+      <button type="button" id="mipVisDownloadImgBtn" class="preview-secondary-btn" style="margin-top:0.45rem;" onclick="downloadRealCardAsPng()">
+        <svg class="ico-stroke-sm"><use href="#ico-download"></use></svg>
+        <span id="mipVisDlImgTxt">Descargar Imagen de Tarjeta (PNG)</span>
+      </button>
+      <div id="mipVisFooter" style="text-align:center;font-size:0.67rem;color:#64748b;font-weight:800;margin-top:0.7rem;">Tarjeta Ejecutiva Oficial • Mr. Invoice Pro</div>
+      <button type="button" id="mipVisCloseBtn" onclick="closeVisitorCardModal()" style="display:block;margin:0.4rem auto 0;background:transparent;border:0;color:#475569;font-size:0.74rem;font-weight:800;text-decoration:underline;cursor:pointer;">Cerrar Tarjeta</button>
     </div>
   </div>
 </div>
 
-<!-- MODAL NOTAS DE PROYECTOS (CARPETAS + VOZ + FOTOS INDEXEDDB) -->
+<!-- MODAL NOTAS DE PROYECTOS (CUADERNO TÉCNICO PRIVADO + FOTOS INDEXEDDB) -->
 <div class="mip-biz-overlay" id="mipNotesModal" onclick="if(event.target===this)dismissModalCleanly()">
-  <div class="proj-notes-modal">
+  <div class="proj-notes-modal" id="projNotesCardRoot">
     <div class="proj-notes-head">
       <div>
-        <div style="font-size:0.64rem;color:#fbbf24;font-weight:900;letter-spacing:1.1px;text-transform:uppercase;">CAMPO & SUBASTAS</div>
-        <div style="font-size:1rem;font-weight:900;" id="ui-notes-modal-title">Notas de Proyectos</div>
+        <div class="proj-priv-tag">
+          <svg class="ico-stroke-sm" style="width:11px;height:11px;"><use href="#ico-lock"></use></svg>
+          <span>Archivo Local Privado</span>
+        </div>
+        <div style="font-size:0.94rem;font-weight:900;letter-spacing:-0.01em;" id="ui-notes-modal-title">Notas de Proyectos</div>
       </div>
-      <button type="button" onclick="dismissModalCleanly()" style="width:30px;height:30px;border-radius:50%;border:0;background:rgba(255,255,255,0.14);color:#fff;font-weight:900;cursor:pointer;">✕</button>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <button type="button" class="proj-head-btn" id="projThemeToggleBtn" onclick="toggleProjPrivateTheme()">Grafito</button>
+        <button type="button" class="proj-head-btn" onclick="dismissModalCleanly()" style="padding:0 8px;">✕</button>
+      </div>
     </div>
 
     <div class="proj-notes-body">
-      <div class="proj-folder-bar">
-        <select id="projFolderSelect" onchange="selectProjectFolder(this.value)" style="flex:1;font-weight:800;font-size:0.84rem;"></select>
-        <button type="button" class="mip-biz-mini-btn" style="background:var(--obsidian);color:#fbbf24;border-color:var(--obsidian);padding:0 0.75rem;" onclick="promptNewProjectFolder()">+ Proyecto</button>
-        <button type="button" class="cart-remove" onclick="deleteCurrentProjectFolder()" title="Borrar carpeta"><svg class="ico-stroke-sm"><use href="#ico-trash"></use></svg></button>
+      <div class="proj-bar-grid">
+        <select id="projFolderSelect" class="proj-select-clean" onchange="selectProjectFolder(this.value)"></select>
+        <button type="button" class="proj-btn-flat dark" onclick="promptNewProjectFolder()">
+          <svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-plus"></use></svg>
+          <span>Nuevo</span>
+        </button>
+        <button type="button" class="proj-btn-flat danger" onclick="deleteCurrentProjectFolder()" title="Eliminar carpeta">
+          <svg class="ico-stroke-sm" style="width:14px;height:14px;"><use href="#ico-trash"></use></svg>
+        </button>
       </div>
 
-      <div id="newProjInlineBox" style="display:none;background:#fffbeb;border:1px solid #f59e0b;border-radius:12px;padding:0.65rem;margin-bottom:0.8rem;">
-        <label style="color:#92400e;" id="ui-new-proj-lbl">Nombre del Proyecto / Subasta:</label>
+      <div id="newProjInlineBox" style="display:none;background:#ffffff;border:1px solid #94a3b8;border-radius:6px;padding:0.6rem;margin-bottom:0.68rem;">
+        <label style="color:#334155;font-size:0.67rem;" id="ui-new-proj-lbl">Identificador del Proyecto o Subasta</label>
         <div style="display:flex;gap:0.4rem;margin-top:0.25rem;">
-          <input type="text" id="newProjNameInp" placeholder="Ej. Subasta Escuela Ponce / Casa María" style="flex:1;">
-          <button type="button" class="sig-open-btn" style="background:#059669;" onclick="confirmCreateProjectFolder()">Crear</button>
+          <input type="text" id="newProjNameInp" placeholder="Nombre de obra o número de subasta" style="flex:1;border-radius:5px;padding:0.46rem 0.62rem;font-size:0.81rem;">
+          <button type="button" class="proj-btn-flat dark" onclick="confirmCreateProjectFolder()">Guardar</button>
         </div>
       </div>
 
-      <!-- Barra de dictado y cámara dentro de la carpeta -->
-      <div style="background:#ffffff;border:1.5px solid #cbd5e1;border-radius:15px;padding:0.75rem;margin-bottom:0.8rem;">
-        <textarea id="projNoteInput" rows="2" placeholder="Dicta o escribe: 10 lb clavos, 200 bloques, ventana 10x10, 50 LF losa..." style="background:#f8fafc;min-height:52px;font-size:0.84rem;"></textarea>
-        <div class="mip-rec-bar" style="margin-top:0.55rem;">
-          <button type="button" id="projTrashBtn" class="mip-trash-btn" onclick="discardProjRecording()"><svg class="ico-stroke-sm"><use href="#ico-trash"></use></svg></button>
-          <button type="button" id="projRecBtn" class="mip-rec-main-btn" onclick="toggleProjVoiceRec()">
-            <svg class="ico-stroke-sm"><use href="#ico-mic"></use></svg>
-            <span id="projRecBtnTxt">Dictar Nota</span>
-          </button>
-          <button type="button" class="mip-biz-mini-btn" style="height:44px;padding:0 12px;border-radius:12px;" onclick="document.getElementById('projPhotoInput').click()" title="Añadir Foto">
-            <svg class="ico-stroke-sm ico-gold"><use href="#ico-camera"></use></svg>
-            <span id="projPhotoCountBadge" style="font-size:0.74rem;font-weight:900;">0/6</span>
-          </button>
-          <input type="file" id="projPhotoInput" accept="image/*" capture="environment" style="display:none;" onchange="handleProjectPhotoAdd(this)">
-          <button type="button" id="projSendBtn" class="mip-send-round-btn" disabled onclick="submitProjectNoteEntry()" title="Sumar a la carpeta">
-            <svg class="ico-stroke-sm"><use href="#ico-share"></use></svg>
-          </button>
-        </div>
-        <div id="projRecStatus" style="display:none;margin-top:6px;font-size:0.75rem;font-weight:800;text-align:center;color:#059669;"></div>
-      </div>
+      <!-- Hoja técnica corrida -->
+      <div class="proj-sheet" id="projListsRenderArea"></div>
 
-      <!-- Listas inteligentes separadas -->
-      <div id="projListsRenderArea"></div>
-
-      <!-- Galería de fotos en IndexedDB -->
-      <div class="proj-cat-box" id="projPhotosSection" style="display:none;">
-        <div class="proj-cat-head">
-          <span>📷 Fotos de Campo (Memoria Interna Segura)</span>
-          <small style="color:#64748b;font-weight:700;">Toca para ampliar</small>
+      <!-- Registro fotográfico en IndexedDB -->
+      <div class="proj-sheet" id="projPhotosSection" style="display:none;">
+        <div class="proj-sec-bar">
+          <span>Registro Fotográfico Local</span>
+          <span style="font-weight:700;text-transform:none;">Toca para ampliar</span>
         </div>
         <div class="proj-photos-grid" id="projPhotosGrid"></div>
       </div>
 
-      <!-- Botones puente 1-Toque -->
-      <div style="display:grid;grid-template-columns:1fr;gap:0.48rem;margin-top:0.6rem;">
-        <button type="button" class="wa-master-btn" style="margin-top:0;padding:0.75rem;" onclick="pushProjectToBuilder('quote')">📄 Pasar Todo a Estimado Oficial</button>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.48rem;">
-          <button type="button" class="preview-secondary-btn" style="padding:0.7rem;font-size:0.79rem;" onclick="shareMaterialsToSupplier()">📲 WhatsApp Ferretería</button>
-          <button type="button" class="preview-secondary-btn" style="padding:0.7rem;font-size:0.79rem;" onclick="pushProjectToBuilder('po')">📦 Pasar a Orden (PO)</button>
+      <!-- Consola compacta de dictado / apuntes -->
+      <div class="proj-dock">
+        <textarea id="projNoteInput" rows="2" placeholder="Dictar o escribir apuntes, cantidades o dimensiones..."></textarea>
+        <div class="proj-dock-controls">
+          <button type="button" id="projTrashBtn" class="proj-btn-flat danger" style="display:none;" onclick="discardProjRecording()">
+            <svg class="ico-stroke-sm" style="width:14px;height:14px;"><use href="#ico-trash"></use></svg>
+          </button>
+          <button type="button" id="projRecBtn" class="proj-rec-exec" onclick="toggleProjVoiceRec()">
+            <svg class="ico-stroke-sm" style="width:14px;height:14px;"><use href="#ico-mic"></use></svg>
+            <span id="projRecBtnTxt">Grabar Nota</span>
+          </button>
+          <button type="button" class="proj-btn-flat" onclick="document.getElementById('projPhotoInput').click()" title="Adjuntar fotografía">
+            <svg class="ico-stroke-sm" style="width:14px;height:14px;"><use href="#ico-camera"></use></svg>
+            <span id="projPhotoCountBadge" style="font-family:ui-monospace,monospace;font-size:0.72rem;">0/6</span>
+          </button>
+          <input type="file" id="projPhotoInput" accept="image/*" capture="environment" style="display:none;" onchange="handleProjectPhotoAdd(this)">
+          <button type="button" id="projSendBtn" class="proj-send-exec" disabled onclick="submitProjectNoteEntry()" title="Registrar en carpeta">
+            <svg class="ico-stroke-sm" style="width:14px;height:14px;"><use href="#ico-check"></use></svg>
+          </button>
         </div>
+        <div id="projRecStatus" style="display:none;margin-top:6px;font-size:0.71rem;font-weight:700;text-align:center;color:#475569;"></div>
+      </div>
+
+      <!-- Barra ejecutiva de transferencia -->
+      <div class="proj-export-strip">
+        <button type="button" class="proj-btn-flat dark" onclick="pushProjectToBuilder('quote')">
+          <svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-doc"></use></svg>
+          <span>Pasar a Estimado</span>
+        </button>
+        <button type="button" class="proj-btn-flat" onclick="pushProjectToBuilder('po')">
+          <span>Orden (PO)</span>
+        </button>
+        <button type="button" class="proj-btn-flat" onclick="shareMaterialsToSupplier()">
+          <svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-share"></use></svg>
+          <span>Suplidor</span>
+        </button>
       </div>
     </div>
   </div>
@@ -1005,25 +1050,25 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
 <!-- VISOR DE FOTO AMPLIADA DE PROYECTO -->
 <div class="confirm-modal-overlay" id="projPhotoZoomOverlay" onclick="this.style.display='none'">
   <div style="max-width:94vw;max-height:88vh;text-align:center;">
-    <img id="projPhotoZoomImg" style="max-width:100%;max-height:78vh;border-radius:14px;border:2px solid #fff;box-shadow:0 20px 50px rgba(0,0,0,0.6);" alt="Foto de Obra">
+    <img id="projPhotoZoomImg" style="max-width:100%;max-height:78vh;border-radius:6px;border:1px solid #cbd5e1;box-shadow:0 20px 50px rgba(0,0,0,0.65);" alt="Foto de Obra">
     <div style="margin-top:0.6rem;">
-      <button type="button" class="sig-open-btn" style="background:#059669;padding:0.55rem 1rem;" onclick="useZoomedPhotoAsPdfPage2(event)">📎 Usar esta foto como 2da Página del PDF</button>
+      <button type="button" class="proj-btn-flat dark" style="padding:0 1rem;" onclick="useZoomedPhotoAsPdfPage2(event)">Adjuntar como 2da Página del PDF</button>
     </div>
   </div>
 </div>
 
-<!-- PANEL FLOTANTE HELP (GRABADORA TURBO IA PARA FACTURAS/ESTIMADOS) -->
+<!-- PANEL FLOTANTE HELP (DICTADO DIRECTO AL DOCUMENTO) -->
 <div id="mip-help-panel">
-  <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;border-bottom:1px solid #f1f5f9;">
-    <div style="display:flex;align-items:center;gap:8px;font-weight:900;font-size:14px;color:#0b0f19;">
-      <span style="width:28px;height:28px;border-radius:8px;background:#ecfdf5;color:#059669;display:flex;align-items:center;justify-content:center;">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:9px;border-bottom:1px solid #e2e8f0;">
+    <div style="display:flex;align-items:center;gap:7px;font-weight:900;font-size:13.2px;color:#0f172a;">
+      <span style="width:26px;height:26px;border-radius:5px;background:#f1f5f9;color:#0f172a;display:flex;align-items:center;justify-content:center;border:1px solid #cbd5e1;">
         <svg class="ico-stroke-sm"><use href="#ico-mic"></use></svg>
       </span>
-      <span id="mipHelpTitleTxt">Help • Grabadora Turbo IA</span>
+      <span id="mipHelpTitleTxt">Dictado de Documento</span>
     </div>
-    <button type="button" onclick="toggleHelpPanel()" style="cursor:pointer;width:28px;height:28px;border-radius:50%;background:#f1f5f9;color:#475569;font-weight:800;border:0;">✕</button>
+    <button type="button" onclick="toggleHelpPanel()" style="cursor:pointer;width:26px;height:26px;border-radius:5px;background:#f8fafc;color:#475569;font-weight:800;border:1px solid #cbd5e1;">✕</button>
   </div>
-  <textarea id="mip-help-text" rows="2" placeholder="Opcional: escribe aquí o usa Grabar Voz..." style="margin-top:10px;background:#f8fafc;font-size:13.5px;"></textarea>
+  <textarea id="mip-help-text" rows="2" placeholder="Dictar o escribir datos del documento..." style="margin-top:9px;background:#f8fafc;font-size:13px;border-radius:6px;"></textarea>
   <div class="mip-rec-bar">
     <button type="button" id="mip-trash" class="mip-trash-btn" onclick="discardHelpRecording()"><svg class="ico-stroke-sm"><use href="#ico-trash"></use></svg></button>
     <button type="button" id="mip-rec" class="mip-rec-main-btn" onclick="toggleHelpRecording()">
@@ -1031,23 +1076,21 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
       <span>Grabar Voz</span>
     </button>
     <button type="button" id="mip-send" class="mip-send-round-btn" disabled onclick="sendHelpRecordingNow()">
-      <svg class="ico-stroke-sm"><use href="#ico-share"></use></svg>
+      <svg class="ico-stroke-sm"><use href="#ico-check"></use></svg>
     </button>
   </div>
-  <div id="mip-help-hint" style="font-size:11.5px;color:#64748b;margin-top:8px;text-align:center;line-height:1.35;">Pausa y continúa cuantas veces quieras, y toca enviar al terminar.</div>
-  <div id="mip-help-status" style="display:none;margin-top:8px;padding:9px 10px;border-radius:10px;background:#f1f5f9;font-size:12px;font-weight:700;text-align:center;"></div>
+  <div id="mip-help-hint" style="font-size:11px;color:#64748b;margin-top:7px;text-align:center;line-height:1.35;">Pausa y continúa libremente; confirma a la derecha al terminar.</div>
+  <div id="mip-help-status" style="display:none;margin-top:7px;padding:7px 9px;border-radius:6px;background:#f8fafc;border:1px solid #e2e8f0;font-size:11.5px;font-weight:700;text-align:center;"></div>
 </div>
 
-<!-- DOS BOTONES FLOTANTES EXACTOS: NOTAS ARRIBA + HELP ABAJO -->
+<!-- DOS BOTONES FLOTANTES DISCRETOS: NOTAS ARRIBA + HELP ABAJO -->
 <div class="mip-fab-stack">
   <button type="button" class="mip-fab-pill mip-fab-notes" id="mipNotesFabBtn" onclick="openProjectNotesModal()">
-    <span class="mip-fab-dot"></span>
     <svg class="ico-stroke-sm"><use href="#ico-folder"></use></svg>
     <span id="ui-fab-notes-txt">Notas</span>
   </button>
   <button type="button" class="mip-fab-pill mip-fab-help" id="mipHelpFabBtn" onclick="toggleHelpPanel()">
-    <span class="mip-fab-dot"></span>
-    <svg class="ico-stroke-sm"><use href="#ico-chat"></use></svg>
+    <svg class="ico-stroke-sm"><use href="#ico-mic"></use></svg>
     <span>Help</span>
   </button>
 </div>
@@ -1056,8 +1099,8 @@ footer { text-align: center; font-size: 0.76rem; color: var(--text-muted); margi
 
 <footer>
   &copy; 2026 Mr. Invoice Pro | mrinvoicepro.com
-  <span onclick="deactivateOwnerMode()" style="display:none;cursor:pointer;color:#059669;font-weight:800;margin-left:8px;padding:3px 9px;border:1px solid #a7f3d0;background:#ecfdf5;border-radius:999px;" id="ownerKeyBtn">
-    <svg class="ico-stroke-sm" style="width:13px;height:13px;margin-right:3px;"><use href="#ico-crown"></use></svg>Salir de Modo Dueño
+  <span onclick="deactivateOwnerMode()" style="display:none;cursor:pointer;color:#0f172a;font-weight:800;margin-left:8px;padding:3px 8px;border:1px solid #cbd5e1;background:#f8fafc;border-radius:5px;" id="ownerKeyBtn">
+    <svg class="ico-stroke-sm" style="width:12px;height:12px;margin-right:3px;"><use href="#ico-crown"></use></svg>Salir de Modo Dueño
   </span>
 </footer>
 <script>
@@ -1200,7 +1243,7 @@ function showExecutiveToast(msg, durationMs) {
   el.innerText = msg;
   el.classList.add('show');
   if (mcpToastTimer) clearTimeout(mcpToastTimer);
-  mcpToastTimer = setTimeout(() => { el.classList.remove('show'); }, durationMs || 3800);
+  mcpToastTimer = setTimeout(() => { el.classList.remove('show'); }, durationMs || 3500);
 }
 
 function getTodayIsoDate() {
@@ -1248,15 +1291,15 @@ const I18N = {
     cfmResetTitle: "¿Nuevo borrador en $0.00?",
     cfmResetMsg: "Se limpiarán el cliente, la firma del cliente y las partidas actuales. Se conservarán los datos, firma y logo de tu negocio.",
     cfmHistTitle: "¿Borrar el récord guardado?",
-    cfmHistMsg: "Esta acción eliminará la lista de documentos guardados en este teléfono.",
+    cfmHistMsg: "Esta acción eliminará la lista de documentos guardados en este dispositivo.",
     btnNo: "No", btnYes: "Sí, continuar",
     wmTile: "BORRADOR • SIN VALIDEZ • MRINVOICEPRO.COM",
     wmStamp: "VISTA PREVIA PROTEGIDA — DESBLOQUEA EL PDF OFICIAL",
-    installBtn: "App", iosSub: "App Oficial para iPhone / iPad",
-    iosS1: 'Toca los <strong>3 puntitos (•••)</strong> o el botón <strong>Compartir</strong> en la barra inferior de tu iPhone.',
-    iosS2: 'Selecciona <strong>"Agregar a inicio"</strong> (Add to Home Screen) y toca <strong>Agregar</strong> arriba a la derecha.',
-    androidSub: "App Oficial para Android",
-    androidS1: 'Toca el menú de <strong>3 puntitos (⋮)</strong> arriba a la derecha en tu navegador.',
+    installBtn: "App", iosSub: "Aplicación Oficial para iPhone / iPad",
+    iosS1: 'Toca el menú o el botón <strong>Compartir</strong> en la barra inferior de tu iPhone.',
+    iosS2: 'Selecciona <strong>"Agregar a inicio"</strong> y toca <strong>Agregar</strong> arriba a la derecha.',
+    androidSub: "Aplicación Oficial para Android",
+    androidS1: 'Toca el menú de <strong>3 puntos</strong> arriba a la derecha en tu navegador.',
     androidS2: 'Selecciona <strong>"Instalar aplicación"</strong> o <strong>"Agregar a pantalla principal"</strong>.',
     iosDone: "Listo, ya la agregué a mi inicio", attOk: "Imagen 2da Pág. Lista",
     sub: "Estimados, Facturas y Contratos PDF", reset: "Nuevo ($0.00)",
@@ -1276,7 +1319,7 @@ const I18N = {
     histTitle: "Récord de Documentos Pagados", histClear: "Borrar",
     histSearch: "Buscar por cliente, # de documento o fecha...", openBtn: "Abrir", pdfBtn: "PDF", toInvBtn: "→ Factura", toRecBtn: "→ Recibo",
     qty: "Cantidad", price: "Precio Unitario", qtyShort: "Cant.", unitPriceShort: "P. Unit.", totalColShort: "Total",
-    itemLbl: "Partida #", descPh: "Descripción detallada (ej. Vehículo/VIN, Propiedad, Servicios o Materiales)...",
+    itemLbl: "Partida #", descPh: "Descripción detallada del alcance, materiales o bien...",
     waPaid: "Enviar PDF Oficial por WhatsApp / Compartir", emailPaid: "Enviar PDF Oficial por Email", dlPaid: "Descargar / Guardar PDF en mi Teléfono",
     waLock: "Desbloquear PDF Oficial Sin Marca de Agua ($1.99)",
     proPassBtn: "Pase Pro Ilimitado • Marca Blanca Sin Pie Web ($9.99/mes)",
@@ -1291,13 +1334,13 @@ const I18N = {
     restCancel: "Cerrar", restOk: "Verificar", restChecking: "Verificando...",
     restSuccess: "Compra verificada y restaurada en este dispositivo.",
     restInvalid: "No se pudo verificar una compra activa con ese correo en el servidor.",
-    sigModalSub: "Firma con tu dedo dentro del recuadro", sigBtnSign: "Firmar", sigReady: "Firma Lista ✓", sigSavedHint: "Opcional (Se guarda)", sigClientHint: "Firmar en pantalla",
+    sigModalSub: "Firma con tu dedo dentro del recuadro", sigBtnSign: "Firmar", sigReady: "Firma Registrada", sigSavedHint: "Opcional (Se guarda)", sigClientHint: "Firmar en pantalla",
     sigCancel: "Cancelar", sigClear: "Borrar", sigSave: "Guardar Firma",
     pdfEngineErr: "No se pudo cargar el motor PDF. Verifica tu conexión a internet e intenta de nuevo.",
     convertedToast: "Datos copiados a nuevo borrador listo para revisar.",
     useSampleBtn: "Usar Este Ejemplo en Editor",
     backToLiveBtn: "Ver Mi Documento",
-    sampleLoadedToast: "Ejemplo cargado en el editor. Personalízalo a tu gusto.",
+    sampleLoadedToast: "Ejemplo cargado en el editor.",
     pageOfTpl: "Pág. {P} de {T}",
     emailDesktopHint: "PDF descargado en tu equipo. Adjúntalo al correo que se acaba de abrir.",
     ownerUnlockedMsg: "Modo Dueño Activado: Tienes descargas y marca blanca ilimitadas.",
@@ -1332,10 +1375,10 @@ const I18N = {
     wmTile: "DRAFT PREVIEW • NOT VALID • MRINVOICEPRO.COM",
     wmStamp: "PROTECTED PREVIEW — UNLOCK OFFICIAL PDF",
     installBtn: "App", iosSub: "Official App for iPhone / iPad",
-    iosS1: 'Tap the <strong>3 dots (•••)</strong> or the <strong>Share</strong> button on your iPhone bottom bar.',
+    iosS1: 'Tap the menu or the <strong>Share</strong> button on your iPhone bottom bar.',
     iosS2: 'Select <strong>"Add to Home Screen"</strong> and tap <strong>Add</strong> at the top right.',
     androidSub: "Official App for Android",
-    androidS1: 'Tap the <strong>3-dot menu (⋮)</strong> at the top right of your browser.',
+    androidS1: 'Tap the <strong>3-dot menu</strong> at the top right of your browser.',
     androidS2: 'Select <strong>"Install app"</strong> or <strong>"Add to Home screen"</strong>.',
     iosDone: "Done, added to Home Screen", attOk: "Page 2 Image Ready",
     sub: "Official PDF Estimates, Invoices & Contracts", reset: "New ($0.00)",
@@ -1355,7 +1398,7 @@ const I18N = {
     histTitle: "Paid Documents Record", histClear: "Clear",
     histSearch: "Search by client, doc # or date...", openBtn: "Open", pdfBtn: "PDF", toInvBtn: "→ Invoice", toRecBtn: "→ Receipt",
     qty: "Quantity", price: "Unit Price", qtyShort: "Qty", unitPriceShort: "Unit Price", totalColShort: "Amount",
-    itemLbl: "Item #", descPh: "Detailed description (e.g. Vehicle/VIN, Property, Services or Materials)...",
+    itemLbl: "Item #", descPh: "Detailed scope, materials, measurements or asset description...",
     waPaid: "Send Official PDF via WhatsApp / Share", emailPaid: "Send Official PDF via Email", dlPaid: "Download / Save PDF to Phone",
     waLock: "Unlock Watermark-Free Official PDF ($1.99)",
     proPassBtn: "Unlimited Pro Pass • White-Label PDFs ($9.99/mo)",
@@ -1370,13 +1413,13 @@ const I18N = {
     restCancel: "Close", restOk: "Verify", restChecking: "Verifying...",
     restSuccess: "Purchase verified and restored on this device.",
     restInvalid: "Could not verify an active purchase with that email on the server.",
-    sigModalSub: "Sign with your finger inside the box", sigBtnSign: "Sign", sigReady: "Signed ✓", sigSavedHint: "Optional (Auto-saved)", sigClientHint: "Sign on screen",
+    sigModalSub: "Sign with your finger inside the box", sigBtnSign: "Sign", sigReady: "Signature Saved", sigSavedHint: "Optional (Auto-saved)", sigClientHint: "Sign on screen",
     sigCancel: "Cancel", sigClear: "Clear", sigSave: "Save Signature",
     pdfEngineErr: "PDF engine could not load. Please check your internet connection and try again.",
     convertedToast: "Copied into a new draft ready for review.",
     useSampleBtn: "Load Sample into Editor",
     backToLiveBtn: "View My Live Doc",
-    sampleLoadedToast: "Sample loaded into editor. Customize as needed.",
+    sampleLoadedToast: "Sample loaded into editor.",
     pageOfTpl: "Page {P} of {T}",
     emailDesktopHint: "PDF downloaded to your device. Please attach it to the email draft just opened.",
     ownerUnlockedMsg: "Owner Mode Activated: Unlimited white-label downloads.",
@@ -1414,7 +1457,7 @@ const I18N = {
     iosS1: 'Appuyez sur le bouton <strong>Partager</strong> dans la barre inférieure de votre iPhone.',
     iosS2: 'Sélectionnez <strong>"Sur l\'écran d\'accueil"</strong> puis appuyez sur <strong>Ajouter</strong>.',
     androidSub: "App Officielle pour Android",
-    androidS1: 'Appuyez sur le menu <strong>3 points (⋮)</strong> en haut à droite du navigateur.',
+    androidS1: 'Appuyez sur le menu <strong>3 points</strong> en haut à droite du navigateur.',
     androidS2: 'Sélectionnez <strong>"Installer l\'application"</strong> ou <strong>"Ajouter à l\'écran d\'accueil"</strong>.',
     iosDone: "C'est fait, ajoutée à l'accueil", attOk: "Image 2e Page Prête",
     sub: "Devis, Factures et Contrats PDF Officiels", reset: "Nouveau (0.00)",
@@ -1434,7 +1477,7 @@ const I18N = {
     histTitle: "Historique des Documents Payés", histClear: "Effacer",
     histSearch: "Rechercher par client, n° ou date...", openBtn: "Ouvrir", pdfBtn: "PDF", toInvBtn: "→ Facture", toRecBtn: "→ Reçu",
     qty: "Quantité", price: "Prix Unitaire", qtyShort: "Qté", unitPriceShort: "P.U.", totalColShort: "Montant",
-    itemLbl: "Ligne #", descPh: "Description détaillée (ex. Véhicule/VIN, Bien, Travaux ou Matériaux)...",
+    itemLbl: "Ligne #", descPh: "Description détaillée des travaux, matériaux ou biens...",
     waPaid: "Envoyer le PDF Officiel par WhatsApp / Partager", emailPaid: "Envoyer le PDF Officiel par E-mail", dlPaid: "Télécharger / Enregistrer le PDF",
     waLock: "Débloquer le PDF Officiel Sans Filigrane ($1.99)",
     proPassBtn: "Pass Pro Illimité • Marque Blanche ($9.99/mois)",
@@ -1449,7 +1492,7 @@ const I18N = {
     restCancel: "Fermer", restOk: "Vérifier", restChecking: "Vérification...",
     restSuccess: "Achat vérifié et restauré.",
     restInvalid: "Aucun achat actif vérifié avec cet e-mail sur le serveur.",
-    sigModalSub: "Signez avec votre doigt dans le cadre", sigBtnSign: "Signer", sigReady: "Signé ✓", sigSavedHint: "Optionnel (Sauvegardé)", sigClientHint: "Signer à l'écran",
+    sigModalSub: "Signez avec votre doigt dans le cadre", sigBtnSign: "Signer", sigReady: "Signature Enregistrée", sigSavedHint: "Optionnel (Sauvegardé)", sigClientHint: "Signer à l'écran",
     sigCancel: "Annuler", sigClear: "Effacer", sigSave: "Enregistrer",
     pdfEngineErr: "Impossible de charger le moteur PDF. Vérifiez votre connexion.",
     convertedToast: "Copié dans un nouveau brouillon.",
@@ -1493,7 +1536,7 @@ const I18N = {
     iosS1: 'Kliknij przycisk <strong>Udostępnij</strong> na dolnym pasku przeglądarki iPhone.',
     iosS2: 'Wybierz <strong>"Dodaj do ekranu początkowego"</strong> i kliknij <strong>Dodaj</strong>.',
     androidSub: "Oficjalna Aplikacja na Androida",
-    androidS1: 'Kliknij menu <strong>3 kropek (⋮)</strong> w prawym górnym rogu przeglądarki.',
+    androidS1: 'Kliknij menu <strong>3 kropek</strong> w prawym górnym rogu przeglądarki.',
     androidS2: 'Wybierz <strong>"Zainstaluj aplikację"</strong> lub <strong>"Dodaj do ekranu głównego"</strong>.',
     iosDone: "Gotowe, dodano do ekranu", attOk: "Obraz 2. Strony Gotowy",
     sub: "Kosztorysy, Faktury i Umowy PDF", reset: "Nowy (0.00)",
@@ -1513,7 +1556,7 @@ const I18N = {
     histTitle: "Historia Opłaconych Dokumentów", histClear: "Usuń",
     histSearch: "Szukaj klienta, numeru lub daty...", openBtn: "Otwórz", pdfBtn: "PDF", toInvBtn: "→ Faktura", toRecBtn: "→ Pokwitowanie",
     qty: "Ilość", price: "Cena Jednostkowa", qtyShort: "Ilość", unitPriceShort: "Cena Jedn.", totalColShort: "Kwota",
-    itemLbl: "Pozycja #", descPh: "Szczegółowy opis (np. Pojazd/VIN, Nieruchomość, Usługi lub Materiały)...",
+    itemLbl: "Pozycja #", descPh: "Szczegółowy opis zakresu prac, materiałów lub mienia...",
     waPaid: "Wyślij Oficjalny PDF przez WhatsApp / Udostępnij", emailPaid: "Wyślij Oficjalny PDF przez E-mail", dlPaid: "Pobierz / Zapisz PDF na Telefonie",
     waLock: "Odblokuj Oficjalny PDF Bez Znaku Wodnego ($1.99)",
     proPassBtn: "Pakiet Pro Bez Limitu • White-Label ($9.99/mies.)",
@@ -1528,7 +1571,7 @@ const I18N = {
     restCancel: "Zamknij", restOk: "Weryfikuj", restChecking: "Weryfikacja...",
     restSuccess: "Zakup zweryfikowany i przywrócony.",
     restInvalid: "Nie udało się zweryfikować aktywnego zakupu dla tego adresu e-mail.",
-    sigModalSub: "Podpisz palcem w polu poniżej", sigBtnSign: "Podpisz", sigReady: "Podpisano ✓", sigSavedHint: "Opcjonalnie (Zapisany)", sigClientHint: "Podpis na ekranie",
+    sigModalSub: "Podpisz palcem w polu poniżej", sigBtnSign: "Podpisz", sigReady: "Podpis Zapisany", sigSavedHint: "Opcjonalnie (Zapisany)", sigClientHint: "Podpis na ekranie",
     sigCancel: "Anuluj", sigClear: "Wyczyść", sigSave: "Zapisz Podpis",
     pdfEngineErr: "Nie udało się załadować generatora PDF. Sprawdź połączenie.",
     convertedToast: "Skopiowano do nowego dokumentu.",
@@ -1572,7 +1615,7 @@ const I18N = {
     iosS1: 'Toque no botão <strong>Compartilhar</strong> na barra inferior do seu iPhone.',
     iosS2: 'Selecione <strong>"Adicionar à Tela de Início"</strong> e toque em <strong>Adicionar</strong>.',
     androidSub: "App Oficial para Android",
-    androidS1: 'Toque no menu de <strong>3 pontos (⋮)</strong> no canto superior direito do navegador.',
+    androidS1: 'Toque no menu de <strong>3 pontos</strong> no canto superior direito do navegador.',
     androidS2: 'Selecione <strong>"Instalar aplicativo"</strong> ou <strong>"Adicionar à tela inicial"</strong>.',
     iosDone: "Pronto, já adicionei ao início", attOk: "Imagem da 2ª Pág. Pronta",
     sub: "Orçamentos, Faturas e Contratos em PDF", reset: "Novo (0.00)",
@@ -1592,7 +1635,7 @@ const I18N = {
     histTitle: "Histórico de Documentos Pagos", histClear: "Limpar",
     histSearch: "Buscar por cliente, nº do doc ou data...", openBtn: "Abrir", pdfBtn: "PDF", toInvBtn: "→ Fatura", toRecBtn: "→ Recibo",
     qty: "Quantidade", price: "Preço Unitário", qtyShort: "Qtd.", unitPriceShort: "P. Unit.", totalColShort: "Total",
-    itemLbl: "Item #", descPh: "Descrição detalhada (ex. Veículo/Chassi, Imóvel, Serviços ou Materiais)...",
+    itemLbl: "Item #", descPh: "Descrição detalhada do escopo, materiais ou bem...",
     waPaid: "Enviar PDF Oficial pelo WhatsApp / Compartilhar", emailPaid: "Enviar PDF Oficial por E-mail", dlPaid: "Baixar / Salvar PDF no Celular",
     waLock: "Desbloquear PDF Oficial Sem Marca d'Água ($1.99)",
     proPassBtn: "Passe Pro Ilimitado • PDF Marca Branca ($9.99/mês)",
@@ -1607,7 +1650,7 @@ const I18N = {
     restCancel: "Fechar", restOk: "Verificar", restChecking: "Verificando...",
     restSuccess: "Compra verificada e restaurada!",
     restInvalid: "Não foi possível verificar uma compra ativa com esse e-mail.",
-    sigModalSub: "Assine com o dedo dentro do quadro", sigBtnSign: "Assinar", sigReady: "Assinado ✓", sigSavedHint: "Opcional (Salva auto.)", sigClientHint: "Assinar na tela",
+    sigModalSub: "Assine com o dedo dentro do quadro", sigBtnSign: "Assinar", sigReady: "Assinatura Salva", sigSavedHint: "Opcional (Salva auto.)", sigClientHint: "Assinar na tela",
     sigCancel: "Cancelar", sigClear: "Limpar", sigSave: "Salvar Assinatura",
     pdfEngineErr: "Não foi possível carregar o motor PDF. Verifique sua conexão.",
     convertedToast: "Dados copiados para um novo rascunho.",
@@ -1678,7 +1721,7 @@ const SAMPLES_I18N = {
       tax: 0, dep: 3000.00, notes: "CLÁUSULA DE MORA: Todo pago recibido con más de 5 días de atraso conllevará un cargo administrativo del 5%."
     },
     billsale: {
-      comp: "ALBERTO RODRÍGUEZ MONTERO (VENDEDOR)", phone: "Licencia / ID: PR-5829104 • Tel: (787) 555-0912 • Adjuntas, PR",
+      comp: "ALBERTO RODRÍUEZ MONTERO (VENDEDOR)", phone: "Licencia / ID: PR-5829104 • Tel: (787) 555-0912 • Adjuntas, PR",
       docNum: "2026-0318", date: "20/11/2026", client: "Jorge L. Santiago Vega (COMPRADOR) — ID: PR-9920184 • Urb. Valle Real #88, Ponce, PR",
       rows: [
         ["1. Vehículo de Motor Objeto de Compraventa", "Marca: TOYOTA | Modelo: 4RUNNER LIMITED 4x4 | Año: 2024 | Color: Blanco Perla | Transmisión: Automática.", 38500],
@@ -1801,7 +1844,7 @@ function getLocalizedSampleData(activeType) {
     }),
     hasMultiQty: false,
     disc: 0, discLabelExtra: '',
-    tax: roundMoney((Number(raw.tax) || 0) * mult), taxLabelExtra: '',
+    tax: roundMoney((Number(raw[2]) || Number(raw.tax) || 0) * mult), taxLabelExtra: '',
     ret: 0, retLabelExtra: '',
     dep: roundMoney((Number(raw.dep) || 0) * mult),
     notes: raw.notes
@@ -1848,7 +1891,7 @@ function loadSampleDataIntoBuilder() {
   recalcMasterTotals();
   updatePayButtonState();
   persistDraftSilently(false);
-  showExecutiveToast(L.sampleLoadedToast, 3400);
+  showExecutiveToast(L.sampleLoadedToast, 3200);
 }
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -2790,7 +2833,7 @@ function applyLanguageUI() {
   document.getElementById('ui-sec3').innerHTML = '<span class="sec-step-badge">03</span><span>' + escapeHtml(L.sec3) + '</span>';
   document.getElementById('ui-lbl-attach').innerHTML = svgIco('ico-clip', 'ico-stroke-sm ico-gold') + '<span>' + escapeHtml(L.attach) + '</span>';
   document.getElementById('ui-hist-title').innerHTML = svgIco('ico-doc', 'ico-stroke ico-gold') + '<span>' + escapeHtml(L.histTitle) + '</span>';
-  document.getElementById('ui-hist-clear').innerHTML = '<svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-trash"></use></svg><span>' + escapeHtml(L.histClear) + '</span>';
+  document.getElementById('ui-hist-clear').innerHTML = '<svg class="ico-stroke-sm" style="width:12px;height:12px;"><use href="#ico-trash"></use></svg><span>' + escapeHtml(L.histClear) + '</span>';
   const searchInp = document.getElementById('histSearchInput'); if (searchInp) searchInp.placeholder = L.histSearch;
 
   const docInp = document.getElementById('qb-doctype');
@@ -2850,7 +2893,7 @@ function renderCustomLines() {
         '<span>' + escapeHtml(L.itemLbl) + (idx + 1) + '</span>' +
         '<div class="line-top-right">' +
           '<span class="line-live-sub' + negCls + '" id="line-sub-' + idx + '">' + escapeHtml(formatUSD(sub)) + '</span>' +
-          (customLineItems.length > 1 ? '<button type="button" class="cart-remove" onclick="removeCustomLine(' + idx + ')"><svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-x"></use></svg></button>' : '') +
+          (customLineItems.length > 1 ? '<button type="button" class="cart-remove" onclick="removeCustomLine(' + idx + ')"><svg class="ico-stroke-sm" style="width:12px;height:12px;"><use href="#ico-x"></use></svg></button>' : '') +
         '</div>' +
       '</div>' +
       '<textarea class="cl-desc" placeholder="' + escapeHtml(L.descPh) + '" oninput="onBuilderUserEdit(false)">' + escapeHtml(item.desc || '') + '</textarea>' +
@@ -3289,20 +3332,20 @@ function renderModalSheet(mode) {
       '<div class="lux-brand">' +
         brandVisualHtml +
         '<div style="min-width:0;">' +
-          '<div style="font-size:0.7rem;font-weight:800;color:#64748b;text-transform:uppercase;">' + escapeHtml(meta.party1) + '</div>' +
-          '<div style="font-weight:900;font-size:1.05rem;color:#0f172a;word-break:break-word;">' + escapeHtml(data.comp) + '</div>' +
-          (data.phone ? '<div style="font-size:0.74rem;color:#475569;word-break:break-word;">' + escapeHtml(data.phone) + '</div>' : '') +
+          '<div style="font-size:0.68rem;font-weight:800;color:#64748b;text-transform:uppercase;">' + escapeHtml(meta.party1) + '</div>' +
+          '<div style="font-weight:900;font-size:1.02rem;color:#0f172a;word-break:break-word;">' + escapeHtml(data.comp) + '</div>' +
+          (data.phone ? '<div style="font-size:0.73rem;color:#475569;word-break:break-word;">' + escapeHtml(data.phone) + '</div>' : '') +
         '</div>' +
       '</div>' +
       '<div class="lux-badge-box">' +
-        '<div style="font-weight:900;font-size:0.86rem;color:#0f172a;">' + escapeHtml(meta.badge) + '</div>' +
-        '<div style="color:#b45309;font-weight:900;font-size:0.86rem;margin:2px 0;">' + escapeHtml(meta.prefix + data.docNum) + '</div>' +
-        '<div style="font-size:0.73rem;color:#64748b;font-weight:700;">' + escapeHtml(L.dateLbl + ': ' + data.date) + '</div>' +
-        (data.dueDate ? '<div style="font-size:0.71rem;color:#b45309;font-weight:800;margin-top:1px;">' + escapeHtml(L.dueShort + ': ' + data.dueDate) + '</div>' : '') +
+        '<div style="font-weight:900;font-size:0.84rem;color:#0f172a;">' + escapeHtml(meta.badge) + '</div>' +
+        '<div style="color:#b45309;font-weight:900;font-size:0.84rem;margin:2px 0;">' + escapeHtml(meta.prefix + data.docNum) + '</div>' +
+        '<div style="font-size:0.72rem;color:#64748b;font-weight:700;">' + escapeHtml(L.dateLbl + ': ' + data.date) + '</div>' +
+        (data.dueDate ? '<div style="font-size:0.7rem;color:#b45309;font-weight:800;margin-top:1px;">' + escapeHtml(L.dueShort + ': ' + data.dueDate) + '</div>' : '') +
       '</div>' +
     '</div>' +
-    '<div style="background:#f8fafc;border:1px solid #cbd5e1;padding:0.55rem 0.75rem;border-radius:6px;font-size:0.8rem;margin-bottom:0.65rem;">' +
-      '<div style="font-size:0.7rem;font-weight:800;color:#64748b;">' + escapeHtml(meta.party2) + '</div>' +
+    '<div style="background:#f8fafc;border:1px solid #cbd5e1;padding:0.52rem 0.72rem;border-radius:6px;font-size:0.79rem;margin-bottom:0.6rem;">' +
+      '<div style="font-size:0.68rem;font-weight:800;color:#64748b;">' + escapeHtml(meta.party2) + '</div>' +
       '<div style="font-weight:800;color:#0f172a;margin-top:2px;word-break:break-word;">' + escapeHtml(data.client) + '</div>' +
     '</div>' +
     '<table class="lux-table">' +
@@ -3310,25 +3353,25 @@ function renderModalSheet(mode) {
       '<tbody>' +
         rowsHtml +
         (showBreakdownSubtotal ? '<tr style="background:#f8fafc;"><td colspan="' + colSpanCount + '" style="text-align:right;font-weight:800;color:#334155;">' + escapeHtml(L.subtotalLbl) + '</td><td>' + escapeHtml(formatUSD(rawSubtotal)) + '</td></tr>' : '') +
-        (discVal > 0 ? '<tr><td colspan="' + colSpanCount + '" style="text-align:right;font-weight:700;color:#be123c;">' + escapeHtml(L.disc + (data.discLabelExtra || '')) + '</td><td style="color:#be123c;">-' + escapeHtml(formatUSD(discVal)) + '</td></tr>' : '') +
+        (discVal > 0 ? '<tr><td colspan="' + colSpanCount + '" style="text-align:right;font-weight:700;color:#991b1b;">' + escapeHtml(L.disc + (data.discLabelExtra || '')) + '</td><td style="color:#991b1b;">-' + escapeHtml(formatUSD(discVal)) + '</td></tr>' : '') +
         (taxVal > 0 ? '<tr><td colspan="' + colSpanCount + '" style="text-align:right;font-weight:700;color:#475569;">' + escapeHtml(L.tax + (data.taxLabelExtra || '')) + '</td><td>' + escapeHtml(formatUSD(taxVal)) + '</td></tr>' : '') +
         '<tr class="lux-tot-row"><td colspan="' + colSpanCount + '">' + escapeHtml(totalRowLabelTxt + ' (' + currentCurr + ')') + '</td><td>' + escapeHtml(formatUSD(grandTotal)) + '</td></tr>' +
-        (retVal > 0 ? '<tr><td colspan="' + colSpanCount + '" style="text-align:right;font-weight:800;color:#b45309;">' + escapeHtml(L.retRowLbl + (data.retLabelExtra || '')) + '</td><td style="color:#b45309;">-' + escapeHtml(formatUSD(retVal)) + '</td></tr>' : '') +
+        (retVal > 0 ? '<tr><td colspan="' + colSpanCount + '" style="text-align:right;font-weight:800;color:#92400e;">' + escapeHtml(L.retRowLbl + (data.retLabelExtra || '')) + '</td><td style="color:#92400e;">-' + escapeHtml(formatUSD(retVal)) + '</td></tr>' : '') +
         (showPaidRows ? '<tr><td colspan="' + colSpanCount + '" style="color:#065f46;font-weight:800;">' + escapeHtml(L.paidAmt) + '</td><td style="color:#065f46;">-' + escapeHtml(formatUSD(effectivePaid)) + '</td></tr>' : '') +
-        (showRemBalanceRow ? '<tr style="background:#dcfce7;font-weight:900;"><td colspan="' + colSpanCount + '" style="color:#065f46;">' + escapeHtml(L.remBal) + '</td><td style="color:#065f46;font-size:0.92rem;">' + escapeHtml(formatUSD(remBalance)) + '</td></tr>' : '') +
+        (showRemBalanceRow ? '<tr style="background:#dcfce7;font-weight:900;"><td colspan="' + colSpanCount + '" style="color:#065f46;">' + escapeHtml(L.remBal) + '</td><td style="color:#065f46;font-size:0.9rem;">' + escapeHtml(formatUSD(remBalance)) + '</td></tr>' : '') +
       '</tbody>' +
     '</table>' +
-    (data.notes ? '<div style="background:#f8fafc;border:1px solid #cbd5e1;border-left:3px solid #0f172a;padding:0.55rem 0.75rem;border-radius:6px;font-size:0.75rem;color:#1e293b;line-height:1.4;margin-top:0.6rem;"><strong>' + escapeHtml(L.notes) + ':</strong> ' + escapeHtml(data.notes) + '</div>' : '') +
+    (data.notes ? '<div style="background:#f8fafc;border:1px solid #cbd5e1;border-left:3px solid #0f172a;padding:0.52rem 0.72rem;border-radius:5px;font-size:0.74rem;color:#1e293b;line-height:1.4;margin-top:0.55rem;"><strong>' + escapeHtml(L.notes) + ':</strong> ' + escapeHtml(data.notes) + '</div>' : '') +
     '<div class="lux-sign-box">' +
       '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.4rem;">' +
-        '<div style="font-size:0.78rem;font-weight:900;color:#0f172a;">' + escapeHtml(meta.signTitle) + '</div>' +
-        (meta.showAcceptChecks ? '<div style="font-size:0.74rem;font-weight:800;color:#0f172a;">☐ ' + escapeHtml(L.accept) + ' &nbsp;&nbsp; ☐ ' + escapeHtml(L.decline) + '</div>' : '') +
+        '<div style="font-size:0.76rem;font-weight:900;color:#0f172a;">' + escapeHtml(meta.signTitle) + '</div>' +
+        (meta.showAcceptChecks ? '<div style="font-size:0.73rem;font-weight:800;color:#0f172a;">☐ ' + escapeHtml(L.accept) + ' &nbsp;&nbsp; ☐ ' + escapeHtml(L.decline) + '</div>' : '') +
       '</div>' +
-      '<div style="font-size:0.74rem;color:#334155;margin-top:5px;line-height:1.38;">' + escapeHtml(meta.legalClause) + '</div>' +
+      '<div style="font-size:0.73rem;color:#334155;margin-top:5px;line-height:1.38;">' + escapeHtml(meta.legalClause) + '</div>' +
       '<div class="lux-signs">' +
-        '<div class="lux-sig-slot">' + cliSigHtml + '<div class="lux-sign-line"><svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-edit"></use></svg><span>' + escapeHtml(meta.sig1) + '</span></div></div>' +
-        '<div class="lux-sig-slot">' + issSigHtml + '<div class="lux-sign-line"><svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-edit"></use></svg><span>' + escapeHtml(meta.sig2) + '</span></div></div>' +
-        '<div class="lux-sig-slot"><div style="font-size:0.76rem;font-weight:800;color:#0f172a;margin-bottom:4px;">' + escapeHtml(data.date) + '</div><div class="lux-sign-line"><svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-calendar"></use></svg><span>' + escapeHtml(L.dateLbl) + '</span></div></div>' +
+        '<div class="lux-sig-slot">' + cliSigHtml + '<div class="lux-sign-line"><svg class="ico-stroke-sm" style="width:12px;height:12px;"><use href="#ico-edit"></use></svg><span>' + escapeHtml(meta.sig1) + '</span></div></div>' +
+        '<div class="lux-sig-slot">' + issSigHtml + '<div class="lux-sign-line"><svg class="ico-stroke-sm" style="width:12px;height:12px;"><use href="#ico-edit"></use></svg><span>' + escapeHtml(meta.sig2) + '</span></div></div>' +
+        '<div class="lux-sig-slot"><div style="font-size:0.74rem;font-weight:800;color:#0f172a;margin-bottom:4px;">' + escapeHtml(data.date) + '</div><div class="lux-sign-line"><svg class="ico-stroke-sm" style="width:12px;height:12px;"><use href="#ico-calendar"></use></svg><span>' + escapeHtml(L.dateLbl) + '</span></div></div>' +
       '</div>' +
     '</div>' +
     page2PreviewHtml +
@@ -3520,7 +3563,7 @@ function convertRecordToDoc(id, targetType) {
   applyLanguageUI();
   persistDraftSilently(false);
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  showExecutiveToast(L.convertedToast, 3400);
+  showExecutiveToast(L.convertedToast, 3200);
 }
 
 function renderHistory() {
@@ -3548,13 +3591,13 @@ function renderHistory() {
     const canToRec = (dt === 'quote' || dt === 'invoice' || dt === 'contract' || dt === 'promissory');
 
     return '<li>' +
-      '<div style="min-width:180px;flex:1;"><strong style="color:#050505;">' + escapeHtml(item.label || '') + '</strong> <small style="color:#65676b;">(' + escapeHtml(item.time || '') + ')</small><br><span style="color:#059669;font-weight:800;font-variant-numeric:tabular-nums;">' + escapeHtml(item.res || '') + '</span></div>' +
+      '<div style="min-width:180px;flex:1;"><strong style="color:#0f172a;">' + escapeHtml(item.label || '') + '</strong> <small style="color:#64748b;">(' + escapeHtml(item.time || '') + ')</small><br><span style="color:#047857;font-weight:800;font-variant-numeric:tabular-nums;">' + escapeHtml(item.res || '') + '</span></div>' +
       (item.inputs ?
         '<div class="hist-btn-group">' +
           (canToInv ? '<button type="button" class="hist-conv-btn" onclick="convertRecordToDoc(' + safeId + ', \'invoice\')"><span>' + escapeHtml(L.toInvBtn) + '</span></button>' : '') +
           (canToRec ? '<button type="button" class="hist-conv-btn" onclick="convertRecordToDoc(' + safeId + ', \'receipt\')"><span>' + escapeHtml(L.toRecBtn) + '</span></button>' : '') +
-          '<button type="button" class="hist-open-btn" onclick="loadInvoiceFromRecord(' + safeId + ', false)"><svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-folder"></use></svg><span>' + escapeHtml(L.openBtn) + '</span></button>' +
-          '<button type="button" class="hist-pdf-btn" onclick="loadInvoiceFromRecord(' + safeId + ', true)"><svg class="ico-stroke-sm" style="width:13px;height:13px;"><use href="#ico-download"></use></svg><span>' + escapeHtml(L.pdfBtn) + '</span></button>' +
+          '<button type="button" class="hist-open-btn" onclick="loadInvoiceFromRecord(' + safeId + ', false)"><svg class="ico-stroke-sm" style="width:12px;height:12px;"><use href="#ico-folder"></use></svg><span>' + escapeHtml(L.openBtn) + '</span></button>' +
+          '<button type="button" class="hist-pdf-btn" onclick="loadInvoiceFromRecord(' + safeId + ', true)"><svg class="ico-stroke-sm" style="width:12px;height:12px;"><use href="#ico-download"></use></svg><span>' + escapeHtml(L.pdfBtn) + '</span></button>' +
         '</div>' : '') +
     '</li>';
   }).join('');
@@ -3678,10 +3721,10 @@ async function buildPureVectorPDF(overrideDateStr) {
     } catch (e) {}
   } else {
     const initials = pdfSafeText(getCompanyInitials(comp));
-    doc.setFillColor(11, 15, 25);
-    doc.setDrawColor(217, 119, 6);
+    doc.setFillColor(15, 23, 42);
+    doc.setDrawColor(180, 83, 9);
     doc.setLineWidth(0.5);
-    doc.roundedRect(14, 12, 20, 20, 3, 3, 'FD');
+    doc.roundedRect(14, 12, 20, 20, 2, 2, 'FD');
     doc.setTextColor(251, 191, 36);
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(initials.length > 2 ? 11 : 13);
@@ -3716,8 +3759,8 @@ async function buildPureVectorPDF(overrideDateStr) {
   doc.setFillColor(248, 250, 252);
   doc.setDrawColor(203, 213, 225);
   doc.setLineWidth(0.3);
-  doc.roundedRect(126, 11, 76, badgeBoxH, 2, 2, 'FD');
-  doc.setFillColor(234, 179, 8);
+  doc.roundedRect(126, 11, 76, badgeBoxH, 1.5, 1.5, 'FD');
+  doc.setFillColor(180, 83, 9);
   doc.rect(200, 11, 2, badgeBoxH, 'F');
 
   doc.setFont('helvetica', 'bold');
@@ -3753,7 +3796,7 @@ async function buildPureVectorPDF(overrideDateStr) {
   doc.setFillColor(248, 250, 252);
   doc.setDrawColor(203, 213, 225);
   doc.setLineWidth(0.3);
-  doc.roundedRect(14, clientBoxY, 188, clientBoxH, 2, 2, 'FD');
+  doc.roundedRect(14, clientBoxY, 188, clientBoxH, 1.5, 1.5, 'FD');
 
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(8);
@@ -3826,7 +3869,7 @@ async function buildPureVectorPDF(overrideDateStr) {
       }
 
       doc.setFont('helvetica', 'bold');
-      if (lineTotal < 0) doc.setTextColor(190, 18, 60);
+      if (lineTotal < 0) doc.setTextColor(153, 27, 27);
       doc.text(lineTotal !== 0 ? pdfSafeText(formatPDFCurr(lineTotal)) : '-', 198.5, y + 5.8, { align: 'right' });
       doc.setTextColor(15, 23, 42);
       y += rowH;
@@ -3885,7 +3928,7 @@ async function buildPureVectorPDF(overrideDateStr) {
     doc.rect(totSplitX, y, totValW, 8.5);
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(8.8);
-    doc.setTextColor(190, 18, 60);
+    doc.setTextColor(153, 27, 27);
     doc.text(pdfSafeText(L.disc + snap.discLabelSuffix), totSplitX - 3.5, y + 5.8, { align: 'right' });
     doc.text(pdfSafeText('-' + formatPDFCurr(snap.computedDisc)), 198.5, y + 5.8, { align: 'right' });
     y += 8.5;
@@ -3923,7 +3966,7 @@ async function buildPureVectorPDF(overrideDateStr) {
     doc.rect(totSplitX, y, totValW, 8.5, 'FD');
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(8.8);
-    doc.setTextColor(180, 83, 9);
+    doc.setTextColor(146, 64, 14);
     doc.text(pdfSafeText(L.retRowLbl + snap.retLabelSuffix), totSplitX - 3.5, y + 5.8, { align: 'right' });
     doc.text(pdfSafeText('-' + formatPDFCurr(snap.computedRet)), 198.5, y + 5.8, { align: 'right' });
     y += 8.5;
@@ -3981,7 +4024,7 @@ async function buildPureVectorPDF(overrideDateStr) {
 
   doc.setDrawColor(15, 23, 42);
   doc.setLineWidth(0.35);
-  doc.roundedRect(14, y, 188, boxH, 2, 2);
+  doc.roundedRect(14, y, 188, boxH, 1.5, 1.5);
 
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(8.5);
@@ -4091,7 +4134,7 @@ async function processOfficialPDF(actionMode, isHistoryReprint, overrideDateStr)
     triggerResilientDownload(doc, pdfBlob, fileName);
 
     if (actionMode === 'email') {
-      showExecutiveToast(L.emailDesktopHint, 5200);
+      showExecutiveToast(L.emailDesktopHint, 5000);
       const subj = encodeURIComponent(meta.badge + ' ' + meta.prefix + docNum + ' - ' + comp);
       const bodyStr = (L.emailBodyTpl || I18N.es.emailBodyTpl)
         .replace('{BADGE}', meta.badge).replace('{NUM}', meta.prefix + docNum)
@@ -4234,20 +4277,20 @@ const MODULES_I18N = {
     lblEmail: "Email o Página Web",
     lblLic: "Ciudad / Licencia / Registro",
     logoBtn: "Subir / Cambiar Logo", sigBtn: "Guardar Mi Firma Fija",
-    saveBiz: "Guardar y Fijar Mi Negocio", savedToast: "Negocio guardado y protegido",
+    saveBiz: "Guardar y Fijar Mi Negocio", savedToast: "Perfil de negocio guardado y protegido",
     unlockOnce: "Editar emisor solo en este documento",
-    qrHint: "Apunta la cámara al QR para abrir tu Tarjeta de Negocios Real.",
+    qrHint: "Escanea el código QR para abrir tu Tarjeta de Negocios Real.",
     fillFirst: "Guarda primero el nombre y teléfono en Datos Fijos.",
-    previewRealBtn: "🪪 Ver Tarjeta de Negocios Real",
+    previewRealBtn: "Ver Tarjeta de Negocios Real",
     shareLinkBtn: "Compartir Link", pngBtn: "Descargar PNG",
     linkCopied: "Enlace de tarjeta copiado",
-    visSave: "📲 Guardar en Contactos", visCall: "📞 Llamar", visWa: "💬 WhatsApp",
-    visDlImg: "🖼️ Descargar Imagen de Tarjeta (PNG)",
+    visSave: "Guardar en Contactos", visCall: "Llamar", visWa: "WhatsApp",
+    visDlImg: "Descargar Imagen de Tarjeta (PNG)",
     visClose: "Cerrar Tarjeta", visFooter: "Tarjeta Ejecutiva Oficial • Mr. Invoice Pro",
-    helpTitle: "Help • Grabadora Turbo IA",
-    helpPh: "Opcional: escribe aquí o usa Grabar Voz...",
-    recIdle: "Grabar Voz", recStop: "Parar", recCont: "Continuar",
-    helpHint: "Pausa y continúa cuantas veces quieras, y toca enviar al terminar.",
+    helpTitle: "Dictado de Documento",
+    helpPh: "Dictar o escribir datos del documento...",
+    recIdle: "Grabar Voz", recStop: "Pausar", recCont: "Continuar",
+    helpHint: "Pausa y continúa libremente; confirma a la derecha al terminar.",
     notesTitle: "Notas de Proyectos"
   },
   en: {
@@ -4263,18 +4306,18 @@ const MODULES_I18N = {
     logoBtn: "Upload / Change Logo", sigBtn: "Save Default Signature",
     saveBiz: "Save & Lock My Business", savedToast: "Business profile saved & locked",
     unlockOnce: "Override issuer for this document only",
-    qrHint: "Scan this QR with any camera to open your Real Business Card.",
+    qrHint: "Scan this QR code to open your Real Business Card.",
     fillFirst: "Save your business name and phone in Business Info first.",
-    previewRealBtn: "🪪 View Real Business Card",
+    previewRealBtn: "View Real Business Card",
     shareLinkBtn: "Share Link", pngBtn: "Download PNG",
     linkCopied: "Card link copied",
-    visSave: "📲 Save to Contacts", visCall: "📞 Call", visWa: "💬 WhatsApp",
-    visDlImg: "🖼️ Download Business Card Image (PNG)",
+    visSave: "Save to Contacts", visCall: "Call", visWa: "WhatsApp",
+    visDlImg: "Download Business Card Image (PNG)",
     visClose: "Close Card", visFooter: "Official Executive Card • Mr. Invoice Pro",
-    helpTitle: "Help • Turbo AI Recorder",
-    helpPh: "Optional: type here or tap Record Voice...",
+    helpTitle: "Document Dictation",
+    helpPh: "Dictate or type document details...",
     recIdle: "Record Voice", recStop: "Pause", recCont: "Resume",
-    helpHint: "Pause and resume freely, then tap send when finished.",
+    helpHint: "Pause and resume freely; confirm on the right when finished.",
     notesTitle: "Project Notes"
   }
 };
@@ -4413,7 +4456,7 @@ function syncBizAndModulesI18n() {
     'mipModalSigBtn': ML.sigBtn,
     'mipSaveBizBtn': ML.saveBiz,
     'mipUnlockOnceBtn': ML.unlockOnce,
-    'mipPreviewCardBtn': ML.previewRealBtn,
+    'mipPreviewCardTxt': ML.previewRealBtn,
     'mipShareCardBtn': ML.shareLinkBtn,
     'mipPngCardBtn': ML.pngBtn,
     'mipHelpTitleTxt': ML.helpTitle,
@@ -4494,7 +4537,7 @@ function renderBizQrCode() {
   if (!v.comp && !v.owner && !v.phone) {
     titleEl.textContent = ML.bizBtn;
     subEl.textContent = '';
-    qrBox.innerHTML = '<div style="color:#0f172a;font-size:0.78rem;font-weight:800;padding:1rem;max-width:190px;">' + escapeHtml(ML.fillFirst) + '</div>';
+    qrBox.innerHTML = '<div style="color:#0f172a;font-size:0.76rem;font-weight:800;padding:1rem;max-width:190px;">' + escapeHtml(ML.fillFirst) + '</div>';
     hintEl.textContent = '';
     return;
   }
@@ -4502,7 +4545,7 @@ function renderBizQrCode() {
   titleEl.textContent = v.comp || v.owner || '---';
   subEl.textContent = [v.owner, v.phone].filter(Boolean).join(' • ');
   hintEl.textContent = ML.qrHint;
-  renderQrIntoElement(qrBox, buildCardUrl(v), 176);
+  renderQrIntoElement(qrBox, buildCardUrl(v), 174);
 }
 
 function saveBizFromModal() {
@@ -4519,7 +4562,7 @@ function saveBizFromModal() {
   onBuilderUserEdit(true);
   if (saved.comp || saved.owner || saved.phone) switchBizTab('qr');
   else dismissModalCleanly();
-  showExecutiveToast(ML.savedToast, 3000);
+  showExecutiveToast(ML.savedToast, 2800);
 }
 
 function unlockIssuerOnce() {
@@ -4590,9 +4633,9 @@ function showVisitorCardModal(card, isOwnPreview) {
   }
 
   let linesHtml = '';
-  if (card.p) linesHtml += '<div class="real-bcard-line"><span class="real-bcard-ico">📞</span><span>' + escapeHtml(card.p) + '</span></div>';
-  if (card.e) linesHtml += '<div class="real-bcard-line"><span class="real-bcard-ico">✉️</span><span>' + escapeHtml(card.e) + '</span></div>';
-  if (card.l) linesHtml += '<div class="real-bcard-line"><span class="real-bcard-ico">📍</span><span>' + escapeHtml(card.l) + '</span></div>';
+  if (card.p) linesHtml += '<div class="real-bcard-line"><span class="real-bcard-lbl">TEL</span><span>' + escapeHtml(card.p) + '</span></div>';
+  if (card.e) linesHtml += '<div class="real-bcard-line"><span class="real-bcard-lbl">WEB</span><span>' + escapeHtml(card.e) + '</span></div>';
+  if (card.l) linesHtml += '<div class="real-bcard-line"><span class="real-bcard-lbl">LOC</span><span>' + escapeHtml(card.l) + '</span></div>';
   document.getElementById('mipVisRows').innerHTML = linesHtml;
 
   const cardUrl = buildCardUrl({ comp: card.c, owner: card.o, phone: card.p, email: card.e, lic: card.l });
@@ -4603,16 +4646,17 @@ function showVisitorCardModal(card, isOwnPreview) {
   if (waDigits.length === 10) waDigits = '1' + waDigits;
   let actsHtml = '';
   if (cleanDigits) {
-    actsHtml += '<a class="mip-vis-act" href="tel:' + cleanDigits + '">' + escapeHtml(ML.visCall) + '</a>';
-    actsHtml += '<a class="mip-vis-act" target="_blank" rel="noopener" href="https://wa.me/' + waDigits + '">' + escapeHtml(ML.visWa) + '</a>';
+    actsHtml += '<a class="mip-vis-act" href="tel:' + cleanDigits + '">' + svgIco('ico-phone') + '<span>' + escapeHtml(ML.visCall) + '</span></a>';
+    actsHtml += '<a class="mip-vis-act" target="_blank" rel="noopener" href="https://wa.me/' + waDigits + '">' + svgIco('ico-chat') + '<span>' + escapeHtml(ML.visWa) + '</span></a>';
   }
   document.getElementById('mipVisActs').innerHTML = actsHtml;
 
-  const saveBtn = document.getElementById('mipVisSaveBtn');
-  saveBtn.textContent = ML.visSave;
-  saveBtn.onclick = () => triggerVCardDownload(card);
+  const saveTxt = document.getElementById('mipVisSaveTxt');
+  if (saveTxt) saveTxt.textContent = ML.visSave;
+  document.getElementById('mipVisSaveBtn').onclick = () => triggerVCardDownload(card);
 
-  document.getElementById('mipVisDownloadImgBtn').textContent = ML.visDlImg;
+  const dlImgTxt = document.getElementById('mipVisDlImgTxt');
+  if (dlImgTxt) dlImgTxt.textContent = ML.visDlImg;
   document.getElementById('mipVisFooter').textContent = ML.visFooter;
   document.getElementById('mipVisCloseBtn').textContent = ML.visClose;
 
@@ -4643,7 +4687,22 @@ async function shareDigitalCardLink() {
     try { await navigator.share({ title: titleTxt, text: titleTxt, url: url }); return; } catch (e) {}
   }
   try { await navigator.clipboard.writeText(url); } catch (e2) {}
-  showExecutiveToast(ML.linkCopied, 3000);
+  showExecutiveToast(ML.linkCopied, 2800);
+}
+
+function fillRoundRectSafe(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  if (ctx.roundRect) {
+    ctx.roundRect(x, y, w, h, r);
+  } else {
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+  ctx.fill();
 }
 
 async function downloadRealCardAsPng() {
@@ -4656,7 +4715,6 @@ async function downloadRealCardAsPng() {
   canvas.width = W; canvas.height = H;
   const ctx = canvas.getContext('2d');
 
-  // Fondo mate ejecutivo con acento dorado
   const bg = ctx.createLinearGradient(0, 0, W, H);
   bg.addColorStop(0, '#0b0f19');
   bg.addColorStop(0.6, '#162033');
@@ -4664,111 +4722,97 @@ async function downloadRealCardAsPng() {
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
-  // Marco fino dorado y barra inferior
   ctx.strokeStyle = 'rgba(251, 191, 36, 0.55)';
-  ctx.lineWidth = 4;
-  ctx.strokeRect(16, 16, W - 32, H - 32);
+  ctx.lineWidth = 3;
+  ctx.strokeRect(18, 18, W - 36, H - 36);
 
   const goldBar = ctx.createLinearGradient(0, 0, W, 0);
   goldBar.addColorStop(0, '#b45309');
   goldBar.addColorStop(0.5, '#fbbf24');
-  goldBar.addColorStop(1, '#d97706');
+  goldBar.addColorStop(1, '#b45309');
   ctx.fillStyle = goldBar;
-  ctx.fillRect(0, H - 14, W, 14);
+  ctx.fillRect(0, H - 12, W, 12);
 
-  // Logo real o sello dorado
   const ownLogo = uploadedLogoData || safeGetStorage('mcp_company_logo', '');
-  let textStartX = 225;
+  let textStartX = 222;
   if (ownLogo) {
     await new Promise(res => {
       const im = new Image();
       im.onload = () => {
         ctx.fillStyle = '#ffffff';
-        ctx.beginPath();
-        ctx.roundRect(62, 62, 132, 132, 24);
-        ctx.fill();
+        fillRoundRectSafe(ctx, 62, 62, 130, 130, 16);
         const scale = Math.min(112 / im.naturalWidth, 112 / im.naturalHeight);
         const dw = im.naturalWidth * scale, dh = im.naturalHeight * scale;
-        ctx.drawImage(im, 62 + (132 - dw) / 2, 62 + (132 - dh) / 2, dw, dh);
+        ctx.drawImage(im, 62 + (130 - dw) / 2, 62 + (130 - dh) / 2, dw, dh);
         res();
       };
       im.onerror = res;
       im.src = ownLogo;
     });
   } else {
-    ctx.fillStyle = 'rgba(251, 191, 36, 0.16)';
+    ctx.fillStyle = 'rgba(251, 191, 36, 0.14)';
+    fillRoundRectSafe(ctx, 62, 62, 130, 130, 16);
     ctx.strokeStyle = '#fbbf24';
     ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.roundRect(62, 62, 132, 132, 24);
-    ctx.fill();
-    ctx.stroke();
+    ctx.strokeRect(62, 62, 130, 130);
     ctx.fillStyle = '#fbbf24';
-    ctx.font = '900 44px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+    ctx.font = '900 42px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(getCompanyInitials(card.c || card.o), 128, 130);
+    ctx.fillText(getCompanyInitials(card.c || card.o), 127, 128);
   }
 
-  // Nombre de empresa y cargo
   ctx.textAlign = 'left';
   ctx.textBaseline = 'top';
   ctx.fillStyle = '#ffffff';
   const mainTitle = card.c || card.o || 'Contacto Oficial';
-  ctx.font = (mainTitle.length > 26 ? '900 40px' : '900 46px') + ' -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+  ctx.font = (mainTitle.length > 26 ? '900 39px' : '900 45px') + ' -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
   ctx.fillText(mainTitle.slice(0, 38), textStartX, 82);
 
   if (card.c && card.o) {
     ctx.fillStyle = '#fbbf24';
-    ctx.font = '800 26px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+    ctx.font = '800 25px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
     ctx.fillText(card.o.toUpperCase().slice(0, 44), textStartX, 144);
   }
 
-  // Línea divisoria dorada
   const divGrad = ctx.createLinearGradient(62, 0, W - 62, 0);
   divGrad.addColorStop(0, 'rgba(251, 191, 36, 0.65)');
   divGrad.addColorStop(1, 'rgba(255, 255, 255, 0.08)');
   ctx.fillStyle = divGrad;
-  ctx.fillRect(62, 236, W - 124, 2);
+  ctx.fillRect(62, 234, W - 124, 2);
 
-  // Datos de contacto limpios abajo a la izquierda
-  let lineY = 285;
-  ctx.font = '700 30px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+  let lineY = 284;
   const infoRows = [];
-  if (card.p) infoRows.push(['TEL:', card.p]);
-  if (card.e) infoRows.push(['WEB/EMAIL:', card.e]);
-  if (card.l) infoRows.push(['UBICACIÓN:', card.l]);
+  if (card.p) infoRows.push(['TEL', card.p]);
+  if (card.e) infoRows.push(['WEB', card.e]);
+  if (card.l) infoRows.push(['LOC', card.l]);
 
   infoRows.forEach(r => {
     ctx.fillStyle = '#fbbf24';
-    ctx.font = '900 22px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+    ctx.font = '800 21px ui-monospace, SFMono-Regular, Menlo, monospace';
     ctx.fillText(r[0], 62, lineY + 5);
-    const lblW = ctx.measureText(r[0]).width + 16;
     ctx.fillStyle = '#f8fafc';
     ctx.font = '700 29px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
-    ctx.fillText(String(r[1]).slice(0, 42), 62 + lblW, lineY);
+    ctx.fillText(String(r[1]).slice(0, 44), 132, lineY);
     lineY += 68;
   });
 
-  // Código QR real en la esquina inferior derecha
   const tempQrDiv = document.createElement('div');
   const cardUrl = buildCardUrl({ comp: card.c, owner: card.o, phone: card.p, email: card.e, lic: card.l });
   if (typeof QRCode !== 'undefined') {
-    new QRCode(tempQrDiv, { text: cardUrl, width: 170, height: 170, colorDark: '#0b0f19', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
+    new QRCode(tempQrDiv, { text: cardUrl, width: 168, height: 168, colorDark: '#0b0f19', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
     await new Promise(r => setTimeout(r, 60));
     const qrCanvas = tempQrDiv.querySelector('canvas');
     if (qrCanvas) {
       ctx.fillStyle = '#ffffff';
-      ctx.beginPath();
-      ctx.roundRect(W - 246, H - 252, 186, 186, 18);
-      ctx.fill();
-      ctx.drawImage(qrCanvas, W - 238, H - 244, 170, 170);
+      fillRoundRectSafe(ctx, W - 244, H - 250, 184, 184, 12);
+      ctx.drawImage(qrCanvas, W - 236, H - 242, 168, 168);
     }
   }
 
-  canvas.toBlob(async blob => {
+  canvas.toBlob(blob => {
     if (!blob) return;
-    const fName = 'Tarjeta_' + ((card.c || card.o || 'Negocio').replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 24)) + '.png';
+    const fName = 'Tarjeta_' + ((card.c || card.o || 'Ejecutiva').replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 24)) + '.png';
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url; a.download = fName;
@@ -4785,7 +4829,7 @@ function checkVisitorQrCardOnOpen() {
 }
 
 /* ============================================================================
-   MÓDULO 2: NOTAS DE PROYECTOS + FOTOS EN INDEXEDDB (MEMORIA SEPARADA)
+   MÓDULO 2: CUADERNO TÉCNICO PRIVADO (NOTAS DE PROYECTOS + FOTOS EN INDEXEDDB)
    ============================================================================ */
 const PROJ_DB_NAME = 'mcp_projects_db_v1';
 let projDbInstance = null;
@@ -4793,6 +4837,20 @@ let allProjectsCache = [];
 let activeProjectId = '';
 let activeProjectPhotos = [];
 let currentZoomedPhotoData = '';
+
+function syncProjThemeUI() {
+  const isDark = safeGetStorage('mcp_proj_dark_mode', '0') === '1';
+  const root = document.getElementById('projNotesCardRoot');
+  const btn = document.getElementById('projThemeToggleBtn');
+  if (root) root.classList.toggle('proj-dark', isDark);
+  if (btn) btn.textContent = isDark ? 'Claro' : 'Grafito';
+}
+
+function toggleProjPrivateTheme() {
+  const cur = safeGetStorage('mcp_proj_dark_mode', '0') === '1';
+  safeSetStorage('mcp_proj_dark_mode', cur ? '0' : '1');
+  syncProjThemeUI();
+}
 
 function openProjectsIDB() {
   if (projDbInstance) return Promise.resolve(projDbInstance);
@@ -4896,7 +4954,7 @@ async function initProjectsDB() {
     if (allProjectsCache.length === 0) {
       const defProj = {
         id: 'prj_' + Date.now(),
-        name: 'Proyecto General / Visita Campo',
+        name: 'Carpeta General',
         materials: [],
         measurements: [],
         notes: [],
@@ -4916,6 +4974,7 @@ function getActiveProjectObj() {
 
 async function openProjectNotesModal() {
   await initProjectsDB();
+  syncProjThemeUI();
   renderProjectFolderDropdown();
   await loadAndRenderActiveProject();
   openModalWithStep('notes', 'mipNotesModal');
@@ -4925,7 +4984,7 @@ function renderProjectFolderDropdown() {
   const sel = document.getElementById('projFolderSelect');
   if (!sel) return;
   sel.innerHTML = allProjectsCache.map(p =>
-    '<option value="' + escapeHtml(p.id) + '"' + (p.id === activeProjectId ? ' selected' : '') + '>📁 ' + escapeHtml(p.name) + '</option>'
+    '<option value="' + escapeHtml(p.id) + '"' + (p.id === activeProjectId ? ' selected' : '') + '>' + escapeHtml(p.name) + '</option>'
   ).join('');
 }
 
@@ -4962,7 +5021,7 @@ async function confirmCreateProjectFolder() {
   document.getElementById('newProjInlineBox').style.display = 'none';
   renderProjectFolderDropdown();
   await loadAndRenderActiveProject();
-  showExecutiveToast('📁 Proyecto creado: ' + name, 2500);
+  showExecutiveToast('Proyecto registrado: ' + name, 2400);
 }
 
 async function deleteCurrentProjectFolder() {
@@ -4993,54 +5052,52 @@ async function loadAndRenderActiveProject() {
   const meas = Array.isArray(proj.measurements) ? proj.measurements : [];
   const nts = Array.isArray(proj.notes) ? proj.notes : [];
 
-  let html = '';
-
-  // Materiales
-  html += '<div class="proj-cat-box"><div class="proj-cat-head"><span>🧱 Lista de Materiales (' + mats.length + ')</span></div>';
-  if (mats.length === 0) {
-    html += '<div style="font-size:0.78rem;color:#94a3b8;">Sin materiales aún. Ej: "10 lb de clavos, 200 bloques"</div>';
+  if (mats.length === 0 && meas.length === 0 && nts.length === 0) {
+    area.innerHTML = '<div class="proj-sec-bar"><span>Hoja de Campo</span><span>0 registros</span></div>' +
+                     '<div class="proj-empty-line">Carpeta vacía — dicta o escribe abajo para registrar partidas.</div>';
   } else {
-    html += mats.map((m, i) =>
-      '<div class="proj-item-row' + (m.done ? ' checked' : '') + '">' +
-        '<label style="display:flex;align-items:center;gap:0.5rem;margin:0;text-transform:none;font-size:0.83rem;font-weight:700;cursor:pointer;flex:1;">' +
-          '<input type="checkbox" style="width:17px;height:17px;accent-color:#059669;" ' + (m.done ? 'checked' : '') + ' onchange="toggleProjMatCheck(' + i + ')">' +
-          '<span><strong>' + escapeHtml(m.qty || '1') + '</strong> — ' + escapeHtml(m.item || '') + '</span>' +
-        '</label>' +
-        '<button type="button" class="cart-remove" onclick="removeProjEntry(\'materials\',' + i + ')">✕</button>' +
-      '</div>'
-    ).join('');
+    let html = '';
+
+    if (mats.length > 0) {
+      html += '<div class="proj-sec-bar"><span>Materiales</span><span>' + mats.length + '</span></div>';
+      html += mats.map((m, i) =>
+        '<div class="proj-ledger-row' + (m.done ? ' checked' : '') + '">' +
+          '<label style="display:flex;align-items:center;gap:0.55rem;margin:0;text-transform:none;font-weight:600;cursor:pointer;flex:1;min-width:0;">' +
+            '<input type="checkbox" style="width:15px;height:15px;accent-color:#111827;flex-shrink:0;" ' + (m.done ? 'checked' : '') + ' onchange="toggleProjMatCheck(' + i + ')">' +
+            '<span class="proj-qty-code">' + escapeHtml(m.qty || '1') + '</span>' +
+            '<span class="proj-ledger-txt" style="word-break:break-word;">' + escapeHtml(m.item || '') + '</span>' +
+          '</label>' +
+          '<button type="button" class="proj-row-del" onclick="removeProjEntry(\'materials\',' + i + ')">×</button>' +
+        '</div>'
+      ).join('');
+    }
+
+    if (meas.length > 0) {
+      html += '<div class="proj-sec-bar"><span>Medidas / Takeoff</span><span>' + meas.length + '</span></div>';
+      html += meas.map((m, i) =>
+        '<div class="proj-ledger-row">' +
+          '<div style="display:flex;align-items:center;gap:0.55rem;flex:1;min-width:0;">' +
+            '<span class="proj-qty-code">' + escapeHtml(m.dim || '-') + '</span>' +
+            '<span class="proj-ledger-txt" style="font-weight:700;word-break:break-word;">' + escapeHtml(m.area || 'Medida') + '</span>' +
+          </div>' +
+          '<button type="button" class="proj-row-del" onclick="removeProjEntry(\'measurements\',' + i + ')">×</button>' +
+        '</div>'
+      ).join('');
+    }
+
+    if (nts.length > 0) {
+      html += '<div class="proj-sec-bar"><span>Observaciones</span><span>' + nts.length + '</span></div>';
+      html += nts.map((n, i) =>
+        '<div class="proj-ledger-row">' +
+          '<span class="proj-ledger-txt" style="flex:1;word-break:break-word;">' + escapeHtml(n) + '</span>' +
+          '<button type="button" class="proj-row-del" onclick="removeProjEntry(\'notes\',' + i + ')">×</button>' +
+        '</div>'
+      ).join('');
+    }
+
+    area.innerHTML = html;
   }
-  html += '</div>';
 
-  // Medidas / Takeoff
-  html += '<div class="proj-cat-box"><div class="proj-cat-head"><span>📐 Medidas y Áreas / Takeoff (' + meas.length + ')</span></div>';
-  if (meas.length === 0) {
-    html += '<div style="font-size:0.78rem;color:#94a3b8;">Sin medidas aún. Ej: "Ventana 10x10, 50 LF losa, 200 SF pintura"</div>';
-  } else {
-    html += meas.map((m, i) =>
-      '<div class="proj-item-row">' +
-        '<span style="font-weight:700;color:#0f172a;"><strong>' + escapeHtml(m.area || 'Área') + ':</strong> ' + escapeHtml(m.dim || '') + '</span>' +
-        '<button type="button" class="cart-remove" onclick="removeProjEntry(\'measurements\',' + i + ')">✕</button>' +
-      '</div>'
-    ).join('');
-  }
-  html += '</div>';
-
-  // Observaciones
-  if (nts.length > 0) {
-    html += '<div class="proj-cat-box"><div class="proj-cat-head"><span>📝 Observaciones de Campo (' + nts.length + ')</span></div>';
-    html += nts.map((n, i) =>
-      '<div class="proj-item-row">' +
-        '<span style="color:#334155;">' + escapeHtml(n) + '</span>' +
-        '<button type="button" class="cart-remove" onclick="removeProjEntry(\'notes\',' + i + ')">✕</button>' +
-      '</div>'
-    ).join('');
-    html += '</div>';
-  }
-
-  area.innerHTML = html;
-
-  // Galería de fotos
   const phSec = document.getElementById('projPhotosSection');
   const phGrid = document.getElementById('projPhotosGrid');
   if (activeProjectPhotos.length > 0) {
@@ -5048,7 +5105,7 @@ async function loadAndRenderActiveProject() {
     phGrid.innerHTML = activeProjectPhotos.map((ph, idx) =>
       '<div class="proj-photo-card">' +
         '<img src="' + ph.dataUrl + '" alt="Foto" onclick="zoomProjectPhoto(' + idx + ')">' +
-        '<button type="button" class="proj-photo-del" onclick="deleteProjectPhoto(\'' + ph.id + '\')">✕</button>' +
+        '<button type="button" class="proj-photo-del" onclick="deleteProjectPhoto(\'' + ph.id + '\')">×</button>' +
       '</div>'
     ).join('');
   } else {
@@ -5080,14 +5137,14 @@ async function handleProjectPhotoAdd(input) {
   const proj = getActiveProjectObj();
   if (!proj) return;
   if (activeProjectPhotos.length >= 6) {
-    showExecutiveToast('Máximo 6 fotos por proyecto alcanzado', 3000);
+    showExecutiveToast('Límite de 6 fotografías por carpeta alcanzado', 3000);
     return;
   }
   try {
     const compressed = await compressImageFile(file, 1150, 0.72, false);
     await idbAddProjectPhoto(proj.id, compressed);
     await loadAndRenderActiveProject();
-    showExecutiveToast('📷 Foto guardada en la carpeta', 2200);
+    showExecutiveToast('Fotografía guardada localmente', 2200);
   } catch (e) {}
 }
 
@@ -5114,7 +5171,7 @@ function useZoomedPhotoAsPdfPage2(ev) {
   if (chk) chk.checked = true;
   document.getElementById('projPhotoZoomOverlay').style.display = 'none';
   scheduleAutoSave(false);
-  showExecutiveToast('📎 Foto adjuntada en la 2da página de tu PDF', 3000);
+  showExecutiveToast('Fotografía asignada a la 2da página del PDF', 2800);
 }
 
 function localParseProjectNote(rawText) {
@@ -5141,17 +5198,17 @@ function shareMaterialsToSupplier() {
   const mats = proj.materials || [];
   const meas = proj.measurements || [];
   if (mats.length === 0 && meas.length === 0) {
-    showExecutiveToast('Primero dicta materiales o medidas en el proyecto', 2800);
+    showExecutiveToast('Registra materiales o medidas antes de enviar', 2600);
     return;
   }
-  let txt = '📋 *SOLICITUD DE COTIZACIÓN — ' + proj.name.toUpperCase() + '*\n\n';
+  let txt = '*SOLICITUD DE COTIZACIÓN — ' + proj.name.toUpperCase() + '*\n\n';
   if (mats.length > 0) {
-    txt += '*MATERIALES REQUERIDOS:*\n';
-    mats.forEach((m, i) => { txt += (i + 1) + '. ' + (m.qty || '1') + ' — ' + m.item + '\n'; });
+    txt += '*LISTADO DE MATERIALES:*\n';
+    mats.forEach((m, i) => { txt += (i + 1) + '. [' + (m.qty || '1') + '] ' + m.item + '\n'; });
   }
   if (meas.length > 0) {
-    txt += '\n*MEDIDAS DE REFERENCIA:*\n';
-    meas.forEach(m => { txt += '• ' + m.area + ': ' + m.dim + '\n'; });
+    txt += '\n*DIMENSIONES DE CAMPO:*\n';
+    meas.forEach(m => { txt += '- ' + m.area + ': ' + m.dim + '\n'; });
   }
   window.open('https://wa.me/?text=' + encodeURIComponent(txt.trim()), '_blank');
 }
@@ -5164,7 +5221,7 @@ function pushProjectToBuilder(targetDocType) {
   const nts = proj.notes || [];
 
   if (mats.length === 0 && meas.length === 0 && nts.length === 0) {
-    showExecutiveToast('Esta carpeta aún está vacía', 2600);
+    showExecutiveToast('La carpeta seleccionada no tiene partidas', 2600);
     return;
   }
 
@@ -5177,7 +5234,7 @@ function pushProjectToBuilder(targetDocType) {
       lines.push({ desc: m.item + unitRest, qty: qNum, price: '' });
     });
   } else {
-    meas.forEach(m => lines.push({ desc: m.area + ' — Medida: ' + m.dim, qty: '1', price: '' }));
+    meas.forEach(m => lines.push({ desc: m.area + ' — Dimensión: ' + m.dim, qty: '1', price: '' }));
     mats.forEach(m => lines.push({ desc: 'Suministro: ' + (m.qty ? m.qty + ' de ' : '') + m.item, qty: '1', price: '' }));
   }
 
@@ -5211,11 +5268,11 @@ function pushProjectToBuilder(targetDocType) {
   updatePayButtonState();
   persistDraftSilently(false);
   window.scrollTo({ top: 0, behavior: 'smooth' });
-  showExecutiveToast('✅ Partidas cargadas desde ' + proj.name, 3200);
+  showExecutiveToast('Partidas transferidas al editor: ' + proj.name, 3000);
 }
 
 /* ============================================================================
-   MOTOR COMPARTIDO DE GRABACIÓN DE AUDIO (PARA NOTAS DE PROYECTO Y HELP TURBO)
+   MOTOR COMPARTIDO DE GRABACIÓN DE VOZ (NOTAS DE PROYECTOS Y HELP)
    ============================================================================ */
 function blobToBase64Str(blob) {
   return new Promise((resolve, reject) => {
@@ -5235,7 +5292,7 @@ function fmtRecClock(t) {
   return m + ':' + (s < 10 ? '0' : '') + s;
 }
 
-// --- Grabadora 1: Dentro de Notas de Proyectos ---
+// --- Grabadora 1: Cuaderno Técnico de Proyectos ---
 let prjMr = null, prjStream = null, prjChunks = [], prjMime = 'audio/webm', prjState = 'idle', prjSecs = 0, prjTimer = null, prjSendAfter = false;
 
 function syncProjSendBtn() {
@@ -5244,7 +5301,6 @@ function syncProjSendBtn() {
   if (!btn || !inp) return;
   const ready = prjState === 'recording' || prjState === 'paused' || prjChunks.length > 0 || inp.value.trim().length > 0;
   btn.disabled = (prjState === 'sending') || !ready;
-  btn.classList.toggle('ready', !btn.disabled && ready);
 }
 
 function resetProjRecUI() {
@@ -5252,7 +5308,11 @@ function resetProjRecUI() {
   if (prjStream) { try { prjStream.getTracks().forEach(t => t.stop()); } catch (e) {} prjStream = null; }
   prjMr = null; prjChunks = []; prjSecs = 0; prjState = 'idle'; prjSendAfter = false;
   const btn = document.getElementById('projRecBtn');
-  if (btn) { btn.disabled = false; btn.className = 'mip-rec-main-btn'; btn.innerHTML = svgIco('ico-mic') + '<span>Dictar Nota</span>'; }
+  if (btn) {
+    btn.disabled = false;
+    btn.className = 'proj-rec-exec';
+    btn.innerHTML = '<svg class="ico-stroke-sm" style="width:14px;height:14px;"><use href="#ico-mic"></use></svg><span>Grabar Nota</span>';
+  }
   const tr = document.getElementById('projTrashBtn');
   if (tr) tr.style.display = 'none';
   syncProjSendBtn();
@@ -5264,7 +5324,7 @@ async function processProjNoteWithAI(audioB64, mimeStr, extraTxt) {
   const st = document.getElementById('projRecStatus');
   prjState = 'sending';
   syncProjSendBtn();
-  if (st) { st.style.display = 'block'; st.textContent = 'Organizando materiales y medidas con IA...'; }
+  if (st) { st.style.display = 'block'; st.textContent = 'Registrando apuntes...'; }
 
   const sys = 'Eres un ingeniero de costos y estimador en campo. Extrae del audio o texto del contratista los materiales, las medidas (takeoff) y las observaciones. Si corrige un número mientras habla, usa solo la corrección final. Devuelve SOLO JSON válido exacto: {"materials":[{"qty":"10 lb","item":"Clavos"}],"measurements":[{"area":"Ventana","dim":"10\' x 10\'"}],"notes":["observación"]}';
   const payload = { system: sys };
@@ -5300,7 +5360,7 @@ async function processProjNoteWithAI(audioB64, mimeStr, extraTxt) {
     await idbSaveProject(proj);
     document.getElementById('projNoteInput').value = '';
     await loadAndRenderActiveProject();
-    showExecutiveToast('✨ Nota sumada a ' + proj.name, 2400);
+    showExecutiveToast('Registro guardado en ' + proj.name, 2200);
   }
   if (st) st.style.display = 'none';
   resetProjRecUI();
@@ -5335,14 +5395,14 @@ async function toggleProjVoiceRec() {
       };
       prjMr.start(250);
       prjSecs = 0; prjState = 'recording';
-      btn.className = 'mip-rec-main-btn rec';
-      btn.innerHTML = '<span>⏸ Pausar (0:00)</span>';
-      document.getElementById('projTrashBtn').style.display = 'flex';
-      if (st) { st.style.display = 'block'; st.textContent = 'Grabando medidas y materiales...'; }
+      btn.className = 'proj-rec-exec rec';
+      btn.innerHTML = '<span>Pausar · 0:00</span>';
+      document.getElementById('projTrashBtn').style.display = 'inline-flex';
+      if (st) { st.style.display = 'block'; st.textContent = 'Grabación activa...'; }
       syncProjSendBtn();
       prjTimer = setInterval(() => {
         prjSecs++;
-        if (prjState === 'recording') btn.innerHTML = '<span>⏸ Pausar (' + fmtRecClock(prjSecs) + ')</span>';
+        if (prjState === 'recording') btn.innerHTML = '<span>Pausar · ' + fmtRecClock(prjSecs) + '</span>';
       }, 1000);
     } catch (e) {
       resetProjRecUI();
@@ -5354,8 +5414,9 @@ async function toggleProjVoiceRec() {
     prjMr.pause();
     clearInterval(prjTimer);
     prjState = 'paused';
-    btn.className = 'mip-rec-main-btn paused';
-    btn.innerHTML = '<span>▶ Continuar (' + fmtRecClock(prjSecs) + ')</span>';
+    btn.className = 'proj-rec-exec paused';
+    btn.innerHTML = '<span>Continuar · ' + fmtRecClock(prjSecs) + '</span>';
+    if (st) st.textContent = 'Grabación en pausa';
     syncProjSendBtn();
     return;
   }
@@ -5363,10 +5424,11 @@ async function toggleProjVoiceRec() {
   if (prjState === 'paused' && prjMr && prjMr.state === 'paused') {
     prjMr.resume();
     prjState = 'recording';
-    btn.className = 'mip-rec-main-btn rec';
+    btn.className = 'proj-rec-exec rec';
+    if (st) st.textContent = 'Grabación activa...';
     prjTimer = setInterval(() => {
       prjSecs++;
-      if (prjState === 'recording') btn.innerHTML = '<span>⏸ Pausar (' + fmtRecClock(prjSecs) + ')</span>';
+      if (prjState === 'recording') btn.innerHTML = '<span>Pausar · ' + fmtRecClock(prjSecs) + '</span>';
     }, 1000);
   }
 }
@@ -5393,7 +5455,7 @@ function submitProjectNoteEntry() {
   if (txt) processProjNoteWithAI('', '', txt);
 }
 
-// --- Grabadora 2: Botón Flotante Verde HELP (Facturas / Estimados Turbo IA) ---
+// --- Grabadora 2: Botón Flotante HELP (Dictado Directo al Documento) ---
 let hlpMr = null, hlpStream = null, hlpChunks = [], hlpMime = 'audio/webm', hlpState = 'idle', hlpSecs = 0, hlpTimer = null, hlpSendAfter = false;
 
 function toggleHelpPanel() {
@@ -5412,7 +5474,7 @@ function setHelpStatus(msg, isErr) {
   const s = document.getElementById('mip-help-status');
   if (!s) return;
   s.style.display = msg ? 'block' : 'none';
-  s.style.color = isErr ? '#be123c' : '#065f46';
+  s.style.color = isErr ? '#991b1b' : '#0f172a';
   s.textContent = msg || '';
 }
 
@@ -5422,7 +5484,6 @@ function syncHelpSendBtn() {
   if (!btn || !inp) return;
   const ready = hlpState === 'recording' || hlpState === 'paused' || hlpChunks.length > 0 || inp.value.trim().length > 0;
   btn.disabled = (hlpState === 'sending') || !ready;
-  btn.classList.toggle('ready', !btn.disabled && ready);
 }
 
 function resetHelpRecUI() {
@@ -5442,7 +5503,7 @@ async function sendHelpToTurboWorker(audioB64, mimeStr, extraText) {
   document.getElementById('mip-rec').disabled = true;
   document.getElementById('mip-send').disabled = true;
   document.getElementById('mip-trash').style.display = 'none';
-  setHelpStatus('Procesando en modo Turbo...', false);
+  setHelpStatus('Procesando documento...', false);
 
   const sys = 'Eres un asistente experto redactando documentos comerciales en idioma "' + currentLang + '". Escucha el audio y/o lee la nota del usuario. Si se corrige mientras habla, usa solo el dato corregido final. PROHIBIDO poner "Mr. Invoice Pro" como nombre de empresa (issuer); deja issuer="" a menos que el usuario dicte explícitamente el nombre de su propio negocio. Redacta descripciones profesionales claras para cada partida. Devuelve SOLO JSON válido exacto: {"docType":"quote|invoice|receipt|contract|billsale|lease|waiver|promissory|change|workorder|po|delivery","issuer":"","phone":"","client":"","items":[{"desc":"","qty":1,"price":0}],"taxPct":0,"taxAmt":0,"discAmt":0,"retPct":0,"dep":0,"notes":""}';
   const payload = { system: sys };
@@ -5500,7 +5561,7 @@ async function sendHelpToTurboWorker(audioB64, mimeStr, extraText) {
     resetHelpRecUI();
     document.getElementById('mip-help-panel').style.display = 'none';
     setHelpStatus('', false);
-    showExecutiveToast('✨ Documento completado en modo Turbo', 2800);
+    showExecutiveToast('Documento actualizado correctamente', 2600);
   } catch (err) {
     resetHelpRecUI();
     setHelpStatus('No se pudo procesar (' + String(err.message || 'Error') + ').', true);
@@ -5538,13 +5599,13 @@ async function toggleHelpRecording() {
       hlpMr.start(250);
       hlpSecs = 0; hlpState = 'recording';
       btn.className = 'mip-rec-main-btn rec';
-      btn.innerHTML = '<span>⏸ ' + escapeHtml(ML.recStop) + ' (0:00)</span>';
+      btn.innerHTML = '<span>' + escapeHtml(ML.recStop) + ' · 0:00</span>';
       document.getElementById('mip-trash').style.display = 'flex';
-      setHelpStatus('Grabando sin cortes... Toca Parar para pausar.', false);
+      setHelpStatus('Grabación en curso...', false);
       syncHelpSendBtn();
       hlpTimer = setInterval(() => {
         hlpSecs++;
-        if (hlpState === 'recording') btn.innerHTML = '<span>⏸ ' + escapeHtml(ML.recStop) + ' (' + fmtRecClock(hlpSecs) + ')</span>';
+        if (hlpState === 'recording') btn.innerHTML = '<span>' + escapeHtml(ML.recStop) + ' · ' + fmtRecClock(hlpSecs) + '</span>';
       }, 1000);
     } catch (e) {
       resetHelpRecUI();
@@ -5558,8 +5619,8 @@ async function toggleHelpRecording() {
     clearInterval(hlpTimer);
     hlpState = 'paused';
     btn.className = 'mip-rec-main-btn paused';
-    btn.innerHTML = '<span>▶ ' + escapeHtml(ML.recCont) + ' (' + fmtRecClock(hlpSecs) + ')</span>';
-    setHelpStatus('En pausa (' + fmtRecClock(hlpSecs) + '). Continúa o toca enviar.', false);
+    btn.innerHTML = '<span>' + escapeHtml(ML.recCont) + ' · ' + fmtRecClock(hlpSecs) + '</span>';
+    setHelpStatus('En pausa (' + fmtRecClock(hlpSecs) + ').', false);
     syncHelpSendBtn();
     return;
   }
@@ -5568,10 +5629,10 @@ async function toggleHelpRecording() {
     hlpMr.resume();
     hlpState = 'recording';
     btn.className = 'mip-rec-main-btn rec';
-    setHelpStatus('Grabando...', false);
+    setHelpStatus('Grabación en curso...', false);
     hlpTimer = setInterval(() => {
       hlpSecs++;
-      if (hlpState === 'recording') btn.innerHTML = '<span>⏸ ' + escapeHtml(ML.recStop) + ' (' + fmtRecClock(hlpSecs) + ')</span>';
+      if (hlpState === 'recording') btn.innerHTML = '<span>' + escapeHtml(ML.recStop) + ' · ' + fmtRecClock(hlpSecs) + '</span>';
     }, 1000);
   }
 }
