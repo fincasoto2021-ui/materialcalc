@@ -5079,7 +5079,7 @@ async function loadAndRenderActiveProject() {
           '<div style="display:flex;align-items:center;gap:0.55rem;flex:1;min-width:0;">' +
             '<span class="proj-qty-code">' + escapeHtml(m.dim || '-') + '</span>' +
             '<span class="proj-ledger-txt" style="font-weight:700;word-break:break-word;">' + escapeHtml(m.area || 'Medida') + '</span>' +
-          </div>' +
+          '</div>' +
           '<button type="button" class="proj-row-del" onclick="removeProjEntry(\'measurements\',' + i + ')">×</button>' +
         '</div>'
       ).join('');
@@ -5627,6 +5627,7 @@ async function toggleHelpRecording() {
 
   if (hlpState === 'paused' && hlpMr && hlpMr.state === 'paused') {
     hlpMr.resume();
+    prjState = prjState;
     hlpState = 'recording';
     btn.className = 'mip-rec-main-btn rec';
     setHelpStatus('Grabación en curso...', false);
